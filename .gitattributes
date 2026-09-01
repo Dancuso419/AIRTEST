@@ -1,0 +1,3 @@
+# These files are executed inside WSL2 Ubuntu. CRLF breaks the bash shebang.
+*.sh text eol=lf
+*.py text eol=lf
