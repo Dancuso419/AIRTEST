@@ -76,3 +76,41 @@ def test_reconciliation_raises_when_delivered_exceeds_offered():
     with pytest.raises(ReconciliationError):
         check_reconciliation(delivered_mbps=400.0, loss_pct=0.0,
                              offered_mbps=300.0)
+
+
+from parse import interpolate_max_clients
+
+
+def test_interpolation_finds_crossing_between_bracketing_points():
+    # Latency crosses 50 ms between 40 clients (30 ms) and 60 clients (70 ms).
+    # 40 + (50-30)*(60-40)/(70-30) = 40 + 20*20/40 = 50
+    points = [(20, 12.0), (40, 30.0), (60, 70.0), (80, 110.0)]
+    assert interpolate_max_clients(points, threshold=50.0) == 50
+
+
+def test_interpolation_uses_first_crossing_not_last():
+    points = [(20, 10.0), (40, 60.0), (60, 40.0), (80, 90.0)]
+    # First crossing is between 20 and 40: 20 + (50-10)*20/50 = 36
+    assert interpolate_max_clients(points, threshold=50.0) == 36
+
+
+def test_no_crossing_within_grid_reports_over_200_not_extrapolated():
+    points = [(20, 5.0), (60, 9.0), (120, 14.0), (200, 21.0)]
+    assert interpolate_max_clients(points, threshold=50.0) == ">200"
+
+
+def test_threshold_exceeded_at_lowest_density_reports_that_density():
+    points = [(20, 80.0), (60, 120.0)]
+    assert interpolate_max_clients(points, threshold=50.0) == 20
+
+
+def test_interpolation_sorts_unordered_points():
+    points = [(60, 70.0), (20, 12.0), (40, 30.0)]
+    assert interpolate_max_clients(points, threshold=50.0) == 50
+
+
+def test_interpolation_handles_flat_segment_without_dividing_by_zero():
+    # Identical latencies at both ends of the bracket.
+    points = [(20, 50.0), (40, 50.0), (60, 90.0)]
+    result = interpolate_max_clients(points, threshold=50.0)
+    assert result == 20
