@@ -186,8 +186,7 @@ def interpolate_max_clients(points, threshold):
 
     for (d1, l1), (d2, l2) in zip(pts, pts[1:]):
         if l2 >= threshold > l1:
-            if l2 == l1:
-                return d1
+            # l1 < threshold <= l2 forces l1 < l2, so this cannot divide by zero.
             crossed = d1 + (threshold - l1) * (d2 - d1) / (l2 - l1)
             return int(round(crossed))
     return ">200"

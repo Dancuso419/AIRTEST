@@ -109,7 +109,7 @@ def test_interpolation_sorts_unordered_points():
     assert interpolate_max_clients(points, threshold=50.0) == 50
 
 
-def test_interpolation_handles_flat_segment_without_dividing_by_zero():
+def test_threshold_met_exactly_at_lowest_density_returns_that_density():
     # Identical latencies at both ends of the bracket.
     points = [(20, 50.0), (40, 50.0), (60, 90.0)]
     result = interpolate_max_clients(points, threshold=50.0)
