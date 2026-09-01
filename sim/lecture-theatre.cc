@@ -10,12 +10,64 @@
 #include "ns3/flow-monitor-module.h"
 #include "ns3/spectrum-module.h"
 
+#include <algorithm>
 #include <fstream>
+#include <iomanip>
 #include <string>
 
 using namespace ns3;
 
 NS_LOG_COMPONENT_DEFINE("LectureTheatre");
+
+// Accumulated time the AP's PHY spent in each state. Airtime utilization is
+// derived from this; FlowMonitor cannot supply it.
+struct PhyStateTotals
+{
+    double tx = 0.0;
+    double rx = 0.0;
+    double busy = 0.0;
+    double idle = 0.0;
+};
+
+static PhyStateTotals g_apPhy;
+static double g_phyWindowStart = 0.0;
+static double g_phyWindowEnd = 0.0;
+
+static void
+PhyStateTrace(std::string context, Time start, Time duration, WifiPhyState state)
+{
+    // Only count the overlap with the measurement window. The start clamp keeps
+    // association traffic before appStart out; the end clamp keeps the drain
+    // period after appStop out (Simulator::Stop is duration + 1.0 s), without
+    // which idle time would exceed the window.
+    double startS = std::max(start.GetSeconds(), g_phyWindowStart);
+    double endS = std::min(start.GetSeconds() + duration.GetSeconds(), g_phyWindowEnd);
+    double counted = endS - startS;
+    if (counted <= 0.0)
+    {
+        return;
+    }
+
+    switch (state)
+    {
+    case WifiPhyState::TX:
+        g_apPhy.tx += counted;
+        break;
+    case WifiPhyState::RX:
+        g_apPhy.rx += counted;
+        break;
+    case WifiPhyState::CCA_BUSY:
+    case WifiPhyState::SWITCHING:
+        g_apPhy.busy += counted;
+        break;
+    case WifiPhyState::IDLE:
+        g_apPhy.idle += counted;
+        break;
+    default:
+        // SLEEP / OFF: never entered by this scenario.
+        break;
+    }
+}
 
 int
 main(int argc, char* argv[])
@@ -207,6 +259,13 @@ main(int argc, char* argv[])
     FlowMonitorHelper flowmonHelper;
     Ptr<FlowMonitor> monitor = flowmonHelper.InstallAll();
 
+    // AP is node 0 (apNode is created before staNodes); its PHY observes the
+    // whole BSS medium, so it is the right vantage point for airtime.
+    g_phyWindowStart = appStart;
+    g_phyWindowEnd = duration;
+    Config::Connect("/NodeList/0/DeviceList/0/$ns3::WifiNetDevice/Phy/State/State",
+                    MakeCallback(&PhyStateTrace));
+
     Simulator::Stop(Seconds(duration + 1.0));
     Simulator::Run();
 
@@ -226,6 +285,17 @@ main(int argc, char* argv[])
          << "  \"offeredLoadMbps\": " << (perClientMbps * clients) << "\n"
          << "}\n";
     meta.close();
+
+    std::ofstream phyOut(out + ".phy.json");
+    phyOut << std::fixed << std::setprecision(6)
+           << "{\n"
+           << "  \"ap_tx_s\": " << g_apPhy.tx << ",\n"
+           << "  \"ap_rx_s\": " << g_apPhy.rx << ",\n"
+           << "  \"ap_busy_s\": " << g_apPhy.busy << ",\n"
+           << "  \"ap_idle_s\": " << g_apPhy.idle << ",\n"
+           << "  \"measured_window_s\": " << (duration - appStart) << "\n"
+           << "}\n";
+    phyOut.close();
 
     Simulator::Destroy();
     return 0;
