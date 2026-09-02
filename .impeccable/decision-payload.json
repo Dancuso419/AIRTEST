@@ -1,0 +1,100 @@
+{
+  "title": "AIREST — choose the visual world",
+  "question": "The roll assigned Site Survey. Keep it, take an alternate, or re-roll.",
+  "buildPath": { "value": "code-led", "toggle": true },
+  "options": [
+    {
+      "id": "assigned",
+      "label": "Site Survey",
+      "kicker": "THE ROLL",
+      "lineage": "wireless site-survey deliverables — Ekahau reports, RF coverage plots, signal contour overlays on floorplans",
+      "thesis": "AIREST is the survey report a network engineer would hand you about this exact room. The room is the page: a tiered seating plan whose seats carry what each student actually gets, WiFi 5 against WiFi 6, with the measurement's provenance and its limits printed on the same sheet. It refuses the analytics-dashboard arrangement — cards floating on grey, KPI tiles, a sidebar — because a survey has a subject, and the subject is a room.",
+      "palette": ["#0B1F16", "#F2F4F1", "#4E9E6E", "#0F3D26", "#C9782A"],
+      "materials": ["contour plot", "drafting hairline", "engineering legend", "annotated floorplan"],
+      "viewport": "Left two-thirds: the lecture theatre in plan, seats as a live grid, each seat tinted by the throughput that seat receives — the whole room readable at projector distance. Right third: a fixed instrument column holding the dial, the verdict sentence, and the provenance stamp. Conditions run as a legend strip along the top, phrased as questions, not form fields. GO sits in the instrument column, at the top of the reading order after the room.",
+      "risk": "A floorplan implies spatial precision the simulation only partly has — seat positions are a uniform grid, not a real theatre. The design must not let the plan claim more accuracy than the model earns.",
+      "raised": [
+        { "from": "Designers Republic info-noise sleeve", "raise": "Density is the material: the sheet fills its frame edge to edge with legend, scale and annotation instead of floating one card in whitespace." },
+        { "from": "Orizuru fold sequence", "raise": "A strict margin column carries numbered, named steps — conditions, trial, provenance — so the sheet reads as a procedure with an order, not a panel of controls." },
+        { "from": "CRT arcade phosphor", "raise": "The ground between marks does active work; the dark plan field is a material, not empty space." }
+      ],
+      "board": "https://impeccable.style/worlds/cards/tdr-info-noise-sleeve.webp"
+    },
+    {
+      "id": "model-pick",
+      "label": "Bench Instrument",
+      "kicker": "IMPECCABLE’S PICK",
+      "lineage": "RF test-equipment front panels — Rohde & Schwarz, Anritsu spectrum analysers",
+      "thesis": "AIREST as the measurement instrument itself: a bezelled panel where the trace is the product, controls are legended hardware, and the readout is engraved rather than rendered.",
+      "palette": ["#141815", "#E6EDE7", "#4E9E6E", "#C9782A"],
+      "materials": ["anodised panel", "engraved legend", "phosphor trace", "detented control"],
+      "viewport": "A full-bleed instrument face: the dual trace across the upper two-thirds, a legended control strip below, readout digits at panel right.",
+      "risk": "This is where most runs in this category land once they reject the dashboard — the 'serious hardware' look is itself a well-worn destination, and it topped my own list, which is exactly why the roll did not hand it to me."
+    },
+    {
+      "id": "challenger-sixpack",
+      "label": "Night Instrument Six-Pack",
+      "verdict": "competitive",
+      "lineage": "small-aircraft night instrument panel",
+      "thesis": "Six calm luminous dials that agree with each other, each owning one truth, read as a practiced cross-check sweep.",
+      "palette": ["#0A0C0B", "#F4F7F4", "#7BE8A8", "#D9A441"],
+      "materials": ["matte panel", "luminous marking", "damped needle"],
+      "viewport": "Two ranked rows of three dials on an ink ground; the eye sweeps them in fixed order.",
+      "case": "Holds product clarity outright — one gauge per truth, trend shown alongside value, criticality ordering — and it reconciles the dial reference already supplied. Loses audience identification narrowly: an examiner identifies with an engineering report, not a cockpit.",
+      "risk": "Aviation borrowing can read as costume when the product is not safety-critical.",
+      "board": "https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack.webp",
+      "hero": "https://impeccable.style/worlds/cards/signals-instruments-night-flight-six-pack-hero.webp"
+    },
+    {
+      "id": "challenger-crouwel",
+      "label": "Grid Specimen",
+      "verdict": "competitive",
+      "lineage": "Wim Crouwel gridded type specimen",
+      "thesis": "The construction grid stays visible and is the design; letterforms and data alike are built cell by cell, and the page reflows by whole cells.",
+      "palette": ["#FFFFFF", "#0F3D26", "#4E9E6E", "#B8C4BC"],
+      "materials": ["construction hairline", "grid-built letterform", "flat accent plane"],
+      "viewport": "A visible cell armature; the room's seat grid and the type share one construction.",
+      "case": "The lecture theatre's seat grid IS a cell grid, so the metaphor is structurally true rather than borrowed. Ties on clarity, loses audience identification to a document engineers actually produce.",
+      "risk": "Grid-as-ornament reads as Swiss pastiche the moment the grid stops doing structural work.",
+      "board": "https://impeccable.style/worlds/cards/crouwel-grid-specimen.webp",
+      "hero": "https://impeccable.style/worlds/cards/crouwel-grid-specimen-hero.webp"
+    },
+    {
+      "id": "challenger-tdr",
+      "label": "Info-Noise Sleeve",
+      "verdict": "declined",
+      "lineage": "Designers Republic record sleeve",
+      "thesis": "Pseudo-corporate roundels and hazard grotesk composing immaculate information noise.",
+      "palette": ["#000000", "#FF0090", "#FF6A00", "#FFFFFF"],
+      "materials": ["flat print", "registration mark", "hazard grotesk"],
+      "viewport": "Magenta target grid locked over black, one enormous condensed word shouting through.",
+      "case": "Declined: loses both axes. Hostile-brand density fights legibility at projector distance and reads unserious in a viva. Kept from it: density as material — the assigned direction now fills its frame instead of floating a card in whitespace.",
+      "risk": "Illegible at distance; wrong register for an examiner.",
+      "board": "https://impeccable.style/worlds/cards/tdr-info-noise-sleeve.webp"
+    },
+    {
+      "id": "challenger-crane",
+      "label": "Orizuru Fold Sequence",
+      "verdict": "declined",
+      "lineage": "thirty-two-fold paper crane sequence",
+      "thesis": "One uncut sheet passing from flat geometry to finished form through numbered folds.",
+      "palette": ["#C8322A", "#F7F3EA", "#1A1A1A", "#C9A227"],
+      "materials": ["washi", "crease line", "sumi ink"],
+      "viewport": "Square centered diagram beside a strict numbered margin column.",
+      "case": "Declined: no product truth to carry — a simulation replay is not a fold sequence. Kept from it: the strict numbered margin column, so the sheet reads as an ordered procedure rather than a panel of controls.",
+      "risk": "Pure metaphor with nothing underneath.",
+      "board": "https://impeccable.style/worlds/cards/paper-folds-pleats-deployable-orizuru-crane-sequence.webp"
+    }
+  ],
+  "canonCard": {
+    "id": "canon",
+    "label": "The Analytics Dashboard",
+    "lineage": "the category standard, played straight",
+    "thesis": "Sidebar, KPI tiles, white cards on grey, one accent colour, charts below the fold.",
+    "palette": ["#F7F8F9", "#FFFFFF", "#16A34A", "#111827"],
+    "materials": ["card", "tile", "sidebar"],
+    "viewport": "Metric tiles across the top, chart panel beneath, filters in a rail.",
+    "risk": "This is what the current build already is, and what you rejected as reading like a template."
+  },
+  "reroll": { "enabled": true, "steer": true, "registers": ["plain", "safer", "bolder"] }
+}

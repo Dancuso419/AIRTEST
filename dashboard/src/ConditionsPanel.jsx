@@ -19,21 +19,21 @@ export default function ConditionsPanel({ scenarios, conditions, onChange }) {
   return (
     <div className="conditions">
       <label className="condition">
-        <span className="condition-q">How many students are in the room?</span>
+        <span className="condition-q">Students in the room</span>
         <select
           value={conditions.clients}
           onChange={(e) => set({ clients: Number(e.target.value) })}
         >
           {options.clients.map((c) => (
             <option key={c} value={c} disabled={!optionUsable({ clients: c })}>
-              {c} students{optionUsable({ clients: c }) ? '' : ' — not simulated'}
+              {c} students{optionUsable({ clients: c }) ? '' : ' · NO DATA'}
             </option>
           ))}
         </select>
       </label>
 
       <label className="condition">
-        <span className="condition-q">What are they doing?</span>
+        <span className="condition-q">Activity</span>
         <select
           value={conditions.trafficType}
           onChange={(e) => set({ trafficType: e.target.value })}
@@ -41,14 +41,14 @@ export default function ConditionsPanel({ scenarios, conditions, onChange }) {
           {options.trafficTypes.map((t) => (
             <option key={t} value={t} disabled={!optionUsable({ trafficType: t })}>
               {TRAFFIC_LABELS[t] ?? t}
-              {optionUsable({ trafficType: t }) ? '' : ' — not simulated'}
+              {optionUsable({ trafficType: t }) ? '' : ' · NO DATA'}
             </option>
           ))}
         </select>
       </label>
 
       <label className="condition">
-        <span className="condition-q">How many access points?</span>
+        <span className="condition-q">Access points</span>
         <select
           value={conditions.aps}
           onChange={(e) => set({ aps: Number(e.target.value) })}
@@ -56,14 +56,14 @@ export default function ConditionsPanel({ scenarios, conditions, onChange }) {
           {options.apCounts.map((a) => (
             <option key={a} value={a} disabled={!optionUsable({ aps: a })}>
               {a === 1 ? '1 access point' : `${a} access points`}
-              {optionUsable({ aps: a }) ? '' : ' — not simulated'}
+              {optionUsable({ aps: a }) ? '' : ' · NO DATA'}
             </option>
           ))}
         </select>
       </label>
 
       <details className="advanced">
-        <summary>Advanced conditions</summary>
+        <summary>Advanced</summary>
         <p className="go-note">
           Competing networks and room spread are not in the dataset yet. They
           appear here once those simulations have been run.

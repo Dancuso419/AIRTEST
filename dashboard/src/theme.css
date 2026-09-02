@@ -1,257 +1,600 @@
-@import '@fontsource-variable/nunito-sans';
+@import '@fontsource-variable/saira';
+@import '@fontsource-variable/jetbrains-mono';
+
+/* ------------------------------------------------------------------
+   AIREST — night instrument panel.
+   Palette and materials taken from the chosen world's quality bar:
+   matte panel, anti-reflective instrument faces, satin bezels,
+   luminous markings. Amber is caution and nothing else; red is
+   warning and nothing else. Spending either on decoration destroys
+   the only signal the panel has.
+   ------------------------------------------------------------------ */
 
 :root {
-  color-scheme: light;
+  color-scheme: dark;
 
-  /* Palette — DASH REF.jpg. Monochromatic green on a warm-neutral ground. */
-  --bg: #f4f6f5;
-  --surface: #ffffff;
-  --surface-sunken: #edf1ee;
-  --border: #e1e7e3;
-  --ink: #16211b;
-  --ink-dim: #5f6f67;
+  --panel: #0b0d0f;
+  --panel-raised: #14171a;
+  --face: #0f1114;
+  --plate: #2a2d31;
+  --bezel: #1b1f23;
+  --hairline: #22272c;
 
-  /* Standards are separated by VALUE, not hue. Never swap these for an
-     accent colour: a warm hue on one standard editorialises the result. */
-  --green: #4e9e6e;    /* WiFi 5 */
-  --forest: #0f3d26;   /* WiFi 6, primary actions */
-  --forest-600: #1b5e3b;
-  --mint: #8fcba4;
-  --mint-pale: #d6e9de;
+  --lum: #f2f5f5;
+  --lum-dim: #8b969b;
+  --radium: #7cff9e;
+  --amber: #ffb000;
+  --warning: #ff3b30;
 
-  /* Absent data and dataset caveats only. Never marks a standard. */
-  --warn: #b45309;
+  /* Standard identity. White is WiFi 5, radium is WiFi 6 — the world's own
+     needle convention, and a value split as well as a hue split, so it holds
+     for colourblind viewers and in print. */
+  --wifi5: #f2f5f5;
+  --wifi6: #7cff9e;
 
-  --radius: 16px;
-  --gap: 1.25rem;
-  --maxw: 1080px;
-  --font: 'Nunito Sans Variable', system-ui, sans-serif;
-  --shadow: 0 1px 2px rgba(16, 33, 27, 0.05), 0 10px 28px rgba(16, 33, 27, 0.07);
+  --display: 'Saira Variable', system-ui, sans-serif;
+  --mono: 'JetBrains Mono Variable', ui-monospace, monospace;
+
+  --gap: 1.5rem;
+  --radius: 3px;
 }
 
 * { box-sizing: border-box; }
 
 html {
-  caret-color: var(--forest);
-  scrollbar-color: var(--mint) var(--surface-sunken);
+  caret-color: var(--radium);
+  scrollbar-color: var(--plate) var(--panel);
 }
 
 body {
   margin: 0;
-  background: var(--bg);
-  color: var(--ink);
-  font-family: var(--font);
-  line-height: 1.55;
+  background: var(--panel);
+  color: var(--lum);
+  font-family: var(--mono);
+  font-size: 13px;
+  line-height: 1.6;
   -webkit-font-smoothing: antialiased;
+
+  /* Fine panel texture. Two nearly-invisible gradients; the grain is what
+     stops a black page reading as an empty div. */
+  background-image:
+    repeating-linear-gradient(0deg, rgba(255,255,255,0.012) 0 1px, transparent 1px 3px),
+    radial-gradient(120% 80% at 50% 0%, rgba(124,255,158,0.035), transparent 60%);
 }
 
-::selection { background: var(--mint-pale); color: var(--ink); }
+::selection { background: rgba(124,255,158,0.25); color: var(--lum); }
 
-:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+:focus-visible { outline: 1px solid var(--radium); outline-offset: 3px; }
 
-/* Data must not jitter when the seed changes. */
 .num { font-variant-numeric: tabular-nums; }
 
-.shell { max-width: var(--maxw); margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+/* --- shell ------------------------------------------------------- */
 
-.page-title {
-  font-size: clamp(1.75rem, 4vw, 2.5rem);
-  font-weight: 800;
-  letter-spacing: -0.02em;
-  line-height: 1.15;
-  margin: 0 0 0.4rem;
+.shell {
+  max-width: 1440px;
+  margin: 0 auto;
+  padding: 2rem 2rem 5rem;
 }
 
-.page-sub { color: var(--ink-dim); margin: 0 0 2rem; max-width: 70ch; }
-
-.card {
-  background: var(--surface);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: clamp(1.25rem, 3vw, 2rem);
-  box-shadow: var(--shadow);
+.masthead {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hairline);
+  flex-wrap: wrap;
 }
 
-.go-button {
-  display: block;
-  width: 100%;
-  max-width: 240px;
-  margin: 2rem auto 0.6rem;
-  padding: 1.05rem;
-  font-family: inherit;
-  font-size: 1.15rem;
-  font-weight: 800;
-  letter-spacing: 0.12em;
-  color: #ffffff;
-  background: linear-gradient(135deg, var(--forest-600), var(--green));
-  border: none;
-  border-radius: 999px;
-  cursor: pointer;
-  box-shadow: var(--shadow);
-  transition: filter 140ms ease-out;
-}
-
-.go-button:hover:not(:disabled) { filter: brightness(1.07); }
-
-.go-button:disabled {
-  background: var(--surface-sunken);
-  color: var(--ink-dim);
-  box-shadow: none;
-  cursor: not-allowed;
-}
-
-/* Permanent, never a tooltip. Spec section 2. */
-.go-note {
-  text-align: center;
-  color: var(--ink-dim);
-  font-size: 0.85rem;
+.wordmark {
+  display: flex;
+  align-items: center;
+  gap: 0.7rem;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: 1.5rem;
+  letter-spacing: 0.32em;
   margin: 0;
 }
 
-.verdict {
-  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
-  font-weight: 600;
-  line-height: 1.45;
-  margin: 0 0 1.75rem;
-  max-width: 60ch;
+.wordmark-sub {
+  font-family: var(--mono);
+  font-size: 0.65rem;
+  font-weight: 400;
+  letter-spacing: 0.22em;
+  color: var(--lum-dim);
+  text-transform: uppercase;
 }
 
-.unavailable {
-  color: var(--warn);
-  background: var(--surface-sunken);
-  border: 1px solid var(--border);
+.masthead-meta {
+  font-size: 0.7rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--lum-dim);
+}
+
+/* --- placard: the world's label primitive ------------------------ */
+
+.placard {
+  display: inline-block;
+  border: 1px solid var(--plate);
   border-radius: var(--radius);
-  padding: 0.9rem 1.1rem;
-  margin-top: 1rem;
+  padding: 0.25rem 0.6rem;
+  font-family: var(--display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lum-dim);
+  background: var(--panel);
 }
 
-.secondary-button {
-  background: var(--surface);
-  color: var(--forest);
-  border: 1.5px solid var(--forest);
-  border-radius: 999px;
-  padding: 0.65rem 1.35rem;
-  cursor: pointer;
-  font-family: inherit;
-  font-size: 0.95rem;
-  font-weight: 700;
-  transition: background 140ms ease-out;
+.section-label {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--radium);
+  margin: 0 0 0.9rem;
 }
 
-.secondary-button:hover:not(:disabled) { background: var(--mint-pale); }
+/* --- panel bay --------------------------------------------------- */
 
-.secondary-button:disabled {
-  color: var(--ink-dim);
-  border-color: var(--border);
-  cursor: not-allowed;
+.bay {
+  display: grid;
+  grid-template-columns: minmax(280px, 340px) 1fr;
+  gap: var(--gap);
+  margin-top: var(--gap);
+  align-items: start;
 }
 
-.explorer { margin-top: 3.5rem; }
+@media (max-width: 900px) {
+  .bay { grid-template-columns: 1fr; }
+}
 
-.explorer h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem; }
+.panel {
+  position: relative;
+  background:
+    linear-gradient(180deg, rgba(255,255,255,0.02), transparent 30%),
+    var(--panel-raised);
+  border: 1px solid var(--hairline);
+  border-radius: 6px;
+  padding: 1.5rem;
+}
 
-.conditions { display: grid; gap: var(--gap); }
+/* Fasteners. Four to a plate, as on the real thing. */
+.panel::before,
+.panel::after {
+  content: '';
+  position: absolute;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4a5157, #16191c 70%);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+.panel::before { top: 10px; left: 10px; }
+.panel::after { top: 10px; right: 10px; }
+
+.panel-screws-bottom { position: relative; }
+.panel-screws-bottom::before,
+.panel-screws-bottom::after {
+  content: '';
+  position: absolute;
+  bottom: -8px;
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: radial-gradient(circle at 35% 35%, #4a5157, #16191c 70%);
+  box-shadow: inset 0 0 0 1px rgba(0,0,0,0.6);
+}
+.panel-screws-bottom::before { left: -4px; }
+.panel-screws-bottom::after { right: -4px; }
+
+/* --- conditions -------------------------------------------------- */
+
+.conditions { display: grid; gap: 1.1rem; }
 
 .condition { display: grid; gap: 0.4rem; }
 
-.condition-q { font-size: 1.05rem; font-weight: 600; }
+.condition-q {
+  font-family: var(--display);
+  font-size: 0.68rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lum-dim);
+}
 
 .condition select {
-  background: var(--surface);
-  color: var(--ink);
-  border: 1px solid var(--border);
-  border-radius: 8px;
-  padding: 0.7rem 0.9rem;
-  font-size: 1rem;
-  font-family: inherit;
+  appearance: none;
+  width: 100%;
+  background: var(--face);
+  color: var(--lum);
+  border: 1px solid var(--plate);
+  border-radius: var(--radius);
+  padding: 0.65rem 2rem 0.65rem 0.75rem;
+  font-family: var(--mono);
+  font-size: 0.9rem;
+  font-variant-numeric: tabular-nums;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--lum-dim) 50%),
+    linear-gradient(135deg, var(--lum-dim) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
 }
 
-.advanced { margin-top: 0.5rem; }
+.condition select:hover { border-color: var(--lum-dim); }
 
-.advanced summary { cursor: pointer; color: var(--ink-dim); }
+.advanced { margin-top: 0.25rem; }
 
-/* No nested cards (DESIGN.md section 5): the gauges sit on the results card,
-   separated by a rule rather than boxed again. */
-.gauges {
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-  gap: clamp(1.5rem, 4vw, 3rem);
+.advanced summary {
+  cursor: pointer;
+  font-family: var(--display);
+  font-size: 0.65rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lum-dim);
 }
 
-.gauge { text-align: center; }
+.advanced p { color: var(--lum-dim); font-size: 0.75rem; margin: 0.6rem 0 0; }
 
-.gauge + .gauge { border-left: 1px solid var(--border); padding-left: clamp(1.5rem, 4vw, 3rem); }
+/* --- engage ------------------------------------------------------ */
 
-@media (max-width: 640px) {
-  .gauge + .gauge {
-    border-left: none;
-    border-top: 1px solid var(--border);
-    padding: 1.5rem 0 0;
-  }
-}
-
-.gauge-title {
-  margin: 0 0 0.25rem;
+.engage {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.7rem;
+  width: 100%;
+  margin-top: 1.4rem;
+  padding: 0.95rem;
+  font-family: var(--display);
   font-size: 0.95rem;
   font-weight: 700;
-  letter-spacing: 0.01em;
+  letter-spacing: 0.26em;
+  color: var(--radium);
+  background: rgba(124,255,158,0.06);
+  border: 1px solid var(--radium);
+  border-radius: var(--radius);
+  cursor: pointer;
+  transition: background 120ms linear;
 }
 
-.gauge-dial { width: 100%; max-width: 260px; }
+.engage:hover:not(:disabled) { background: rgba(124,255,158,0.14); }
 
-.gauge-tick { fill: var(--ink-dim); font-size: 9px; }
-
-.gauge-value {
-  font-size: clamp(2.5rem, 6vw, 3.5rem);
-  font-weight: 800;
-  letter-spacing: -0.03em;
-  line-height: 1;
-  margin: -1.25rem 0 0;
+.engage:disabled {
+  color: var(--lum-dim);
+  border-color: var(--plate);
+  background: transparent;
+  cursor: not-allowed;
 }
 
-.gauge-unit { font-size: 1.1rem; color: var(--ink-dim); font-weight: 600; letter-spacing: 0; }
+.engage-dot {
+  width: 9px; height: 9px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+}
 
-.gauge-label { color: var(--ink-dim); margin: 0.5rem 0 1.25rem; font-size: 0.9rem; }
+.engage:not(:disabled) .engage-dot {
+  background: var(--radium);
+  box-shadow: 0 0 6px rgba(124,255,158,0.8);
+}
 
-.tiles {
+/* Permanent. Never a tooltip: the panel must never read as live. */
+.provenance-note {
+  margin: 0.7rem 0 0;
+  font-size: 0.68rem;
+  line-height: 1.5;
+  color: var(--lum-dim);
+  text-align: center;
+}
+
+.unavailable {
+  margin-top: 0.8rem;
+  border: 1px solid var(--amber);
+  border-radius: var(--radius);
+  padding: 0.6rem 0.7rem;
+  color: var(--amber);
+  font-size: 0.72rem;
+}
+
+/* --- instrument cluster ------------------------------------------ */
+
+.cluster {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.75rem;
-  margin: 0;
-  text-align: left;
+  gap: 1.25rem;
 }
 
-.tile {
-  background: var(--surface-sunken);
-  border-radius: 10px;
-  padding: 0.6rem 0.7rem;
+@media (max-width: 1180px) { .cluster { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 620px)  { .cluster { grid-template-columns: 1fr; } }
+
+.instrument { display: flex; flex-direction: column; align-items: center; }
+
+.dial-face {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 1;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 50% 18%, rgba(255,255,255,0.05), transparent 55%),
+    var(--face);
+  border: 6px solid var(--bezel);
+  box-shadow:
+    0 0 0 1px #000,
+    inset 0 0 22px rgba(0,0,0,0.9),
+    0 6px 18px rgba(0,0,0,0.55);
 }
 
-.tile dt { color: var(--ink-dim); font-size: 0.7rem; font-weight: 600; }
+.dial-face svg { position: absolute; inset: 0; width: 100%; height: 100%; }
 
-.tile dd { margin: 0.1rem 0 0; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+.dial-readout {
+  position: absolute;
+  left: 0; right: 0;
+  bottom: 12%;
+  text-align: center;
+  font-family: var(--display);
+  font-variant-numeric: tabular-nums;
+  pointer-events: none;
+}
+
+.readout-pair {
+  display: flex; justify-content: center; align-items: baseline; gap: 0.4rem;
+  background: var(--face);
+  border: 1px solid var(--hairline);
+  border-radius: 2px;
+  padding: 0.1rem 0.5rem;
+  margin: 0 auto;
+  width: fit-content;
+}
+
+.readout-5 { color: var(--wifi5); font-size: 1.12rem; font-weight: 700; }
+.readout-6 { color: var(--wifi6); font-size: 1.12rem; font-weight: 700; }
+.readout-sep { color: var(--plate); font-size: 0.9rem; }
+
+.readout-unit {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.16em;
+  color: var(--lum-dim);
+  text-transform: uppercase;
+  margin-top: 0.15rem;
+}
+
+.instrument-placard {
+  margin-top: 0.8rem;
+  width: 100%;
+  text-align: center;
+  border: 1px solid var(--plate);
+  border-radius: var(--radius);
+  padding: 0.3rem 0.4rem;
+  font-family: var(--display);
+  font-size: 0.62rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lum);
+  background: var(--panel);
+}
+
+.instrument-sub {
+  margin: 0.4rem 0 0;
+  font-size: 0.66rem;
+  color: var(--lum-dim);
+  text-align: center;
+  line-height: 1.45;
+}
+
+/* --- verdict ----------------------------------------------------- */
+
+.verdict {
+  font-family: var(--display);
+  font-size: clamp(1.05rem, 2vw, 1.4rem);
+  font-weight: 500;
+  line-height: 1.45;
+  letter-spacing: 0.005em;
+  margin: 0 0 1.4rem;
+  max-width: 62ch;
+  color: var(--lum);
+}
+
+.verdict strong { color: var(--radium); font-weight: 700; }
+
+/* --- key --------------------------------------------------------- */
+
+.needle-key {
+  display: flex;
+  gap: 1.5rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+  padding-bottom: 1rem;
+  border-bottom: 1px solid var(--hairline);
+}
+
+.key-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.08em;
+  color: var(--lum-dim);
+  text-transform: uppercase;
+}
+
+.key-swatch { width: 18px; height: 2px; border-radius: 2px; }
+
+/* --- status strip ------------------------------------------------ */
+
+.status-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(190px, 1fr));
+  gap: 1px;
+  margin-top: var(--gap);
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+.status-cell { background: var(--panel-raised); padding: 0.85rem 1rem; }
+
+.status-cell dt {
+  font-family: var(--display);
+  font-size: 0.6rem;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lum-dim);
+}
+
+.status-cell dd {
+  margin: 0.25rem 0 0;
+  font-family: var(--display);
+  font-size: 1.05rem;
+  font-weight: 600;
+  font-variant-numeric: tabular-nums;
+  color: var(--lum);
+}
+
+.status-cell dd.is-green { color: var(--radium); }
+
+/* --- actions ----------------------------------------------------- */
+
+.actions { display: flex; gap: 0.75rem; flex-wrap: wrap; margin-top: var(--gap); }
+
+.btn {
+  font-family: var(--display);
+  font-size: 0.7rem;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--lum);
+  background: transparent;
+  border: 1px solid var(--plate);
+  border-radius: var(--radius);
+  padding: 0.6rem 1.1rem;
+  cursor: pointer;
+  transition: border-color 120ms linear, color 120ms linear;
+}
+
+.btn:hover:not(:disabled) { border-color: var(--lum); }
+
+.btn:disabled { color: var(--plate); border-color: var(--hairline); cursor: not-allowed; }
+
+/* --- provenance stamp -------------------------------------------- */
 
 .provenance {
-  color: var(--ink-dim);
-  font-size: 0.8rem;
-  margin: 1.5rem 0 0;
-  padding-top: 1rem;
-  border-top: 1px solid var(--border);
+  margin: var(--gap) 0 0;
+  padding-top: 0.9rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.7rem;
+  letter-spacing: 0.06em;
+  color: var(--lum-dim);
 }
 
-.result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
+.provenance strong {
+  color: var(--amber);
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+/* --- caution card: the world's amber state, spent on real caveats - */
+
+.caution {
+  margin-top: var(--gap);
+  border: 1px solid var(--amber);
+  border-radius: 4px;
+  padding: 1.1rem 1.25rem;
+  background: rgba(255,176,0,0.04);
+}
+
+.caution-head {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  font-family: var(--display);
+  font-size: 0.68rem;
+  font-weight: 700;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: var(--amber);
+  margin-bottom: 0.75rem;
+}
+
+.caution ul { margin: 0; padding-left: 1.1rem; color: var(--lum-dim); }
+.caution li { margin-bottom: 0.5rem; font-size: 0.76rem; line-height: 1.55; }
+.caution li:last-child { margin-bottom: 0; }
+
+/* --- legend ------------------------------------------------------ */
 
 .legend {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-  gap: 0.75rem;
-  margin: 0 0 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1px;
+  background: var(--hairline);
+  border: 1px solid var(--hairline);
+  border-radius: 4px;
+  overflow: hidden;
+  margin: 0;
 }
 
-.legend dt { font-weight: 600; }
+.legend > div { background: var(--panel-raised); padding: 0.8rem 1rem; }
 
-.legend dd { margin: 0; color: var(--ink-dim); font-size: 0.9rem; }
+.legend dt {
+  font-family: var(--display);
+  font-size: 0.65rem;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--lum);
+}
 
-.caveats { color: var(--ink-dim); padding-left: 1.2rem; }
+.legend dd { margin: 0.2rem 0 0; color: var(--lum-dim); font-size: 0.72rem; }
 
-.caveats li { margin-bottom: 0.5rem; }
+/* --- explorer ---------------------------------------------------- */
+
+.explorer { margin-top: 3.5rem; }
+
+.explorer-head {
+  display: flex;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 1rem;
+  flex-wrap: wrap;
+  margin-bottom: 1.25rem;
+}
+
+.explorer select {
+  appearance: none;
+  background: var(--face);
+  color: var(--lum);
+  border: 1px solid var(--plate);
+  border-radius: var(--radius);
+  padding: 0.55rem 2rem 0.55rem 0.7rem;
+  font-family: var(--mono);
+  font-size: 0.8rem;
+  cursor: pointer;
+  background-image:
+    linear-gradient(45deg, transparent 50%, var(--lum-dim) 50%),
+    linear-gradient(135deg, var(--lum-dim) 50%, transparent 50%);
+  background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
+  background-size: 5px 5px, 5px 5px;
+  background-repeat: no-repeat;
+}
+
+.footer-stamp {
+  margin-top: 2.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--hairline);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--lum-dim);
+  text-transform: uppercase;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; }
+}

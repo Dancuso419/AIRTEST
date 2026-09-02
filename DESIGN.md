@@ -1,133 +1,125 @@
-# DESIGN.md — Lecture Theatre WiFi Simulator
+# DESIGN.md — AIREST
 
-Durable visual decisions for the dashboard. Pinned by two references the user
-supplied: `METER REF.png` (instrument form) and `DASH REF.jpg` (colour and
-surface language).
+Written at finish, from the built world. Replaces the earlier light/green
+system, which shipped as a generic admin template and was rejected.
+
+**World:** a small aircraft's night instrument six-pack. Chosen by the user
+over the roll's assigned Site Survey. Seed key `09b6f6e4`.
 
 ---
 
-## 1. The world
+## 1. Thesis
 
-A measuring instrument, rendered in a calm institutional palette.
+AIREST is an instrument panel, not a dashboard. Six dials, each owning one
+truth, each carrying **both standards on one shared scale** — so the gap
+between the two needles *is* the reading, rather than something the viewer
+reconstructs by comparing separate gauges.
 
-The page has one job: let someone see, in seconds, what two WiFi standards
-deliver to a room full of students. The gauge is not decoration standing in for
-content — it *is* the content, which is the only reason a dial earns its place
-here rather than reading as dashboard costume.
-
-**Light, not dark.** Chosen from the use scene rather than category habit: this
-is demonstrated in a lit room, likely projected, to an examiner or an IT
-manager. Light-on-dark washes out under those conditions. `DASH REF` is light
-and the palette is built for it.
+It refuses the arrangement it previously shipped: white cards on grey, KPI
+tiles, a centred column of stacked form fields.
 
 ## 2. Palette
 
-Taken from `DASH REF.jpg`. Monochromatic green on a warm-neutral ground.
+Taken from the chosen world's quality bar.
 
 | Token | Value | Role |
 |---|---|---|
-| `--bg` | `#F4F6F5` | Page ground |
-| `--surface` | `#FFFFFF` | Cards |
-| `--surface-sunken` | `#EDF1EE` | Wells, inactive tracks |
-| `--border` | `#E1E7E3` | Hairlines |
-| `--ink` | `#16211B` | Primary text, needle |
-| `--ink-dim` | `#5F6F67` | Secondary text, tick labels |
-| `--forest` | `#0F3D26` | **WiFi 6**, primary actions |
-| `--forest-600` | `#1B5E3B` | Button fill, gradient start |
-| `--green` | `#4E9E6E` | **WiFi 5** |
-| `--mint` | `#8FCBA4` | Gauge gradient mid |
-| `--mint-pale` | `#D6E9DE` | Gauge track, tints |
-| `--warn` | `#B45309` | Unavailable and caveat states only |
+| `--panel` | `#0b0d0f` | Panel ground |
+| `--panel-raised` | `#14171a` | Plates |
+| `--face` | `#0f1114` | Instrument faces, inputs, wells |
+| `--bezel` | `#1b1f23` | Dial bezels |
+| `--plate` | `#2a2d31` | Borders, minor ticks |
+| `--hairline` | `#22272c` | Rules, seams |
+| `--lum` | `#f2f5f5` | Luminous white — text, major ticks |
+| `--lum-dim` | `#8b969b` | Secondary text, tick labels |
+| `--radium` | `#7cff9e` | Section labels, engage, WiFi 6 |
+| `--amber` | `#ffb000` | **Caution only** |
+| `--warning` | `#ff3b30` | **Warning only** |
 
-**Standard identity is value, not hue.** WiFi 5 is `--green`, WiFi 6 is
-`--forest`. Value contrast survives colourblindness and print, and it keeps the
-comparison inside the reference palette rather than importing an accent hue that
-would editorialise the result. Charts add line style (solid for WiFi 6, dashed
-for WiFi 5) as a redundant second channel.
+**Amber and red are signals, not decoration.** Amber is spent on exactly one
+thing: the dataset's own caveats. Red is currently unspent. Using either
+ornamentally destroys the only alarm channel the panel has.
 
-`--warn` is reserved for genuinely absent data and dataset caveats. It never
-marks a standard.
+**Standard identity:** WiFi 5 is luminous white, WiFi 6 is radium green. This
+is the world's own needle convention, and it separates by **value as well as
+hue**, so it survives colourblindness and greyscale printing in a
+dissertation.
 
-## 3. The instrument
+## 3. Type
 
-From `METER REF.png`, re-tuned for a light ground.
-
-- **Semicircular arc**, 180°, stroke `16px`, round caps.
-- **Track** in `--mint-pale`; **fill** a gradient running `--mint` → `--forest`
-  along the sweep, so the arc deepens as the value climbs.
-- **Needle** in `--ink` — the reference uses white on dark; on a light ground
-  the needle inverts to near-black or it disappears. A pivot disc in `--surface`
-  with an `--ink` ring sits at the arc's centre.
-- **Tick labels** ringing the outside in `--ink-dim`, at `0.7rem`, marking the
-  scale so the number has a frame of reference. The reference's ticks are what
-  make it read as an instrument rather than a progress ring; they are not
-  optional.
-- **Full scale is 5 Mbps per student** — enough for HD video, so the arc's
-  full sweep means something rather than being arbitrary.
-
-## 4. Type
-
-**Nunito Sans**, self-hosted via `@fontsource-variable/nunito-sans`. The
-reference's face is a rounded humanist sans with a double-storey `a`; Poppins
-(single-storey) is the wrong match. A system fallback stack is a failure here,
-not a fallback.
-
-| Role | Spec |
+| Role | Face |
 |---|---|
-| Page title | 800, `clamp(1.75rem, 4vw, 2.5rem)`, tracking `-0.02em` |
-| Section heading | 700, `1.25rem` |
-| Condition question | 600, `1.05rem` |
-| Gauge value | 800, `clamp(2.5rem, 6vw, 3.5rem)`, tracking `-0.03em` |
-| Body | 400, `1rem`, measure 65–75ch |
-| Tick / meta | 400, `0.75rem` |
+| Display, numerals, placards | **Saira Variable** |
+| Body, data, controls | **JetBrains Mono Variable** |
 
-**Every number uses `font-variant-numeric: tabular-nums`.** Values change on
-re-roll; proportional figures make them jitter, which reads as instability in a
-tool whose subject is measurement.
+Both self-hosted via `@fontsource-variable`.
 
-## 5. Surfaces and depth
+Mono as body text is earned here rather than worn as a costume: this surface
+*is* measurement. Placards and section labels are uppercase Saira at
+0.16–0.26em tracking. Every number carries `font-variant-numeric: tabular-nums`
+— values change on re-seed, and proportional figures jitter.
 
-- Cards: `--surface`, `1px solid --border`, radius `16px`.
-- Shadow: `0 1px 2px rgba(16,33,27,.05), 0 10px 28px rgba(16,33,27,.07)` — real
-  offset plus blur. No zero-offset halos.
-- Buttons: full pill. Primary is `--forest-600` → `--green` at 135°, white text.
-- **No nested cards.** The gauges sit directly on the results card, not in cards
-  of their own.
+## 4. The instrument
+
+- **240° sweep** starting at 210°. The dead zone at the bottom is where a
+  needle parks, so "no data" is visibly distinct from "zero".
+- **21 minor ticks, 3 major.** Major ticks are luminous white and carry a
+  labelled value; the labelled scale is what makes it an instrument rather
+  than a progress ring.
+- **Two needles per dial.** WiFi 5 runs full length in white; WiFi 6 runs
+  14 units shorter in radium with a drop-shadow glow. The length difference is
+  load-bearing: at an exact tie a single-length pair would hide one needle,
+  and "both standards are equal" is itself a finding.
+- **Counterweight tail** of 9 units past the pivot, as on the real thing.
+- **Fixed scales**, never derived from the data: 5 Mbps per student, 100 ms
+  latency (so the study's 50 ms threshold sits mid-dial), 20% loss, 100% for
+  the two percentages, 1.0 for fairness. A self-rescaling dial destroys
+  comparability between runs, which is the whole point.
+- **Readout well** beneath the pivot: `white / green`, bordered, in the sweep's
+  dead zone so it never collides with tick labels.
+
+## 5. Materials
+
+- Panel: `--panel-raised` with a 1px hairline, 6px radius, and a top-edge
+  light gradient.
+- **Fasteners**: 7px radial-gradient discs at plate corners.
+- Dial face: 6px bezel ring, inset shadow for depth, a subtle top highlight
+  reading as anti-reflective glass.
+- Body carries a fine repeating-gradient grain plus one faint radium bloom at
+  the top. Without grain a black page reads as an empty div.
 
 ## 6. Browser surfaces
 
-These ship with defaults belonging to no design system, so they are themed:
-
 ```css
-::selection { background: var(--mint-pale); color: var(--ink); }
-:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
-html { caret-color: var(--forest); scrollbar-color: var(--mint) var(--surface-sunken); }
+color-scheme: dark;                       /* native controls follow the panel */
+::selection { background: rgba(124,255,158,0.25); }
+:focus-visible { outline: 1px solid var(--radium); outline-offset: 3px; }
+html { caret-color: var(--radium); scrollbar-color: var(--plate) var(--panel); }
 ```
+
+Native `<select>` arrows are drawn with CSS gradient triangles rather than
+left at browser default. Recharts' tooltip is themed to the instrument face —
+its default is a white box, which on this ground is white text on white.
 
 ## 7. Motion
 
-**One authored moment:** on GO, the needle sweeps from zero to its value while
-the figure counts up, ~700 ms, exponential ease-out. Both gauges animate
-together, not staggered.
+**One authored moment:** on engage, all twelve needles sweep from zero while
+their readouts count up, ~700 ms, exponential ease-out. Nothing else animates
+on arrival.
 
-Nothing else animates on arrival. No section entrances, no scattered hovers
-beyond a simple state change.
+The sweep presents a value **already known**. It must never be dressed as
+measurement in progress: no progress bar, no spinner, no indeterminate timer.
+This is a product constraint from PRODUCT.md, not a stylistic one.
 
-**The needle sweep is presentation of a value already known.** It must never be
-dressed as measurement in progress: no progress bar, no spinner, no indeterminate
-timer. This is a product constraint from the spec, not a stylistic preference,
-and it is the one place where "make it feel like Speedtest" could quietly become
-a misrepresentation.
-
-Respect `prefers-reduced-motion`: land on the final value immediately.
+`prefers-reduced-motion` lands on final values at first paint and disables all
+transitions.
 
 ## 8. What this world refuses
 
-- Dark theme (wrong for the use scene).
-- A hue outside the green family for either standard.
-- Gradient text; emphasis is weight and size.
-- Emoji or unicode glyphs as icons; any icon is drawn SVG at one stroke weight.
-- Nested cards, or same-size cards used as page structure.
-- A kicker or eyebrow above any heading.
-- Monospace as a costume for "technical". Data uses tabular numerals in the
-  body face.
+- Light theme, white cards, KPI tiles, sidebars — the rejected arrangement.
+- Amber or red for anything but caution and warning.
+- A hue outside white/radium for either standard.
+- Self-rescaling dials.
+- A dial without a labelled scale (that is a progress ring).
+- Emoji or unicode glyphs as icons.
+- Gradient text.
