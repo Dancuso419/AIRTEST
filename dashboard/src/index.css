@@ -32,7 +32,7 @@
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --text: #9ca3af;
+    --text: #e0e0e0;
     --text-h: #f3f4f6;
     --bg: #16171d;
     --border: #2e303a;
@@ -58,7 +58,6 @@ body {
   width: 1126px;
   max-width: 100%;
   margin: 0 auto;
-  text-align: center;
   border-inline: 1px solid var(--border);
   min-height: 100svh;
   display: flex;
@@ -74,7 +73,8 @@ h2 {
 }
 
 h1 {
-  font-size: 56px;
+  font-size: 48px;
+  line-height: 1.25;
   letter-spacing: -1.68px;
   margin: 32px 0;
   @media (max-width: 1024px) {
