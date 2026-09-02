@@ -22,7 +22,10 @@ SLICE = {
     "topology": ["single_ap"],
     "standard": ["wifi5", "wifi6"],
     "traffic": ["video"],
-    "clients": [10, 20, 40],
+    # wifi6 cost knee at 16-20 clients (~N^1.2 below, ~N^3.3 above); 40c would
+    # be ~2h/run x2 runs, turning the smoke slice into a 2+ hour job. 40c
+    # belongs in the full matrix, not here.
+    "clients": [10, 14, 20],
     "seed": [1, 2],
 }
 
