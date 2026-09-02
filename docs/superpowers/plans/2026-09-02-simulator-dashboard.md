@@ -6,9 +6,10 @@
 
 **Architecture:** Pure logic (metric vocabulary, scenario selection, verdict generation) lives in plain `.js` modules that take data as arguments and are unit-tested with Node's built-in test runner. React components stay thin and presentational. `results.json` is unchanged; all available options are derived from it at runtime so the UI lights up as the matrix grows.
 
-**Tech Stack:** Vite 8, React 19, Recharts 3 (already installed), Node 24's built-in `node:test` runner (no new dependencies).
+**Tech Stack:** Vite 8, React 19, Recharts 3 (already installed), Node 24's built-in `node:test` runner, and `@fontsource-variable/nunito-sans` for the self-hosted display face.
 
 **Spec:** `docs/superpowers/specs/2026-09-02-simulator-dashboard-design.md`
+**Visual system:** `DESIGN.md` — pinned by the user's `METER REF.png` (instrument form) and `DASH REF.jpg` (colour and surface language). Read it before Task 3.
 
 ## Global Constraints
 
@@ -21,6 +22,9 @@
 - **Unavailable combinations are shown as unavailable, never silently substituted** with the nearest scenario.
 - **Where the two standards do not differ meaningfully, the verdict says so** rather than manufacturing a contrast.
 - **Latency and jitter are delivered-packets-only** and must carry that caveat; the text comes from `meta.caveats`.
+- **The design is pinned by `DESIGN.md`.** Light theme, forest-green palette, needle instrument. WiFi 5 is `--green` (`#4E9E6E`), WiFi 6 is `--forest` (`#0F3D26`) — distinguished by value, never by an accent hue. Do not substitute your own palette or "improve" the direction.
+- **Every number renders with `font-variant-numeric: tabular-nums`.** Values change on re-roll; proportional figures jitter and read as instability in a measurement tool.
+- **One authored motion moment:** the needle sweep plus count-up on GO, ~700 ms, both gauges together. Nothing else animates on arrival. Honour `prefers-reduced-motion` by landing on the final value.
 - Topology maps to access points: `single_ap` = 1 AP, `multi_ap` = 3 APs.
 - Traffic types map to plain language: `web` = "Browsing the web", `video` = "Streaming video", `bulk` = "Downloading files".
 - All work is under `dashboard/`. Do not modify `data/results.json`, `pipeline/`, or `sim/`.
@@ -540,123 +544,169 @@ git commit -m "feat(dashboard): scenario lookup, availability and trial selectio
 
 This task establishes structure and styling only; the panel and gauges arrive in Tasks 4 and 5. Use simple placeholder markup for them here so the shell is testable on its own.
 
-- [ ] **Step 1: Write the design tokens**
+- [ ] **Step 1: Install the display face**
 
-Create `dashboard/src/theme.css`:
+Run: `cd dashboard && npm install @fontsource-variable/nunito-sans`
+
+`DESIGN.md` pins Nunito Sans — a rounded humanist sans with a double-storey `a`, matching the reference. Poppins is the wrong match (single-storey `a`). A system fallback stack is not acceptable as the display voice.
+
+- [ ] **Step 2: Write the design tokens**
+
+Create `dashboard/src/theme.css`. Values come from `DESIGN.md` sections 2-6 — do not invent alternatives.
 
 ```css
+@import '@fontsource-variable/nunito-sans';
+
 :root {
-  --bg: #0f1115;
-  --surface: #181c23;
-  --surface-raised: #212630;
-  --border: #2c323d;
-  --text: #e8eaed;
-  --text-dim: #9aa3af;
-  --wifi5: #4a9eff;
-  --wifi6: #ff5c5c;
-  --accent: #22c55e;
-  --radius: 12px;
+  /* Palette — DASH REF.jpg. Monochromatic green on a warm-neutral ground. */
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-sunken: #edf1ee;
+  --border: #e1e7e3;
+  --ink: #16211b;
+  --ink-dim: #5f6f67;
+
+  /* Standards are separated by VALUE, not hue. Never swap these for an
+     accent colour: a warm hue on one standard editorialises the result. */
+  --green: #4e9e6e;    /* WiFi 5 */
+  --forest: #0f3d26;   /* WiFi 6, primary actions */
+  --forest-600: #1b5e3b;
+  --mint: #8fcba4;
+  --mint-pale: #d6e9de;
+
+  /* Absent data and dataset caveats only. Never marks a standard. */
+  --warn: #b45309;
+
+  --radius: 16px;
   --gap: 1.25rem;
   --maxw: 1080px;
-  --font: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font: 'Nunito Sans Variable', system-ui, sans-serif;
+  --shadow: 0 1px 2px rgba(16, 33, 27, 0.05), 0 10px 28px rgba(16, 33, 27, 0.07);
 }
 
 * { box-sizing: border-box; }
 
+html {
+  caret-color: var(--forest);
+  scrollbar-color: var(--mint) var(--surface-sunken);
+}
+
 body {
   margin: 0;
   background: var(--bg);
-  color: var(--text);
+  color: var(--ink);
   font-family: var(--font);
-  line-height: 1.5;
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
 }
 
-.shell {
-  max-width: var(--maxw);
-  margin: 0 auto;
-  padding: 2rem 1.5rem 4rem;
-}
+::selection { background: var(--mint-pale); color: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+
+/* Data must not jitter when the seed changes. */
+.num { font-variant-numeric: tabular-nums; }
+
+.shell { max-width: var(--maxw); margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
 
 .page-title {
-  font-size: 2rem;
-  line-height: 1.25;
-  margin: 0 0 0.25rem;
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
 }
 
-.page-sub {
-  color: var(--text-dim);
-  margin: 0 0 2rem;
-}
+.page-sub { color: var(--ink-dim); margin: 0 0 2rem; max-width: 70ch; }
 
 .card {
   background: var(--surface);
   border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1.5rem;
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: var(--shadow);
 }
 
 .go-button {
   display: block;
   width: 100%;
-  max-width: 260px;
-  margin: 1.5rem auto 0.5rem;
-  padding: 1rem;
-  font-size: 1.25rem;
-  font-weight: 700;
-  letter-spacing: 0.08em;
-  color: #06210f;
-  background: var(--accent);
+  max-width: 240px;
+  margin: 2rem auto 0.6rem;
+  padding: 1.05rem;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--forest-600), var(--green));
   border: none;
   border-radius: 999px;
   cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: filter 140ms ease-out;
 }
 
+.go-button:hover:not(:disabled) { filter: brightness(1.07); }
+
 .go-button:disabled {
-  background: var(--border);
-  color: var(--text-dim);
+  background: var(--surface-sunken);
+  color: var(--ink-dim);
+  box-shadow: none;
   cursor: not-allowed;
 }
 
-/* Required by the spec: this line is permanent, never a tooltip. */
+/* Permanent, never a tooltip. Spec section 2. */
 .go-note {
   text-align: center;
-  color: var(--text-dim);
-  font-size: 0.875rem;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
   margin: 0;
 }
 
 .verdict {
-  font-size: 1.35rem;
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 600;
   line-height: 1.45;
-  margin: 0 0 1.5rem;
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
 }
 
 .unavailable {
-  color: var(--text-dim);
-  background: var(--surface-raised);
-  border: 1px dashed var(--border);
+  color: var(--warn);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
   border-radius: var(--radius);
-  padding: 1rem;
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
 }
 
 .secondary-button {
-  background: var(--surface-raised);
-  color: var(--text);
-  border: 1px solid var(--border);
+  background: var(--surface);
+  color: var(--forest);
+  border: 1.5px solid var(--forest);
   border-radius: 999px;
-  padding: 0.6rem 1.2rem;
+  padding: 0.65rem 1.35rem;
   cursor: pointer;
+  font-family: inherit;
   font-size: 0.95rem;
+  font-weight: 700;
+  transition: background 140ms ease-out;
 }
 
-.secondary-button:disabled { color: var(--text-dim); cursor: not-allowed; }
+.secondary-button:hover:not(:disabled) { background: var(--mint-pale); }
 
-.explorer { margin-top: 3rem; }
+.secondary-button:disabled {
+  color: var(--ink-dim);
+  border-color: var(--border);
+  cursor: not-allowed;
+}
 
-.explorer h2 { font-size: 1.25rem; margin-bottom: 0.25rem; }
+.explorer { margin-top: 3.5rem; }
+
+.explorer h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem; }
 ```
 
-- [ ] **Step 2: Import the theme and strip the Vite starter styles**
+- [ ] **Step 3: Import the theme and strip the Vite starter styles**
 
 In `dashboard/src/main.jsx`, add `import './theme.css';` immediately after the existing `import './index.css';`.
 
@@ -666,7 +716,7 @@ Then replace the entire contents of `dashboard/src/index.css` with a single comm
 /* Vite starter styles removed; see theme.css for this app's design tokens. */
 ```
 
-- [ ] **Step 3: Rewrite the app shell**
+- [ ] **Step 4: Rewrite the app shell**
 
 Replace `dashboard/src/App.jsx` entirely:
 
@@ -775,17 +825,17 @@ export default function App() {
 }
 ```
 
-- [ ] **Step 4: Verify the build and the shell**
+- [ ] **Step 5: Verify the build and the shell**
 
 Run: `cd dashboard && npm run build`
 Expected: build succeeds.
 
 Then run `npm run dev`, open the served URL, and confirm: the title renders on one line without overlap, the GO button is enabled, pressing it swaps to the results view showing a verdict sentence, "Change conditions" returns to setup, and the explorer chart still renders below. **Stop the dev server afterwards.**
 
-- [ ] **Step 5: Commit**
+- [ ] **Step 6: Commit**
 
 ```bash
-git add dashboard/src/theme.css dashboard/src/index.css dashboard/src/main.jsx dashboard/src/App.jsx
+git add dashboard/package.json dashboard/package-lock.json dashboard/src/theme.css dashboard/src/index.css dashboard/src/main.jsx dashboard/src/App.jsx
 git commit -m "feat(dashboard): design tokens and two-phase simulator shell"
 ```
 
@@ -894,7 +944,7 @@ Append to `dashboard/src/theme.css`:
 .condition-q { font-size: 1.05rem; font-weight: 600; }
 
 .condition select {
-  background: var(--surface-raised);
+  background: var(--surface);
   color: var(--text);
   border: 1px solid var(--border);
   border-radius: 8px;
@@ -905,7 +955,7 @@ Append to `dashboard/src/theme.css`:
 
 .advanced { margin-top: 0.5rem; }
 
-.advanced summary { cursor: pointer; color: var(--text-dim); }
+.advanced summary { cursor: pointer; color: var(--ink-dim); }
 ```
 
 - [ ] **Step 3: Wire it into the app**
@@ -969,11 +1019,19 @@ import { useEffect, useState } from 'react';
  * NOT a progress indicator and must never be used to imply that a measurement
  * is elapsing. The value is already known before the animation starts.
  */
-export function useCountUp(target, durationMs = 600) {
+export function useCountUp(target, durationMs = 700) {
   const [value, setValue] = useState(target);
 
   useEffect(() => {
     if (typeof target !== 'number' || Number.isNaN(target)) {
+      setValue(target);
+      return undefined;
+    }
+    // DESIGN.md section 7: reduced motion lands on the final value at once.
+    const reduced =
+      typeof matchMedia === 'function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (reduced) {
       setValue(target);
       return undefined;
     }
@@ -1026,31 +1084,77 @@ import { useCountUp } from './useCountUp';
 const HEADLINE = METRICS.find((m) => m.headline);
 const SUPPORTING = ['latency_ms', 'packet_loss_pct', 'airtime_utilization_pct'];
 
-// Per-student speed in Mbps at which the arc reads as full. 5 Mbps comfortably
-// covers HD video, so it is a meaningful ceiling rather than an arbitrary one.
+// Per-student speed at which the dial reads full. 5 Mbps comfortably covers HD
+// video, so the sweep means something rather than being an arbitrary ceiling.
 const FULL_SCALE_MBPS = 5;
 
-function Arc({ value, color }) {
-  const pct = Math.max(0, Math.min(value / FULL_SCALE_MBPS, 1));
-  const r = 70;
-  const circumference = Math.PI * r; // semicircle
+const CX = 100;
+const CY = 100;
+const R = 72;
+const NEEDLE_LEN = 58;
+const SWEEP = Math.PI * R;
+
+// Ticks give the dial a frame of reference. Per DESIGN.md section 3 they are
+// what make this read as an instrument rather than a progress ring.
+const TICKS = [0, 0.25, 0.5, 0.75, 1];
+
+function polar(radius, fraction) {
+  const angle = Math.PI * (1 - fraction); // 180deg at 0, 0deg at full
+  return {
+    x: CX + radius * Math.cos(angle),
+    y: CY - radius * Math.sin(angle),
+  };
+}
+
+function Dial({ value, gradientId, deep }) {
+  const fraction = Math.max(0, Math.min(value / FULL_SCALE_MBPS, 1));
+  const tip = polar(NEEDLE_LEN, fraction);
+  const arc = `M ${CX - R} ${CY} A ${R} ${R} 0 0 1 ${CX + R} ${CY}`;
+
   return (
-    <svg viewBox="0 0 180 100" className="gauge-arc" role="presentation">
+    <svg viewBox="0 0 200 128" className="gauge-dial" role="presentation">
+      <defs>
+        <linearGradient id={gradientId} x1="0" y1="0" x2="1" y2="0">
+          <stop offset="0%" stopColor="var(--mint)" />
+          <stop offset="100%" stopColor={deep} />
+        </linearGradient>
+      </defs>
+
+      <path d={arc} fill="none" stroke="var(--mint-pale)" strokeWidth="16" strokeLinecap="round" />
       <path
-        d="M 20 90 A 70 70 0 0 1 160 90"
+        d={arc}
         fill="none"
-        stroke="var(--border)"
-        strokeWidth="14"
+        stroke={`url(#${gradientId})`}
+        strokeWidth="16"
+        strokeLinecap="round"
+        strokeDasharray={`${SWEEP * fraction} ${SWEEP}`}
+      />
+
+      {TICKS.map((t) => {
+        const p = polar(R + 15, t);
+        return (
+          <text
+            key={t}
+            x={p.x}
+            y={p.y}
+            className="gauge-tick num"
+            textAnchor={t === 0 ? 'start' : t === 1 ? 'end' : 'middle'}
+          >
+            {(t * FULL_SCALE_MBPS).toFixed(t === 0 || t === 1 ? 0 : 2).replace(/\.00$/, '')}
+          </text>
+        );
+      })}
+
+      <line
+        x1={CX}
+        y1={CY}
+        x2={tip.x}
+        y2={tip.y}
+        stroke="var(--ink)"
+        strokeWidth="3.5"
         strokeLinecap="round"
       />
-      <path
-        d="M 20 90 A 70 70 0 0 1 160 90"
-        fill="none"
-        stroke={color}
-        strokeWidth="14"
-        strokeLinecap="round"
-        strokeDasharray={`${circumference * pct} ${circumference}`}
-      />
+      <circle cx={CX} cy={CY} r="7" fill="var(--surface)" stroke="var(--ink)" strokeWidth="3" />
     </svg>
   );
 }
@@ -1058,13 +1162,15 @@ function Arc({ value, color }) {
 function Gauge({ standard, trial }) {
   const raw = trial?.[HEADLINE.key] ?? 0;
   const shown = useCountUp(raw);
-  const color = standard === 'wifi5' ? 'var(--wifi5)' : 'var(--wifi6)';
+  const deep = standard === 'wifi5' ? 'var(--green)' : 'var(--forest)';
 
   return (
     <div className="gauge">
-      <h3 className="gauge-title" style={{ color }}>{STANDARD_LABELS[standard]}</h3>
-      <Arc value={shown} color={color} />
-      <p className="gauge-value">
+      <h3 className="gauge-title" style={{ color: deep }}>
+        {STANDARD_LABELS[standard]}
+      </h3>
+      <Dial value={shown} gradientId={`grad-${standard}`} deep={deep} />
+      <p className="gauge-value num">
         {shown.toFixed(1)}<span className="gauge-unit"> {HEADLINE.unit}</span>
       </p>
       <p className="gauge-label">
@@ -1104,46 +1210,73 @@ export default function ResultGauges({ trial5, trial6 }) {
 Append to `dashboard/src/theme.css`:
 
 ```css
+/* No nested cards (DESIGN.md section 5): the gauges sit on the results card,
+   separated by a rule rather than boxed again. */
 .gauges {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
-  gap: var(--gap);
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
 }
 
-.gauge {
-  background: var(--surface-raised);
-  border: 1px solid var(--border);
-  border-radius: var(--radius);
-  padding: 1.25rem;
-  text-align: center;
+.gauge { text-align: center; }
+
+.gauge + .gauge { border-left: 1px solid var(--border); padding-left: clamp(1.5rem, 4vw, 3rem); }
+
+@media (max-width: 640px) {
+  .gauge + .gauge {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0 0;
+  }
 }
 
-.gauge-title { margin: 0 0 0.5rem; font-size: 1rem; }
+.gauge-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
 
-.gauge-arc { width: 100%; max-width: 220px; }
+.gauge-dial { width: 100%; max-width: 260px; }
 
-.gauge-value { font-size: 3rem; font-weight: 700; margin: -0.5rem 0 0; }
+.gauge-tick { fill: var(--ink-dim); font-size: 9px; }
 
-.gauge-unit { font-size: 1.25rem; color: var(--text-dim); font-weight: 400; }
+.gauge-value {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: -1.25rem 0 0;
+}
 
-.gauge-label { color: var(--text-dim); margin: 0.25rem 0 1rem; font-size: 0.9rem; }
+.gauge-unit { font-size: 1.1rem; color: var(--ink-dim); font-weight: 600; letter-spacing: 0; }
+
+.gauge-label { color: var(--ink-dim); margin: 0.5rem 0 1.25rem; font-size: 0.9rem; }
 
 .tiles {
   display: grid;
   grid-template-columns: repeat(3, 1fr);
-  gap: 0.5rem;
+  gap: 0.75rem;
   margin: 0;
   text-align: left;
 }
 
-.tile dt { color: var(--text-dim); font-size: 0.75rem; }
+.tile {
+  background: var(--surface-sunken);
+  border-radius: 10px;
+  padding: 0.6rem 0.7rem;
+}
 
-.tile dd { margin: 0; font-size: 1rem; font-weight: 600; }
+.tile dt { color: var(--ink-dim); font-size: 0.7rem; font-weight: 600; }
+
+.tile dd { margin: 0.1rem 0 0; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
 
 .provenance {
-  color: var(--text-dim);
-  font-size: 0.85rem;
-  margin: 1rem 0 0;
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+  margin: 1.5rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
 }
 
 .result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
@@ -1257,25 +1390,39 @@ Append to `dashboard/src/theme.css`:
 
 .legend dt { font-weight: 600; }
 
-.legend dd { margin: 0; color: var(--text-dim); font-size: 0.9rem; }
+.legend dd { margin: 0; color: var(--ink-dim); font-size: 0.9rem; }
 
-.caveats { color: var(--text-dim); padding-left: 1.2rem; }
+.caveats { color: var(--ink-dim); padding-left: 1.2rem; }
 
 .caveats li { margin-bottom: 0.5rem; }
 ```
 
-- [ ] **Step 3: Verify the whole page**
+- [ ] **Step 3: Bring the explorer chart into the palette**
+
+`ComparisonChart.jsx` still uses matplotlib's default blue `#1f77b4` and red `#d62728`, which now contradict the design system. In `dashboard/src/ComparisonChart.jsx`, replace those four colour literals so WiFi 5 uses `#4e9e6e` (both the `<Area>` fill and the `<Line>` stroke) and WiFi 6 uses `#0f3d26`.
+
+Then add the redundant second channel `DESIGN.md` section 2 requires, so the two series are distinguishable without relying on colour alone. On the WiFi 5 `<Line>` only, add:
+
+```jsx
+          strokeDasharray="6 4"
+```
+
+WiFi 6 stays solid. Leave the `<Area>` band elements undashed — a dashed fill edge reads as noise.
+
+Also set the axis and grid to the palette rather than Recharts' defaults: give both `<XAxis>` and `<YAxis>` `stroke="#5f6f67"` and `tick={{ fill: '#5f6f67', fontSize: 12 }}`, and change `<CartesianGrid>` to `stroke="#e1e7e3"`.
+
+- [ ] **Step 4: Verify the whole page**
 
 Run: `cd dashboard && npm test` — expect 15 tests passing.
 Run: `cd dashboard && npm run build` — expect success.
 
 Then `npm run dev` and walk the whole flow: set conditions, GO, read the verdict, check the gauges and provenance, run again, change conditions, scroll to the explorer chart, the legend, and the caveats. Confirm the caveats text actually appears (it comes from `results.json`, so an empty list means the parser did not emit it). **Stop the dev server.**
 
-- [ ] **Step 4: Commit**
+- [ ] **Step 5: Commit**
 
 ```bash
-git add dashboard/src/App.jsx dashboard/src/theme.css
-git commit -m "feat(dashboard): metric legend and dataset caveats"
+git add dashboard/src/App.jsx dashboard/src/theme.css dashboard/src/ComparisonChart.jsx
+git commit -m "feat(dashboard): metric legend, dataset caveats, explorer in palette"
 ```
 
 ---
