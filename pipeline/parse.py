@@ -84,23 +84,42 @@ def parse_phy(path):
     return {"airtime_utilization_pct": round(busy / window * 100, 2)}
 
 
-def parse_flowmonitor(path, window_s):
+def parse_meta(path):
+    """Load the per-run <run_id>.meta.json (measurement window, payload size, ...)."""
+    return json.loads(Path(path).read_text())
+
+
+def parse_flowmonitor(path, window_s, payload_bytes):
     """Extract aggregate and per-flow metrics from FlowMonitor XML.
+
+    FlowMonitor's top level has four children: FlowStats, Ipv4FlowClassifier,
+    Ipv6FlowClassifier, FlowProbes. <Flow> elements appear under BOTH
+    FlowStats (real per-flow counters) and Ipv4FlowClassifier (flow-id ->
+    address/port mapping, no counters at all). Only FlowStats/Flow carries
+    txPackets/rxPackets/etc, so we must iterate that subtree specifically --
+    root.iter("Flow") silently picks up the classifier entries too and blows
+    up on their missing attributes.
+
+    Throughput is reported as application-layer goodput (rx_packets *
+    payload_bytes), not FlowMonitor's rxBytes, which includes IP/UDP headers
+    and would make satisfaction_ratio_pct structurally exceed 100%.
 
     FlowMonitor reports delaySum and jitterSum as NS-3 time strings such as
     '+1234567ns'; they are converted to milliseconds per received packet.
     """
     root = ET.parse(path).getroot()
+    flow_stats = root.find("FlowStats")
+    if flow_stats is None:
+        raise ValueError(f"no FlowStats element in {path}")
+
     per_flow_mbps = []
-    total_rx_bytes = 0
     total_tx_packets = 0
     total_lost_packets = 0
     delay_ms_weighted = 0.0
     jitter_ms_weighted = 0.0
     total_rx_packets = 0
 
-    for flow in root.iter("Flow"):
-        rx_bytes = int(flow.get("rxBytes"))
+    for flow in flow_stats.iter("Flow"):
         rx_packets = int(flow.get("rxPackets"))
         tx_packets = int(flow.get("txPackets"))
         lost = int(flow.get("lostPackets"))
@@ -109,8 +128,7 @@ def parse_flowmonitor(path, window_s):
         if tx_packets == 0:
             continue
 
-        per_flow_mbps.append(rx_bytes * 8 / window_s / 1e6)
-        total_rx_bytes += rx_bytes
+        per_flow_mbps.append(rx_packets * payload_bytes * 8 / window_s / 1e6)
         total_tx_packets += tx_packets
         total_lost_packets += lost
         total_rx_packets += rx_packets
@@ -119,7 +137,7 @@ def parse_flowmonitor(path, window_s):
             delay_ms_weighted += _ns_to_ms(flow.get("delaySum"))
             jitter_ms_weighted += _ns_to_ms(flow.get("jitterSum"))
 
-    aggregate_mbps = total_rx_bytes * 8 / window_s / 1e6
+    aggregate_mbps = total_rx_packets * payload_bytes * 8 / window_s / 1e6
     loss_pct = (total_lost_packets / total_tx_packets * 100
                 if total_tx_packets else 0.0)
     latency_ms = (delay_ms_weighted / total_rx_packets
@@ -217,9 +235,16 @@ def build_results(raw_dir, expected_trials=2):
             warnings.append(f"missing PHY companion for {run_id}")
             continue
 
+        meta_path = raw_dir / f"{run_id}.meta.json"
+        if not meta_path.exists():
+            warnings.append(f"missing meta companion for {run_id}")
+            continue
+
         phy = parse_phy(phy_path)
-        window = json.loads(phy_path.read_text())["measured_window_s"]
-        flow = parse_flowmonitor(xml_path, window)
+        meta = parse_meta(meta_path)
+        window = meta["measurementWindowSec"]
+        payload_bytes = meta["payloadBytes"]
+        flow = parse_flowmonitor(xml_path, window, payload_bytes)
 
         offered = offered_load_mbps(fields["traffic_type"], fields["clients"])
         delivered = flow["aggregate_throughput_mbps"]

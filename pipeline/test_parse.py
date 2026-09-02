@@ -1,3 +1,4 @@
+import json
 import math
 import pytest
 from parse import (
@@ -5,8 +6,100 @@ from parse import (
     check_reconciliation,
     jains_fairness,
     offered_load_mbps,
+    parse_flowmonitor,
+    parse_meta,
     parse_run_id,
 )
+
+
+FLOWMONITOR_XML = """<?xml version="1.0" ?>
+<FlowMonitor>
+  <FlowStats>
+    <Flow flowId="1" timeFirstTxPacket="+0.0ns" timeFirstRxPacket="+0.0ns"
+          timeLastTxPacket="+0.0ns" timeLastRxPacket="+0.0ns"
+          delaySum="+2000000.0ns" jitterSum="+500000.0ns" lastDelay="+0.0ns"
+          txBytes="122800" rxBytes="122800" txPackets="100" rxPackets="100"
+          lostPackets="0" timesForwarded="0" />
+    <Flow flowId="2" timeFirstTxPacket="+0.0ns" timeFirstRxPacket="+0.0ns"
+          timeLastTxPacket="+0.0ns" timeLastRxPacket="+0.0ns"
+          delaySum="+1000000.0ns" jitterSum="+250000.0ns" lastDelay="+0.0ns"
+          txBytes="61400" rxBytes="49120" txPackets="50" rxPackets="40"
+          lostPackets="10" timesForwarded="0" />
+  </FlowStats>
+  <Ipv4FlowClassifier>
+    <Flow flowId="1" sourceAddress="10.0.0.1" destinationAddress="10.0.0.2"
+          sourcePort="49153" destinationPort="9" protocol="17" />
+    <Flow flowId="2" sourceAddress="10.0.0.3" destinationAddress="10.0.0.2"
+          sourcePort="49154" destinationPort="9" protocol="17" />
+  </Ipv4FlowClassifier>
+  <Ipv6FlowClassifier />
+  <FlowProbes />
+</FlowMonitor>
+"""
+
+FLOWMONITOR_XML_NO_STATS = """<?xml version="1.0" ?>
+<FlowMonitor>
+  <Ipv4FlowClassifier>
+    <Flow flowId="1" sourceAddress="10.0.0.1" destinationAddress="10.0.0.2"
+          sourcePort="49153" destinationPort="9" protocol="17" />
+  </Ipv4FlowClassifier>
+</FlowMonitor>
+"""
+
+
+def test_flowstats_flows_counted_classifier_flows_ignored(tmp_path):
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(FLOWMONITOR_XML)
+
+    result = parse_flowmonitor(xml_path, window_s=3.0, payload_bytes=1200)
+
+    # Two real flows from FlowStats, not four (classifier duplicates ignored)
+    # and no TypeError from the classifier's missing counter attributes.
+    assert len(result["per_flow_throughput_mbps"]) == 2
+
+
+def test_goodput_uses_rx_packets_times_payload_not_rx_bytes(tmp_path):
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(FLOWMONITOR_XML)
+
+    result = parse_flowmonitor(xml_path, window_s=3.0, payload_bytes=1200)
+
+    # flow 1: 100 rxPackets, rxBytes=122800 (1228 B/pkt with IP+UDP headers)
+    # goodput must come from 100 * 1200 * 8 / 3 / 1e6, NOT 122800 * 8 / 3 / 1e6
+    goodput_correct = 100 * 1200 * 8 / 3.0 / 1e6
+    goodput_from_rxbytes = 122800 * 8 / 3.0 / 1e6
+    assert goodput_correct != pytest.approx(goodput_from_rxbytes)
+    assert result["per_flow_throughput_mbps"][0] == pytest.approx(
+        goodput_correct, rel=1e-3)
+
+    total_rx_packets = 100 + 40
+    expected_aggregate = total_rx_packets * 1200 * 8 / 3.0 / 1e6
+    assert result["aggregate_throughput_mbps"] == pytest.approx(
+        expected_aggregate, rel=1e-3)
+
+
+def test_missing_flowstats_element_reports_cleanly(tmp_path):
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(FLOWMONITOR_XML_NO_STATS)
+
+    with pytest.raises(ValueError):
+        parse_flowmonitor(xml_path, window_s=3.0, payload_bytes=1200)
+
+
+def test_parse_meta_returns_expected_fields(tmp_path):
+    meta_path = tmp_path / "run.meta.json"
+    meta_path.write_text(json.dumps({
+        "standard": "wifi6", "clients": 10, "appStartSec": 2,
+        "appStopSec": 5, "measurementWindowSec": 3,
+        "offeredLoadMbps": 30, "payloadBytes": 1200,
+    }))
+
+    meta = parse_meta(meta_path)
+
+    assert meta["standard"] == "wifi6"
+    assert meta["clients"] == 10
+    assert meta["measurementWindowSec"] == 3
+    assert meta["payloadBytes"] == 1200
 
 
 def test_run_id_round_trips_all_fields():
