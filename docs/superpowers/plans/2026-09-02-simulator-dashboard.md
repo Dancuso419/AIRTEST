@@ -71,10 +71,12 @@ Pure logic takes data as arguments and never imports `results.json`, so tests us
 In `dashboard/package.json`, add to `"scripts"`:
 
 ```json
-    "test": "node --test src/",
+    "test": "node --test \"src/*.test.js\"",
 ```
 
-Node 24 ships a test runner; no dependency is added.
+Node 24 ships a test runner; no dependency is added. Use the glob form exactly
+as written: `node --test src/` (a bare directory argument) fails with
+MODULE_NOT_FOUND on Node 24 for Windows, while the glob resolves correctly.
 
 - [ ] **Step 2: Write the failing verdict tests**
 
