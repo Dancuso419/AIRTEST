@@ -59,12 +59,12 @@ export const METRICS = [
     unit: '0-1',
     betterWhen: 'higher',
   },
+  // Lower airtime for the same delivered throughput is the WiFi 6
+  // efficiency advantage this study exists to measure.
   {
     key: 'airtime_utilization_pct',
     label: 'Airtime utilization',
     plainLabel: 'Airwave usage',
-    // Lower airtime for the same delivered throughput is the WiFi 6
-    // efficiency advantage this study exists to measure.
     explanation: 'how congested the channel is',
     unit: '%',
     betterWhen: 'lower',

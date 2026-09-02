@@ -67,3 +67,25 @@ test('does not divide by zero when both are zero', () => {
   assert.ok(typeof s === 'string' && s.length > 0);
   assert.doesNotMatch(s, /NaN|Infinity/);
 });
+
+test('does not divide by zero when only WiFi 5 is zero', () => {
+  const s = buildVerdict({
+    wifi5: scenario('wifi5', 0),
+    wifi6: scenario('wifi6', 2.0),
+    clients: 80,
+    trafficType: 'video',
+  });
+  assert.doesNotMatch(s, /NaN|Infinity/);
+  assert.doesNotMatch(s, /%/);
+});
+
+test('does not divide by zero when only WiFi 6 is zero', () => {
+  const s = buildVerdict({
+    wifi5: scenario('wifi5', 2.0),
+    wifi6: scenario('wifi6', 0),
+    clients: 80,
+    trafficType: 'video',
+  });
+  assert.doesNotMatch(s, /NaN|Infinity/);
+  assert.doesNotMatch(s, /%/);
+});

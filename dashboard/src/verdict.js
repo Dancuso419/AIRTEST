@@ -38,6 +38,14 @@ export function buildVerdict({ wifi5, wifi6, clients, trafficType }) {
   const lead = leaderIsSix ? b : a;
   const trail = leaderIsSix ? a : b;
   const other = leaderIsSix ? 'WiFi 5' : 'WiFi 6';
+
+  if (trail === 0) {
+    return (
+      `${setting}, ${other} delivered no usable throughput while ${leader} ` +
+      `gave each student ${lead.toFixed(1)} Mbps.`
+    );
+  }
+
   const pct = Math.round(((lead - trail) / trail) * 100);
 
   return (
