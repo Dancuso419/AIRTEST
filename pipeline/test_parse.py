@@ -58,6 +58,30 @@ def test_flowstats_flows_counted_classifier_flows_ignored(tmp_path):
     assert len(result["per_flow_throughput_mbps"]) == 2
 
 
+def test_loss_counts_undelivered_packets_even_when_lostpackets_attr_is_zero(tmp_path):
+    # Real NS-3 output: a packet dropped/still-in-flight at the end of the
+    # measurement window leaves lostPackets=0 (no later packet revealed the
+    # sequence gap) even though txPackets > rxPackets. Loss must come from
+    # tx - rx, not the lostPackets attribute.
+    xml = """<?xml version="1.0" ?>
+<FlowMonitor>
+  <FlowStats>
+    <Flow flowId="1" timeFirstTxPacket="+0.0ns" timeFirstRxPacket="+0.0ns"
+          timeLastTxPacket="+0.0ns" timeLastRxPacket="+0.0ns"
+          delaySum="+0.0ns" jitterSum="+0.0ns" lastDelay="+0.0ns"
+          txBytes="1150636" rxBytes="769956" txPackets="937" rxPackets="627"
+          lostPackets="0" timesForwarded="0" />
+  </FlowStats>
+</FlowMonitor>
+"""
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(xml)
+
+    result = parse_flowmonitor(xml_path, window_s=3.0, payload_bytes=1200)
+
+    assert result["packet_loss_pct"] == round((937 - 627) / 937 * 100, 3)
+
+
 def test_goodput_uses_rx_packets_times_payload_not_rx_bytes(tmp_path):
     xml_path = tmp_path / "run.xml"
     xml_path.write_text(FLOWMONITOR_XML)

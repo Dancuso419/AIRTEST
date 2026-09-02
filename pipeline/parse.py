@@ -106,6 +106,17 @@ def parse_flowmonitor(path, window_s, payload_bytes):
 
     FlowMonitor reports delaySum and jitterSum as NS-3 time strings such as
     '+1234567ns'; they are converted to milliseconds per received packet.
+
+    Loss is computed as txPackets - rxPackets, not the <Flow> element's
+    lostPackets attribute. FlowMonitor only increments lostPackets when it
+    detects a gap in received sequence numbers (i.e. a later packet arrives
+    proving an earlier one was skipped); a packet that is simply never
+    delivered by the end of the measurement window -- dropped in the queue,
+    or still in flight -- leaves no later packet to reveal the gap, so it is
+    silently absent from both rxPackets and lostPackets. Observed on real
+    NS-3 output: flowId 3 of single_ap_wifi5_video_c10_s1 has txPackets=937,
+    rxPackets=627, lostPackets=0 -- 310 packets genuinely undelivered but
+    unreported by lostPackets.
     """
     root = ET.parse(path).getroot()
     flow_stats = root.find("FlowStats")
@@ -114,7 +125,6 @@ def parse_flowmonitor(path, window_s, payload_bytes):
 
     per_flow_mbps = []
     total_tx_packets = 0
-    total_lost_packets = 0
     delay_ms_weighted = 0.0
     jitter_ms_weighted = 0.0
     total_rx_packets = 0
@@ -122,7 +132,6 @@ def parse_flowmonitor(path, window_s, payload_bytes):
     for flow in flow_stats.iter("Flow"):
         rx_packets = int(flow.get("rxPackets"))
         tx_packets = int(flow.get("txPackets"))
-        lost = int(flow.get("lostPackets"))
 
         # Ignore control/ARP flows that carried no application payload.
         if tx_packets == 0:
@@ -130,7 +139,6 @@ def parse_flowmonitor(path, window_s, payload_bytes):
 
         per_flow_mbps.append(rx_packets * payload_bytes * 8 / window_s / 1e6)
         total_tx_packets += tx_packets
-        total_lost_packets += lost
         total_rx_packets += rx_packets
 
         if rx_packets > 0:
@@ -138,7 +146,7 @@ def parse_flowmonitor(path, window_s, payload_bytes):
             jitter_ms_weighted += _ns_to_ms(flow.get("jitterSum"))
 
     aggregate_mbps = total_rx_packets * payload_bytes * 8 / window_s / 1e6
-    loss_pct = (total_lost_packets / total_tx_packets * 100
+    loss_pct = ((total_tx_packets - total_rx_packets) / total_tx_packets * 100
                 if total_tx_packets else 0.0)
     latency_ms = (delay_ms_weighted / total_rx_packets
                   if total_rx_packets else 0.0)
