@@ -6,7 +6,15 @@ import { useEffect, useState } from 'react';
  * is elapsing. The value is already known before the animation starts.
  */
 export function useCountUp(target, durationMs = 700) {
-  const [value, setValue] = useState(target);
+  // Lazy initial state avoids a one-frame flash of the final value: start at
+  // 0 for the animated path, or at the target immediately for reduced motion.
+  const [value, setValue] = useState(() => {
+    if (typeof target !== 'number' || Number.isNaN(target)) return target;
+    const reduced =
+      typeof matchMedia === 'function' &&
+      matchMedia('(prefers-reduced-motion: reduce)').matches;
+    return reduced ? target : 0;
+  });
 
   useEffect(() => {
     if (typeof target !== 'number' || Number.isNaN(target)) {
