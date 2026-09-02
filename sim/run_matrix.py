@@ -54,7 +54,12 @@ def execute(job):
     if xml_path.exists() and phy_path.exists() and meta_path.exists():
         return {"run_id": rid, "status": "skipped", "seconds": 0.0}
 
-    aps = 3 if job["topology"] == "multi_ap" else 1
+    if job["topology"] == "multi_ap":
+        aps = 3
+    elif job["topology"] == "single_ap":
+        aps = 1
+    else:
+        raise ValueError(f"unrecognised topology: {job['topology']!r}")
     env = dict(os.environ)
     env["LD_LIBRARY_PATH"] = str(NS3_DIR / "build" / "lib")
 
@@ -80,6 +85,12 @@ def execute(job):
     except subprocess.TimeoutExpired:
         return {"run_id": rid, "status": "timeout",
                 "seconds": time.monotonic() - started}
+    except Exception as exc:
+        # A crash here (missing/unexecutable binary, OSError under
+        # resource pressure, ...) must not kill the pool -- record it
+        # like any other failed run so the manifest still gets written.
+        return {"run_id": rid, "status": "crashed",
+                "seconds": time.monotonic() - started, "error": repr(exc)}
 
     elapsed = time.monotonic() - started
     if proc.returncode != 0:
@@ -96,7 +107,7 @@ def main():
     ap = argparse.ArgumentParser()
     ap.add_argument("--outdir", default=str(Path.home() / "wifi-sim" / "raw"))
     # Default 4, not more: a wifi6 20-client run measured 28,377s on a
-    # shared 8-core box vs ~450s idle (~63x penalty). Oversubscribing this
+    # shared 8-core box vs ~600s idle (~47x penalty). Oversubscribing this
     # box with memory-hungry Spectrum-PHY sims is catastrophically worse
     # than linear slowdown -- do not raise this back up.
     ap.add_argument("--workers", type=int, default=4)
@@ -133,12 +144,24 @@ def main():
                    not in ("ok", "skipped")],
         "runs": results,
     }
-    (outdir / "_manifest.json").write_text(json.dumps(manifest, indent=2))
+    manifest_text = json.dumps(manifest, indent=2)
+    try:
+        (outdir / "_manifest.json").write_text(manifest_text)
+    except OSError as exc:
+        # Writing the manifest failing must not discard the results --
+        # print them so they survive in the log.
+        print(f"\nWARNING: could not write _manifest.json: {exc!r}")
+        print(manifest_text)
+
+    if slice_ != SLICE:
+        print("\nNOTE: --clients/--standard override in effect; the "
+              "extrapolation below is based only on the jobs actually run, "
+              "not the full SLICE.")
 
     ok_times = [r["seconds"] for r in results if r["status"] == "ok"]
     if ok_times:
         mean_s = sum(ok_times) / len(ok_times)
-        total_jobs = len(list(combinations(SLICE)))
+        total_jobs = len(jobs)
         print(f"\nmean run time: {mean_s:.1f}s")
         print(f"extrapolated {total_jobs}-run matrix at {args.workers} "
               f"workers: {total_jobs * mean_s / args.workers / 3600:.1f} hours")
