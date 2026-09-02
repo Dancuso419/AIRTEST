@@ -1,17 +1,81 @@
-// Every metric carries its unit and its direction, so charts can always be
-// labelled correctly and "higher is better" is never assumed.
+// Each metric carries a technical label (for the explorer chart), a plain
+// label and explanation (for the results view), its unit, and its direction.
+// Keys must match results.json exactly and must never be renamed here.
 export const METRICS = [
-  { key: 'aggregate_throughput_mbps', label: 'Aggregate throughput', unit: 'Mbps', betterWhen: 'higher' },
-  { key: 'per_user_throughput_mbps', label: 'Per-user throughput', unit: 'Mbps', betterWhen: 'higher' },
-  { key: 'latency_ms', label: 'Latency (delivered packets)', unit: 'ms', betterWhen: 'lower' },
-  { key: 'jitter_ms', label: 'Jitter (delivered packets)', unit: 'ms', betterWhen: 'lower' },
-  { key: 'packet_loss_pct', label: 'Packet loss', unit: '%', betterWhen: 'lower' },
-  { key: 'satisfaction_ratio_pct', label: 'Offered-load satisfaction', unit: '%', betterWhen: 'higher' },
-  { key: 'fairness_index', label: "Jain's fairness index", unit: '0-1', betterWhen: 'higher' },
-  // Lower airtime for the same delivered throughput is the WiFi 6 efficiency
-  // advantage this study is looking for, so lower is better here.
-  { key: 'airtime_utilization_pct', label: 'Airtime utilization', unit: '%', betterWhen: 'lower' },
+  {
+    key: 'per_user_throughput_mbps',
+    label: 'Per-user throughput',
+    plainLabel: 'Speed per student',
+    explanation: 'what one person actually gets',
+    unit: 'Mbps',
+    betterWhen: 'higher',
+    headline: true,
+  },
+  {
+    key: 'aggregate_throughput_mbps',
+    label: 'Aggregate throughput',
+    plainLabel: 'Total speed',
+    explanation: 'the whole room combined',
+    unit: 'Mbps',
+    betterWhen: 'higher',
+  },
+  {
+    key: 'latency_ms',
+    label: 'Latency (delivered packets)',
+    plainLabel: 'Lag',
+    explanation: 'delay before things respond',
+    unit: 'ms',
+    betterWhen: 'lower',
+  },
+  {
+    key: 'jitter_ms',
+    label: 'Jitter (delivered packets)',
+    plainLabel: 'Jitter',
+    explanation: 'how much the delay varies',
+    unit: 'ms',
+    betterWhen: 'lower',
+  },
+  {
+    key: 'packet_loss_pct',
+    label: 'Packet loss',
+    plainLabel: 'Data lost',
+    explanation: 'what never arrived',
+    unit: '%',
+    betterWhen: 'lower',
+  },
+  {
+    key: 'satisfaction_ratio_pct',
+    label: 'Offered-load satisfaction',
+    plainLabel: 'Demand met',
+    explanation: 'share of what was asked for',
+    unit: '%',
+    betterWhen: 'higher',
+  },
+  {
+    key: 'fairness_index',
+    label: "Jain's fairness index",
+    plainLabel: 'Fairness',
+    explanation: 'does everyone get an equal share',
+    unit: '0-1',
+    betterWhen: 'higher',
+  },
+  {
+    key: 'airtime_utilization_pct',
+    label: 'Airtime utilization',
+    plainLabel: 'Airwave usage',
+    // Lower airtime for the same delivered throughput is the WiFi 6
+    // efficiency advantage this study exists to measure.
+    explanation: 'how congested the channel is',
+    unit: '%',
+    betterWhen: 'lower',
+  },
 ];
+
+export const TRAFFIC_LABELS = {
+  web: 'Browsing the web',
+  video: 'Streaming video',
+  bulk: 'Downloading files',
+};
 
 export const STANDARD_LABELS = {
   wifi5: 'WiFi 5 (802.11ac)',
