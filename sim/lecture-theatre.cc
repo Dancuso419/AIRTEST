@@ -64,8 +64,10 @@ PhyStateTrace(std::string context, Time start, Time duration, WifiPhyState state
         g_apPhy.idle += counted;
         break;
     default:
-        // SLEEP / OFF: never entered by this scenario.
-        break;
+        // SLEEP / OFF are never entered by this scenario. Silently dropping
+        // them would surface later as an unexplained shortfall against
+        // measured_window_s rather than as an error.
+        NS_FATAL_ERROR("Unhandled WifiPhyState in PhyStateTrace: " << state);
     }
 }
 
@@ -79,6 +81,16 @@ main(int argc, char* argv[])
     uint32_t seed = 1;
     double duration = 20.0;
     std::string out = "run";
+
+    // DL MU PPDUs need an explicit ack sequence type. Two ordering constraints
+    // apply and both are load-bearing: it must precede the first wifi.Install
+    // (the ack manager reads the default at construction), and it must precede
+    // cmd.Parse so an explicit --ns3::WifiDefaultAckManager::... on the command
+    // line still wins. Set unconditionally: wifi5 never emits DL MU PPDUs, so
+    // this attribute is never consulted there.
+    // AGGR-MU-BAR is the sequence wifi-he-network.cc uses for DL OFDMA.
+    Config::SetDefault("ns3::WifiDefaultAckManager::DlMuAckSequenceType",
+                       EnumValue(WifiAcknowledgment::DL_MU_AGGREGATE_TF));
 
     CommandLine cmd(__FILE__);
     cmd.AddValue("standard", "wifi5 (802.11ac) or wifi6 (802.11ax)", standard);
@@ -103,15 +115,6 @@ main(int argc, char* argv[])
     {
         NS_FATAL_ERROR("--aps " << aps << " is not implemented yet; "
                        << "only single-AP topology is available in the current slice.");
-    }
-
-    // DL MU PPDUs need an explicit ack sequence type, set before any device is
-    // installed because the ack manager reads the default at construction.
-    // AGGR-MU-BAR is the sequence wifi-he-network.cc uses for DL OFDMA.
-    if (standard == "wifi6")
-    {
-        Config::SetDefault("ns3::WifiDefaultAckManager::DlMuAckSequenceType",
-                           EnumValue(WifiAcknowledgment::DL_MU_AGGREGATE_TF));
     }
 
     // Per-trial randomisation. Seed is fixed; the run number varies per trial,
@@ -266,27 +269,62 @@ main(int argc, char* argv[])
     Config::Connect("/NodeList/0/DeviceList/0/$ns3::WifiNetDevice/Phy/State/State",
                     MakeCallback(&PhyStateTrace));
 
-    Simulator::Stop(Seconds(duration + 1.0));
+    // Stop at exactly `duration`, not duration + 1.0. The offered-traffic
+    // window, the FlowMonitor accounting window and the PHY accounting window
+    // must be the same interval [appStart, duration]. A drain tail would let
+    // FlowMonitor keep counting rxBytes for backlog leaving the AP queue after
+    // the sources stopped, inflating delivered throughput above offered load —
+    // and worse, inflating it *with* density, since the queue is deeper at high
+    // client counts. Packets still in flight at cutoff now count as
+    // undelivered, which is the honest reading for a fixed measurement period
+    // and is symmetric across both standards.
+    Simulator::Stop(Seconds(duration));
     Simulator::Run();
 
     monitor->CheckForLostPackets();
+
+    // FlowMonitor::SerializeToXmlFile does not check that its ofstream opened,
+    // so a bad --out directory would exit 0 with no artifacts and the batch
+    // runner would record a successful run. Probe the path first.
+    {
+        std::ofstream xmlProbe(out + ".xml");
+        if (!xmlProbe.is_open())
+        {
+            NS_FATAL_ERROR("Cannot open " << out << ".xml for writing; check --out");
+        }
+    }
     monitor->SerializeToXmlFile(out + ".xml", true, true);
 
     // The measurement window is a real quantity, not an assumed
     // "duration - appStart": emit the actual app start/stop and offered load so
     // the parser computes throughput and satisfaction ratio from real values.
     std::ofstream meta(out + ".meta.json");
+    if (!meta.is_open())
+    {
+        NS_FATAL_ERROR("Cannot open " << out << ".meta.json for writing; check --out");
+    }
     meta << "{\n"
          << "  \"standard\": \"" << standard << "\",\n"
          << "  \"clients\": " << clients << ",\n"
          << "  \"appStartSec\": " << appStart << ",\n"
          << "  \"appStopSec\": " << duration << ",\n"
          << "  \"measurementWindowSec\": " << (duration - appStart) << ",\n"
-         << "  \"offeredLoadMbps\": " << (perClientMbps * clients) << "\n"
+         << "  \"offeredLoadMbps\": " << (perClientMbps * clients) << ",\n"
+         // offeredLoadMbps is an application-layer payload rate, but
+         // FlowMonitor's rxBytes includes the 28-byte IP+UDP header per packet.
+         // Comparing the two directly reads 102% of offered load at zero actual
+         // over-delivery. Emit the payload size so the parser can convert
+         // rxBytes to payload bytes (rxPackets * payloadBytes) and compare like
+         // with like.
+         << "  \"payloadBytes\": " << payloadBytes << "\n"
          << "}\n";
     meta.close();
 
     std::ofstream phyOut(out + ".phy.json");
+    if (!phyOut.is_open())
+    {
+        NS_FATAL_ERROR("Cannot open " << out << ".phy.json for writing; check --out");
+    }
     phyOut << std::fixed << std::setprecision(6)
            << "{\n"
            << "  \"ap_tx_s\": " << g_apPhy.tx << ",\n"
