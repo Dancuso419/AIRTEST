@@ -123,6 +123,30 @@ export default function App() {
           metric={METRICS.find((m) => m.key === explorerMetricKey)}
         />
       </section>
+
+      <section className="explorer">
+        <h2>What these numbers mean</h2>
+        <dl className="legend">
+          {METRICS.map((m) => (
+            <div key={m.key}>
+              <dt>{m.plainLabel}</dt>
+              <dd>{m.explanation} ({m.unit})</dd>
+            </div>
+          ))}
+        </dl>
+
+        <h2>Caveats from this dataset</h2>
+        <ul className="caveats">
+          {(results.meta.caveats ?? []).map((c) => (
+            <li key={c}>{c}</li>
+          ))}
+        </ul>
+        <p className="go-note">
+          Generated {results.meta.generated_utc ?? 'unknown'} · measurement
+          window {results.meta.measurement_window_s ?? '?'} s · NS-3{' '}
+          {results.meta.ns3_version ?? '?'}
+        </p>
+      </section>
     </main>
   );
 }
