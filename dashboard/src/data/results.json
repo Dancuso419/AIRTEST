@@ -1,0 +1,438 @@
+{
+  "meta": {
+    "latency_threshold_ms": 50.0,
+    "latency_sensitivity_ms": [
+      30.0,
+      100.0
+    ],
+    "packet_loss_threshold_pct": 5.0,
+    "thresholds_are_study_parameters": true,
+    "energy_efficiency_included": false,
+    "energy_efficiency_note": "Omitted: TWT is not implemented in the NS-3 version used. See docs/phase0-verification.md.",
+    "warnings": []
+  },
+  "scenarios": [
+    {
+      "topology": "single_ap",
+      "standard": "wifi5",
+      "clients": 10,
+      "traffic_type": "video",
+      "offered_load_mbps": 30.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 27.984,
+          "per_user_throughput_mbps": 2.7984,
+          "latency_ms": 1.737,
+          "jitter_ms": 0.384,
+          "packet_loss_pct": 6.67,
+          "satisfaction_ratio_pct": 93.28,
+          "fairness_index": 0.9803,
+          "airtime_utilization_pct": 26.43
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 29.965,
+          "per_user_throughput_mbps": 2.9965,
+          "latency_ms": 1.125,
+          "jitter_ms": 0.162,
+          "packet_loss_pct": 0.064,
+          "satisfaction_ratio_pct": 99.88,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 28.26
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 28.974,
+          "std": 1.401
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.897,
+          "std": 0.14
+        },
+        "latency_ms": {
+          "mean": 1.431,
+          "std": 0.433
+        },
+        "jitter_ms": {
+          "mean": 0.273,
+          "std": 0.157
+        },
+        "packet_loss_pct": {
+          "mean": 3.367,
+          "std": 4.671
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 96.58,
+          "std": 4.667
+        },
+        "fairness_index": {
+          "mean": 0.99,
+          "std": 0.014
+        },
+        "airtime_utilization_pct": {
+          "mean": 27.345,
+          "std": 1.294
+        }
+      }
+    },
+    {
+      "topology": "single_ap",
+      "standard": "wifi5",
+      "clients": 14,
+      "traffic_type": "video",
+      "offered_load_mbps": 42.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 41.92,
+          "per_user_throughput_mbps": 2.9943,
+          "latency_ms": 1.643,
+          "jitter_ms": 0.327,
+          "packet_loss_pct": 0.137,
+          "satisfaction_ratio_pct": 99.81,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 39.02
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 41.914,
+          "per_user_throughput_mbps": 2.9939,
+          "latency_ms": 1.66,
+          "jitter_ms": 0.344,
+          "packet_loss_pct": 0.152,
+          "satisfaction_ratio_pct": 99.8,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 39.07
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 41.917,
+          "std": 0.004
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.994,
+          "std": 0.0
+        },
+        "latency_ms": {
+          "mean": 1.651,
+          "std": 0.012
+        },
+        "jitter_ms": {
+          "mean": 0.336,
+          "std": 0.012
+        },
+        "packet_loss_pct": {
+          "mean": 0.145,
+          "std": 0.011
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 99.805,
+          "std": 0.007
+        },
+        "fairness_index": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "airtime_utilization_pct": {
+          "mean": 39.045,
+          "std": 0.035
+        }
+      }
+    },
+    {
+      "topology": "single_ap",
+      "standard": "wifi5",
+      "clients": 20,
+      "traffic_type": "video",
+      "offered_load_mbps": 60.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 58.842,
+          "per_user_throughput_mbps": 2.9421,
+          "latency_ms": 2.799,
+          "jitter_ms": 2.275,
+          "packet_loss_pct": 1.878,
+          "satisfaction_ratio_pct": 98.07,
+          "fairness_index": 0.9947,
+          "airtime_utilization_pct": 43.96
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 58.838,
+          "per_user_throughput_mbps": 2.9419,
+          "latency_ms": 2.782,
+          "jitter_ms": 2.243,
+          "packet_loss_pct": 1.884,
+          "satisfaction_ratio_pct": 98.06,
+          "fairness_index": 0.9946,
+          "airtime_utilization_pct": 44.03
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 58.84,
+          "std": 0.003
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.942,
+          "std": 0.0
+        },
+        "latency_ms": {
+          "mean": 2.79,
+          "std": 0.012
+        },
+        "jitter_ms": {
+          "mean": 2.259,
+          "std": 0.023
+        },
+        "packet_loss_pct": {
+          "mean": 1.881,
+          "std": 0.004
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 98.065,
+          "std": 0.007
+        },
+        "fairness_index": {
+          "mean": 0.995,
+          "std": 0.0
+        },
+        "airtime_utilization_pct": {
+          "mean": 43.995,
+          "std": 0.049
+        }
+      }
+    },
+    {
+      "topology": "single_ap",
+      "standard": "wifi6",
+      "clients": 10,
+      "traffic_type": "video",
+      "offered_load_mbps": 30.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 29.962,
+          "per_user_throughput_mbps": 2.9962,
+          "latency_ms": 0.49,
+          "jitter_ms": 0.115,
+          "packet_loss_pct": 0.075,
+          "satisfaction_ratio_pct": 99.87,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 21.69
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 29.958,
+          "per_user_throughput_mbps": 2.9958,
+          "latency_ms": 0.482,
+          "jitter_ms": 0.113,
+          "packet_loss_pct": 0.085,
+          "satisfaction_ratio_pct": 99.86,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 21.62
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 29.96,
+          "std": 0.003
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.996,
+          "std": 0.0
+        },
+        "latency_ms": {
+          "mean": 0.486,
+          "std": 0.006
+        },
+        "jitter_ms": {
+          "mean": 0.114,
+          "std": 0.001
+        },
+        "packet_loss_pct": {
+          "mean": 0.08,
+          "std": 0.007
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 99.865,
+          "std": 0.007
+        },
+        "fairness_index": {
+          "mean": 1.0,
+          "std": 0.0
+        },
+        "airtime_utilization_pct": {
+          "mean": 21.655,
+          "std": 0.049
+        }
+      }
+    },
+    {
+      "topology": "single_ap",
+      "standard": "wifi6",
+      "clients": 14,
+      "traffic_type": "video",
+      "offered_load_mbps": 42.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 40.934,
+          "per_user_throughput_mbps": 2.9239,
+          "latency_ms": 0.906,
+          "jitter_ms": 0.216,
+          "packet_loss_pct": 2.485,
+          "satisfaction_ratio_pct": 97.46,
+          "fairness_index": 0.9925,
+          "airtime_utilization_pct": 28.62
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 40.922,
+          "per_user_throughput_mbps": 2.923,
+          "latency_ms": 0.897,
+          "jitter_ms": 0.209,
+          "packet_loss_pct": 2.516,
+          "satisfaction_ratio_pct": 97.43,
+          "fairness_index": 0.9925,
+          "airtime_utilization_pct": 28.55
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 40.928,
+          "std": 0.008
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.923,
+          "std": 0.001
+        },
+        "latency_ms": {
+          "mean": 0.901,
+          "std": 0.006
+        },
+        "jitter_ms": {
+          "mean": 0.212,
+          "std": 0.005
+        },
+        "packet_loss_pct": {
+          "mean": 2.5,
+          "std": 0.022
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 97.445,
+          "std": 0.021
+        },
+        "fairness_index": {
+          "mean": 0.993,
+          "std": 0.0
+        },
+        "airtime_utilization_pct": {
+          "mean": 28.585,
+          "std": 0.049
+        }
+      }
+    },
+    {
+      "topology": "single_ap",
+      "standard": "wifi6",
+      "clients": 20,
+      "traffic_type": "video",
+      "offered_load_mbps": 60.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 58.835,
+          "per_user_throughput_mbps": 2.9417,
+          "latency_ms": 1.141,
+          "jitter_ms": 0.231,
+          "packet_loss_pct": 1.889,
+          "satisfaction_ratio_pct": 98.06,
+          "fairness_index": 0.9947,
+          "airtime_utilization_pct": 39.16
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 59.808,
+          "per_user_throughput_mbps": 2.9904,
+          "latency_ms": 1.026,
+          "jitter_ms": 0.188,
+          "packet_loss_pct": 0.267,
+          "satisfaction_ratio_pct": 99.68,
+          "fairness_index": 1.0,
+          "airtime_utilization_pct": 39.14
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 59.322,
+          "std": 0.688
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.966,
+          "std": 0.034
+        },
+        "latency_ms": {
+          "mean": 1.083,
+          "std": 0.081
+        },
+        "jitter_ms": {
+          "mean": 0.21,
+          "std": 0.03
+        },
+        "packet_loss_pct": {
+          "mean": 1.078,
+          "std": 1.147
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 98.87,
+          "std": 1.146
+        },
+        "fairness_index": {
+          "mean": 0.997,
+          "std": 0.004
+        },
+        "airtime_utilization_pct": {
+          "mean": 39.15,
+          "std": 0.014
+        }
+      }
+    }
+  ],
+  "derived": {
+    "max_supported_clients": [
+      {
+        "topology": "single_ap",
+        "standard": "wifi5",
+        "traffic_type": "video",
+        "max_clients": ">200",
+        "threshold_ms": 50.0,
+        "sensitivity": {
+          "30.0": ">200",
+          "100.0": ">200"
+        }
+      },
+      {
+        "topology": "single_ap",
+        "standard": "wifi6",
+        "traffic_type": "video",
+        "max_clients": ">200",
+        "threshold_ms": 50.0,
+        "sensitivity": {
+          "30.0": ">200",
+          "100.0": ">200"
+        }
+      }
+    ]
+  }
+}
