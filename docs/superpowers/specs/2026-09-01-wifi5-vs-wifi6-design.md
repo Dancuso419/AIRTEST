@@ -136,7 +136,7 @@ Responsibilities:
 - Energy efficiency proxy, **conditional on the Step 0 TWT verification**;
   omitted and documented as a limitation if unsupported
 - Derived `max_supported_clients` by linear interpolation between the two
-  bracketing density points; reported as `">200"` where no crossing occurs
+  bracketing density points; reported as `">N"`, N being the largest density actually simulated, where no crossing occurs
   within the grid, never extrapolated
 - Threshold sensitivity recomputation at 30 ms and 100 ms alongside the primary
   50 ms figure
@@ -183,7 +183,7 @@ what gets tested:
 - Jain's fairness index against hand-computed values, including the degenerate
   all-equal case (equals 1.0) and the single-flow case
 - Interpolation against a known bracket
-- The no-crossing case returning `">200"` rather than an extrapolated number
+- The no-crossing case returning `">N"` for the top of the measured grid rather than an extrapolated number
 - The reconciliation assertion firing on deliberately inconsistent input
 
 The NS-3 scenario is not unit tested. It is validated by the baseline check in

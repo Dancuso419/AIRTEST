@@ -3,8 +3,8 @@
 export const METRICS = [
   { key: 'aggregate_throughput_mbps', label: 'Aggregate throughput', unit: 'Mbps', betterWhen: 'higher' },
   { key: 'per_user_throughput_mbps', label: 'Per-user throughput', unit: 'Mbps', betterWhen: 'higher' },
-  { key: 'latency_ms', label: 'Latency', unit: 'ms', betterWhen: 'lower' },
-  { key: 'jitter_ms', label: 'Jitter', unit: 'ms', betterWhen: 'lower' },
+  { key: 'latency_ms', label: 'Latency (delivered packets)', unit: 'ms', betterWhen: 'lower' },
+  { key: 'jitter_ms', label: 'Jitter (delivered packets)', unit: 'ms', betterWhen: 'lower' },
   { key: 'packet_loss_pct', label: 'Packet loss', unit: '%', betterWhen: 'lower' },
   { key: 'satisfaction_ratio_pct', label: 'Offered-load satisfaction', unit: '%', betterWhen: 'higher' },
   { key: 'fairness_index', label: "Jain's fairness index", unit: '0-1', betterWhen: 'higher' },

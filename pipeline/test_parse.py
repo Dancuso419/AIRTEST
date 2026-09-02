@@ -211,9 +211,22 @@ def test_interpolation_uses_first_crossing_not_last():
     assert interpolate_max_clients(points, threshold=50.0) == 36
 
 
-def test_no_crossing_within_grid_reports_over_200_not_extrapolated():
+def test_no_crossing_reports_largest_measured_density_not_extrapolated():
     points = [(20, 5.0), (60, 9.0), (120, 14.0), (200, 21.0)]
     assert interpolate_max_clients(points, threshold=50.0) == ">200"
+
+
+def test_no_crossing_on_a_short_grid_reports_that_grids_top_not_200():
+    # The regression guard for the fabricated ">200": this grid stops at 20,
+    # so nothing above 20 clients was measured and nothing above 20 may be
+    # claimed. A hardcoded ">200" fails here.
+    points = [(10, 3.0), (14, 4.0), (20, 6.0)]
+    assert interpolate_max_clients(points, threshold=50.0) == ">20"
+    assert interpolate_max_clients([(30, 1.0), (60, 2.0)], threshold=50.0) == ">60"
+
+
+def test_no_measured_points_claims_nothing():
+    assert interpolate_max_clients([], threshold=50.0) is None
 
 
 def test_threshold_exceeded_at_lowest_density_reports_that_density():
@@ -231,3 +244,76 @@ def test_threshold_met_exactly_at_lowest_density_returns_that_density():
     points = [(20, 50.0), (40, 50.0), (60, 90.0)]
     result = interpolate_max_clients(points, threshold=50.0)
     assert result == 20
+
+
+# jitterSum holds rx-1 terms per flow (flow-monitor.cc accumulates only when
+# stats.rxPackets > 0), so the denominator is rx minus the number of flows
+# that received anything. With few packets per flow the two differ sharply.
+FLOWMONITOR_XML_SPARSE_JITTER = """<?xml version="1.0" ?>
+<FlowMonitor>
+  <FlowStats>
+    <Flow flowId="1" delaySum="+4000000.0ns" jitterSum="+3000000.0ns"
+          txBytes="4800" rxBytes="4800" txPackets="4" rxPackets="4"
+          lostPackets="0" />
+    <Flow flowId="2" delaySum="+2000000.0ns" jitterSum="+1000000.0ns"
+          txBytes="2400" rxBytes="2400" txPackets="2" rxPackets="2"
+          lostPackets="0" />
+  </FlowStats>
+</FlowMonitor>
+"""
+
+
+def test_jitter_divides_by_rx_minus_flows_not_by_rx(tmp_path):
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(FLOWMONITOR_XML_SPARSE_JITTER)
+
+    result = parse_flowmonitor(xml_path, window_s=3.0, payload_bytes=1200)
+
+    # 4 ms of jitter over 6 rx packets from 2 flows => 6 - 2 = 4 samples.
+    assert result["jitter_ms"] == pytest.approx(1.0)
+    # The wrong denominator (rx = 6) would have given 0.667.
+    assert result["jitter_ms"] != pytest.approx(4.0 / 6, abs=1e-3)
+
+
+FLOWMONITOR_XML_SINGLE_PACKET = """<?xml version="1.0" ?>
+<FlowMonitor>
+  <FlowStats>
+    <Flow flowId="1" delaySum="+1000000.0ns" jitterSum="+0.0ns"
+          txBytes="1200" rxBytes="1200" txPackets="1" rxPackets="1"
+          lostPackets="0" />
+  </FlowStats>
+</FlowMonitor>
+"""
+
+
+def test_jitter_is_zero_when_no_flow_has_a_second_packet(tmp_path):
+    # rx - flows == 0: no jitter sample exists. Must not divide by zero.
+    xml_path = tmp_path / "run.xml"
+    xml_path.write_text(FLOWMONITOR_XML_SINGLE_PACKET)
+
+    assert parse_flowmonitor(xml_path, window_s=3.0,
+                             payload_bytes=1200)["jitter_ms"] == 0.0
+
+
+from parse import _derive_max_clients_by_loss
+
+
+def test_loss_derivation_uses_the_published_five_percent_threshold():
+    scenarios = [
+        {"topology": "single_ap", "standard": "wifi5", "traffic_type": "video",
+         "clients": c, "aggregates": {"packet_loss_pct": {"mean": loss}}}
+        for c, loss in [(10, 1.0), (20, 3.0), (40, 7.0)]
+    ]
+    entry = _derive_max_clients_by_loss(scenarios)[0]
+    # Crosses 5% between 20 (3%) and 40 (7%): 20 + (5-3)*20/4 = 30
+    assert entry["max_clients"] == 30
+    assert entry["threshold_pct"] == 5.0
+
+
+def test_loss_derivation_never_claims_beyond_the_measured_grid():
+    scenarios = [
+        {"topology": "single_ap", "standard": "wifi6", "traffic_type": "video",
+         "clients": c, "aggregates": {"packet_loss_pct": {"mean": loss}}}
+        for c, loss in [(10, 0.5), (14, 0.8), (20, 1.2)]
+    ]
+    assert _derive_max_clients_by_loss(scenarios)[0]["max_clients"] == ">20"

@@ -33,7 +33,7 @@
 - [ ] Compute airtime utilization from PHY trace sources
 - [ ] Compute satisfaction ratio (delivered ÷ offered load)
 - [ ] Compute (or omit, if unsupported) energy efficiency proxy
-- [ ] Compute derived max supported clients via linear interpolation between bracketing density points; report ">200" where no threshold crossing occurs
+- [ ] Compute derived max supported clients via linear interpolation between bracketing density points; report ">N" for the largest density actually measured where no threshold crossing occurs
 - [ ] Run sensitivity check: recompute max supported clients at alternative thresholds (30 ms / 100 ms) for the discussion chapter
 - [ ] Add automated consistency assertions (throughput + loss ≈ offered load; fairness index within 0–1)
 - [ ] Aggregate into final `results.json` matching the TRD schema

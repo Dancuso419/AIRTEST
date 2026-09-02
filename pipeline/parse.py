@@ -4,6 +4,7 @@ import json
 import re
 import statistics
 import xml.etree.ElementTree as ET
+from datetime import datetime, timezone
 from pathlib import Path
 
 # Offered load per client, in Mbps, by traffic type. These must match the
@@ -128,6 +129,7 @@ def parse_flowmonitor(path, window_s, payload_bytes):
     delay_ms_weighted = 0.0
     jitter_ms_weighted = 0.0
     total_rx_packets = 0
+    flows_with_rx = 0
 
     for flow in flow_stats.iter("Flow"):
         rx_packets = int(flow.get("rxPackets"))
@@ -144,14 +146,17 @@ def parse_flowmonitor(path, window_s, payload_bytes):
         if rx_packets > 0:
             delay_ms_weighted += _ns_to_ms(flow.get("delaySum"))
             jitter_ms_weighted += _ns_to_ms(flow.get("jitterSum"))
+            flows_with_rx += 1
 
     aggregate_mbps = total_rx_packets * payload_bytes * 8 / window_s / 1e6
     loss_pct = ((total_tx_packets - total_rx_packets) / total_tx_packets * 100
                 if total_tx_packets else 0.0)
     latency_ms = (delay_ms_weighted / total_rx_packets
                   if total_rx_packets else 0.0)
-    jitter_ms = (jitter_ms_weighted / total_rx_packets
-                 if total_rx_packets else 0.0)
+    # jitterSum holds rx-1 terms per flow: flow-monitor.cc accumulates it only
+    # when stats.rxPackets > 0, i.e. from the second received packet onward.
+    jitter_samples = total_rx_packets - flows_with_rx
+    jitter_ms = jitter_ms_weighted / jitter_samples if jitter_samples > 0 else 0.0
 
     return {
         "aggregate_throughput_mbps": round(aggregate_mbps, 3),
@@ -176,6 +181,19 @@ def _ns_to_ms(timestr):
 
 # Study-defined thresholds. These are parameters of the study, not objective
 # facts, and must be reported as such with the sensitivity variants below.
+CAVEATS = [
+    "packet_loss_pct is inflated by the short measurement window: packets "
+    "still queued or in flight when the window closes are counted as lost, "
+    "and that roughly fixed backlog is divided by a short window.",
+    "That inflation grows with client density, because queues are deeper at "
+    "high density, so the loss curve is steeper than a steady-state run would "
+    "show.",
+    "latency_ms and jitter_ms are conditioned on delivery: they are computed "
+    "over received packets only. Packets that were never delivered — which "
+    "would have been the slowest — contribute nothing, so both metrics "
+    "understate delay wherever loss is non-trivial.",
+]
+
 LATENCY_THRESHOLD_MS = 50.0
 LATENCY_SENSITIVITY_MS = [30.0, 100.0]
 PACKET_LOSS_THRESHOLD_PCT = 5.0
@@ -196,15 +214,17 @@ TRIAL_METRICS = [
 
 
 def interpolate_max_clients(points, threshold):
-    """Client count at which mean latency crosses `threshold`.
+    """Client count at which the mean metric crosses `threshold`.
 
     Linear interpolation between the two bracketing density points, because
-    the true saturation point rarely lands on a simulated density. Returns
-    ">200" where no crossing occurs in the grid — never extrapolates.
+    the true saturation point rarely lands on a simulated density. Where no
+    crossing occurs, returns ">N" for the LARGEST density actually measured
+    — never extrapolates beyond the grid, and never names a density that was
+    not simulated. Returns None when there are no measured points at all.
     """
     pts = sorted(points)
     if not pts:
-        return ">200"
+        return None
     if pts[0][1] >= threshold:
         # Already over threshold at the lowest measured density; the true
         # figure is below the grid, so report the lowest measured point.
@@ -215,7 +235,7 @@ def interpolate_max_clients(points, threshold):
             # l1 < threshold <= l2 forces l1 < l2, so this cannot divide by zero.
             crossed = d1 + (threshold - l1) * (d2 - d1) / (l2 - l1)
             return int(round(crossed))
-    return ">200"
+    return f">{pts[-1][0]}"
 
 
 def _mean_std(values):
@@ -229,6 +249,8 @@ def build_results(raw_dir, expected_trials=2):
     raw_dir = Path(raw_dir)
     scenarios = {}
     warnings = []
+    windows = set()
+    payloads = set()
 
     for xml_path in sorted(raw_dir.glob("*.xml")):
         run_id = xml_path.stem
@@ -252,6 +274,8 @@ def build_results(raw_dir, expected_trials=2):
         meta = parse_meta(meta_path)
         window = meta["measurementWindowSec"]
         payload_bytes = meta["payloadBytes"]
+        windows.add(window)
+        payloads.add(payload_bytes)
         flow = parse_flowmonitor(xml_path, window, payload_bytes)
 
         offered = offered_load_mbps(fields["traffic_type"], fields["clients"])
@@ -299,14 +323,35 @@ def build_results(raw_dir, expected_trials=2):
         }
         scenario_list.append(sc)
 
-    derived = {"max_supported_clients": _derive_max_clients(scenario_list)}
+    derived = {
+        "max_supported_clients": _derive_max_clients(scenario_list),
+        "max_supported_clients_by_loss": _derive_max_clients_by_loss(scenario_list),
+    }
+
+    if len(windows) > 1:
+        warnings.append(
+            f"runs disagree on measurement window: {sorted(windows)} s; "
+            "metrics normalised per-run but not comparable across windows")
+    if len(payloads) > 1:
+        warnings.append(f"runs disagree on payload size: {sorted(payloads)} bytes")
 
     return {
         "meta": {
+            "ns3_version": "3.42",
+            "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
+            "measurement_window_s": (sorted(windows) if len(windows) > 1
+                                     else next(iter(windows), None)),
+            "payload_bytes": (sorted(payloads) if len(payloads) > 1
+                              else next(iter(payloads), None)),
+            "offered_load_definition": (
+                "Application-layer offered load: payload bytes generated by the "
+                "client applications, excluding IP/UDP/MAC headers and "
+                "retransmissions."),
             "latency_threshold_ms": LATENCY_THRESHOLD_MS,
             "latency_sensitivity_ms": LATENCY_SENSITIVITY_MS,
             "packet_loss_threshold_pct": PACKET_LOSS_THRESHOLD_PCT,
             "thresholds_are_study_parameters": True,
+            "caveats": CAVEATS,
             "energy_efficiency_included": False,
             "energy_efficiency_note": (
                 "Omitted: TWT is not implemented in the NS-3 version used. "
@@ -340,6 +385,31 @@ def _derive_max_clients(scenario_list):
         }
         out.append(entry)
     return out
+
+
+def _derive_max_clients_by_loss(scenario_list):
+    """Same derivation as _derive_max_clients, but on mean packet_loss_pct.
+
+    Reported separately from the latency figure, never merged with it: the
+    two thresholds are independent study parameters and can disagree.
+    """
+    groups = {}
+    for sc in scenario_list:
+        groups.setdefault(
+            (sc["topology"], sc["standard"], sc["traffic_type"]), []
+        ).append((sc["clients"], sc["aggregates"]["packet_loss_pct"]["mean"]))
+
+    return [
+        {
+            "topology": topology,
+            "standard": standard,
+            "traffic_type": traffic,
+            "max_clients": interpolate_max_clients(
+                points, PACKET_LOSS_THRESHOLD_PCT),
+            "threshold_pct": PACKET_LOSS_THRESHOLD_PCT,
+        }
+        for (topology, standard, traffic), points in sorted(groups.items())
+    ]
 
 
 if __name__ == "__main__":
