@@ -1,0 +1,149 @@
+@import '@fontsource-variable/nunito-sans';
+
+:root {
+  /* Palette — DASH REF.jpg. Monochromatic green on a warm-neutral ground. */
+  --bg: #f4f6f5;
+  --surface: #ffffff;
+  --surface-sunken: #edf1ee;
+  --border: #e1e7e3;
+  --ink: #16211b;
+  --ink-dim: #5f6f67;
+
+  /* Standards are separated by VALUE, not hue. Never swap these for an
+     accent colour: a warm hue on one standard editorialises the result. */
+  --green: #4e9e6e;    /* WiFi 5 */
+  --forest: #0f3d26;   /* WiFi 6, primary actions */
+  --forest-600: #1b5e3b;
+  --mint: #8fcba4;
+  --mint-pale: #d6e9de;
+
+  /* Absent data and dataset caveats only. Never marks a standard. */
+  --warn: #b45309;
+
+  --radius: 16px;
+  --gap: 1.25rem;
+  --maxw: 1080px;
+  --font: 'Nunito Sans Variable', system-ui, sans-serif;
+  --shadow: 0 1px 2px rgba(16, 33, 27, 0.05), 0 10px 28px rgba(16, 33, 27, 0.07);
+}
+
+* { box-sizing: border-box; }
+
+html {
+  caret-color: var(--forest);
+  scrollbar-color: var(--mint) var(--surface-sunken);
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  line-height: 1.55;
+  -webkit-font-smoothing: antialiased;
+}
+
+::selection { background: var(--mint-pale); color: var(--ink); }
+
+:focus-visible { outline: 2px solid var(--forest); outline-offset: 2px; }
+
+/* Data must not jitter when the seed changes. */
+.num { font-variant-numeric: tabular-nums; }
+
+.shell { max-width: var(--maxw); margin: 0 auto; padding: 2.5rem 1.5rem 4rem; }
+
+.page-title {
+  font-size: clamp(1.75rem, 4vw, 2.5rem);
+  font-weight: 800;
+  letter-spacing: -0.02em;
+  line-height: 1.15;
+  margin: 0 0 0.4rem;
+}
+
+.page-sub { color: var(--ink-dim); margin: 0 0 2rem; max-width: 70ch; }
+
+.card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: clamp(1.25rem, 3vw, 2rem);
+  box-shadow: var(--shadow);
+}
+
+.go-button {
+  display: block;
+  width: 100%;
+  max-width: 240px;
+  margin: 2rem auto 0.6rem;
+  padding: 1.05rem;
+  font-family: inherit;
+  font-size: 1.15rem;
+  font-weight: 800;
+  letter-spacing: 0.12em;
+  color: #ffffff;
+  background: linear-gradient(135deg, var(--forest-600), var(--green));
+  border: none;
+  border-radius: 999px;
+  cursor: pointer;
+  box-shadow: var(--shadow);
+  transition: filter 140ms ease-out;
+}
+
+.go-button:hover:not(:disabled) { filter: brightness(1.07); }
+
+.go-button:disabled {
+  background: var(--surface-sunken);
+  color: var(--ink-dim);
+  box-shadow: none;
+  cursor: not-allowed;
+}
+
+/* Permanent, never a tooltip. Spec section 2. */
+.go-note {
+  text-align: center;
+  color: var(--ink-dim);
+  font-size: 0.85rem;
+  margin: 0;
+}
+
+.verdict {
+  font-size: clamp(1.15rem, 2.4vw, 1.45rem);
+  font-weight: 600;
+  line-height: 1.45;
+  margin: 0 0 1.75rem;
+  max-width: 60ch;
+}
+
+.unavailable {
+  color: var(--warn);
+  background: var(--surface-sunken);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 0.9rem 1.1rem;
+  margin-top: 1rem;
+}
+
+.secondary-button {
+  background: var(--surface);
+  color: var(--forest);
+  border: 1.5px solid var(--forest);
+  border-radius: 999px;
+  padding: 0.65rem 1.35rem;
+  cursor: pointer;
+  font-family: inherit;
+  font-size: 0.95rem;
+  font-weight: 700;
+  transition: background 140ms ease-out;
+}
+
+.secondary-button:hover:not(:disabled) { background: var(--mint-pale); }
+
+.secondary-button:disabled {
+  color: var(--ink-dim);
+  border-color: var(--border);
+  cursor: not-allowed;
+}
+
+.explorer { margin-top: 3.5rem; }
+
+.explorer h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem; }

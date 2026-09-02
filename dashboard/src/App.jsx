@@ -1,72 +1,102 @@
-import { useState } from 'react';
+import { useMemo, useState } from 'react';
 import results from './data/results.json';
 import ComparisonChart from './ComparisonChart';
 import { METRICS } from './metrics';
+import { availableConditions, findScenario, isCombinationAvailable, pickTrial } from './scenarios';
+import { buildVerdict } from './verdict';
 
 export default function App() {
-  const [metricKey, setMetricKey] = useState(METRICS[0].key);
-  const metric = METRICS.find((m) => m.key === metricKey);
+  const scenarios = results.scenarios;
+  const options = useMemo(() => availableConditions(scenarios), [scenarios]);
 
-  const topologies = [...new Set(results.scenarios.map((s) => s.topology))];
-  const trafficTypes = [...new Set(results.scenarios.map((s) => s.traffic_type))];
-  const [topology, setTopology] = useState(topologies[0]);
-  const [trafficType, setTrafficType] = useState(trafficTypes[0]);
+  const [conditions, setConditions] = useState({
+    clients: options.clients[0],
+    trafficType: options.trafficTypes[0],
+    aps: options.apCounts[0],
+  });
+  const [phase, setPhase] = useState('setup');
+  const [run, setRun] = useState(null);
+  // The explorer chart keeps its own metric selection, independent of the
+  // simulator's conditions — it is the technical view, not the plain one.
+  const [explorerMetricKey, setExplorerMetricKey] = useState('per_user_throughput_mbps');
+
+  const available = isCombinationAvailable(scenarios, conditions);
+
+  function start(excludeSeed = null) {
+    const wifi5 = findScenario(scenarios, { ...conditions, standard: 'wifi5' });
+    const wifi6 = findScenario(scenarios, { ...conditions, standard: 'wifi6' });
+    const t5 = pickTrial(wifi5, { excludeSeed });
+    const t6 = pickTrial(wifi6, { excludeSeed });
+    setRun({ wifi5, wifi6, trial5: t5, trial6: t6, seed: t5?.seed ?? null });
+    setPhase('results');
+  }
 
   return (
-    <main style={{ maxWidth: 960, margin: '0 auto', padding: '2rem', fontFamily: 'system-ui, sans-serif' }}>
-      <h1>WiFi 5 vs WiFi 6 in dense lecture theatres</h1>
+    <main className="shell">
+      <h1 className="page-title">Lecture theatre WiFi simulator</h1>
+      <p className="page-sub">
+        WiFi 5 (802.11ac) against WiFi 6 (802.11ax), from NS-3 simulations.
+      </p>
 
-      <div style={{ display: 'flex', gap: '1.5rem', flexWrap: 'wrap', margin: '1.5rem 0' }}>
-        <label>
-          Metric{' '}
-          <select value={metricKey} onChange={(e) => setMetricKey(e.target.value)}>
+      {phase === 'setup' ? (
+        <section className="card">
+          <p>Conditions panel arrives in Task 4.</p>
+          <button
+            className="go-button"
+            onClick={() => start(null)}
+            disabled={!available}
+          >
+            GO
+          </button>
+          <p className="go-note">
+            Replays a stored NS-3 trial — not a live measurement.
+          </p>
+          {!available && (
+            <p className="unavailable">
+              This combination has not been simulated yet.
+            </p>
+          )}
+        </section>
+      ) : (
+        <section className="card">
+          <p className="verdict">
+            {buildVerdict({
+              wifi5: run.wifi5,
+              wifi6: run.wifi6,
+              clients: conditions.clients,
+              trafficType: conditions.trafficType,
+            })}
+          </p>
+          <p>Gauges arrive in Task 5.</p>
+          <button className="secondary-button" onClick={() => setPhase('setup')}>
+            Change conditions
+          </button>
+        </section>
+      )}
+
+      <section className="explorer">
+        <h2>Explore the full dataset</h2>
+        <p className="page-sub">Every metric across every simulated density.</p>
+        <label className="condition">
+          <span className="condition-q">Metric</span>
+          <select
+            value={explorerMetricKey}
+            onChange={(e) => setExplorerMetricKey(e.target.value)}
+          >
             {METRICS.map((m) => (
-              <option key={m.key} value={m.key}>{m.label}</option>
+              <option key={m.key} value={m.key}>
+                {m.plainLabel} — {m.label}
+              </option>
             ))}
           </select>
         </label>
-        <label>
-          Topology{' '}
-          <select value={topology} onChange={(e) => setTopology(e.target.value)}>
-            {topologies.map((t) => <option key={t} value={t}>{t}</option>)}
-          </select>
-        </label>
-        <label>
-          Traffic{' '}
-          <select value={trafficType} onChange={(e) => setTrafficType(e.target.value)}>
-            {trafficTypes.map((t) => <option key={t} value={t}>{t}</option>)}
-          </select>
-        </label>
-      </div>
-
-      <p style={{ color: '#555' }}>
-        {metric.label} ({metric.unit}) —{' '}
-        {metric.betterWhen === 'higher' ? 'higher is better' : 'lower is better'}.{' '}
-        Shaded bands show ±1 standard deviation across trials.
-      </p>
-
-      {metric.key === 'airtime_utilization_pct' && (
-        <p style={{ color: '#555', fontStyle: 'italic' }}>
-          Read airtime alongside throughput — lower airtime for the same delivered
-          throughput is the efficiency win, not lower airtime on its own.
-        </p>
-      )}
-
-      <ComparisonChart
-        scenarios={results.scenarios}
-        topology={topology}
-        trafficType={trafficType}
-        metric={metric}
-      />
-
-      {results.meta.warnings.length > 0 && (
-        <section style={{ marginTop: '2rem', padding: '1rem', background: '#fff8e1' }}>
-          <strong>Dataset warnings</strong>
-          <ul>
-            {results.meta.warnings.map((w) => <li key={w}>{w}</li>)}
-          </ul>
-        </section>
-      )}
+        <ComparisonChart
+          scenarios={scenarios}
+          topology={conditions.aps === 3 ? 'multi_ap' : 'single_ap'}
+          trafficType={conditions.trafficType}
+          metric={METRICS.find((m) => m.key === explorerMetricKey)}
+        />
+      </section>
     </main>
   );
 }
