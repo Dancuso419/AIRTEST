@@ -1,6 +1,8 @@
 @import '@fontsource-variable/nunito-sans';
 
 :root {
+  color-scheme: light;
+
   /* Palette — DASH REF.jpg. Monochromatic green on a warm-neutral ground. */
   --bg: #f4f6f5;
   --surface: #ffffff;
@@ -147,3 +149,23 @@ body {
 .explorer { margin-top: 3.5rem; }
 
 .explorer h2 { font-size: 1.25rem; font-weight: 700; margin: 0 0 0.25rem; }
+
+.conditions { display: grid; gap: var(--gap); }
+
+.condition { display: grid; gap: 0.4rem; }
+
+.condition-q { font-size: 1.05rem; font-weight: 600; }
+
+.condition select {
+  background: var(--surface);
+  color: var(--text);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  padding: 0.7rem 0.9rem;
+  font-size: 1rem;
+  font-family: inherit;
+}
+
+.advanced { margin-top: 0.5rem; }
+
+.advanced summary { cursor: pointer; color: var(--ink-dim); }

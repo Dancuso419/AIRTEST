@@ -1,6 +1,7 @@
 import { useMemo, useState } from 'react';
 import results from './data/results.json';
 import ComparisonChart from './ComparisonChart';
+import ConditionsPanel from './ConditionsPanel';
 import { METRICS } from './metrics';
 import { availableConditions, findScenario, isCombinationAvailable, pickTrial } from './scenarios';
 import { buildVerdict } from './verdict';
@@ -40,7 +41,11 @@ export default function App() {
 
       {phase === 'setup' ? (
         <section className="card">
-          <p>Conditions panel arrives in Task 4.</p>
+          <ConditionsPanel
+            scenarios={scenarios}
+            conditions={conditions}
+            onChange={setConditions}
+          />
           <button
             className="go-button"
             onClick={() => start(null)}
