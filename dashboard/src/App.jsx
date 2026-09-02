@@ -2,6 +2,8 @@ import { useMemo, useState } from 'react';
 import results from './data/results.json';
 import ComparisonChart from './ComparisonChart';
 import ConditionsPanel from './ConditionsPanel';
+import ResultGauges from './ResultGauges';
+import ProvenanceBadge from './ProvenanceBadge';
 import { METRICS } from './metrics';
 import { availableConditions, findScenario, isCombinationAvailable, pickTrial } from './scenarios';
 import { buildVerdict } from './verdict';
@@ -72,10 +74,29 @@ export default function App() {
               trafficType: conditions.trafficType,
             })}
           </p>
-          <p>Gauges arrive in Task 5.</p>
-          <button className="secondary-button" onClick={() => setPhase('setup')}>
-            Change conditions
-          </button>
+          <ResultGauges trial5={run.trial5} trial6={run.trial6} />
+
+          <ProvenanceBadge
+            seed={run.seed}
+            trialIndex={
+              (run.wifi5?.trials?.findIndex((t) => t.seed === run.seed) ?? 0) + 1
+            }
+            trialCount={run.wifi5?.trials?.length ?? 0}
+            ns3Version={results.meta.ns3_version ?? '3.42'}
+          />
+
+          <div className="result-actions">
+            <button
+              className="secondary-button"
+              onClick={() => start(run.seed)}
+              disabled={(run.wifi5?.trials?.length ?? 0) < 2}
+            >
+              Run again (different seed)
+            </button>
+            <button className="secondary-button" onClick={() => setPhase('setup')}>
+              Change conditions
+            </button>
+          </div>
         </section>
       )}
 

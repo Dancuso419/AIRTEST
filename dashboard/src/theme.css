@@ -158,7 +158,7 @@ body {
 
 .condition select {
   background: var(--surface);
-  color: var(--text);
+  color: var(--ink);
   border: 1px solid var(--border);
   border-radius: 8px;
   padding: 0.7rem 0.9rem;
@@ -169,3 +169,74 @@ body {
 .advanced { margin-top: 0.5rem; }
 
 .advanced summary { cursor: pointer; color: var(--ink-dim); }
+
+/* No nested cards (DESIGN.md section 5): the gauges sit on the results card,
+   separated by a rule rather than boxed again. */
+.gauges {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: clamp(1.5rem, 4vw, 3rem);
+}
+
+.gauge { text-align: center; }
+
+.gauge + .gauge { border-left: 1px solid var(--border); padding-left: clamp(1.5rem, 4vw, 3rem); }
+
+@media (max-width: 640px) {
+  .gauge + .gauge {
+    border-left: none;
+    border-top: 1px solid var(--border);
+    padding: 1.5rem 0 0;
+  }
+}
+
+.gauge-title {
+  margin: 0 0 0.25rem;
+  font-size: 0.95rem;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+}
+
+.gauge-dial { width: 100%; max-width: 260px; }
+
+.gauge-tick { fill: var(--ink-dim); font-size: 9px; }
+
+.gauge-value {
+  font-size: clamp(2.5rem, 6vw, 3.5rem);
+  font-weight: 800;
+  letter-spacing: -0.03em;
+  line-height: 1;
+  margin: -1.25rem 0 0;
+}
+
+.gauge-unit { font-size: 1.1rem; color: var(--ink-dim); font-weight: 600; letter-spacing: 0; }
+
+.gauge-label { color: var(--ink-dim); margin: 0.5rem 0 1.25rem; font-size: 0.9rem; }
+
+.tiles {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0.75rem;
+  margin: 0;
+  text-align: left;
+}
+
+.tile {
+  background: var(--surface-sunken);
+  border-radius: 10px;
+  padding: 0.6rem 0.7rem;
+}
+
+.tile dt { color: var(--ink-dim); font-size: 0.7rem; font-weight: 600; }
+
+.tile dd { margin: 0.1rem 0 0; font-size: 1rem; font-weight: 700; font-variant-numeric: tabular-nums; }
+
+.provenance {
+  color: var(--ink-dim);
+  font-size: 0.8rem;
+  margin: 1.5rem 0 0;
+  padding-top: 1rem;
+  border-top: 1px solid var(--border);
+}
+
+.result-actions { display: flex; gap: 0.75rem; margin-top: 1.25rem; flex-wrap: wrap; }
