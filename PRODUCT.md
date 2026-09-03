@@ -57,8 +57,15 @@ scrutiny is high.
   control with no data behind it would require inventing a response. Fabricated
   data is unrecoverable in an FYP.
 - Current dataset: single AP, video traffic, 10/14/20 students, 2 trials each,
-  3-second measurement window. Browsing, downloading, multi-AP and higher
-  densities are simulated but not yet run.
+  3-second measurement window. Browsing, downloading and multi-AP are specified
+  but the scenario does not implement them yet.
+- **Density grid capped at 60 students** (documented study constraint, not the
+  TRD's original 20-200). WiFi 6 runs cost roughly 9x their WiFi 5 equivalents
+  and hit a sharp cost knee between 16 and 20 clients; the full grid is days of
+  compute the project does not have. Consequence the write-up must state: 60
+  students offer ~180 Mbps against a measured ceiling near 346 Mbps, so the
+  medium may never saturate inside the grid, and ">60" is not a saturation
+  point.
 - Metrics available: per-student throughput, aggregate throughput, latency,
   jitter, packet loss, offered-load satisfaction, Jain's fairness, airtime
   utilisation. Energy efficiency is **omitted** — TWT is absent from NS-3 3.42.

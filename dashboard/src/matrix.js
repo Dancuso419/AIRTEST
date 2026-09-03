@@ -13,8 +13,19 @@
  * discloses scope without ever offering a value the simulation never ran.
  */
 
-// TRD section 3: N = 20, 40, 60, 80, 100, 120, 150, 200.
-const PLANNED_CLIENTS = [20, 40, 60, 80, 100, 120, 150, 200];
+// TRD section 3 specifies N = 20, 40, 60, 80, 100, 120, 150, 200.
+//
+// CAPPED AT 60 as a documented study constraint. WiFi 6 runs cost roughly 9x
+// their WiFi 5 equivalents and hit a sharp cost knee between 16 and 20
+// clients; a single 200-client WiFi 6 run projects to many hours, and the
+// full grid to days of compute the project does not have.
+//
+// Consequence, which the write-up must state rather than bury: 60 students
+// offering 3 Mbps each is ~180 Mbps against a measured ceiling near 346 Mbps,
+// so the medium may never saturate inside this grid. Where no threshold
+// crossing occurs, max_supported_clients reports ">60" and is NOT to be read
+// as a saturation point.
+const PLANNED_CLIENTS = [20, 40, 60];
 
 // TRD section 3: web (bursty), video (CBR UDP), bulk (rate-limited TCP).
 const PLANNED_TRAFFIC = ['web', 'video', 'bulk'];
