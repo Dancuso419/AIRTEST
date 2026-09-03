@@ -9,6 +9,7 @@ from parse import (
     parse_flowmonitor,
     parse_meta,
     parse_run_id,
+    parse_series,
 )
 
 
@@ -317,3 +318,79 @@ def test_loss_derivation_never_claims_beyond_the_measured_grid():
         for c, loss in [(10, 0.5), (14, 0.8), (20, 1.2)]
     ]
     assert _derive_max_clients_by_loss(scenarios)[0]["max_clients"] == ">20"
+
+
+def test_parse_series_derives_per_interval_metrics(tmp_path):
+    # Two 0.5 s intervals. 100 packets delivered of 110 sent in the first,
+    # 200 of 200 in the second, so loss appears only in the first.
+    p = tmp_path / "r.series.json"
+    p.write_text(json.dumps({
+        "sampleMs": 500, "windowStartSec": 0.0, "windowEndSec": 1.0,
+        "samples": [
+            {"t": 0.0, "rxPackets": 0, "txPackets": 0, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.0},
+            {"t": 0.5, "rxPackets": 100, "txPackets": 110, "rxBytes": 0,
+             "delaySumNs": 200_000_000, "airtimeBusySec": 0.25},
+            {"t": 1.0, "rxPackets": 300, "txPackets": 310, "rxBytes": 0,
+             "delaySumNs": 500_000_000, "airtimeBusySec": 0.75},
+        ],
+    }))
+    out = parse_series(p, payload_bytes=1000, clients=10)
+
+    assert len(out) == 2
+    # 100 pkt * 1000 B * 8 / 0.5 s = 1.6 Mbps
+    assert out[0]["aggregate_throughput_mbps"] == pytest.approx(1.6)
+    assert out[0]["per_user_throughput_mbps"] == pytest.approx(0.16)
+    # 10 of 110 sent went missing in the first interval
+    assert out[0]["packet_loss_pct"] == pytest.approx(9.091, abs=0.01)
+    # 200 ms of delay over 100 packets
+    assert out[0]["latency_ms"] == pytest.approx(2.0)
+    # 0.25 s busy in a 0.5 s interval
+    assert out[0]["airtime_utilization_pct"] == pytest.approx(50.0)
+
+    # Second interval: 200 of 200 delivered, so no loss at all.
+    assert out[1]["packet_loss_pct"] == pytest.approx(0.0)
+    assert out[1]["aggregate_throughput_mbps"] == pytest.approx(3.2)
+
+
+def test_parse_series_skips_zero_width_intervals(tmp_path):
+    # The emitter once collapsed every timestamp to its integer second via a
+    # sticky setprecision. Those intervals must be skipped, not divided by.
+    p = tmp_path / "r.series.json"
+    p.write_text(json.dumps({
+        "samples": [
+            {"t": 2.0, "rxPackets": 0, "txPackets": 0, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.0},
+            {"t": 2.0, "rxPackets": 50, "txPackets": 50, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.0},
+            {"t": 3.0, "rxPackets": 100, "txPackets": 100, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.5},
+        ],
+    }))
+    out = parse_series(p, payload_bytes=1000, clients=5)
+    assert len(out) == 1
+    assert out[0]["t"] == 3.0
+
+
+def test_parse_series_handles_an_interval_with_no_deliveries(tmp_path):
+    p = tmp_path / "r.series.json"
+    p.write_text(json.dumps({
+        "samples": [
+            {"t": 0.0, "rxPackets": 0, "txPackets": 0, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.0},
+            {"t": 1.0, "rxPackets": 0, "txPackets": 40, "rxBytes": 0,
+             "delaySumNs": 0, "airtimeBusySec": 0.1},
+        ],
+    }))
+    out = parse_series(p, payload_bytes=1000, clients=4)
+    assert out[0]["latency_ms"] == 0.0          # no NaN from dividing by zero rx
+    assert out[0]["packet_loss_pct"] == pytest.approx(100.0)
+    assert out[0]["aggregate_throughput_mbps"] == 0.0
+
+
+def test_parse_series_returns_empty_for_a_single_sample(tmp_path):
+    p = tmp_path / "r.series.json"
+    p.write_text(json.dumps({"samples": [
+        {"t": 0.0, "rxPackets": 0, "txPackets": 0, "rxBytes": 0,
+         "delaySumNs": 0, "airtimeBusySec": 0.0}]}))
+    assert parse_series(p, payload_bytes=1000, clients=4) == []

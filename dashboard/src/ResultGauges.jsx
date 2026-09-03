@@ -3,8 +3,8 @@ import InstrumentDial from './InstrumentDial';
 
 /**
  * The six-pack. Six instruments, each owning one truth, read as a fixed
- * cross-check sweep — throughput first, then the two failure modes, then the
- * three efficiency and quality measures.
+ * sweep — throughput first, then the two failure modes, then the three
+ * efficiency and quality measures.
  *
  * Jitter and total speed sit in the status strip instead: eight dials is a
  * wall, six is a scan.
@@ -19,9 +19,9 @@ const SIX_PACK = [
 ];
 
 /**
- * Each dial's full-scale value. These are deliberate, not derived from the
- * data: a scale that rescales itself per run destroys comparability between
- * runs, which is the whole point of the instrument.
+ * Full-scale values. Deliberate, never derived from the data: a dial that
+ * rescales itself per run destroys comparability between runs, which is the
+ * whole point of an instrument.
  *
  * 5 Mbps per student comfortably covers HD video. 100 ms is twice the study's
  * 50 ms latency threshold, so the threshold sits mid-dial.
@@ -44,7 +44,16 @@ const FORMAT = {
   fairness_index: (v) => (v ?? 0).toFixed(2),
 };
 
-export default function ResultGauges({ trial5, trial6 }) {
+/**
+ * `frame5`/`frame6` are a single sampled interval during replay. Metrics the
+ * series does not carry (satisfaction, fairness) fall back to the trial's own
+ * value — they are whole-run figures with no meaningful per-interval form,
+ * and inventing one would be worse than holding steady.
+ */
+export default function ResultGauges({ trial5, trial6, frame5, frame6 }) {
+  const read = (trial, frame, key) =>
+    (frame && frame[key] !== undefined ? frame[key] : trial?.[key]);
+
   return (
     <>
       <div className="needle-key">
@@ -59,19 +68,16 @@ export default function ResultGauges({ trial5, trial6 }) {
       </div>
 
       <div className="cluster">
-        {SIX_PACK.map((key) => {
-          const metric = METRICS.find((m) => m.key === key);
-          return (
-            <InstrumentDial
-              key={key}
-              metric={metric}
-              value5={trial5?.[key]}
-              value6={trial6?.[key]}
-              scaleMax={SCALE[key]}
-              formatValue={FORMAT[key]}
-            />
-          );
-        })}
+        {SIX_PACK.map((key) => (
+          <InstrumentDial
+            key={key}
+            metric={METRICS.find((m) => m.key === key)}
+            value5={read(trial5, frame5, key)}
+            value6={read(trial6, frame6, key)}
+            scaleMax={SCALE[key]}
+            formatValue={FORMAT[key]}
+          />
+        ))}
       </div>
     </>
   );

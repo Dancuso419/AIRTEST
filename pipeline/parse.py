@@ -90,6 +90,54 @@ def parse_meta(path):
     return json.loads(Path(path).read_text())
 
 
+def parse_series(path, payload_bytes, clients):
+    """Turn a run's cumulative time-series counters into per-interval metrics.
+
+    The scenario deliberately records only cumulative counters, so every
+    derived metric is computed here — by the same arithmetic that produces the
+    trial aggregates. A series and its own summary can then never disagree
+    about what "goodput" or "loss" means, which duplicating the formulas in
+    C++ would have invited.
+
+    Intervals with non-positive width are skipped rather than divided by: a
+    sticky-precision bug in the emitter once collapsed every timestamp to its
+    integer second, and a silent ZeroDivisionError is a worse failure than a
+    short series.
+    """
+    raw = json.loads(Path(path).read_text())
+    samples = raw.get("samples", [])
+    out = []
+
+    for a, b in zip(samples, samples[1:]):
+        dt = b["t"] - a["t"]
+        if dt <= 0:
+            continue
+
+        d_rx = b["rxPackets"] - a["rxPackets"]
+        d_tx = b["txPackets"] - a["txPackets"]
+        d_delay_ns = b["delaySumNs"] - a["delaySumNs"]
+        d_busy = b["airtimeBusySec"] - a["airtimeBusySec"]
+
+        goodput = d_rx * payload_bytes * 8 / dt / 1e6
+        loss = ((d_tx - d_rx) / d_tx * 100) if d_tx > 0 else 0.0
+        latency = (d_delay_ns / d_rx / 1e6) if d_rx > 0 else 0.0
+        airtime = d_busy / dt * 100
+
+        out.append({
+            "t": round(b["t"], 3),
+            "aggregate_throughput_mbps": round(goodput, 3),
+            "per_user_throughput_mbps": round(goodput / clients, 4) if clients else 0.0,
+            # Clamp only the reporting range, never the value's sign: a
+            # negative loss would mean the counters went backwards, which is a
+            # bug to surface rather than hide.
+            "packet_loss_pct": round(max(loss, 0.0), 3),
+            "latency_ms": round(latency, 3),
+            "airtime_utilization_pct": round(min(airtime, 100.0), 2),
+        })
+
+    return out
+
+
 def parse_flowmonitor(path, window_s, payload_bytes):
     """Extract aggregate and per-flow metrics from FlowMonitor XML.
 
@@ -270,6 +318,8 @@ def build_results(raw_dir, expected_trials=2):
             warnings.append(f"missing meta companion for {run_id}")
             continue
 
+        series_path = raw_dir / f"{run_id}.series.json"
+
         phy = parse_phy(phy_path)
         meta = parse_meta(meta_path)
         window = meta["measurementWindowSec"]
@@ -296,6 +346,15 @@ def build_results(raw_dir, expected_trials=2):
             "fairness_index": round(fairness, 4),
             "airtime_utilization_pct": phy["airtime_utilization_pct"],
         }
+
+        # The replay's needles are driven by this. A run without one still
+        # yields a valid trial — it simply cannot be replayed — so record the
+        # gap rather than dropping the whole run.
+        if series_path.exists():
+            trial["series"] = parse_series(series_path, payload_bytes,
+                                           fields["clients"])
+        else:
+            warnings.append(f"no time series for {run_id}; not replayable")
 
         key = (fields["topology"], fields["standard"],
                fields["clients"], fields["traffic_type"])
