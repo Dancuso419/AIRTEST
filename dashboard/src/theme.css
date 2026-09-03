@@ -190,44 +190,122 @@ body {
 .panel-screws-bottom::before { left: -4px; }
 .panel-screws-bottom::after { right: -4px; }
 
-/* --- conditions -------------------------------------------------- */
+/* --- conditions: the control strip ------------------------------- */
 
-.conditions { display: grid; gap: 1.1rem; }
+.conditions { display: grid; gap: 1.35rem; }
 
-.condition { display: grid; gap: 0.4rem; }
+.selector { border: 0; padding: 0; margin: 0; min-width: 0; }
 
-.condition-q {
+.selector-legend {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.5rem;
+  width: 100%;
+  padding: 0 0 0.5rem;
   font-family: var(--display);
   font-size: 0.68rem;
   font-weight: 600;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
   color: var(--lum-dim);
 }
 
-.condition select {
-  appearance: none;
-  width: 100%;
-  background: var(--face);
-  color: var(--lum);
-  border: 1px solid var(--plate);
-  border-radius: var(--radius);
-  padding: 0.65rem 2rem 0.65rem 0.75rem;
+.selector-note {
   font-family: var(--mono);
-  font-size: 0.9rem;
-  font-variant-numeric: tabular-nums;
-  cursor: pointer;
-  background-image:
-    linear-gradient(45deg, transparent 50%, var(--lum-dim) 50%),
-    linear-gradient(135deg, var(--lum-dim) 50%, transparent 50%);
-  background-position: calc(100% - 17px) 50%, calc(100% - 12px) 50%;
-  background-size: 5px 5px, 5px 5px;
-  background-repeat: no-repeat;
+  font-size: 0.58rem;
+  letter-spacing: 0.08em;
+  text-transform: none;
+  color: var(--plate);
 }
 
-.condition select:hover { border-color: var(--lum-dim); }
+.detents {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 4px;
+  border: 1px solid var(--hairline);
+  border-radius: var(--radius);
+  background: var(--face);
+  padding: 6px;
+}
 
-.advanced { margin-top: 0.25rem; }
+.detent {
+  position: relative;
+  flex: 1 1 0;
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+  padding: 0.4rem 0.35rem 0.35rem;
+  border: 1px solid transparent;
+  border-radius: 2px;
+  cursor: pointer;
+  transition: border-color 110ms linear, background 110ms linear;
+}
+
+.is-dense .detent { flex: 1 1 16%; min-width: 38px; padding: 0.35rem 0.2rem 0.3rem; }
+
+/* Real radios underneath: keyboard, focus and screen readers stay native. */
+.detent input {
+  position: absolute;
+  opacity: 0;
+  width: 0;
+  height: 0;
+}
+
+.detent-tick {
+  width: 1.5px;
+  height: 9px;
+  background: var(--plate);
+  border-radius: 1px;
+}
+
+.detent-label {
+  font-family: var(--display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+  color: var(--lum-dim);
+  text-transform: uppercase;
+}
+
+.is-dense .detent-label { font-size: 0.68rem; }
+
+.detent:hover:not(.is-dead) { background: rgba(255,255,255,0.03); }
+
+.detent:not(.is-dead):hover .detent-label { color: var(--lum); }
+
+.detent.is-selected {
+  border-color: var(--radium);
+  background: rgba(124,255,158,0.08);
+}
+
+.detent.is-selected .detent-tick {
+  background: var(--radium);
+  height: 13px;
+  box-shadow: 0 0 5px rgba(124,255,158,0.9);
+}
+
+.detent.is-selected .detent-label { color: var(--radium); }
+
+/* Unpowered: the study reaches this position, no run stands behind it.
+   Dimmed rather than hidden, so the instrument's real range stays visible. */
+.detent.is-dead { cursor: not-allowed; }
+
+.detent.is-dead .detent-tick { background: #1a1d20; height: 5px; }
+
+.detent.is-dead .detent-label {
+  color: #3a4045;
+  text-decoration: line-through;
+  text-decoration-thickness: 1px;
+}
+
+.detent:focus-within { border-color: var(--lum); }
+
+.advanced { margin-top: 0.1rem; }
 
 .advanced summary {
   cursor: pointer;
@@ -238,7 +316,7 @@ body {
   color: var(--lum-dim);
 }
 
-.advanced p { color: var(--lum-dim); font-size: 0.75rem; margin: 0.6rem 0 0; }
+.advanced p { color: var(--lum-dim); font-size: 0.72rem; margin: 0.6rem 0 0; }
 
 /* --- engage ------------------------------------------------------ */
 

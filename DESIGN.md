@@ -78,6 +78,31 @@ Mono as body text is earned here rather than worn as a costume: this surface
 - **Readout well** beneath the pivot: `white / green`, bordered, in the sweep's
   dead zone so it never collides with tick labels.
 
+## 4b. The control strip
+
+Conditions are **detent selectors**, not dropdowns. Each position is a real
+`<input type="radio">` underneath — keyboard arrows, focus and screen-reader
+semantics stay native; the instrument appearance sits on top of form semantics
+rather than replacing them.
+
+Positions come from `matrix.js`, the study's intended parameter space as
+recorded in TRD section 3 and PRD section 8 — **not** from the dataset alone.
+Whether a position has data behind it is decided at runtime by
+`isCombinationAvailable`.
+
+- **Live**: luminous label, tall lit tick; selected turns radium with a glow.
+- **Unpowered**: dimmed, struck through, `disabled`, cursor `not-allowed`, and
+  a per-selector count ("7 unpowered").
+
+This is disclosure, not fabrication. Deriving options purely from the data hid
+the study's scope — a viewer seeing only "Stream / 1 AP" could not tell the
+work covers browsing, downloading and multi-AP at all. A range switch shows
+every detent it can reach; the unpowered ones say the study goes there and the
+run does not exist yet. No value the simulation never ran is ever offered or
+substituted.
+
+Placards are engraved-terse: `BROWSE`, `STREAM`, `DOWNLOAD`, `1 AP`, `3 AP`.
+
 ## 5. Materials
 
 - Panel: `--panel-raised` with a 1px hairline, 6px radius, and a top-edge
@@ -97,8 +122,9 @@ color-scheme: dark;                       /* native controls follow the panel */
 html { caret-color: var(--radium); scrollbar-color: var(--plate) var(--panel); }
 ```
 
-Native `<select>` arrows are drawn with CSS gradient triangles rather than
-left at browser default. Recharts' tooltip is themed to the instrument face —
+The explorer's `<select>` keeps its arrow drawn as CSS gradient triangles
+rather than left at browser default; the condition controls are detents, not
+selects. Recharts' tooltip is themed to the instrument face —
 its default is a white box, which on this ground is white text on white.
 
 ## 7. Motion

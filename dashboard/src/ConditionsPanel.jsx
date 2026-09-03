@@ -1,72 +1,112 @@
-import { TRAFFIC_LABELS } from './metrics';
+import { TRAFFIC_PLACARDS } from './metrics';
 import { availableConditions, isCombinationAvailable } from './scenarios';
+import { reachableConditions } from './matrix';
 
 /**
- * Every control is derived from the dataset. A value the simulation never
- * covered is shown disabled rather than offered and silently substituted.
+ * The control strip.
+ *
+ * Positions are radio inputs underneath, so keyboard arrows, focus and screen
+ * readers all behave natively; the instrument appearance sits on top of real
+ * form semantics rather than replacing them.
+ *
+ * A position the simulation never ran is rendered unpowered and disabled — it
+ * discloses that the study reaches there without ever offering a value that
+ * would have to be invented, and it is never silently substituted.
  */
+
+function Selector({ name, legend, positions, value, onSelect, format, isLive, dense }) {
+  const deadCount = positions.filter((p) => !isLive(p)).length;
+
+  return (
+    <fieldset className="selector">
+      <legend className="selector-legend">
+        {legend}
+        {deadCount > 0 && (
+          <span className="selector-note">{deadCount} unpowered</span>
+        )}
+      </legend>
+
+      <div className={dense ? 'detents is-dense' : 'detents'}>
+        {positions.map((p) => {
+          const live = isLive(p);
+          const selected = p === value;
+          return (
+            <label
+              key={p}
+              className={[
+                'detent',
+                selected ? 'is-selected' : '',
+                live ? '' : 'is-dead',
+              ].join(' ').trim()}
+              title={live ? undefined : 'Not simulated yet'}
+            >
+              <input
+                type="radio"
+                name={name}
+                value={String(p)}
+                checked={selected}
+                disabled={!live}
+                onChange={() => onSelect(p)}
+              />
+              <span className="detent-tick" aria-hidden="true" />
+              <span className="detent-label">{format(p)}</span>
+            </label>
+          );
+        })}
+      </div>
+    </fieldset>
+  );
+}
+
 export default function ConditionsPanel({ scenarios, conditions, onChange }) {
-  const options = availableConditions(scenarios);
+  const available = availableConditions(scenarios);
+  const reachable = reachableConditions(available);
 
   function set(patch) {
     onChange({ ...conditions, ...patch });
   }
 
-  function optionUsable(patch) {
-    return isCombinationAvailable(scenarios, { ...conditions, ...patch });
-  }
+  const usable = (patch) => isCombinationAvailable(scenarios, { ...conditions, ...patch });
 
   return (
     <div className="conditions">
-      <label className="condition">
-        <span className="condition-q">Students in the room</span>
-        <select
-          value={conditions.clients}
-          onChange={(e) => set({ clients: Number(e.target.value) })}
-        >
-          {options.clients.map((c) => (
-            <option key={c} value={c} disabled={!optionUsable({ clients: c })}>
-              {c} students{optionUsable({ clients: c }) ? '' : ' · NO DATA'}
-            </option>
-          ))}
-        </select>
-      </label>
+      <Selector
+        name="clients"
+        legend="Students"
+        positions={reachable.clients}
+        value={conditions.clients}
+        onSelect={(c) => set({ clients: c })}
+        format={(c) => c}
+        isLive={(c) => usable({ clients: c })}
+        dense
+      />
 
-      <label className="condition">
-        <span className="condition-q">Activity</span>
-        <select
-          value={conditions.trafficType}
-          onChange={(e) => set({ trafficType: e.target.value })}
-        >
-          {options.trafficTypes.map((t) => (
-            <option key={t} value={t} disabled={!optionUsable({ trafficType: t })}>
-              {TRAFFIC_LABELS[t] ?? t}
-              {optionUsable({ trafficType: t }) ? '' : ' · NO DATA'}
-            </option>
-          ))}
-        </select>
-      </label>
+      <Selector
+        name="traffic"
+        legend="Activity"
+        positions={reachable.trafficTypes}
+        value={conditions.trafficType}
+        onSelect={(t) => set({ trafficType: t })}
+        format={(t) => TRAFFIC_PLACARDS[t] ?? t}
+        isLive={(t) => usable({ trafficType: t })}
+      />
 
-      <label className="condition">
-        <span className="condition-q">Access points</span>
-        <select
-          value={conditions.aps}
-          onChange={(e) => set({ aps: Number(e.target.value) })}
-        >
-          {options.apCounts.map((a) => (
-            <option key={a} value={a} disabled={!optionUsable({ aps: a })}>
-              {a === 1 ? '1 access point' : `${a} access points`}
-              {optionUsable({ aps: a }) ? '' : ' · NO DATA'}
-            </option>
-          ))}
-        </select>
-      </label>
+      <Selector
+        name="aps"
+        legend="Access points"
+        positions={reachable.apCounts}
+        value={conditions.aps}
+        onSelect={(a) => set({ aps: a })}
+        format={(a) => `${a} AP`}
+        isLive={(a) => usable({ aps: a })}
+      />
 
       <details className="advanced">
         <summary>Advanced</summary>
-        <p className="go-note">
-          Competing networks and room spread are not in the dataset yet. They
-          appear here once those simulations have been run.
+        <p>
+          Competing networks and room spread are planned conditions with no
+          runs behind them yet. They appear as positions here once those
+          simulations exist.
         </p>
       </details>
     </div>

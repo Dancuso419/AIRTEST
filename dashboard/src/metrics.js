@@ -71,6 +71,17 @@ export const METRICS = [
   },
 ];
 
+
+/**
+ * Terse placard forms for the control strip. An instrument legend is engraved
+ * and short; "Browsing the web" is prose, "BROWSE" is a switch position.
+ */
+export const TRAFFIC_PLACARDS = {
+  web: 'Browse',
+  video: 'Stream',
+  bulk: 'Download',
+};
+
 export const TRAFFIC_LABELS = {
   web: 'Browsing the web',
   video: 'Streaming video',
