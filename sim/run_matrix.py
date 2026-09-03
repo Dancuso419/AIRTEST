@@ -54,7 +54,13 @@ def execute(job):
     xml_path = prefix.with_suffix(".xml")
     phy_path = Path(str(prefix) + ".phy.json")
     meta_path = Path(str(prefix) + ".meta.json")
-    if xml_path.exists() and phy_path.exists() and meta_path.exists():
+    # Four artifacts now, not three: the time series joined them when the
+    # dashboard began replaying runs second by second. Adding it here is what
+    # makes existing three-artifact runs regenerate instead of being skipped
+    # forever with no series behind them.
+    series_path = Path(str(prefix) + ".series.json")
+    if (xml_path.exists() and phy_path.exists() and meta_path.exists()
+            and series_path.exists()):
         return {"run_id": rid, "status": "skipped", "seconds": 0.0}
 
     if job["topology"] == "multi_ap":
@@ -100,7 +106,8 @@ def execute(job):
         return {"run_id": rid, "status": "failed", "seconds": elapsed,
                 "returncode": proc.returncode, "stderr": proc.stderr[-2000:]}
 
-    if not (xml_path.exists() and phy_path.exists() and meta_path.exists()):
+    if not (xml_path.exists() and phy_path.exists() and meta_path.exists()
+            and series_path.exists()):
         return {"run_id": rid, "status": "missing_output", "seconds": elapsed}
 
     return {"run_id": rid, "status": "ok", "seconds": elapsed}

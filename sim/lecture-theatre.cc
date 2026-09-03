@@ -12,6 +12,7 @@
 
 #include <algorithm>
 #include <fstream>
+#include <vector>
 #include <iomanip>
 #include <string>
 
@@ -71,6 +72,55 @@ PhyStateTrace(std::string context, Time start, Time duration, WifiPhyState state
     }
 }
 
+/**
+ * Periodic time-series sampling.
+ *
+ * The dashboard replays a run second by second, so the needles move because
+ * the data moves rather than because a timer is pretending. That requires the
+ * run to record what it was doing over time, not only its endpoint.
+ *
+ * Only CUMULATIVE counters are emitted. Every derived metric (goodput, loss,
+ * latency) is computed downstream by the same Python code that computes the
+ * aggregates, so the series and the summary can never disagree about what a
+ * metric means. Deriving them here would duplicate that arithmetic in a
+ * second language and invite exactly that divergence.
+ */
+struct Sample
+{
+    double t;
+    uint64_t rxPackets;
+    uint64_t txPackets;
+    uint64_t rxBytes;
+    double delaySumNs;
+    double airtimeBusyS;
+};
+
+static std::vector<Sample> g_series;
+
+static void
+SampleFlows(Ptr<FlowMonitor> monitor, double intervalSec, double stopSec)
+{
+    // Read current counters without CheckForLostPackets(): calling it mid-run
+    // repeatedly would perturb the very loss accounting the study reports.
+    uint64_t rxP = 0, txP = 0, rxB = 0;
+    double delayNs = 0.0;
+    for (const auto& kv : monitor->GetFlowStats())
+    {
+        rxP += kv.second.rxPackets;
+        txP += kv.second.txPackets;
+        rxB += kv.second.rxBytes;
+        delayNs += kv.second.delaySum.GetNanoSeconds();
+    }
+
+    g_series.push_back({Simulator::Now().GetSeconds(), rxP, txP, rxB, delayNs,
+                        g_apPhy.tx + g_apPhy.rx + g_apPhy.busy});
+
+    if (Simulator::Now().GetSeconds() + intervalSec <= stopSec + 1e-9)
+    {
+        Simulator::Schedule(Seconds(intervalSec), &SampleFlows, monitor, intervalSec, stopSec);
+    }
+}
+
 int
 main(int argc, char* argv[])
 {
@@ -85,6 +135,8 @@ main(int argc, char* argv[])
     // WiFi 6 mechanisms account for observed differences). Switchable so the
     // study can isolate its effect, and so its cost can be measured.
     bool ofdma = true;
+    // Sampling period for the time series, in milliseconds of simulated time.
+    double sampleMs = 100.0;
 
     // DL MU PPDUs need an explicit ack sequence type. Two ordering constraints
     // apply and both are load-bearing: it must precede the first wifi.Install
@@ -103,6 +155,7 @@ main(int argc, char* argv[])
     cmd.AddValue("aps", "Number of access points (1 or 3)", aps);
     cmd.AddValue("seed", "RNG run number for this trial", seed);
     cmd.AddValue("ofdma", "wifi6 only: enable DL OFDMA multi-user scheduling", ofdma);
+    cmd.AddValue("sampleMs", "time-series sampling period, simulated ms", sampleMs);
     cmd.AddValue("duration", "Simulated seconds", duration);
     cmd.AddValue("out", "Output path prefix", out);
     cmd.Parse(argc, argv);
@@ -289,6 +342,10 @@ main(int argc, char* argv[])
     // client counts. Packets still in flight at cutoff now count as
     // undelivered, which is the honest reading for a fixed measurement period
     // and is symmetric across both standards.
+    // First sample at appStart, so the series covers exactly the measurement
+    // window and never includes association traffic.
+    Simulator::Schedule(Seconds(appStart), &SampleFlows, monitor, sampleMs / 1000.0, duration);
+
     Simulator::Stop(Seconds(duration));
     Simulator::Run();
 
@@ -309,6 +366,35 @@ main(int argc, char* argv[])
     // The measurement window is a real quantity, not an assumed
     // "duration - appStart": emit the actual app start/stop and offered load so
     // the parser computes throughput and satisfaction ratio from real values.
+    {
+        std::ofstream series(out + ".series.json");
+        if (!series.is_open())
+        {
+            NS_FATAL_ERROR("Cannot open " << out << ".series.json for writing; check --out");
+        }
+        series << "{\n"
+               << "  \"sampleMs\": " << sampleMs << ",\n"
+               << "  \"windowStartSec\": " << appStart << ",\n"
+               << "  \"windowEndSec\": " << duration << ",\n"
+               << "  \"samples\": [\n";
+        for (size_t i = 0; i < g_series.size(); ++i)
+        {
+            const Sample& x = g_series[i];
+            // Every field sets its own precision explicitly. setprecision is
+            // sticky on the stream, so a single setprecision(0) for delaySumNs
+            // silently truncated the NEXT row's timestamp to its integer
+            // second and collapsed every interval to zero width.
+            series << "    {\"t\": " << std::fixed << std::setprecision(4) << x.t
+                   << ", \"rxPackets\": " << x.rxPackets
+                   << ", \"txPackets\": " << x.txPackets
+                   << ", \"rxBytes\": " << x.rxBytes
+                   << ", \"delaySumNs\": " << std::setprecision(0) << x.delaySumNs
+                   << ", \"airtimeBusySec\": " << std::setprecision(6) << x.airtimeBusyS << "}"
+                   << (i + 1 < g_series.size() ? "," : "") << "\n";
+        }
+        series << "  ]\n}\n";
+    }
+
     std::ofstream meta(out + ".meta.json");
     if (!meta.is_open())
     {
