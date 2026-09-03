@@ -1,5 +1,6 @@
 import { METRICS, STANDARD_LABELS } from './metrics';
 import InstrumentDial from './InstrumentDial';
+import { sampleAt } from './useReplay';
 
 /**
  * The six-pack. Six instruments, each owning one truth, read as a fixed
@@ -50,9 +51,20 @@ const FORMAT = {
  * value — they are whole-run figures with no meaningful per-interval form,
  * and inventing one would be worse than holding steady.
  */
-export default function ResultGauges({ trial5, trial6, frame5, frame6 }) {
+export default function ResultGauges({ trial5, trial6, frame5, frame6,
+                                       series5, series6, position, playing }) {
+  // Printed value: the sample the run actually recorded.
   const read = (trial, frame, key) =>
     (frame && frame[key] !== undefined ? frame[key] : trial?.[key]);
+
+  // Needle: interpolated between two adjacent recorded samples so it sweeps
+  // rather than steps. Falls back to the printed value when not replaying,
+  // and for whole-run metrics the series does not carry.
+  const point = (series, trial, frame, key) => {
+    if (!playing) return read(trial, frame, key);
+    const v = sampleAt(series, position, key);
+    return typeof v === 'number' ? v : read(trial, frame, key);
+  };
 
   return (
     <>
@@ -74,6 +86,8 @@ export default function ResultGauges({ trial5, trial6, frame5, frame6 }) {
             metric={METRICS.find((m) => m.key === key)}
             value5={read(trial5, frame5, key)}
             value6={read(trial6, frame6, key)}
+            needle5={point(series5, trial5, frame5, key)}
+            needle6={point(series6, trial6, frame6, key)}
             scaleMax={SCALE[key]}
             formatValue={FORMAT[key]}
           />

@@ -29,10 +29,21 @@
   --ink-mid: #56534c;
   --ink-dim: #8b867c;
 
+  /* Accent identity from METER REF 1: a turquoise-to-spring-green gradient.
+     The reference's literal values (#35e0c0 -> #2fe06b) sit near 1.7:1 on
+     cream, invisible for a needle or a label, so the hue is kept and the
+     value is taken down until it reads. The bright pair survives only where
+     it fills area, never where it draws a thin mark. */
+  --teal: #0d8f6f;
+  --green: #12894a;
+  --teal-bright: #35e0c0;
+  --green-bright: #2fe06b;
+  --accent-gradient: linear-gradient(90deg, var(--teal), var(--green));
+
   /* The two standards. Separated by hue AND value, plus line style in the
      chart, so the comparison survives greyscale printing in a dissertation. */
   --wifi5: #16181d;
-  --wifi6: #1b3fa0;
+  --wifi6: #0d8f6f;
 
   /* Caveats only. Never a standard, never decoration. */
   --caution: #a35a06;
@@ -46,7 +57,7 @@
 
 * { box-sizing: border-box; }
 
-html { caret-color: var(--wifi6); }
+html { caret-color: var(--teal); }
 
 body {
   margin: 0;
@@ -59,9 +70,9 @@ body {
   font-variant-numeric: tabular-nums;
 }
 
-::selection { background: #d7e0f7; color: var(--ink); }
+::selection { background: #bff2e2; color: var(--ink); }
 
-:focus-visible { outline: 2px solid var(--wifi6); outline-offset: 2px; }
+:focus-visible { outline: 2px solid var(--teal); outline-offset: 2px; }
 
 .num { font-variant-numeric: tabular-nums; font-feature-settings: 'tnum' 1; }
 
@@ -116,7 +127,7 @@ body {
   font-weight: 600;
   letter-spacing: 0.14em;
   text-transform: uppercase;
-  color: var(--ink-mid);
+  color: var(--teal);
 }
 
 .section-label::before {
@@ -225,7 +236,7 @@ body {
 
 .detent.is-dead .detent-label { color: var(--ink-dim); opacity: 0.55; }
 
-.detent:focus-within { outline: 2px solid var(--wifi6); outline-offset: -2px; }
+.detent:focus-within { outline: 2px solid var(--teal); outline-offset: -2px; }
 
 .advanced { margin-top: -0.4rem; }
 
@@ -250,18 +261,19 @@ body {
   font-weight: 700;
   letter-spacing: 0.16em;
   text-transform: uppercase;
-  color: var(--paper);
-  background: var(--ink);
-  border: 1px solid var(--ink);
+  color: #ffffff;
+  background: var(--accent-gradient);
+  border: 1px solid transparent;
   cursor: pointer;
-  transition: background 110ms linear;
+  transition: filter 110ms linear;
 }
 
-.engage:hover:not(:disabled) { background: var(--wifi6); border-color: var(--wifi6); }
+.engage:hover:not(:disabled) { filter: brightness(1.1); }
 
 .engage:disabled {
   color: var(--ink-dim);
   background: var(--paper-sunk);
+  background-image: none;
   border-color: var(--rule-strong);
   cursor: not-allowed;
 }
@@ -304,7 +316,7 @@ body {
   min-width: 15ch;
 }
 
-.transport-state.is-playing { color: var(--wifi6); }
+.transport-state.is-playing { color: var(--teal); }
 
 /* A replay scrubber, not a progress bar: it reports position within stored
    data, never elapsed measurement. */
@@ -315,7 +327,7 @@ body {
   position: relative;
 }
 
-.scrub-fill { position: absolute; inset: 0 auto 0 0; background: var(--ink); }
+.scrub-fill { position: absolute; inset: 0 auto 0 0; background: var(--accent-gradient); }
 
 .transport-clock {
   font-family: var(--mono);
@@ -355,7 +367,7 @@ body {
 .readout-pair { display: flex; justify-content: center; align-items: baseline; gap: 0.45rem; }
 
 .readout-5 { color: var(--wifi5); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
-.readout-6 { color: var(--wifi6); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
+.readout-6 { color: var(--teal); font-size: 1.35rem; font-weight: 700; letter-spacing: -0.02em; }
 .readout-sep { color: var(--rule-strong); font-size: 0.85rem; }
 
 .readout-unit {
@@ -435,7 +447,7 @@ body {
 }
 
 .status-cell dd { margin: 0.2rem 0 0; font-size: 1rem; font-weight: 600; }
-.status-cell dd.is-green { color: var(--wifi6); }
+.status-cell dd.is-green { color: var(--teal); }
 
 .actions { display: flex; gap: 0.6rem; flex-wrap: wrap; margin-top: 1.25rem; }
 

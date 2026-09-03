@@ -44,3 +44,47 @@ test('degrades safely for a run with too few samples to replay', () => {
 test('negative elapsed time clamps to the first frame', () => {
   assert.equal(frameIndexAt(-2, 29), 0);
 });
+
+import { framePositionAt, sampleAt } from './useReplay.js';
+
+const SERIES = [
+  { t: 0, v: 0 },
+  { t: 1, v: 10 },
+  { t: 2, v: 30 },
+];
+
+test('position advances continuously, not in steps', () => {
+  const seen = [];
+  for (let s = 0; s <= REPLAY_SECONDS; s += 0.25) seen.push(framePositionAt(s, 29));
+  // Every step must differ: a stepping needle is exactly the defect this fixes.
+  const distinct = new Set(seen.map((v) => v.toFixed(4)));
+  assert.equal(distinct.size, seen.length);
+});
+
+test('position and printed index stay in agreement', () => {
+  for (let s = 0; s <= REPLAY_SECONDS; s += 0.31) {
+    assert.equal(Math.floor(framePositionAt(s, 29)), frameIndexAt(s, 29));
+  }
+});
+
+test('sampleAt lands exactly on real samples at whole positions', () => {
+  assert.equal(sampleAt(SERIES, 0, 'v'), 0);
+  assert.equal(sampleAt(SERIES, 1, 'v'), 10);
+  assert.equal(sampleAt(SERIES, 2, 'v'), 30);
+});
+
+test('sampleAt interpolates linearly between two measured samples', () => {
+  assert.equal(sampleAt(SERIES, 0.5, 'v'), 5);
+  assert.equal(sampleAt(SERIES, 1.5, 'v'), 20);
+});
+
+test('sampleAt never extrapolates beyond the recorded run', () => {
+  assert.equal(sampleAt(SERIES, 9, 'v'), 30);
+  assert.equal(sampleAt(SERIES, -3, 'v'), 0);
+});
+
+test('sampleAt degrades safely on missing data', () => {
+  assert.equal(sampleAt([], 1, 'v'), undefined);
+  assert.equal(sampleAt(null, 1, 'v'), undefined);
+  assert.equal(sampleAt([{ t: 0 }], 0, 'v'), undefined);
+});

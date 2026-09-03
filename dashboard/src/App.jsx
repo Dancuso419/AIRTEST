@@ -136,6 +136,10 @@ export default function App() {
                 trial6={run.trial6}
                 frame5={replay.playing ? replay.frame5 : null}
                 frame6={replay.playing ? replay.frame6 : null}
+                series5={run.trial5?.series}
+                series6={run.trial6?.series}
+                position={replay.position}
+                playing={replay.playing}
               />
 
               <dl className="status-row">
@@ -167,10 +171,11 @@ export default function App() {
             <>
               <p className="verdict">
                 Set the room, then engage. Six instruments read one stored trial —
-                the ink needle is {STANDARD_LABELS.wifi5}, the blue needle is{' '}
+                the ink needle is {STANDARD_LABELS.wifi5}, the teal needle is{' '}
                 {STANDARD_LABELS.wifi6}. Where they separate is the finding.
               </p>
-              <ResultGauges trial5={null} trial6={null} frame5={null} frame6={null} />
+              <ResultGauges trial5={null} trial6={null} frame5={null} frame6={null}
+                            series5={null} series6={null} position={0} playing={false} />
             </>
           )}
         </section>

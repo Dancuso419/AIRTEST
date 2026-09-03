@@ -29,9 +29,40 @@ export function frameIndexAt(elapsedSec, frames, replaySeconds = REPLAY_SECONDS)
   return Math.min(Math.floor(progress * (frames - 1)), frames - 1);
 }
 
+/**
+ * Continuous position along the recorded samples, as a float.
+ *
+ * The needle uses this so it sweeps instead of stepping; the printed value
+ * still uses frameIndexAt, so every NUMBER on screen is one the run actually
+ * recorded. Interpolating between two adjacent measured samples is what a
+ * line chart already does when it draws a segment between two points — it
+ * invents no data, it only draws the path between them.
+ */
+export function framePositionAt(elapsedSec, frames, replaySeconds = REPLAY_SECONDS) {
+  if (frames < 2) return 0;
+  const progress = Math.min(Math.max(elapsedSec, 0) / replaySeconds, 1);
+  return progress * (frames - 1);
+}
+
+/** Value of `key` at a fractional position, linearly between real samples. */
+export function sampleAt(series, position, key) {
+  if (!series || series.length === 0) return undefined;
+  const last = series.length - 1;
+  const clamped = Math.min(Math.max(position, 0), last);
+  const i = Math.floor(clamped);
+  const j = Math.min(i + 1, last);
+  const t = clamped - i;
+  const a = series[i]?.[key];
+  const b = series[j]?.[key];
+  if (typeof a !== 'number' || typeof b !== 'number') return a;
+  return a + (b - a) * t;
+}
+
 export function useReplay(series5, series6) {
   const frames = Math.min(series5?.length ?? 0, series6?.length ?? 0);
   const [index, setIndex] = useState(0);
+  // Fractional position drives the needle; `index` drives the printed value.
+  const [position, setPosition] = useState(0);
   const [playing, setPlaying] = useState(false);
   const raf = useRef(null);
   const startedAt = useRef(0);
@@ -61,6 +92,7 @@ export function useReplay(series5, series6) {
 
     function tick(now) {
       const elapsed = (now - startedAt.current) / 1000;
+      setPosition(framePositionAt(elapsed, frames));
       setIndex(frameIndexAt(elapsed, frames));
       if (elapsed < REPLAY_SECONDS) {
         raf.current = requestAnimationFrame(tick);
@@ -85,6 +117,7 @@ export function useReplay(series5, series6) {
     if (frames < 2) {
       setPlaying(false);
       setIndex(0);
+      setPosition(0);
       return;
     }
 
@@ -94,10 +127,12 @@ export function useReplay(series5, series6) {
     if (reduced) {
       setPlaying(false);
       setIndex(frames - 1);
+      setPosition(frames - 1);
       return;
     }
 
     setIndex(0);
+    setPosition(0);
     startedAt.current = performance.now();
     setPlaying(true);
   }, [series5, series6, frames]);
@@ -107,6 +142,7 @@ export function useReplay(series5, series6) {
   return {
     playing,
     index,
+    position,
     frames,
     progress: frames > 1 ? index / (frames - 1) : 0,
     simSeconds: at(series5)?.t ?? null,

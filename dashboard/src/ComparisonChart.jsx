@@ -90,7 +90,7 @@ export default function ComparisonChart({
           dataKey="wifi6_band"
           name={`${STANDARD_LABELS.wifi6} ±1 SD`}
           stroke="none"
-          fill="#1b3fa0"
+          fill="#0d8f6f"
           fillOpacity={0.15}
         />
         <Line
@@ -104,7 +104,7 @@ export default function ComparisonChart({
         <Line
           dataKey="wifi6_mean"
           name={STANDARD_LABELS.wifi6}
-          stroke="#1b3fa0"
+          stroke="#0d8f6f"
           strokeWidth={2}
           dot={{ r: 4 }}
         />

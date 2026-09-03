@@ -40,9 +40,13 @@ function Needle({ fraction, color, length, width }) {
   );
 }
 
-export default function InstrumentDial({ metric, value5, value6, scaleMax, formatValue }) {
-  const f5 = Math.max(0, Math.min((value5 ?? 0) / scaleMax, 1));
-  const f6 = Math.max(0, Math.min((value6 ?? 0) / scaleMax, 1));
+export default function InstrumentDial({ metric, value5, value6, needle5, needle6,
+                                         scaleMax, formatValue }) {
+  // Needle position may be interpolated; the printed value never is.
+  const n5 = needle5 ?? value5;
+  const n6 = needle6 ?? value6;
+  const f5 = Math.max(0, Math.min((n5 ?? 0) / scaleMax, 1));
+  const f6 = Math.max(0, Math.min((n6 ?? 0) / scaleMax, 1));
 
   const majors = [0, 0.5, 1];
   const minors = Array.from({ length: 21 }, (_, i) => i / 20);
@@ -80,7 +84,7 @@ export default function InstrumentDial({ metric, value5, value6, scaleMax, forma
           {/* Different lengths so an exact tie still reads as two needles.
               Equal performance is a finding; a hidden needle would erase it. */}
           <Needle fraction={f5} color="#16181d" length={NEEDLE_LEN} width={1.9} />
-          <Needle fraction={f6} color="#1b3fa0" length={NEEDLE_LEN - 13} width={2.4} />
+          <Needle fraction={f6} color="#0d8f6f" length={NEEDLE_LEN - 13} width={2.4} />
 
           <circle cx={CX} cy={CY} r="3.6" fill="#faf8f4" stroke="#16181d" strokeWidth="1.2" />
         </svg>
