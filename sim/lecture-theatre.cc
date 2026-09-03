@@ -81,6 +81,10 @@ main(int argc, char* argv[])
     uint32_t seed = 1;
     double duration = 20.0;
     std::string out = "run";
+    // OFDMA is the mechanism under study (PRD objective 2: identify which
+    // WiFi 6 mechanisms account for observed differences). Switchable so the
+    // study can isolate its effect, and so its cost can be measured.
+    bool ofdma = true;
 
     // DL MU PPDUs need an explicit ack sequence type. Two ordering constraints
     // apply and both are load-bearing: it must precede the first wifi.Install
@@ -98,6 +102,7 @@ main(int argc, char* argv[])
     cmd.AddValue("clients", "Number of client stations", clients);
     cmd.AddValue("aps", "Number of access points (1 or 3)", aps);
     cmd.AddValue("seed", "RNG run number for this trial", seed);
+    cmd.AddValue("ofdma", "wifi6 only: enable DL OFDMA multi-user scheduling", ofdma);
     cmd.AddValue("duration", "Simulated seconds", duration);
     cmd.AddValue("out", "Output path prefix", out);
     cmd.Parse(argc, argv);
@@ -181,9 +186,15 @@ main(int argc, char* argv[])
         mac.SetType("ns3::ApWifiMac",
                     "Ssid", SsidValue(ssid),
                     "EnableBeaconJitter", BooleanValue(false));
-        mac.SetMultiUserScheduler("ns3::RrMultiUserScheduler",
-                                  "EnableUlOfdma", BooleanValue(false),
-                                  "EnableBsrp", BooleanValue(false));
+        if (ofdma)
+        {
+            mac.SetMultiUserScheduler("ns3::RrMultiUserScheduler",
+                                      "EnableUlOfdma", BooleanValue(false),
+                                      "EnableBsrp", BooleanValue(false));
+        }
+        // With --ofdma=0 the AP keeps HE rates but sends single-user PPDUs,
+        // isolating what OFDMA itself contributes to both throughput and
+        // simulation cost.
     }
     else
     {
@@ -305,6 +316,9 @@ main(int argc, char* argv[])
     }
     meta << "{\n"
          << "  \"standard\": \"" << standard << "\",\n"
+         // A run must describe itself: an --ofdma=0 trial is not comparable
+         // with the default ones and must never be mistaken for one.
+         << "  \"ofdma\": " << ((standard == "wifi6" && ofdma) ? "true" : "false") << ",\n"
          << "  \"clients\": " << clients << ",\n"
          << "  \"appStartSec\": " << appStart << ",\n"
          << "  \"appStopSec\": " << duration << ",\n"
