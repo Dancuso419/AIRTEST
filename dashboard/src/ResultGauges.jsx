@@ -36,6 +36,30 @@ const SCALE = {
   fairness_index: 1,
 };
 
+/**
+ * Major divisions per dial, chosen so every labelled tick is a clean number.
+ * 5 Mbps over 5 divisions reads 0,1,2,3,4,5 — over 4 it would read 1.25 and
+ * 3.75, which is the kind of scale nobody can read at a glance.
+ */
+const DIVISIONS = {
+  per_user_throughput_mbps: 5,
+  latency_ms: 4,
+  packet_loss_pct: 4,
+  airtime_utilization_pct: 4,
+  satisfaction_ratio_pct: 4,
+  fairness_index: 4,
+};
+
+/** Tick labels are terser than readouts: the scale is a ruler, not a report. */
+const TICK_FORMAT = {
+  per_user_throughput_mbps: (v) => String(Math.round(v)),
+  latency_ms: (v) => String(Math.round(v)),
+  packet_loss_pct: (v) => String(Math.round(v)),
+  airtime_utilization_pct: (v) => String(Math.round(v)),
+  satisfaction_ratio_pct: (v) => String(Math.round(v)),
+  fairness_index: (v) => (v === 0 || v === 1 ? String(v) : v.toFixed(2).replace(/^0/, '')),
+};
+
 const FORMAT = {
   per_user_throughput_mbps: (v) => (v ?? 0).toFixed(1),
   latency_ms: (v) => (v ?? 0).toFixed(1),
@@ -90,6 +114,8 @@ export default function ResultGauges({ trial5, trial6, frame5, frame6,
             needle6={point(series6, trial6, frame6, key)}
             scaleMax={SCALE[key]}
             formatValue={FORMAT[key]}
+            divisions={DIVISIONS[key]}
+            formatTick={TICK_FORMAT[key]}
           />
         ))}
       </div>

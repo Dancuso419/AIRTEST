@@ -10,9 +10,12 @@
  */
 
 const CX = 100;
-const CY = 104;
-const R = 76;
-const NEEDLE_LEN = 66;
+const CY = 108;
+const R = 70;
+const NEEDLE_LEN = 62;
+// Scale labels sit OUTSIDE the arc, as on both reference dials. Inside, the
+// needle swept straight across them.
+const LABEL_R = R + 12;
 
 // 200 degrees, opening downward. The gap at the bottom is where a needle
 // parks, so "no data" is visibly different from "zero".
@@ -41,20 +44,26 @@ function Needle({ fraction, color, length, width }) {
 }
 
 export default function InstrumentDial({ metric, value5, value6, needle5, needle6,
-                                         scaleMax, formatValue }) {
+                                         scaleMax, formatValue, divisions = 4,
+                                         formatTick }) {
   // Needle position may be interpolated; the printed value never is.
   const n5 = needle5 ?? value5;
   const n6 = needle6 ?? value6;
   const f5 = Math.max(0, Math.min((n5 ?? 0) / scaleMax, 1));
   const f6 = Math.max(0, Math.min((n6 ?? 0) / scaleMax, 1));
 
-  const majors = [0, 0.5, 1];
-  const minors = Array.from({ length: 21 }, (_, i) => i / 20);
+  // Divisions are chosen per metric so every labelled tick is a clean number:
+  // 5 Mbps reads 0..5 in whole steps rather than 1.25 / 3.75.
+  const majors = Array.from({ length: divisions + 1 }, (_, i) => i / divisions);
+  const mids = Array.from({ length: divisions }, (_, i) => (i + 0.5) / divisions);
+  const minorCount = divisions * 10;
+  const minors = Array.from({ length: minorCount + 1 }, (_, i) => i / minorCount);
+  const label = formatTick ?? formatValue;
 
   return (
     <div className="instrument">
       <div className="dial-face">
-        <svg viewBox="0 0 200 156" role="img"
+        <svg viewBox="0 0 200 152" role="img"
              aria-label={`${metric.plainLabel}. WiFi 5 ${formatValue(value5)}, WiFi 6 ${formatValue(value6)} ${metric.unit}`}>
           <path d={arcPath(R)} fill="none" stroke="#cfc8b9" strokeWidth="1" />
 
@@ -76,7 +85,7 @@ export default function InstrumentDial({ metric, value5, value6, needle5, needle
                     fontFamily="Archivo Variable, sans-serif"
                     textAnchor="middle" dominantBaseline="middle"
                     style={{ fontVariantNumeric: 'tabular-nums' }}>
-                {formatValue(t * scaleMax)}
+                {label(t * scaleMax)}
               </text>
             );
           })}
