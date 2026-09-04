@@ -394,3 +394,81 @@ def test_parse_series_returns_empty_for_a_single_sample(tmp_path):
         {"t": 0.0, "rxPackets": 0, "txPackets": 0, "rxBytes": 0,
          "delaySumNs": 0, "airtimeBusySec": 0.0}]}))
     assert parse_series(p, payload_bytes=1000, clients=4) == []
+
+
+def _fm_xml(tmp_path, stats, classifier):
+    """Minimal FlowMonitor document: FlowStats plus an Ipv4FlowClassifier."""
+    rows = "".join(
+        f'<Flow flowId="{f["id"]}" txPackets="{f["tx"]}" rxPackets="{f["rx"]}" '
+        f'rxBytes="{f["bytes"]}" lostPackets="0" '
+        f'delaySum="+0.0ns" jitterSum="+0.0ns" />' for f in stats)
+    cls = "".join(
+        f'<Flow flowId="{c["id"]}" sourceAddress="10.1.1.1" '
+        f'destinationAddress="10.1.1.2" sourcePort="{c["sport"]}" '
+        f'destinationPort="{c["dport"]}" protocol="6" />' for c in classifier)
+    p = tmp_path / "fm.xml"
+    p.write_text(
+        f'<FlowMonitor><FlowStats>{rows}</FlowStats>'
+        f'<Ipv4FlowClassifier>{cls}</Ipv4FlowClassifier></FlowMonitor>')
+    return p
+
+
+def test_tcp_ack_flows_are_excluded(tmp_path):
+    # A bulk run opens a reverse ACK flow per client. Counting them reported
+    # 20 flows for 10 clients and 431% of offered load.
+    p = _fm_xml(
+        tmp_path,
+        stats=[
+            {"id": 1, "tx": 100, "rx": 100, "bytes": 100 * (1448 + 40)},  # data
+            {"id": 2, "tx": 100, "rx": 100, "bytes": 100 * 40},           # ACKs
+        ],
+        classifier=[
+            {"id": 1, "sport": 49153, "dport": 5000},   # AP -> client
+            {"id": 2, "sport": 5000, "dport": 49153},   # client -> AP
+        ],
+    )
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1448, app_port_base=5000,
+                            app_port_count=10, header_bytes=40)
+    assert len(out["per_flow_throughput_mbps"]) == 1, "ACK flow was counted"
+    # 100 packets * 1448 B payload * 8 / 1 s = 1.1584 Mbps
+    assert out["aggregate_throughput_mbps"] == pytest.approx(1.1584, abs=0.001)
+
+
+def test_goodput_excludes_transport_headers_exactly(tmp_path):
+    # rxBytes carries IP+UDP; payload must come out exact rather than assuming
+    # every packet was a full segment.
+    p = _fm_xml(
+        tmp_path,
+        stats=[{"id": 1, "tx": 50, "rx": 50, "bytes": 50 * (1200 + 28)}],
+        classifier=[{"id": 1, "sport": 49153, "dport": 5000}],
+    )
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1200, app_port_base=5000,
+                            app_port_count=10, header_bytes=28)
+    assert out["aggregate_throughput_mbps"] == pytest.approx(0.48, abs=1e-3)
+
+
+def test_short_tcp_segments_are_not_rounded_up_to_full(tmp_path):
+    # Half-full segments: the old rx_packets * payload_bytes shortcut would
+    # report double the real goodput.
+    p = _fm_xml(
+        tmp_path,
+        stats=[{"id": 1, "tx": 10, "rx": 10, "bytes": 10 * (724 + 40)}],
+        classifier=[{"id": 1, "sport": 49153, "dport": 5000}],
+    )
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1448, app_port_base=5000,
+                            app_port_count=10, header_bytes=40)
+    # 10 packets * 724 B payload * 8 = 0.05792 Mbps; the parser rounds
+    # aggregates to 3 dp. The shortcut it replaces would have reported 0.116.
+    assert out["aggregate_throughput_mbps"] == pytest.approx(0.058, abs=1e-3)
+    assert out["aggregate_throughput_mbps"] < 0.08, "full-segment shortcut is back"
+
+
+def test_a_run_without_a_classifier_keeps_every_flow(tmp_path):
+    # Data recorded before the scenario emitted port metadata must still parse.
+    p = tmp_path / "old.xml"
+    p.write_text('<FlowMonitor><FlowStats>'
+                 '<Flow flowId="1" txPackets="10" rxPackets="10" rxBytes="12280" '
+                 'lostPackets="0" delaySum="+0.0ns" jitterSum="+0.0ns" />'
+                 '</FlowStats></FlowMonitor>')
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1200)
+    assert len(out["per_flow_throughput_mbps"]) == 1

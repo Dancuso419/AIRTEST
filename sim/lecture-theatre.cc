@@ -164,10 +164,9 @@ main(int argc, char* argv[])
     {
         NS_FATAL_ERROR("--standard must be wifi5 or wifi6, got: " << standard);
     }
-    if (traffic != "video")
+    if (traffic != "video" && traffic != "web" && traffic != "bulk")
     {
-        NS_FATAL_ERROR("--traffic " << traffic << " is not implemented yet; "
-                       << "only 'video' is available in the current slice.");
+        NS_FATAL_ERROR("--traffic must be web, video or bulk, got: " << traffic);
     }
     if (aps != 1)
     {
@@ -288,8 +287,54 @@ main(int argc, char* argv[])
     // Downlink CBR UDP video: AP sends, each client receives.
     // Offered load is exactly 3.0 Mbps * clients, which makes the
     // throughput/loss/offered-load reconciliation checkable by hand.
-    const double perClientMbps = 3.0;
-    const uint32_t payloadBytes = 1200;
+    // Traffic profiles, per TRD section 3. Offered load is the MEAN rate per
+    // client; for the bursty profile that is the wire rate times the duty
+    // cycle, not the wire rate itself, and the parser's offered-load table
+    // must agree with the mean or every satisfaction ratio is wrong.
+    //
+    //   web    bursty on/off over UDP, 0.5 Mbps mean  (1 Mbps at 50% duty)
+    //   video  CBR over UDP, 3 Mbps
+    //   bulk   long-lived TCP, rate-limited to 5 Mbps
+    //
+    // Bulk is rate-limited rather than left to saturate so that offered load
+    // stays a defined quantity and the satisfaction ratio remains meaningful.
+    const bool isBulk = (traffic == "bulk");
+    const std::string socketFactory =
+        isBulk ? "ns3::TcpSocketFactory" : "ns3::UdpSocketFactory";
+
+    double perClientMbps;   // mean offered load
+    double wireRateMbps;    // rate while the source is on
+    std::string onTime;
+    std::string offTime;
+    uint32_t payloadBytes;
+
+    if (traffic == "web")
+    {
+        perClientMbps = 0.5;
+        wireRateMbps = 1.0;
+        // Exponential on/off with equal means gives a 50% duty cycle, so the
+        // mean lands on 0.5 Mbps while the traffic stays genuinely bursty.
+        onTime = "ns3::ExponentialRandomVariable[Mean=0.5]";
+        offTime = "ns3::ExponentialRandomVariable[Mean=0.5]";
+        payloadBytes = 512;
+    }
+    else if (isBulk)
+    {
+        perClientMbps = 5.0;
+        wireRateMbps = 5.0;
+        onTime = "ns3::ConstantRandomVariable[Constant=1]";
+        offTime = "ns3::ConstantRandomVariable[Constant=0]";
+        payloadBytes = 1448;   // one full TCP segment on a 1500-byte MTU
+    }
+    else
+    {
+        perClientMbps = 3.0;
+        wireRateMbps = 3.0;
+        onTime = "ns3::ConstantRandomVariable[Constant=1]";
+        offTime = "ns3::ConstantRandomVariable[Constant=0]";
+        payloadBytes = 1200;
+    }
+
     const uint16_t basePort = 5000;
     const double appStart = 2.0;
 
@@ -300,18 +345,15 @@ main(int argc, char* argv[])
     {
         uint16_t port = basePort + i;
 
-        PacketSinkHelper sinkHelper("ns3::UdpSocketFactory",
+        PacketSinkHelper sinkHelper(socketFactory,
                                     InetSocketAddress(Ipv4Address::GetAny(), port));
         sinks.Add(sinkHelper.Install(staNodes.Get(i)));
 
-        OnOffHelper onoff("ns3::UdpSocketFactory",
+        OnOffHelper onoff(socketFactory,
                           InetSocketAddress(staInterfaces.GetAddress(i), port));
-        onoff.SetAttribute("OnTime",
-                           StringValue("ns3::ConstantRandomVariable[Constant=1]"));
-        onoff.SetAttribute("OffTime",
-                           StringValue("ns3::ConstantRandomVariable[Constant=0]"));
-        onoff.SetAttribute("DataRate",
-                           DataRateValue(DataRate(perClientMbps * 1e6)));
+        onoff.SetAttribute("OnTime", StringValue(onTime));
+        onoff.SetAttribute("OffTime", StringValue(offTime));
+        onoff.SetAttribute("DataRate", DataRateValue(DataRate(wireRateMbps * 1e6)));
         onoff.SetAttribute("PacketSize", UintegerValue(payloadBytes));
         sources.Add(onoff.Install(apNode.Get(0)));
     }
@@ -416,7 +458,15 @@ main(int argc, char* argv[])
          // over-delivery. Emit the payload size so the parser can convert
          // rxBytes to payload bytes (rxPackets * payloadBytes) and compare like
          // with like.
-         << "  \"payloadBytes\": " << payloadBytes << "\n"
+         << "  \"payloadBytes\": " << payloadBytes << ",\n"
+         // TCP opens a reverse ACK flow per client, which FlowMonitor reports
+         // as its own <Flow>. Without the port base the parser sums those ACKs
+         // as if they were payload: bulk read 20 flows for 10 clients and 431%
+         // of offered load. headerBytes lets goodput come from rxBytes exactly,
+         // rather than assuming every packet carries a full segment.
+         << "  \"transport\": \"" << (isBulk ? "tcp" : "udp") << "\",\n"
+         << "  \"headerBytes\": " << (isBulk ? 40 : 28) << ",\n"
+         << "  \"appPortBase\": " << basePort << "\n"
          << "}\n";
     meta.close();
 

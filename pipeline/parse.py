@@ -138,7 +138,60 @@ def parse_series(path, payload_bytes, clients):
     return out
 
 
-def parse_flowmonitor(path, window_s, payload_bytes):
+def _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s):
+    """Application-layer goodput for one flow.
+
+    With header_bytes known, payload comes from rxBytes minus the per-packet
+    transport+IP header, which is exact. TCP segments are not all full, so the
+    older rx_packets * payload_bytes shortcut over-reports a rate-limited bulk
+    stream; it stays as the fallback for data recorded before the scenario
+    emitted header_bytes.
+    """
+    if header_bytes is not None:
+        rx_bytes = int(flow.get("rxBytes", 0))
+        payload = max(rx_bytes - rx_packets * header_bytes, 0)
+        return payload * 8 / window_s / 1e6
+    return rx_packets * payload_bytes * 8 / window_s / 1e6
+
+
+def downlink_flow_ids(root, app_port_base, app_port_count):
+    """Flow ids of the AP-to-client application flows.
+
+    TCP is bidirectional, so a bulk run opens a reverse ACK flow per client
+    and FlowMonitor reports each as its own <Flow>. Summing every flow counted
+    those ACKs as payload: a 10-client bulk run reported 20 flows and 431% of
+    offered load.
+
+    The Ipv4FlowClassifier maps each flow id to its addresses and ports, so a
+    downlink data flow is identified by its DESTINATION port sitting in the
+    application range. That range is BOUNDED AT BOTH ENDS: the reply flow's
+    destination is the client's ephemeral port, which is numerically higher
+    than the app base, so a lower bound alone still keeps every ACK flow.
+
+    Returns None when there is no classifier or no known port count, meaning
+    "no filter" — a UDP run is unidirectional and needs none, and data
+    recorded before the scenario emitted port metadata must still parse.
+    """
+    classifier = root.find("Ipv4FlowClassifier")
+    if classifier is None or not app_port_count:
+        return None
+
+    lo, hi = app_port_base, app_port_base + app_port_count
+
+    ids = set()
+    for flow in classifier.iter("Flow"):
+        try:
+            dport = int(flow.get("destinationPort"))
+            fid = int(flow.get("flowId"))
+        except (TypeError, ValueError):
+            continue
+        if lo <= dport < hi:
+            ids.add(fid)
+    return ids or None
+
+
+def parse_flowmonitor(path, window_s, payload_bytes, app_port_base=5000,
+                      app_port_count=None, header_bytes=None):
     """Extract aggregate and per-flow metrics from FlowMonitor XML.
 
     FlowMonitor's top level has four children: FlowStats, Ipv4FlowClassifier,
@@ -172,6 +225,8 @@ def parse_flowmonitor(path, window_s, payload_bytes):
     if flow_stats is None:
         raise ValueError(f"no FlowStats element in {path}")
 
+    keep = downlink_flow_ids(root, app_port_base, app_port_count)
+
     per_flow_mbps = []
     total_tx_packets = 0
     delay_ms_weighted = 0.0
@@ -187,7 +242,12 @@ def parse_flowmonitor(path, window_s, payload_bytes):
         if tx_packets == 0:
             continue
 
-        per_flow_mbps.append(rx_packets * payload_bytes * 8 / window_s / 1e6)
+        # Drop the reverse ACK flows a TCP run opens.
+        if keep is not None and int(flow.get("flowId")) not in keep:
+            continue
+
+        per_flow_mbps.append(
+            _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s))
         total_tx_packets += tx_packets
         total_rx_packets += rx_packets
 
@@ -196,7 +256,7 @@ def parse_flowmonitor(path, window_s, payload_bytes):
             jitter_ms_weighted += _ns_to_ms(flow.get("jitterSum"))
             flows_with_rx += 1
 
-    aggregate_mbps = total_rx_packets * payload_bytes * 8 / window_s / 1e6
+    aggregate_mbps = sum(per_flow_mbps)
     loss_pct = ((total_tx_packets - total_rx_packets) / total_tx_packets * 100
                 if total_tx_packets else 0.0)
     latency_ms = (delay_ms_weighted / total_rx_packets
@@ -326,7 +386,10 @@ def build_results(raw_dir, expected_trials=2):
         payload_bytes = meta["payloadBytes"]
         windows.add(window)
         payloads.add(payload_bytes)
-        flow = parse_flowmonitor(xml_path, window, payload_bytes)
+        flow = parse_flowmonitor(xml_path, window, payload_bytes,
+                                 app_port_base=meta.get("appPortBase", 5000),
+                                 app_port_count=meta.get("clients"),
+                                 header_bytes=meta.get("headerBytes"))
 
         offered = offered_load_mbps(fields["traffic_type"], fields["clients"])
         delivered = flow["aggregate_throughput_mbps"]
