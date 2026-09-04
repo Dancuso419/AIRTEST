@@ -6,7 +6,7 @@ An NS-3 simulation study and the instrument panel that reads it. The panel
 replays stored trials; it never measures anything live, and it never offers a
 condition the simulation did not run.
 
-Live: https://dancuso419.github.io/AIRTEST/
+Hosted on Render as a static site; see `render.yaml`.
 
 ---
 

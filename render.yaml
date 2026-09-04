@@ -1,0 +1,22 @@
+# Render blueprint.
+#
+# The dashboard is a fully static site: React builds to HTML/CSS/JS and
+# results.json is baked into the bundle at build time. There is no server, no
+# API and nothing to keep running, so this is a static service rather than a
+# web service — no port, no health check, nothing to sleep and cold-start.
+services:
+  - type: web
+    name: airtest
+    runtime: static
+    rootDir: dashboard
+    # The tests cover the replay arithmetic and every sentence the evaluation
+    # prints. Publishing a wrong number is worse than failing a build, so they
+    # run before it. `prebuild` copies data/results.json into src/data, which
+    # is why the dataset always matches the commit that published it.
+    buildCommand: npm ci && npm test && npm run build
+    staticPublishPath: dist
+    envVars:
+      # Pin the toolchain. Render's default Node moves, and a silent major
+      # bump is not something a deploy should discover for you.
+      - key: NODE_VERSION
+        value: "22"
