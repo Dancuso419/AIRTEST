@@ -7,11 +7,14 @@ import { useCallback, useEffect, useRef, useState } from 'react';
  * run actually recorded at that point in simulated time — it is not an
  * interpolation toward a final number dressed up as activity.
  *
- * The measurement window is ~3 simulated seconds and playback takes 10, so
- * this runs at roughly 0.3x: slower than reality, never faster. The UI states
+ * The measurement window is ~3 simulated seconds and playback takes 15, so
+ * this runs at roughly 0.2x: slower than reality, never faster. The UI states
  * the rate rather than letting a viewer assume real time.
+ *
+ * 15s is a presentation length, not an animation length: it is long enough to
+ * say what the dials are doing while they are still doing it.
  */
-export const REPLAY_SECONDS = 10;
+export const REPLAY_SECONDS = 15;
 
 /**
  * Which recorded sample belongs at `elapsedSec` into playback.

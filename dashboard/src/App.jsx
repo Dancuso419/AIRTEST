@@ -73,6 +73,12 @@ export default function App() {
       METRICS[(metricIndex + delta + METRICS.length) % METRICS.length].key
     );
 
+  // Stated, never assumed: the rate follows REPLAY_SECONDS, so stretching
+  // playback can never leave a stale multiplier on screen claiming otherwise.
+  const replayRate = (
+    (results.meta.measurement_window_s ?? 3) / REPLAY_SECONDS
+  ).toFixed(2).replace(/0$/, '');
+
   const fmt = (v, d = 1) => (typeof v === 'number' ? v.toFixed(d) : '—');
 
   return (
@@ -137,7 +143,7 @@ export default function App() {
             {replayable && (
               <div className="transport">
                 <span className={replay.playing ? 'transport-state is-playing' : 'transport-state'}>
-                  {replay.playing ? 'Replaying · 0.3×' : 'Run complete'}
+                  {replay.playing ? `Replaying · ${replayRate}×` : 'Run complete'}
                 </span>
                 <div className="scrub">
                   <div className="scrub-fill" style={{ width: `${replay.progress * 100}%` }} />
