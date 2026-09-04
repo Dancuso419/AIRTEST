@@ -805,3 +805,115 @@ body {
   line-height: 1.6;
   color: var(--ink-dim);
 }
+
+/* --- ripple -------------------------------------------------------- */
+
+/* The engage press is the one moment the panel is touched rather than read,
+   so it gets the one piece of material feedback in the whole interface. */
+.engage { position: relative; overflow: hidden; }
+
+.ripple {
+  position: absolute;
+  border-radius: 50%;
+  transform: scale(0);
+  opacity: 0.55;
+  background: rgba(255, 255, 255, 0.55);
+  pointer-events: none;
+  animation: ripple-out 0.62s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+}
+
+@keyframes ripple-out {
+  to { transform: scale(1); opacity: 0; }
+}
+
+/* --- report ------------------------------------------------------- */
+
+.report-cta { margin-top: 1.6rem; }
+
+.report-open {
+  padding: 0.7rem 1.5rem;
+  border: 1px solid var(--ink);
+  background: var(--ink);
+  color: var(--paper);
+  font-family: inherit;
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease;
+}
+
+.report-open:hover { background: var(--paper); color: var(--ink); }
+
+/* While the needles are still moving there is no conclusion to show, and the
+   space where the button will be says so rather than sitting empty. */
+.report-wait {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.09em;
+  text-transform: uppercase;
+  color: var(--ink-dim);
+}
+
+.report {
+  width: min(760px, calc(100vw - 2.5rem));
+  max-height: calc(100vh - 3rem);
+  padding: 0;
+  border: 1px solid var(--rule-strong);
+  background: var(--paper);
+  color: var(--ink);
+  overflow: auto;
+}
+
+.report::backdrop { background: rgba(22, 24, 29, 0.42); }
+
+.report[open] { animation: report-in 0.28s cubic-bezier(0.2, 0.75, 0.25, 1); }
+.report[open]::backdrop { animation: fade-in 0.28s ease; }
+
+@keyframes report-in {
+  from { opacity: 0; transform: translateY(10px) scale(0.985); }
+}
+
+@keyframes fade-in { from { opacity: 0; } }
+
+@media (prefers-reduced-motion: reduce) {
+  .report[open], .report[open]::backdrop { animation: none; }
+}
+
+.report-card { padding: 1.5rem 1.7rem 1.8rem; }
+
+.report-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.9rem;
+  border-bottom: 1px solid var(--rule);
+}
+
+.report-eyebrow {
+  margin: 0;
+  font-family: var(--mono);
+  font-size: 0.58rem;
+  letter-spacing: 0.11em;
+  text-transform: uppercase;
+  color: var(--teal);
+}
+
+.report-close {
+  width: 1.9rem;
+  height: 1.9rem;
+  border: 1px solid var(--rule-strong);
+  background: transparent;
+  color: var(--ink-mid);
+  font-size: 1.1rem;
+  line-height: 1;
+  cursor: pointer;
+}
+
+.report-close:hover { background: var(--ink); color: var(--paper); border-color: var(--ink); }
+
+/* Inside the dialog the card already supplies the frame. */
+.report .evaluation { margin-top: 1.2rem; padding: 0; border: 0; background: transparent; }

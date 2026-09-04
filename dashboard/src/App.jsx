@@ -80,6 +80,36 @@ export default function App() {
     (results.meta.measurement_window_s ?? 3) / REPLAY_SECONDS
   ).toFixed(2).replace(/0$/, '');
 
+  const reportRef = useRef(null);
+  const openReport = () => reportRef.current?.showModal();
+  const closeReport = () => reportRef.current?.close();
+
+  /**
+   * Ripple from the point of contact. The press has to feel like it landed
+   * somewhere, so the circle starts where the finger or cursor actually was
+   * rather than at the centre of the button.
+   */
+  function ripple(event) {
+    if (typeof matchMedia === 'function'
+        && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    const host = event.currentTarget;
+    const box = host.getBoundingClientRect();
+    const size = Math.max(box.width, box.height) * 2;
+    const dot = document.createElement('span');
+    dot.className = 'ripple';
+    dot.style.width = dot.style.height = `${size}px`;
+    dot.style.left = `${event.clientX - box.left - size / 2}px`;
+    dot.style.top = `${event.clientY - box.top - size / 2}px`;
+    // Removing on animationend rather than a timeout means a fast double
+    // press leaves two circles running instead of cancelling the first. The
+    // timeout is only a backstop: a background tab pauses CSS animations, so
+    // animationend can be indefinitely deferred and the circle would still
+    // be sitting on the button when the tab is looked at again.
+    dot.addEventListener('animationend', () => dot.remove());
+    setTimeout(() => dot.remove(), 1200);
+    host.appendChild(dot);
+  }
+
   const fmt = (v, d = 1) => (typeof v === 'number' ? v.toFixed(d) : '—');
 
   return (
@@ -105,7 +135,9 @@ export default function App() {
           />
 
           <div className="engage-bay">
-            <button className="engage" onClick={() => start(null)} disabled={!available}>
+            <button className="engage"
+                    onClick={(e) => { ripple(e); start(null); }}
+                    disabled={!available}>
               {run ? 'Replay' : 'Engage'}
             </button>
             <p className="provenance-note">
@@ -183,16 +215,18 @@ export default function App() {
                           value={`${fmt(run.trial6?.jitter_ms, 2)} ms`} accent />
             </dl>
 
-            {/* The evaluation belongs with the run that produced it, under the
-                instruments rather than in a section of its own: a reader who
-                has just watched the needles settle is looking here. */}
-            <EvaluationPanel
-              wifi5={run.wifi5}
-              wifi6={run.wifi6}
-              clients={conditions.clients}
-              trafficType={conditions.trafficType}
-              aps={conditions.aps}
-            />
+            {/* The report is a conclusion, and a conclusion cannot be on
+                screen while the run that produced it is still playing out.
+                The button only exists once the needles have settled. */}
+            <div className="report-cta">
+              {replay.playing ? (
+                <p className="report-wait">Reading the run…</p>
+              ) : (
+                <button className="report-open" onClick={openReport}>
+                  View report
+                </button>
+              )}
+            </div>
 
             <ProvenanceBadge
               seed={run.seed}
@@ -308,6 +342,33 @@ export default function App() {
           {results.meta.ns3_version ?? '?'} · AIRTEST
         </p>
       </section>
+      {/* A native dialog, so the backdrop, Escape, focus trapping and
+          inertness of the page behind it are the platform's job, not
+          three hundred lines of ours. */}
+      <dialog
+        className="report"
+        ref={reportRef}
+        onClick={(e) => { if (e.target === reportRef.current) closeReport(); }}
+      >
+        {run && (
+          <div className="report-card">
+            <div className="report-head">
+              <p className="report-eyebrow">Evaluation · stored NS-3 trials</p>
+              <button className="report-close" onClick={closeReport} aria-label="Close report">
+                ×
+              </button>
+            </div>
+
+            <EvaluationPanel
+              wifi5={run.wifi5}
+              wifi6={run.wifi6}
+              clients={conditions.clients}
+              trafficType={conditions.trafficType}
+              aps={conditions.aps}
+            />
+          </div>
+        )}
+      </dialog>
     </main>
   );
 }
