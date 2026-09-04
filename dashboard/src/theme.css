@@ -90,21 +90,39 @@ body {
   border-bottom: 1.5px solid var(--ink);
 }
 
+/* A vertical lockup: the mark, then the descriptor beneath it in wide-tracked
+   mono. Set side by side, the descriptor wrapped onto two lines next to the
+   mark on any narrow screen and the whole masthead lost its footing. */
 .wordmark {
   display: flex;
-  align-items: baseline;
-  gap: 0.85rem;
+  flex-direction: column;
+  gap: 0.3rem;
   margin: 0;
-  font-size: 1.45rem;
-  font-weight: 700;
-  letter-spacing: -0.02em;
 }
+
+.wordmark-mark {
+  display: block;
+  /* Big and tight. A wordmark is the one place on this panel where type is
+     the object rather than the label for one. */
+  font-size: clamp(1.8rem, 5.2vw, 2.6rem);
+  line-height: 0.92;
+  letter-spacing: -0.045em;
+  color: var(--ink);
+  /* Tight tracking closes the counters at weight 800; this reopens them just
+     enough that AIR does not set solid. */
+  font-feature-settings: "kern" 1;
+}
+
+.mark-air  { font-weight: 800; }
+/* The light half is optically smaller at the same size, so it gets a touch of
+   tracking back to sit level with the heavy half. */
+.mark-test { font-weight: 300; letter-spacing: -0.028em; }
 
 .wordmark-sub {
   font-family: var(--mono);
-  font-size: 0.68rem;
+  font-size: 0.6rem;
   font-weight: 400;
-  letter-spacing: 0.08em;
+  letter-spacing: 0.19em;
   color: var(--ink-dim);
   text-transform: uppercase;
 }
@@ -960,3 +978,73 @@ body {
 
 /* Inside the dialog the card already supplies the frame. */
 .report .evaluation { margin-top: 1.2rem; padding: 0; border: 0; background: transparent; }
+
+/* --- mobile -------------------------------------------------------- */
+
+/* Measured at 390px before any of this existed: the page ran to 4806px, and
+   the instrument cluster alone was 1949px of it — six cards in a single
+   column, which is a list, not a cluster. */
+@media (max-width: 620px) {
+  .shell { padding-bottom: 3rem; }
+
+  .masthead {
+    /* The meta line sat beside a wordmark that had already wrapped. Stack
+       it, and let it read as a caption under the rule instead. */
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.55rem;
+    padding: 1.4rem 0 0.9rem;
+  }
+
+  /* Two columns, not one. Halves the scroll and keeps the six reading as a
+     set. The dial is SVG, so it loses nothing but size. */
+  .cluster { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  .flip-face { padding: 0.8rem 0.6rem 0.9rem; }
+  .instrument-sub { display: none; }
+  .dial-readout { margin-top: 0.2rem; }
+  .readout-5, .readout-6 { font-size: 1.05rem; }
+  .instrument-placard { font-size: 0.6rem; letter-spacing: 0.06em; }
+
+  /* The back of a card carries a paragraph. At half width it needs the room
+     the front face does not. */
+  .back-body { font-size: 0.66rem; line-height: 1.45; }
+  .back-title { font-size: 0.8rem; margin: 0.25rem 0 0.35rem; }
+  .back-facts { gap: 0.8rem; margin-top: 0.5rem; padding-top: 0.45rem; }
+  .back-caveat { font-size: 0.6rem; }
+
+  .readout-bay { margin-top: 1.4rem; }
+  .controls { margin-top: 1.4rem; }
+
+  .evaluation { padding: 1.1rem 1rem 1.2rem; }
+  .report-card { padding: 1.1rem 1rem 1.3rem; }
+
+  .status-row { gap: 0; }
+}
+
+/* Anything a finger has to hit gets a real target. 38px arrows and 3px dots
+   were drawn for a cursor. */
+@media (pointer: coarse) {
+  .step-arrow { width: 3rem; height: 3rem; font-size: 1.3rem; }
+
+  .step-dot {
+    height: 3px;
+    /* The visible bar stays 3px; the padding is the target around it. */
+    padding: 12px 0;
+    background-clip: content-box;
+  }
+
+  .report-close { width: 2.6rem; height: 2.6rem; }
+  .btn, .report-open { min-height: 2.75rem; }
+
+  /* There is no hover on a touch screen, so the card turns on tap instead —
+     :focus-within already handles it, but the cursor would otherwise stick a
+     card face-down after the tap that opened it. */
+  .instrument { cursor: pointer; }
+}
+
+/* Mono at 0.55rem is 8.8px. Fine on a desk, illegible in a lecture theatre. */
+@media (max-width: 620px) {
+  .eval-chip, .back-eyebrow, .step-eyebrow, .readout-unit { font-size: 0.6rem; }
+  .provenance-note, .eval-source { font-size: 0.66rem; }
+  .section-label { font-size: 0.68rem; }
+}
