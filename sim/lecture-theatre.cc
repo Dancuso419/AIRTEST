@@ -11,6 +11,7 @@
 #include "ns3/spectrum-module.h"
 
 #include <algorithm>
+#include <cmath>
 #include <fstream>
 #include <vector>
 #include <iomanip>
@@ -168,10 +169,9 @@ main(int argc, char* argv[])
     {
         NS_FATAL_ERROR("--traffic must be web, video or bulk, got: " << traffic);
     }
-    if (aps != 1)
+    if (aps != 1 && aps != 3)
     {
-        NS_FATAL_ERROR("--aps " << aps << " is not implemented yet; "
-                       << "only single-AP topology is available in the current slice.");
+        NS_FATAL_ERROR("--aps must be 1 or 3, got: " << aps);
     }
 
     // Per-trial randomisation. Seed is fixed; the run number varies per trial,
@@ -180,7 +180,7 @@ main(int argc, char* argv[])
     RngSeedManager::SetRun(seed);
 
     NodeContainer apNode;
-    apNode.Create(1);
+    apNode.Create(aps);
     NodeContainer staNodes;
     staNodes.Create(clients);
 
@@ -225,18 +225,49 @@ main(int argc, char* argv[])
     }
     wifi.SetRemoteStationManager("ns3::IdealWifiManager");
 
-    Ssid ssid = Ssid("lecture-theatre");
+    // Each AP runs its own BSS on the SAME channel. Co-channel overlap is the
+    // condition under study: it is where BSS coloring earns its place and,
+    // per the TRD, where single-AP results understate WiFi 6.
+    //
+    // Clients are assigned to APs by SEAT COLUMN, and the APs are spread
+    // across the room's width. The modelled room is wider (10 m) than it is
+    // deep (1.2 m per row), so distributing along the depth put the APs only
+    // ~2.4 m apart at these densities — closer than any real ceiling
+    // deployment, which inflates co-channel interference. Splitting by column
+    // gives a constant ~3.3 m spacing that does not shrink as the cohort does.
+    //
+    // Round-robin assignment would scatter every BSS across the whole room and
+    // measure association geometry rather than contention.
+    std::vector<Ssid> ssids;
+    for (uint32_t a = 0; a < aps; ++a)
+    {
+        ssids.push_back(Ssid(aps == 1 ? "lecture-theatre"
+                                      : ("lecture-theatre-" + std::to_string(a)).c_str()));
+    }
+
+    const uint32_t gridWidthConst = 10;
+    auto servingAp = [&](uint32_t i) {
+        return std::min((i % gridWidthConst) * aps / gridWidthConst, aps - 1);
+    };
+
     WifiMacHelper mac;
 
-    mac.SetType("ns3::StaWifiMac", "Ssid", SsidValue(ssid));
-    NetDeviceContainer staDevices = wifi.Install(phy, mac, staNodes);
+    NetDeviceContainer staDevices;
+    for (uint32_t i = 0; i < clients; ++i)
+    {
+        mac.SetType("ns3::StaWifiMac", "Ssid", SsidValue(ssids[servingAp(i)]));
+        staDevices.Add(wifi.Install(phy, mac, staNodes.Get(i)));
+    }
 
+    NetDeviceContainer apDevices;
+    for (uint32_t a = 0; a < aps; ++a)
+    {
     if (standard == "wifi6")
     {
         // OFDMA downlink scheduling. This is the mechanism under study and is
         // the defining difference from the wifi5 configuration.
         mac.SetType("ns3::ApWifiMac",
-                    "Ssid", SsidValue(ssid),
+                    "Ssid", SsidValue(ssids[a]),
                     "EnableBeaconJitter", BooleanValue(false));
         if (ofdma)
         {
@@ -251,16 +282,52 @@ main(int argc, char* argv[])
     else
     {
         mac.SetType("ns3::ApWifiMac",
-                    "Ssid", SsidValue(ssid),
+                    "Ssid", SsidValue(ssids[a]),
                     "EnableBeaconJitter", BooleanValue(false));
     }
-    NetDeviceContainer apDevice = wifi.Install(phy, mac, apNode);
+        apDevices.Add(wifi.Install(phy, mac, apNode.Get(a)));
+    }
+
+    // BSS coloring: WiFi 6 only, and only meaningful with overlapping BSSs.
+    // The TRD is explicit that it must never be presented as a factor in
+    // single-AP results, so it is not set there at all.
+    if (standard == "wifi6" && aps > 1)
+    {
+        for (uint32_t a = 0; a < aps; ++a)
+        {
+            Ptr<WifiNetDevice> dev = DynamicCast<WifiNetDevice>(apDevices.Get(a));
+            dev->GetHeConfiguration()->SetAttribute("BssColor", UintegerValue(a + 1));
+        }
+    }
 
     // Seated grid: 1.0 m seat pitch, 1.2 m row pitch, 10 seats per row.
-    // AP at the front of the theatre, 3 m up.
+    // A single AP sits at the front, 3 m up. With three APs each is placed
+    // over the centre of the band of seats it serves, so coverage matches the
+    // association blocks rather than cutting across them.
+    const uint32_t gridWidth = 10;
+    const double seatPitch = 1.0;
+    const double rowPitch = 1.2;
+
     MobilityHelper mobility;
     Ptr<ListPositionAllocator> apPos = CreateObject<ListPositionAllocator>();
-    apPos->Add(Vector(5.0, -2.0, 3.0));
+    if (aps == 1)
+    {
+        apPos->Add(Vector(5.0, -2.0, 3.0));
+    }
+    else
+    {
+        // Depth of the occupied seating, so the APs sit over its middle.
+        const uint32_t rows = (clients + gridWidth - 1) / gridWidth;
+        const double midDepth = (rows > 0 ? (rows - 1) : 0) * rowPitch / 2.0;
+
+        for (uint32_t a = 0; a < aps; ++a)
+        {
+            // Centre of the column band this AP serves, in metres.
+            const double firstCol = std::ceil(a * double(gridWidth) / aps);
+            const double lastCol = std::ceil((a + 1) * double(gridWidth) / aps) - 1;
+            apPos->Add(Vector((firstCol + lastCol) / 2.0 * seatPitch, midDepth, 3.0));
+        }
+    }
     mobility.SetPositionAllocator(apPos);
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
     mobility.Install(apNode);
@@ -268,9 +335,9 @@ main(int argc, char* argv[])
     mobility.SetPositionAllocator("ns3::GridPositionAllocator",
                                   "MinX", DoubleValue(0.0),
                                   "MinY", DoubleValue(0.0),
-                                  "DeltaX", DoubleValue(1.0),
-                                  "DeltaY", DoubleValue(1.2),
-                                  "GridWidth", UintegerValue(10),
+                                  "DeltaX", DoubleValue(seatPitch),
+                                  "DeltaY", DoubleValue(rowPitch),
+                                  "GridWidth", UintegerValue(gridWidth),
                                   "LayoutType", StringValue("RowFirst"));
     mobility.SetMobilityModel("ns3::ConstantPositionMobilityModel");
     mobility.Install(staNodes);
@@ -281,7 +348,7 @@ main(int argc, char* argv[])
 
     Ipv4AddressHelper address;
     address.SetBase("10.1.1.0", "255.255.255.0");
-    Ipv4InterfaceContainer apInterface = address.Assign(apDevice);
+    Ipv4InterfaceContainer apInterface = address.Assign(apDevices);
     Ipv4InterfaceContainer staInterfaces = address.Assign(staDevices);
 
     // Downlink CBR UDP video: AP sends, each client receives.
@@ -355,7 +422,10 @@ main(int argc, char* argv[])
         onoff.SetAttribute("OffTime", StringValue(offTime));
         onoff.SetAttribute("DataRate", DataRateValue(DataRate(wireRateMbps * 1e6)));
         onoff.SetAttribute("PacketSize", UintegerValue(payloadBytes));
-        sources.Add(onoff.Install(apNode.Get(0)));
+        // Install on the AP this client is associated with. Sourcing every
+        // flow from AP 0 would send two thirds of the traffic across BSS
+        // boundaries and measure routing, not contention.
+        sources.Add(onoff.Install(apNode.Get(servingAp(i))));
     }
 
     sinks.Start(Seconds(0.0));

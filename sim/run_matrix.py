@@ -21,7 +21,7 @@ BINARY = NS3_DIR / "build" / "scratch" / "ns3.42-lecture-theatre-optimized"
 SLICE = {
     "topology": ["single_ap"],
     "standard": ["wifi5", "wifi6"],
-    "traffic": ["video"],
+    "traffic": ["web", "video", "bulk"],
     # wifi6 cost knee at 16-20 clients (~N^1.2 below, ~N^3.3 above); 40c would
     # be ~2h/run x2 runs, turning the smoke slice into a 2+ hour job. 40c
     # belongs in the full matrix, not here.
