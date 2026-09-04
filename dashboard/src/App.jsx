@@ -85,29 +85,45 @@ export default function App() {
   const closeReport = () => reportRef.current?.close();
 
   /**
-   * Ripple from the point of contact. The press has to feel like it landed
-   * somewhere, so the circle starts where the finger or cursor actually was
-   * rather than at the centre of the button.
+   * Ripple across the whole panel from the point of contact.
+   *
+   * Engaging a run is the one moment the instrument is operated rather than
+   * read, so the feedback is the size of the thing being started: two rings
+   * leave the press and cross the entire screen, not a circle trapped inside
+   * a button.
+   *
+   * Rendered outside React into document.body, because this is a transient
+   * visual event with no state behind it — reconciling it through the tree
+   * would re-render the panel mid-run for the sake of a decoration.
    */
   function ripple(event) {
     if (typeof matchMedia === 'function'
         && matchMedia('(prefers-reduced-motion: reduce)').matches) return;
-    const host = event.currentTarget;
-    const box = host.getBoundingClientRect();
-    const size = Math.max(box.width, box.height) * 2;
-    const dot = document.createElement('span');
-    dot.className = 'ripple';
-    dot.style.width = dot.style.height = `${size}px`;
-    dot.style.left = `${event.clientX - box.left - size / 2}px`;
-    dot.style.top = `${event.clientY - box.top - size / 2}px`;
-    // Removing on animationend rather than a timeout means a fast double
-    // press leaves two circles running instead of cancelling the first. The
-    // timeout is only a backstop: a background tab pauses CSS animations, so
-    // animationend can be indefinitely deferred and the circle would still
-    // be sitting on the button when the tab is looked at again.
-    dot.addEventListener('animationend', () => dot.remove());
-    setTimeout(() => dot.remove(), 1200);
-    host.appendChild(dot);
+
+    const x = event.clientX;
+    const y = event.clientY;
+    // Reach the FARTHEST corner, so the wave always clears the viewport
+    // rather than stopping short when the button is off-centre.
+    const radius = Math.hypot(
+      Math.max(x, window.innerWidth - x),
+      Math.max(y, window.innerHeight - y)
+    );
+    const size = radius * 2;
+
+    for (const delay of [0, 160]) {
+      const ring = document.createElement('span');
+      ring.className = 'screen-ripple';
+      ring.style.width = ring.style.height = `${size}px`;
+      ring.style.left = `${x - radius}px`;
+      ring.style.top = `${y - radius}px`;
+      ring.style.animationDelay = `${delay}ms`;
+      ring.addEventListener('animationend', () => ring.remove());
+      // Backstop: a background tab pauses CSS animations, so animationend
+      // can be deferred indefinitely and the ring would still be lying over
+      // the page when the tab is next looked at.
+      setTimeout(() => ring.remove(), 1600 + delay);
+      document.body.appendChild(ring);
+    }
   }
 
   const fmt = (v, d = 1) => (typeof v === 'number' ? v.toFixed(d) : '—');

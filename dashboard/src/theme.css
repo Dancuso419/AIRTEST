@@ -808,22 +808,32 @@ body {
 
 /* --- ripple -------------------------------------------------------- */
 
-/* The engage press is the one moment the panel is touched rather than read,
-   so it gets the one piece of material feedback in the whole interface. */
-.engage { position: relative; overflow: hidden; }
-
-.ripple {
-  position: absolute;
+/* Engage is the one control that is operated rather than read, so it gets the
+   one piece of motion in the interface — and it is the size of what it
+   starts, crossing the whole panel rather than sitting inside the button. */
+.screen-ripple {
+  position: fixed;
   border-radius: 50%;
+  border: 2px solid var(--teal);
+  background: radial-gradient(circle,
+              rgba(13, 143, 111, 0.14) 0%,
+              rgba(13, 143, 111, 0.05) 55%,
+              transparent 72%);
   transform: scale(0);
-  opacity: 0.55;
-  background: rgba(255, 255, 255, 0.55);
+  opacity: 0.9;
   pointer-events: none;
-  animation: ripple-out 0.62s cubic-bezier(0.2, 0.7, 0.3, 1) forwards;
+  z-index: 90;
+  animation: screen-ripple 0.95s cubic-bezier(0.16, 0.72, 0.24, 1) forwards;
 }
 
-@keyframes ripple-out {
-  to { transform: scale(1); opacity: 0; }
+@keyframes screen-ripple {
+  0%   { transform: scale(0);    opacity: 0.9; }
+  70%  { opacity: 0.42; }
+  100% { transform: scale(1);    opacity: 0; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .screen-ripple { display: none; }
 }
 
 /* --- report ------------------------------------------------------- */
