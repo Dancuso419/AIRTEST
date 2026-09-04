@@ -23,10 +23,24 @@ export default function App() {
   const scenarios = results.scenarios;
   const options = useMemo(() => availableConditions(scenarios), [scenarios]);
 
-  const [conditions, setConditions] = useState({
-    clients: options.clients[0],
-    trafficType: options.trafficTypes[0],
-    aps: options.apCounts[0],
+  // Opening condition: streamed video on one access point, at the largest
+  // density that was simulated for it.
+  //
+  // Not arbitrary, and not cherry-picked either. A lecture theatre's dominant
+  // traffic is streamed content, so this is the representative case; every
+  // other condition is one click away. The previous default opened on
+  // Download at the lowest density, which is the least representative
+  // workload AND the one where 30 and 40 students render unpowered, because
+  // those densities were only simulated for video.
+  const [conditions, setConditions] = useState(() => {
+    const preferred = { clients: 40, trafficType: 'video', aps: 1 };
+    return isCombinationAvailable(scenarios, preferred)
+      ? preferred
+      : {
+          clients: options.clients[0],
+          trafficType: options.trafficTypes[0],
+          aps: options.apCounts[0],
+        };
   });
   const [run, setRun] = useState(null);
   // Whether the NEXT run should animate. The panel loads a real trial on
