@@ -60,8 +60,13 @@ export default function InstrumentDial({ metric, value5, value6, needle5, needle
   const minors = Array.from({ length: minorCount + 1 }, (_, i) => i / minorCount);
   const label = formatTick ?? formatValue;
 
+  // Card, not tile: each instrument turns on hover or keyboard focus to show
+  // what it measures. tabIndex makes the back reachable without a pointer —
+  // hover-only would hide the explanation from keyboard and touch entirely.
   return (
-    <div className="instrument">
+    <div className="instrument" tabIndex={0}>
+     <div className="flip-inner">
+      <div className="flip-face flip-front">
       <div className="dial-face">
         <svg viewBox="0 0 200 152" role="img"
              aria-label={`${metric.plainLabel}. WiFi 5 ${formatValue(value5)}, WiFi 6 ${formatValue(value6)} ${metric.unit}`}>
@@ -112,6 +117,18 @@ export default function InstrumentDial({ metric, value5, value6, needle5, needle
 
       <div className="instrument-placard">{metric.plainLabel}</div>
       <p className="instrument-sub">{metric.explanation}</p>
+      </div>
+
+      <div className="flip-face flip-back">
+        <p className="back-eyebrow">{metric.label}</p>
+        <h3 className="back-title">{metric.plainLabel}</h3>
+        <p className="back-body">{metric.detail ?? metric.explanation}</p>
+        <dl className="back-facts">
+          <div><dt>Full scale</dt><dd>{formatValue(scaleMax)} {metric.unit}</dd></div>
+          <div><dt>Better</dt><dd>{metric.betterWhen === 'lower' ? 'Lower' : 'Higher'}</dd></div>
+        </dl>
+      </div>
+     </div>
     </div>
   );
 }

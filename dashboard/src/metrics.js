@@ -4,6 +4,8 @@
 export const METRICS = [
   {
     key: 'per_user_throughput_mbps',
+    detail:
+      "Delivered payload divided by the number of students in the room. The room's total can look healthy while each individual share is unusable, which is why this dial leads the cluster.",
     label: 'Per-user throughput',
     plainLabel: 'Speed per student',
     explanation: 'what one person actually gets',
@@ -21,6 +23,8 @@ export const METRICS = [
   },
   {
     key: 'latency_ms',
+    detail:
+      'Mean one-way delay of packets that actually arrived. Packets that never arrived are counted under Data lost, not here — so a low reading on a lossy run is not good news by itself.',
     label: 'Latency (delivered packets)',
     plainLabel: 'Lag',
     explanation: 'delay before things respond',
@@ -37,6 +41,8 @@ export const METRICS = [
   },
   {
     key: 'packet_loss_pct',
+    detail:
+      'Share of transmitted packets that never reached the receiver, derived from transmitted minus received. Past roughly 2%, a video call visibly degrades.',
     label: 'Packet loss',
     plainLabel: 'Data lost',
     explanation: 'what never arrived',
@@ -45,6 +51,8 @@ export const METRICS = [
   },
   {
     key: 'satisfaction_ratio_pct',
+    detail:
+      'Delivered throughput as a share of what the applications actually asked for. 100% means the network kept up with demand; below that, the room wanted more than it got.',
     label: 'Offered-load satisfaction',
     plainLabel: 'Demand met',
     explanation: 'share of what was asked for',
@@ -53,6 +61,8 @@ export const METRICS = [
   },
   {
     key: 'fairness_index',
+    detail:
+      "Jain's index over the per-student throughputs. 1.00 means every student got an identical share; lower means some seats were starved while others ran fast.",
     label: "Jain's fairness index",
     plainLabel: 'Fairness',
     explanation: 'does everyone get an equal share',
@@ -63,6 +73,8 @@ export const METRICS = [
   // efficiency advantage this study exists to measure.
   {
     key: 'airtime_utilization_pct',
+    detail:
+      'Share of the measurement window the channel was busy sending, receiving or sensing another transmitter. This is the cost side: two standards can deliver the same data while spending very different amounts of air.',
     label: 'Airtime utilization',
     plainLabel: 'Airwave usage',
     explanation: 'how congested the channel is',
