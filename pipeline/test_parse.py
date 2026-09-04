@@ -400,8 +400,8 @@ def _fm_xml(tmp_path, stats, classifier):
     """Minimal FlowMonitor document: FlowStats plus an Ipv4FlowClassifier."""
     rows = "".join(
         f'<Flow flowId="{f["id"]}" txPackets="{f["tx"]}" rxPackets="{f["rx"]}" '
-        f'rxBytes="{f["bytes"]}" lostPackets="0" '
-        f'delaySum="+0.0ns" jitterSum="+0.0ns" />' for f in stats)
+        f'txBytes="{f.get("txbytes", f["bytes"])}" rxBytes="{f["bytes"]}" '
+        f'lostPackets="0" delaySum="+0.0ns" jitterSum="+0.0ns" />' for f in stats)
     cls = "".join(
         f'<Flow flowId="{c["id"]}" sourceAddress="10.1.1.1" '
         f'destinationAddress="10.1.1.2" sourcePort="{c["sport"]}" '
@@ -472,3 +472,45 @@ def test_a_run_without_a_classifier_keeps_every_flow(tmp_path):
                  '</FlowStats></FlowMonitor>')
     out = parse_flowmonitor(p, 1.0, payload_bytes=1200)
     assert len(out["per_flow_throughput_mbps"]) == 1
+
+
+def test_realised_offered_load_is_reported_separately(tmp_path):
+    # A bursty source over a short window transmits less than its long-run
+    # mean. Reconciling against the nominal figure fired the assertion at 8%
+    # drift with nothing actually lost.
+    p = _fm_xml(
+        tmp_path,
+        stats=[{"id": 1, "tx": 100, "rx": 100,
+                "bytes": 100 * (1200 + 28), "txbytes": 100 * (1200 + 28)}],
+        classifier=[{"id": 1, "sport": 49153, "dport": 5000}],
+    )
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1200, app_port_base=5000,
+                            app_port_count=10, header_bytes=28)
+    # Nothing lost, so realised offered equals delivered.
+    assert out["offered_realised_mbps"] == pytest.approx(0.96, abs=1e-3)
+    assert out["aggregate_throughput_mbps"] == pytest.approx(0.96, abs=1e-3)
+    assert out["packet_loss_pct"] == pytest.approx(0.0)
+    # And that identity is what reconciliation must be checked against.
+    check_reconciliation(out["aggregate_throughput_mbps"],
+                         out["packet_loss_pct"],
+                         out["offered_realised_mbps"])
+
+
+def test_realised_offered_load_still_exposes_genuine_loss(tmp_path):
+    # Separating demand from realised must not blind the check to real loss:
+    # 40 of 100 packets never arrive.
+    p = _fm_xml(
+        tmp_path,
+        stats=[{"id": 1, "tx": 100, "rx": 60,
+                "bytes": 60 * (1200 + 28), "txbytes": 100 * (1200 + 28)}],
+        classifier=[{"id": 1, "sport": 49153, "dport": 5000}],
+    )
+    out = parse_flowmonitor(p, 1.0, payload_bytes=1200, app_port_base=5000,
+                            app_port_count=10, header_bytes=28)
+    assert out["packet_loss_pct"] == pytest.approx(40.0)
+    assert out["offered_realised_mbps"] == pytest.approx(0.96, abs=1e-3)
+    assert out["aggregate_throughput_mbps"] == pytest.approx(0.576, abs=1e-3)
+    # Consistent: 0.576 delivered of 0.96 offered is exactly 40% lost.
+    check_reconciliation(out["aggregate_throughput_mbps"],
+                         out["packet_loss_pct"],
+                         out["offered_realised_mbps"])

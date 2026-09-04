@@ -138,7 +138,8 @@ def parse_series(path, payload_bytes, clients):
     return out
 
 
-def _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s):
+def _payload_mbps(flow, packets, payload_bytes, header_bytes, window_s,
+                  byte_attr="rxBytes"):
     """Application-layer goodput for one flow.
 
     With header_bytes known, payload comes from rxBytes minus the per-packet
@@ -148,10 +149,10 @@ def _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s):
     emitted header_bytes.
     """
     if header_bytes is not None:
-        rx_bytes = int(flow.get("rxBytes", 0))
-        payload = max(rx_bytes - rx_packets * header_bytes, 0)
+        total_bytes = int(flow.get(byte_attr, 0))
+        payload = max(total_bytes - packets * header_bytes, 0)
         return payload * 8 / window_s / 1e6
-    return rx_packets * payload_bytes * 8 / window_s / 1e6
+    return packets * payload_bytes * 8 / window_s / 1e6
 
 
 def downlink_flow_ids(root, app_port_base, app_port_count):
@@ -228,6 +229,7 @@ def parse_flowmonitor(path, window_s, payload_bytes, app_port_base=5000,
     keep = downlink_flow_ids(root, app_port_base, app_port_count)
 
     per_flow_mbps = []
+    total_offered_mbps = 0.0
     total_tx_packets = 0
     delay_ms_weighted = 0.0
     jitter_ms_weighted = 0.0
@@ -247,7 +249,14 @@ def parse_flowmonitor(path, window_s, payload_bytes, app_port_base=5000,
             continue
 
         per_flow_mbps.append(
-            _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s))
+            _payload_mbps(flow, rx_packets, payload_bytes, header_bytes, window_s,
+                          byte_attr="rxBytes"))
+        # Symmetric on the transmit side: assuming every SENT packet carried a
+        # full segment inflated bulk's realised offered load to 143.94 Mbps
+        # against 49.13 delivered, and the reconciliation check fired on it.
+        total_offered_mbps += _payload_mbps(
+            flow, tx_packets, payload_bytes, header_bytes, window_s,
+            byte_attr="txBytes")
         total_tx_packets += tx_packets
         total_rx_packets += rx_packets
 
@@ -257,6 +266,11 @@ def parse_flowmonitor(path, window_s, payload_bytes, app_port_base=5000,
             flows_with_rx += 1
 
     aggregate_mbps = sum(per_flow_mbps)
+    # What the source ACTUALLY put on the wire in this window, as opposed to
+    # the nominal demand. For CBR they agree; for the bursty web profile the
+    # nominal figure is the long-run mean of an exponential on/off process and
+    # a short window legitimately realises less of it.
+    offered_realised_mbps = total_offered_mbps
     loss_pct = ((total_tx_packets - total_rx_packets) / total_tx_packets * 100
                 if total_tx_packets else 0.0)
     latency_ms = (delay_ms_weighted / total_rx_packets
@@ -268,6 +282,7 @@ def parse_flowmonitor(path, window_s, payload_bytes, app_port_base=5000,
 
     return {
         "aggregate_throughput_mbps": round(aggregate_mbps, 3),
+        "offered_realised_mbps": round(offered_realised_mbps, 3),
         "per_flow_throughput_mbps": [round(x, 4) for x in per_flow_mbps],
         "latency_ms": round(latency_ms, 3),
         "jitter_ms": round(jitter_ms, 3),
@@ -359,6 +374,7 @@ def build_results(raw_dir, expected_trials=2):
     warnings = []
     windows = set()
     payloads = set()
+    payload_by_traffic = {}
 
     for xml_path in sorted(raw_dir.glob("*.xml")):
         run_id = xml_path.stem
@@ -386,14 +402,28 @@ def build_results(raw_dir, expected_trials=2):
         payload_bytes = meta["payloadBytes"]
         windows.add(window)
         payloads.add(payload_bytes)
+        payload_by_traffic.setdefault(fields["traffic_type"], set()).add(payload_bytes)
         flow = parse_flowmonitor(xml_path, window, payload_bytes,
                                  app_port_base=meta.get("appPortBase", 5000),
                                  app_port_count=meta.get("clients"),
                                  header_bytes=meta.get("headerBytes"))
 
+        # Two different quantities, and conflating them fired the
+        # reconciliation assertion on the bursty web profile:
+        #
+        #   offered  - nominal DEMAND from the traffic table. The study
+        #              question is "did the network meet demand?", so
+        #              satisfaction_ratio_pct is measured against this.
+        #   realised - what the source actually transmitted in this window.
+        #              Sent = received + lost is a physical identity and only
+        #              holds against this, so reconciliation checks it.
+        #
+        # For CBR the two agree. For an exponential on/off source over a 3 s
+        # window they differ by sampling alone, with nothing lost.
         offered = offered_load_mbps(fields["traffic_type"], fields["clients"])
         delivered = flow["aggregate_throughput_mbps"]
-        check_reconciliation(delivered, flow["packet_loss_pct"], offered)
+        realised = flow["offered_realised_mbps"]
+        check_reconciliation(delivered, flow["packet_loss_pct"], realised)
 
         fairness = jains_fairness(flow["per_flow_throughput_mbps"])
         assert 0.0 <= fairness <= 1.0, f"fairness out of range for {run_id}"
@@ -406,6 +436,7 @@ def build_results(raw_dir, expected_trials=2):
             "jitter_ms": flow["jitter_ms"],
             "packet_loss_pct": flow["packet_loss_pct"],
             "satisfaction_ratio_pct": round(delivered / offered * 100, 2),
+            "offered_realised_mbps": realised,
             "fairness_index": round(fairness, 4),
             "airtime_utilization_pct": phy["airtime_utilization_pct"],
         }
@@ -454,8 +485,14 @@ def build_results(raw_dir, expected_trials=2):
         warnings.append(
             f"runs disagree on measurement window: {sorted(windows)} s; "
             "metrics normalised per-run but not comparable across windows")
-    if len(payloads) > 1:
-        warnings.append(f"runs disagree on payload size: {sorted(payloads)} bytes")
+    # Payload size differs BY DESIGN between traffic profiles (web 512, video
+    # 1200, bulk 1448), so a global mismatch says nothing. Only a disagreement
+    # WITHIN one profile means two runs of the same thing are not comparable.
+    for traffic_type, sizes in sorted(payload_by_traffic.items()):
+        if len(sizes) > 1:
+            warnings.append(
+                f"{traffic_type} runs disagree on payload size: "
+                f"{sorted(sizes)} bytes; those runs are not comparable")
 
     return {
         "meta": {
@@ -463,6 +500,8 @@ def build_results(raw_dir, expected_trials=2):
             "generated_utc": datetime.now(timezone.utc).isoformat(timespec="seconds"),
             "measurement_window_s": (sorted(windows) if len(windows) > 1
                                      else next(iter(windows), None)),
+            "payload_bytes_by_traffic": {k: sorted(v)[0] if len(v) == 1 else sorted(v)
+                                         for k, v in sorted(payload_by_traffic.items())},
             "payload_bytes": (sorted(payloads) if len(payloads) > 1
                               else next(iter(payloads), None)),
             "offered_load_definition": (
