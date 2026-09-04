@@ -158,13 +158,9 @@ export default function App() {
   return (
     <main className="shell">
       <header className="masthead">
-        {/* One word, two weights. AIR is the medium, TEST is what we do to
-            it, and setting them at 800 against 300 says that without a
-            second colour or a second typeface — teal already means WiFi 6
-            everywhere else on this panel and must not be spent on a logo. */}
         <h1 className="wordmark">
-          <span className="wordmark-mark" aria-label="AIRTEST">
-            <span className="mark-air">AIR</span><span className="mark-test">TEST</span>
+          <span className="wordmark-mark">
+            AIR<span className="mark-test">TEST</span>
           </span>
           <span className="wordmark-sub">Lecture theatre WiFi instrument</span>
         </h1>
