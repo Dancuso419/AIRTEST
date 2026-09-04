@@ -123,6 +123,11 @@ export default function InstrumentDial({ metric, value5, value6, needle5, needle
         <p className="back-eyebrow">{metric.label}</p>
         <h3 className="back-title">{metric.plainLabel}</h3>
         <p className="back-body">{metric.detail ?? metric.explanation}</p>
+        {metric.caveat && (
+          <p className="back-caveat">
+            <span>Caveat</span> {metric.caveat}
+          </p>
+        )}
         <dl className="back-facts">
           <div><dt>Full scale</dt><dd>{formatValue(scaleMax)} {metric.unit}</dd></div>
           <div><dt>Better</dt><dd>{metric.betterWhen === 'lower' ? 'Lower' : 'Higher'}</dd></div>

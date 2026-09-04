@@ -23,6 +23,8 @@ export const METRICS = [
   },
   {
     key: 'latency_ms',
+    caveat:
+      'Computed over delivered packets only. Packets that never arrived — which would have been the slowest — contribute nothing, so this understates delay wherever loss is non-trivial.',
     detail:
       'Mean one-way delay of packets that actually arrived. Packets that never arrived are counted under Data lost, not here — so a low reading on a lossy run is not good news by itself.',
     label: 'Latency (delivered packets)',
@@ -41,6 +43,8 @@ export const METRICS = [
   },
   {
     key: 'packet_loss_pct',
+    caveat:
+      'Inflated by the short measurement window: packets still queued when it closes are counted lost. Queues deepen with density, so the curve is steeper than a steady-state run would show.',
     detail:
       'Share of transmitted packets that never reached the receiver, derived from transmitted minus received. Past roughly 2%, a video call visibly degrades.',
     label: 'Packet loss',
@@ -51,6 +55,8 @@ export const METRICS = [
   },
   {
     key: 'satisfaction_ratio_pct',
+    caveat:
+      "Measured against nominal demand. The web profile's 0.5 Mbps per client is a long-run mean, so a short window can legitimately exceed 100% with zero loss.",
     detail:
       'Delivered throughput as a share of what the applications actually asked for. 100% means the network kept up with demand; below that, the room wanted more than it got.',
     label: 'Offered-load satisfaction',

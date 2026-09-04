@@ -439,6 +439,26 @@ body {
   color: var(--ink-dim);
 }
 
+/* The caveat rides with the number it qualifies. A limitation parked in a
+   footnote at the bottom of the page is read by nobody who is looking at
+   the dial. */
+.back-caveat {
+  margin: 0.6rem 0 0;
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--caution);
+  font-size: 0.66rem;
+  line-height: 1.45;
+  color: var(--ink-mid);
+}
+
+.back-caveat span {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--caution);
+}
+
 .back-facts {
   display: flex;
   gap: 1.4rem;
