@@ -725,3 +725,83 @@ body {
 @media (prefers-reduced-motion: reduce) {
   * { transition: none !important; }
 }
+
+/* --- evaluation ---------------------------------------------------- */
+
+.evaluation {
+  margin-top: 2rem;
+  padding: 1.4rem 1.5rem 1.5rem;
+  border: 1px solid var(--rule-strong);
+  background: var(--surface);
+}
+
+.eval-headline {
+  margin: 0;
+  font-size: clamp(1rem, 1.7vw, 1.3rem);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  line-height: 1.35;
+}
+
+.eval-tally { margin: 0.45rem 0 0; font-size: 0.8rem; color: var(--ink-mid); }
+
+.eval-list {
+  list-style: none;
+  margin: 1.2rem 0 0;
+  padding: 0;
+  border-top: 1px solid var(--rule);
+}
+
+.eval-row {
+  display: grid;
+  grid-template-columns: 4.6rem 9rem 1fr;
+  gap: 0.9rem;
+  align-items: baseline;
+  padding: 0.62rem 0;
+  border-bottom: 1px solid var(--rule);
+}
+
+@media (max-width: 700px) {
+  .eval-row { grid-template-columns: 4.6rem 1fr; }
+  .eval-sentence { grid-column: 2; }
+}
+
+.eval-chip {
+  font-family: var(--mono);
+  font-size: 0.55rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-align: center;
+  padding: 0.2rem 0;
+  border: 1px solid currentColor;
+}
+
+.eval-chip.is-wifi5 { color: var(--wifi5); }
+.eval-chip.is-wifi6 { color: var(--wifi6); }
+/* A draw is deliberately the quietest thing on the row. It is a real result,
+   but it is not a finding, and it must not look like one. */
+.eval-chip.is-tie { color: var(--ink-dim); border-style: dashed; }
+
+.eval-metric { font-size: 0.76rem; font-weight: 600; }
+
+.eval-sentence { font-size: 0.78rem; line-height: 1.5; color: var(--ink-mid); }
+.eval-row.is-tie .eval-sentence { color: var(--ink-dim); }
+
+.eval-note {
+  margin: 1rem 0 0;
+  padding-left: 0.7rem;
+  border-left: 2px solid var(--caution);
+  font-size: 0.76rem;
+  line-height: 1.5;
+  color: var(--ink-mid);
+}
+
+.eval-source {
+  margin: 1.1rem 0 0;
+  padding-top: 0.8rem;
+  border-top: 1px solid var(--rule);
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  line-height: 1.6;
+  color: var(--ink-dim);
+}

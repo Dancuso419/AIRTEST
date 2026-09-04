@@ -4,6 +4,7 @@ import ComparisonChart from './ComparisonChart';
 import ConditionsPanel from './ConditionsPanel';
 import ResultGauges from './ResultGauges';
 import ProvenanceBadge from './ProvenanceBadge';
+import EvaluationPanel from './EvaluationPanel';
 import { METRICS, STANDARD_LABELS } from './metrics';
 import { availableConditions, findScenario, isCombinationAvailable, pickTrial } from './scenarios';
 import { buildVerdict } from './verdict';
@@ -181,6 +182,17 @@ export default function App() {
               <StatusCell label={`Jitter · ${STANDARD_LABELS.wifi6}`}
                           value={`${fmt(run.trial6?.jitter_ms, 2)} ms`} accent />
             </dl>
+
+            {/* The evaluation belongs with the run that produced it, under the
+                instruments rather than in a section of its own: a reader who
+                has just watched the needles settle is looking here. */}
+            <EvaluationPanel
+              wifi5={run.wifi5}
+              wifi6={run.wifi6}
+              clients={conditions.clients}
+              trafficType={conditions.trafficType}
+              aps={conditions.aps}
+            />
 
             <ProvenanceBadge
               seed={run.seed}
