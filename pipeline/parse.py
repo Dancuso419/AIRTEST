@@ -305,6 +305,13 @@ def _ns_to_ms(timestr):
 # Study-defined thresholds. These are parameters of the study, not objective
 # facts, and must be reported as such with the sensitivity variants below.
 CAVEATS = [
+    "satisfaction_ratio_pct is measured against each profile's NOMINAL demand. "
+    "The web profile is an exponential on/off source whose 0.5 Mbps per client "
+    "is a long-run mean, so a 3 s window realises more or less of it by "
+    "sampling alone and the ratio can legitimately exceed 100% with zero loss. "
+    "Reconciliation is checked against what the source actually transmitted "
+    "(offered_realised_mbps), which is the quantity sent = received + lost "
+    "actually holds for.",
     "packet_loss_pct is inflated by the short measurement window: packets "
     "still queued or in flight when the window closes are counted as lost, "
     "and that roughly fixed backlog is divided by a short window.",

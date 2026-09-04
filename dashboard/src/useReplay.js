@@ -58,7 +58,7 @@ export function sampleAt(series, position, key) {
   return a + (b - a) * t;
 }
 
-export function useReplay(series5, series6) {
+export function useReplay(series5, series6, shouldPlay = true) {
   const frames = Math.min(series5?.length ?? 0, series6?.length ?? 0);
   const [index, setIndex] = useState(0);
   // Fractional position drives the needle; `index` drives the printed value.
@@ -124,7 +124,9 @@ export function useReplay(series5, series6) {
     const reduced = typeof matchMedia === 'function'
       && matchMedia('(prefers-reduced-motion: reduce)').matches;
 
-    if (reduced) {
+    // The panel powers up with a real run already on the dials, but it does
+    // not perform. Only a deliberate Engage or Replay animates.
+    if (reduced || !shouldPlay) {
       setPlaying(false);
       setIndex(frames - 1);
       setPosition(frames - 1);
@@ -135,7 +137,7 @@ export function useReplay(series5, series6) {
     setPosition(0);
     startedAt.current = performance.now();
     setPlaying(true);
-  }, [series5, series6, frames]);
+  }, [series5, series6, frames, shouldPlay]);
 
   const at = (series) => (frames > 0 ? series?.[Math.min(index, series.length - 1)] : null);
 

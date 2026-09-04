@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import results from './data/results.json';
 import ComparisonChart from './ComparisonChart';
 import ConditionsPanel from './ConditionsPanel';
@@ -28,13 +28,18 @@ export default function App() {
     aps: options.apCounts[0],
   });
   const [run, setRun] = useState(null);
+  // Whether the NEXT run should animate. The panel loads a real trial on
+  // mount so it never opens as six dead instruments, but landing on final
+  // values rather than performing unasked.
+  const [shouldPlay, setShouldPlay] = useState(false);
   const [explorerMetricKey, setExplorerMetricKey] = useState('per_user_throughput_mbps');
 
   const available = isCombinationAvailable(scenarios, conditions);
 
-  const replay = useReplay(run?.trial5?.series, run?.trial6?.series);
+  const replay = useReplay(run?.trial5?.series, run?.trial6?.series, shouldPlay);
 
-  function start(excludeSeed = null) {
+  function start(excludeSeed = null, { play = true } = {}) {
+    setShouldPlay(play);
     const wifi5 = findScenario(scenarios, { ...conditions, standard: 'wifi5' });
     const wifi6 = findScenario(scenarios, { ...conditions, standard: 'wifi6' });
     const t5 = pickTrial(wifi5, { excludeSeed });
@@ -44,6 +49,13 @@ export default function App() {
     // arrived yet, and the replay silently never ran.
     setRun({ wifi5, wifi6, trial5: t5, trial6: t6, seed: t5?.seed ?? null });
   }
+
+  // Power-up: land on a real trial so the first viewport shows the
+  // instrument working rather than an empty panel.
+  useEffect(() => {
+    if (available) start(null, { play: false });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   const trialIndex = run
     ? (run.wifi5?.trials?.findIndex((t) => t.seed === run.seed) ?? -1) + 1

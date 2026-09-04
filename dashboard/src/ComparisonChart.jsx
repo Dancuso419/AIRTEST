@@ -33,6 +33,10 @@ export default function ComparisonChart({
         <CartesianGrid strokeDasharray="3 3" stroke="#e3ded3" />
         <XAxis
           dataKey="clients"
+          // Tick only at densities that were actually simulated. The numeric
+          // axis otherwise auto-ticks to 13, 16, 19 — values no run exists
+          // for, which invites reading the line between points as data.
+          ticks={rows.map((r) => r.clients)}
           type="number"
           domain={['dataMin', 'dataMax']}
           label={{ value: 'Client density (stations)', position: 'insideBottom', offset: -24 }}
@@ -80,6 +84,7 @@ export default function ComparisonChart({
         <Legend verticalAlign="top" height={36} />
 
         <Area
+          legendType="none"
           dataKey="wifi5_band"
           name={`${STANDARD_LABELS.wifi5} ±1 SD`}
           stroke="none"
@@ -87,6 +92,7 @@ export default function ComparisonChart({
           fillOpacity={0.15}
         />
         <Area
+          legendType="none"
           dataKey="wifi6_band"
           name={`${STANDARD_LABELS.wifi6} ±1 SD`}
           stroke="none"

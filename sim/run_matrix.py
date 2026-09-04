@@ -19,7 +19,7 @@ BINARY = NS3_DIR / "build" / "scratch" / "ns3.42-lecture-theatre-optimized"
 
 # The vertical slice. Widening happens in a later plan, not here.
 SLICE = {
-    "topology": ["single_ap"],
+    "topology": ["single_ap", "multi_ap"],
     "standard": ["wifi5", "wifi6"],
     "traffic": ["web", "video", "bulk"],
     # wifi6 cost knee at 16-20 clients (~N^1.2 below, ~N^3.3 above); 40c would
