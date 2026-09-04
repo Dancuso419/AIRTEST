@@ -77,121 +77,121 @@ export default function App() {
         </span>
       </header>
 
-      <div className="bay">
-        <section>
-          <p className="section-label" data-index="01">Conditions</p>
+      <section className="controls">
+        <p className="section-label" data-index="01">Conditions</p>
 
+        <div className="controls-row">
           <ConditionsPanel
             scenarios={scenarios}
             conditions={conditions}
             onChange={setConditions}
           />
 
-          <button className="engage" onClick={() => start(null)} disabled={!available}>
-            {run ? 'Replay' : 'Engage'}
-          </button>
+          <div className="engage-bay">
+            <button className="engage" onClick={() => start(null)} disabled={!available}>
+              {run ? 'Replay' : 'Engage'}
+            </button>
+            <p className="provenance-note">
+              Replays a stored NS-3 trial — not a live measurement.
+            </p>
+            {run && (
+              <div className="actions">
+                <button className="btn" onClick={() => start(run.seed)} disabled={trialCount < 2}>
+                  New seed
+                </button>
+                <button className="btn" onClick={() => setRun(null)}>Clear</button>
+              </div>
+            )}
+          </div>
+        </div>
 
-          <p className="provenance-note">
-            Replays a stored NS-3 trial — not a live measurement.
-          </p>
+        {!available && (
+          <p className="unavailable">This combination has not been simulated yet.</p>
+        )}
+      </section>
 
-          {!available && (
-            <p className="unavailable">This combination has not been simulated yet.</p>
-          )}
+      <section className="readout-bay">
+        <p className="section-label" data-index="02">Instrument cluster</p>
 
-          {run && (
-            <div className="actions">
-              <button className="btn" onClick={() => start(run.seed)} disabled={trialCount < 2}>
-                New seed
-              </button>
-              <button className="btn" onClick={() => setRun(null)}>Clear</button>
-            </div>
-          )}
-        </section>
+        {run ? (
+          <>
+            <p className="verdict">
+              {buildVerdict({
+                wifi5: run.wifi5,
+                wifi6: run.wifi6,
+                clients: conditions.clients,
+                trafficType: conditions.trafficType,
+              })}
+            </p>
 
-        <section>
-          <p className="section-label" data-index="02">Instrument cluster</p>
-
-          {run ? (
-            <>
-              <p className="verdict">
-                {buildVerdict({
-                  wifi5: run.wifi5,
-                  wifi6: run.wifi6,
-                  clients: conditions.clients,
-                  trafficType: conditions.trafficType,
-                })}
-              </p>
-
-              {replayable && (
-                <div className="transport">
-                  <span className={replay.playing ? 'transport-state is-playing' : 'transport-state'}>
-                    {replay.playing ? 'Replaying · 0.3×' : 'Run complete'}
-                  </span>
-                  <div className="scrub">
-                    <div className="scrub-fill" style={{ width: `${replay.progress * 100}%` }} />
-                  </div>
-                  <span className="transport-clock num">
-                    t+{fmt(replay.simSeconds ?? 0, 1)}s sim
-                  </span>
-                  <button
-                    className="btn"
-                    onClick={() => (replay.playing ? replay.stop() : replay.play())}
-                  >
-                    {replay.playing ? 'Stop' : 'Replay'}
-                  </button>
+            {replayable && (
+              <div className="transport">
+                <span className={replay.playing ? 'transport-state is-playing' : 'transport-state'}>
+                  {replay.playing ? 'Replaying · 0.3×' : 'Run complete'}
+                </span>
+                <div className="scrub">
+                  <div className="scrub-fill" style={{ width: `${replay.progress * 100}%` }} />
                 </div>
-              )}
+                <span className="transport-clock num">
+                  t+{fmt(replay.simSeconds ?? 0, 1)}s sim
+                </span>
+                <button
+                  className="btn"
+                  onClick={() => (replay.playing ? replay.stop() : replay.play())}
+                >
+                  {replay.playing ? 'Stop' : 'Replay'}
+                </button>
+              </div>
+            )}
 
-              <ResultGauges
-                trial5={run.trial5}
-                trial6={run.trial6}
-                frame5={replay.playing ? replay.frame5 : null}
-                frame6={replay.playing ? replay.frame6 : null}
-                series5={run.trial5?.series}
-                series6={run.trial6?.series}
-                position={replay.position}
-                playing={replay.playing}
-              />
+            <ResultGauges
+              trial5={run.trial5}
+              trial6={run.trial6}
+              frame5={replay.playing ? replay.frame5 : null}
+              frame6={replay.playing ? replay.frame6 : null}
+              series5={run.trial5?.series}
+              series6={run.trial6?.series}
+              position={replay.position}
+              playing={replay.playing}
+            />
 
-              <dl className="status-row">
-                <StatusCell label={`Total speed · ${STANDARD_LABELS.wifi5}`}
-                            value={`${fmt(run.trial5?.aggregate_throughput_mbps)} Mbps`} />
-                <StatusCell label={`Total speed · ${STANDARD_LABELS.wifi6}`}
-                            value={`${fmt(run.trial6?.aggregate_throughput_mbps)} Mbps`} accent />
-                <StatusCell label={`Jitter · ${STANDARD_LABELS.wifi5}`}
-                            value={`${fmt(run.trial5?.jitter_ms, 2)} ms`} />
-                <StatusCell label={`Jitter · ${STANDARD_LABELS.wifi6}`}
-                            value={`${fmt(run.trial6?.jitter_ms, 2)} ms`} accent />
-              </dl>
+            <dl className="status-row">
+              <StatusCell label={`Total speed · ${STANDARD_LABELS.wifi5}`}
+                          value={`${fmt(run.trial5?.aggregate_throughput_mbps)} Mbps`} />
+              <StatusCell label={`Total speed · ${STANDARD_LABELS.wifi6}`}
+                          value={`${fmt(run.trial6?.aggregate_throughput_mbps)} Mbps`} accent />
+              <StatusCell label={`Jitter · ${STANDARD_LABELS.wifi5}`}
+                          value={`${fmt(run.trial5?.jitter_ms, 2)} ms`} />
+              <StatusCell label={`Jitter · ${STANDARD_LABELS.wifi6}`}
+                          value={`${fmt(run.trial6?.jitter_ms, 2)} ms`} accent />
+            </dl>
 
-              <ProvenanceBadge
-                seed={run.seed}
-                trialIndex={trialIndex}
-                trialCount={trialCount}
-                ns3Version={results.meta.ns3_version ?? '3.42'}
-              />
-              {replayable && (
-                <p className="provenance-note">
-                  Replay covers {fmt(results.meta.measurement_window_s ?? 3, 0)}s of simulated
-                  time across {REPLAY_SECONDS}s of playback, from {replay.frames} recorded
-                  samples. Slower than the run, never faster.
-                </p>
-              )}
-            </>
-          ) : (
-            <>
-              <p className="verdict">
-                Set the room, then engage. Six instruments read one stored trial —
-                the ink needle is {STANDARD_LABELS.wifi5}, the teal needle is{' '}
-                {STANDARD_LABELS.wifi6}. Where they separate is the finding.
+            <ProvenanceBadge
+              seed={run.seed}
+              trialIndex={trialIndex}
+              trialCount={trialCount}
+              ns3Version={results.meta.ns3_version ?? '3.42'}
+            />
+            {replayable && (
+              <p className="provenance-note">
+                Replay covers {fmt(results.meta.measurement_window_s ?? 3, 0)}s of simulated
+                time across {REPLAY_SECONDS}s of playback, from {replay.frames} recorded
+                samples. Slower than the run, never faster.
               </p>
-              <ResultGauges trial5={null} trial6={null} frame5={null} frame6={null}
-                            series5={null} series6={null} position={0} playing={false} />
-            </>
-          )}
-        </section>
-      </div>
+            )}
+          </>
+        ) : (
+          <>
+            <p className="verdict">
+              Set the room, then engage. Six instruments read one stored trial —
+              the ink needle is {STANDARD_LABELS.wifi5}, the teal needle is{' '}
+              {STANDARD_LABELS.wifi6}. Where they separate is the finding.
+            </p>
+            <ResultGauges trial5={null} trial6={null} frame5={null} frame6={null}
+                          series5={null} series6={null} position={0} playing={false} />
+          </>
+        )}
+      </section>
 
       {(results.meta.caveats ?? []).length > 0 && (
         <section className="caution">

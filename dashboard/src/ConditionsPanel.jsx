@@ -19,12 +19,10 @@ function Selector({ name, legend, positions, value, onSelect, format, isLive, de
 
   return (
     <fieldset className="selector">
-      <legend className="selector-legend">
-        {legend}
-        {deadCount > 0 && (
-          <span className="selector-note">{deadCount} unpowered</span>
-        )}
-      </legend>
+      {/* The note sits UNDER the control, not beside the legend. Inline, it
+          wrapped "ACCESS POINTS" onto a second line and pushed that control
+          out of alignment with the other two. */}
+      <legend className="selector-legend">{legend}</legend>
 
       <div className={dense ? 'detents is-dense' : 'detents'}>
         {positions.map((p) => {
@@ -54,6 +52,10 @@ function Selector({ name, legend, positions, value, onSelect, format, isLive, de
           );
         })}
       </div>
+
+      {deadCount > 0 && (
+        <p className="selector-note">{deadCount} not simulated</p>
+      )}
     </fieldset>
   );
 }
