@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import results from './data/results.json';
 import ComparisonChart from './ComparisonChart';
 import ConditionsPanel from './ConditionsPanel';
@@ -62,6 +62,16 @@ export default function App() {
     : 0;
   const trialCount = run?.wifi5?.trials?.length ?? 0;
   const replayable = replay.frames > 1;
+
+  const metricIndex = METRICS.findIndex((m) => m.key === explorerMetricKey);
+  const explorerMetric = METRICS[metricIndex];
+  const swipeStart = useRef(null);
+
+  // Wraps, so the set has no dead ends at either edge.
+  const stepMetric = (delta) =>
+    setExplorerMetricKey(
+      METRICS[(metricIndex + delta + METRICS.length) % METRICS.length].key
+    );
 
   const fmt = (v, d = 1) => (typeof v === 'number' ? v.toFixed(d) : '—');
 
@@ -194,21 +204,58 @@ export default function App() {
       </section>
 
       <section className="explorer">
-        <div className="explorer-head">
-          <div>
-            <p className="section-label" data-index="03">Full dataset</p>
-            <p style={{ margin: 0, color: 'var(--ink-dim)', fontSize: '0.78rem' }}>
-              Every metric across every simulated density.
+        <p className="section-label" data-index="03">Full dataset</p>
+
+        {/* A dropdown hides seven of the eight metrics behind a click and gives
+            no sense that they form a set. Stepping through them left to right
+            makes the sweep itself visible, and the same gesture works with a
+            thumb, a mouse and the arrow keys. */}
+        <div
+          className="stepper"
+          tabIndex={0}
+          role="group"
+          aria-label="Metric"
+          onKeyDown={(e) => {
+            if (e.key === 'ArrowLeft') { e.preventDefault(); stepMetric(-1); }
+            if (e.key === 'ArrowRight') { e.preventDefault(); stepMetric(1); }
+          }}
+          onPointerDown={(e) => { swipeStart.current = e.clientX; }}
+          onPointerUp={(e) => {
+            const from = swipeStart.current;
+            swipeStart.current = null;
+            // 48px, so a slightly shaky click is never read as a swipe.
+            if (from !== null && Math.abs(e.clientX - from) > 48) {
+              stepMetric(e.clientX < from ? 1 : -1);
+            }
+          }}
+        >
+          <button className="step-arrow" onClick={() => stepMetric(-1)}
+                  aria-label="Previous metric">‹</button>
+
+          <div className="step-face">
+            <p className="step-eyebrow">{explorerMetric.label}</p>
+            <h3 className="step-title">{explorerMetric.plainLabel}</h3>
+            <p className="step-sub">
+              {explorerMetric.explanation} · {explorerMetric.unit} ·{' '}
+              {explorerMetric.betterWhen === 'lower' ? 'lower is better' : 'higher is better'}
             </p>
           </div>
-          <label>
-            <select value={explorerMetricKey}
-                    onChange={(e) => setExplorerMetricKey(e.target.value)}>
-              {METRICS.map((m) => (
-                <option key={m.key} value={m.key}>{m.plainLabel} — {m.label}</option>
-              ))}
-            </select>
-          </label>
+
+          <button className="step-arrow" onClick={() => stepMetric(1)}
+                  aria-label="Next metric">›</button>
+        </div>
+
+        <div className="step-dots" role="tablist" aria-label="Metrics">
+          {METRICS.map((m, i) => (
+            <button
+              key={m.key}
+              role="tab"
+              aria-selected={i === metricIndex}
+              aria-label={m.plainLabel}
+              className={i === metricIndex ? 'step-dot is-on' : 'step-dot'}
+              onClick={() => setExplorerMetricKey(m.key)}
+            />
+          ))}
         </div>
 
         <div className="chart-frame">
@@ -216,9 +263,14 @@ export default function App() {
             scenarios={scenarios}
             topology={conditions.aps === 3 ? 'multi_ap' : 'single_ap'}
             trafficType={conditions.trafficType}
-            metric={METRICS.find((m) => m.key === explorerMetricKey)}
+            metric={explorerMetric}
           />
         </div>
+
+        <p className="step-hint">
+          Swipe, click the arrows, or use ← → to move through all {METRICS.length}{' '}
+          metrics. Every one is drawn across every simulated density.
+        </p>
       </section>
 
       <section className="explorer">
