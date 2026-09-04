@@ -110,18 +110,34 @@ export default function App() {
     );
     const size = radius * 2;
 
-    for (const delay of [0, 160]) {
+    // Depth comes from atmospheric perspective, not from faking a 3D tilt on
+    // what is a flat page. The near ring is thin, sharp and quick; each one
+    // behind it is thicker, blurrier, slower and fainter, which is how
+    // distance actually reads. Three layers is enough to imply a volume —
+    // two read as a pair of lines.
+    const LAYERS = [
+      { delay: 0,   blur: 0,   width: 2,   opacity: 0.95, duration: 900,  scale: 1 },
+      { delay: 90,  blur: 3,   width: 6,   opacity: 0.55, duration: 1150, scale: 0.94 },
+      { delay: 210, blur: 10,  width: 14,  opacity: 0.3,  duration: 1450, scale: 0.86 },
+    ];
+
+    for (const layer of LAYERS) {
       const ring = document.createElement('span');
       ring.className = 'screen-ripple';
       ring.style.width = ring.style.height = `${size}px`;
       ring.style.left = `${x - radius}px`;
       ring.style.top = `${y - radius}px`;
-      ring.style.animationDelay = `${delay}ms`;
+      ring.style.animationDelay = `${layer.delay}ms`;
+      ring.style.animationDuration = `${layer.duration}ms`;
+      ring.style.setProperty('--ring-blur', `${layer.blur}px`);
+      ring.style.setProperty('--ring-width', `${layer.width}px`);
+      ring.style.setProperty('--ring-opacity', layer.opacity);
+      ring.style.setProperty('--ring-scale', layer.scale);
       ring.addEventListener('animationend', () => ring.remove());
       // Backstop: a background tab pauses CSS animations, so animationend
       // can be deferred indefinitely and the ring would still be lying over
       // the page when the tab is next looked at.
-      setTimeout(() => ring.remove(), 1600 + delay);
+      setTimeout(() => ring.remove(), layer.duration + layer.delay + 600);
       document.body.appendChild(ring);
     }
   }
