@@ -1,4 +1,4 @@
-# DESIGN.md — AIREST
+# DESIGN.md — AIRTEST
 
 Written at finish, from the built world. Replaces the earlier light/green
 system, which shipped as a generic admin template and was rejected.
@@ -10,7 +10,7 @@ over the roll's assigned Site Survey. Seed key `09b6f6e4`.
 
 ## 1. Thesis
 
-AIREST is an instrument panel, not a dashboard. Six dials, each owning one
+AIRTEST is an instrument panel, not a dashboard. Six dials, each owning one
 truth, each carrying **both standards on one shared scale** — so the gap
 between the two needles *is* the reading, rather than something the viewer
 reconstructs by comparing separate gauges.

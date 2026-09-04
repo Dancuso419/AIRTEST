@@ -1,5 +1,5 @@
 {
-  "title": "AIREST — choose the visual world",
+  "title": "AIRTEST — choose the visual world",
   "question": "The roll assigned Site Survey. Keep it, take an alternate, or re-roll.",
   "buildPath": { "value": "code-led", "toggle": true },
   "options": [
@@ -8,7 +8,7 @@
       "label": "Site Survey",
       "kicker": "THE ROLL",
       "lineage": "wireless site-survey deliverables — Ekahau reports, RF coverage plots, signal contour overlays on floorplans",
-      "thesis": "AIREST is the survey report a network engineer would hand you about this exact room. The room is the page: a tiered seating plan whose seats carry what each student actually gets, WiFi 5 against WiFi 6, with the measurement's provenance and its limits printed on the same sheet. It refuses the analytics-dashboard arrangement — cards floating on grey, KPI tiles, a sidebar — because a survey has a subject, and the subject is a room.",
+      "thesis": "AIRTEST is the survey report a network engineer would hand you about this exact room. The room is the page: a tiered seating plan whose seats carry what each student actually gets, WiFi 5 against WiFi 6, with the measurement's provenance and its limits printed on the same sheet. It refuses the analytics-dashboard arrangement — cards floating on grey, KPI tiles, a sidebar — because a survey has a subject, and the subject is a room.",
       "palette": ["#0B1F16", "#F2F4F1", "#4E9E6E", "#0F3D26", "#C9782A"],
       "materials": ["contour plot", "drafting hairline", "engineering legend", "annotated floorplan"],
       "viewport": "Left two-thirds: the lecture theatre in plan, seats as a live grid, each seat tinted by the throughput that seat receives — the whole room readable at projector distance. Right third: a fixed instrument column holding the dial, the verdict sentence, and the provenance stamp. Conditions run as a legend strip along the top, phrased as questions, not form fields. GO sits in the instrument column, at the top of the reading order after the room.",
@@ -25,7 +25,7 @@
       "label": "Bench Instrument",
       "kicker": "IMPECCABLE’S PICK",
       "lineage": "RF test-equipment front panels — Rohde & Schwarz, Anritsu spectrum analysers",
-      "thesis": "AIREST as the measurement instrument itself: a bezelled panel where the trace is the product, controls are legended hardware, and the readout is engraved rather than rendered.",
+      "thesis": "AIRTEST as the measurement instrument itself: a bezelled panel where the trace is the product, controls are legended hardware, and the readout is engraved rather than rendered.",
       "palette": ["#141815", "#E6EDE7", "#4E9E6E", "#C9782A"],
       "materials": ["anodised panel", "engraved legend", "phosphor trace", "detented control"],
       "viewport": "A full-bleed instrument face: the dual trace across the upper two-thirds, a legended control strip below, readout digits at panel right.",

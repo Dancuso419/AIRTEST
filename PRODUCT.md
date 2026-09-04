@@ -1,6 +1,6 @@
 # Product
 
-**AIREST** — a WiFi capacity simulator for dense university lecture theatres.
+**AIRTEST** — a WiFi capacity simulator for dense university lecture theatres.
 
 ## Platform
 
@@ -72,7 +72,7 @@ scrutiny is high.
 
 ## Brand Commitments
 
-- **Name: AIREST.** Set by the user.
+- **Name: AIRTEST.** Set by the user.
 - Reference material supplied by the user: `METER REF.png` (an instrument dial —
   arc, needle, pivot, tick scale) and `DASH REF.jpg` (a green palette).
 - The user has rejected the first execution as reading like a generic template

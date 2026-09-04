@@ -69,7 +69,7 @@ export default function App() {
     <main className="shell">
       <header className="masthead">
         <h1 className="wordmark">
-          AIREST
+          AIRTEST
           <span className="wordmark-sub">Lecture theatre WiFi instrument</span>
         </h1>
         <span className="masthead-meta">
@@ -244,7 +244,7 @@ export default function App() {
         <p className="footer-stamp">
           Generated {results.meta.generated_utc ?? 'unknown'} · measurement window{' '}
           {results.meta.measurement_window_s ?? '?'} s · NS-3{' '}
-          {results.meta.ns3_version ?? '?'} · AIREST
+          {results.meta.ns3_version ?? '?'} · AIRTEST
         </p>
       </section>
     </main>
