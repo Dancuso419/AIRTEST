@@ -29,6 +29,16 @@ SLICE = {
     "seed": [1, 2],
 }
 
+# Uplink OFDMA, on for every wifi6 run.
+#
+# It was off for the first matrix, and that turned out to cost 802.11ax most
+# of its TCP performance: bulk sends its ACKs upstream, and with the uplink
+# unscheduled every one of them contended individually through EDCA while the
+# downlink was scheduled. Measured at 20 clients, single AP, bulk:
+# offered-load satisfaction 88.8% -> 97.7% and fairness 0.92 -> 0.99 with it
+# enabled. The UL-off runs are kept as an ablation, not deleted.
+UL_OFDMA = True
+
 DURATION = 5.0
 TIMEOUT_S = 1800  # measured: wifi5 10/20/40c = 34/82/141s; wifi6 10/20/40c =
 # 193/~450/~1050s at 5s simulated. 1800s gives headroom without letting a
@@ -84,7 +94,10 @@ def execute(job):
                 f"--seed={job['seed']}",
                 f"--duration={DURATION}",
                 f"--out={prefix}",
-            ],
+            ]
+            # wifi5 has no multi-user scheduler to configure; passing the flag
+            # there would be inert but misleading in the process list.
+            + ([f"--ulOfdma={int(UL_OFDMA)}"] if job["standard"] == "wifi6" else []),
             cwd=NS3_DIR,
             env=env,
             capture_output=True,

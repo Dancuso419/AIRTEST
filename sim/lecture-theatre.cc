@@ -136,6 +136,18 @@ main(int argc, char* argv[])
     // WiFi 6 mechanisms account for observed differences). Switchable so the
     // study can isolate its effect, and so its cost can be measured.
     bool ofdma = true;
+    // Uplink OFDMA, separately switchable from downlink.
+    //
+    // Off by default because the vertical slice measured it that way and the
+    // published dataset must stay comparable. It matters for TCP: bulk sends
+    // its ACKs upstream, and with UL OFDMA disabled every one of them
+    // contends individually through EDCA while the downlink is scheduled, so
+    // the return path becomes the bottleneck. NS-3's own wifi-he-network.cc
+    // notes UL OFDMA is useful precisely when DL OFDMA is on and TCP is used.
+    //
+    // Enabling it also turns on BSRP, the buffer-status round the AP needs to
+    // know which stations have uplink data to send.
+    bool ulOfdma = false;
     // Sampling period for the time series, in milliseconds of simulated time.
     double sampleMs = 100.0;
 
@@ -156,6 +168,7 @@ main(int argc, char* argv[])
     cmd.AddValue("aps", "Number of access points (1 or 3)", aps);
     cmd.AddValue("seed", "RNG run number for this trial", seed);
     cmd.AddValue("ofdma", "wifi6 only: enable DL OFDMA multi-user scheduling", ofdma);
+    cmd.AddValue("ulOfdma", "wifi6 only: also schedule the uplink (implies BSRP)", ulOfdma);
     cmd.AddValue("sampleMs", "time-series sampling period, simulated ms", sampleMs);
     cmd.AddValue("duration", "Simulated seconds", duration);
     cmd.AddValue("out", "Output path prefix", out);
@@ -272,8 +285,12 @@ main(int argc, char* argv[])
         if (ofdma)
         {
             mac.SetMultiUserScheduler("ns3::RrMultiUserScheduler",
-                                      "EnableUlOfdma", BooleanValue(false),
-                                      "EnableBsrp", BooleanValue(false));
+                                      "EnableUlOfdma", BooleanValue(ulOfdma),
+                                      // BSRP is how the AP learns which
+                                      // stations have uplink data. Scheduling
+                                      // an uplink without it is scheduling
+                                      // blind.
+                                      "EnableBsrp", BooleanValue(ulOfdma));
         }
         // With --ofdma=0 the AP keeps HE rates but sends single-user PPDUs,
         // isolating what OFDMA itself contributes to both throughput and
@@ -517,6 +534,8 @@ main(int argc, char* argv[])
          // A run must describe itself: an --ofdma=0 trial is not comparable
          // with the default ones and must never be mistaken for one.
          << "  \"ofdma\": " << ((standard == "wifi6" && ofdma) ? "true" : "false") << ",\n"
+         << "  \"ul_ofdma\": "
+         << ((standard == "wifi6" && ofdma && ulOfdma) ? "true" : "false") << ",\n"
          << "  \"clients\": " << clients << ",\n"
          << "  \"appStartSec\": " << appStart << ",\n"
          << "  \"appStopSec\": " << duration << ",\n"
