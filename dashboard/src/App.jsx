@@ -193,15 +193,6 @@ export default function App() {
         )}
       </section>
 
-      {(results.meta.caveats ?? []).length > 0 && (
-        <section className="caution">
-          <p className="caution-head">Caution · dataset limitations</p>
-          <ul>
-            {results.meta.caveats.map((c) => <li key={c}>{c}</li>)}
-          </ul>
-        </section>
-      )}
-
       <section className="explorer">
         <div className="explorer-head">
           <div>

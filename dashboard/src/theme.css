@@ -587,26 +587,6 @@ body {
 
 .provenance strong { color: var(--caution); font-weight: 600; text-transform: uppercase; }
 
-/* --- caution ------------------------------------------------------ */
-
-.caution {
-  margin-top: 3rem;
-  border-top: 1.5px solid var(--caution);
-  padding-top: 1rem;
-}
-
-.caution-head {
-  font-size: 0.7rem;
-  font-weight: 700;
-  letter-spacing: 0.14em;
-  text-transform: uppercase;
-  color: var(--caution);
-  margin: 0 0 0.8rem;
-}
-
-.caution ul { margin: 0; padding-left: 1.05rem; color: var(--ink-mid); max-width: 80ch; }
-.caution li { margin-bottom: 0.45rem; font-size: 0.78rem; line-height: 1.5; }
-
 /* --- legend / explorer -------------------------------------------- */
 
 .legend {
