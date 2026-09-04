@@ -111,35 +111,46 @@ export default function App() {
     const size = radius * 2;
 
     // Depth comes from atmospheric perspective, not from faking a 3D tilt on
-    // what is a flat page. The near ring is thin, sharp and quick; each one
-    // behind it is thicker, blurrier, slower and fainter, which is how
-    // distance actually reads. Three layers is enough to imply a volume —
-    // two read as a pair of lines.
+    // what is a flat page: the near band is narrow and hard-edged, and each
+    // one behind it is wider, softer, slower and fainter.
+    //
+    // `edge` is where that band's outer limit falls inside the element, as a
+    // fraction of its radius. It decides how far the element must scale for
+    // that band to clear the viewport.
     const LAYERS = [
-      { delay: 0,   blur: 0,   width: 2,   opacity: 0.95, duration: 900,  scale: 1 },
-      { delay: 90,  blur: 3,   width: 6,   opacity: 0.55, duration: 1150, scale: 0.94 },
-      { delay: 210, blur: 10,  width: 14,  opacity: 0.3,  duration: 1450, scale: 0.86 },
+      { delay: 0,   opacity: 0.95, duration: 900,  edge: 0.71, reach: 1 },
+      { delay: 90,  opacity: 0.55, duration: 1150, edge: 0.73, reach: 0.94 },
+      { delay: 210, opacity: 0.32, duration: 1450, edge: 0.78, reach: 0.86 },
     ];
 
-    for (const layer of LAYERS) {
+    // Each ring is drawn small and scaled up rather than drawn at full size.
+    // At full size these were ~2650px layers carrying a blur filter and a
+    // shadow — roughly 80MB of texture per press, re-rasterised as they grew,
+    // which is what made the whole panel stutter. A 400px layer scaled on the
+    // GPU costs effectively nothing, and because the bands are defined in
+    // percentages they stay perfectly soft however far they travel.
+    const BASE = 400;
+
+    LAYERS.forEach((layer, i) => {
       const ring = document.createElement('span');
-      ring.className = 'screen-ripple';
-      ring.style.width = ring.style.height = `${size}px`;
-      ring.style.left = `${x - radius}px`;
-      ring.style.top = `${y - radius}px`;
+      ring.className = `screen-ripple is-layer-${i}`;
+      ring.style.width = ring.style.height = `${BASE}px`;
+      ring.style.left = `${x - BASE / 2}px`;
+      ring.style.top = `${y - BASE / 2}px`;
       ring.style.animationDelay = `${layer.delay}ms`;
       ring.style.animationDuration = `${layer.duration}ms`;
-      ring.style.setProperty('--ring-blur', `${layer.blur}px`);
-      ring.style.setProperty('--ring-width', `${layer.width}px`);
       ring.style.setProperty('--ring-opacity', layer.opacity);
-      ring.style.setProperty('--ring-scale', layer.scale);
+      ring.style.setProperty(
+        '--ring-scale',
+        (radius / (BASE / 2 / layer.edge)) * layer.reach
+      );
       ring.addEventListener('animationend', () => ring.remove());
-      // Backstop: a background tab pauses CSS animations, so animationend
-      // can be deferred indefinitely and the ring would still be lying over
-      // the page when the tab is next looked at.
+      // Backstop: a background tab pauses CSS animations, so animationend can
+      // be deferred indefinitely and the ring would still be lying over the
+      // page when the tab is next looked at.
       setTimeout(() => ring.remove(), layer.duration + layer.delay + 600);
       document.body.appendChild(ring);
-    }
+    });
   }
 
   const fmt = (v, d = 1) => (typeof v === 'number' ? v.toFixed(d) : '—');

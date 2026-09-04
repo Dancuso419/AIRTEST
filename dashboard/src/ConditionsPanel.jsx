@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { TRAFFIC_PLACARDS } from './metrics';
 import { availableConditions, isCombinationAvailable } from './scenarios';
 import { reachableConditions } from './matrix';
@@ -60,7 +61,7 @@ function Selector({ name, legend, positions, value, onSelect, format, isLive, de
   );
 }
 
-export default function ConditionsPanel({ scenarios, conditions, onChange }) {
+function ConditionsPanel({ scenarios, conditions, onChange }) {
   const available = availableConditions(scenarios);
   const reachable = reachableConditions(available);
 
@@ -114,3 +115,8 @@ export default function ConditionsPanel({ scenarios, conditions, onChange }) {
     </div>
   );
 }
+
+// Rescans every scenario in the dataset to decide which positions are live.
+// Nothing it reads changes while a replay is running, so it should not be
+// doing that work sixty times a second.
+export default memo(ConditionsPanel);

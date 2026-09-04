@@ -811,32 +811,52 @@ body {
 /* Engage is the one control that is operated rather than read, so it gets the
    one piece of motion in the interface — and it is the size of what it
    starts, crossing the whole panel rather than sitting inside the button.
-   
-   Depth is atmospheric, not geometric: three rings at different sharpness and
-   speed. The blur and the falling opacity are what put them at different
-   distances; a hairline at any size stays flat no matter how far it travels. */
+
+   Every band is a gradient stop, not a border with a blur filter over it. A
+   gradient IS a soft edge, it costs nothing, and it scales without ever
+   re-rasterising. Depth is the difference between the bands: narrow and hard
+   in front, wide and diffuse behind. */
 .screen-ripple {
   position: fixed;
   border-radius: 50%;
-  border: var(--ring-width, 2px) solid var(--teal);
-  background: radial-gradient(circle,
-              rgba(13, 143, 111, 0.13) 0%,
-              rgba(13, 143, 111, 0.05) 58%,
-              transparent 73%);
-  /* Light on the leading edge and a wash inside it: the two together read as
-     a shell with thickness rather than an outline. */
-  box-shadow:
-    0 0 40px rgba(13, 143, 111, 0.22),
-    inset 0 0 60px rgba(13, 143, 111, 0.12);
-  filter: blur(var(--ring-blur, 0px));
   transform: scale(0);
   opacity: var(--ring-opacity, 0.9);
   pointer-events: none;
   z-index: 90;
+  /* Transform and opacity only, so the whole thing lives on the compositor
+     and never touches layout or paint while it travels. */
   will-change: transform, opacity;
-  /* Slow out: the wave carries momentum away from the press and settles,
-     rather than arriving everywhere at once. */
   animation: screen-ripple 0.95s cubic-bezier(0.12, 0.66, 0.2, 1) forwards;
+}
+
+/* Near: a tight, almost hard edge with a faint wash inside it. */
+.screen-ripple.is-layer-0 {
+  background: radial-gradient(circle,
+              rgba(13, 143, 111, 0.025) 0%,
+              rgba(13, 143, 111, 0.03) 60%,
+              rgba(13, 143, 111, 0.62) 66%,
+              rgba(13, 143, 111, 0.62) 68%,
+              transparent 71%);
+}
+
+/* Middle. */
+.screen-ripple.is-layer-1 {
+  background: radial-gradient(circle,
+              rgba(13, 143, 111, 0.02) 0%,
+              rgba(13, 143, 111, 0.025) 54%,
+              rgba(13, 143, 111, 0.34) 63%,
+              rgba(13, 143, 111, 0.24) 68%,
+              transparent 73%);
+}
+
+/* Far: a wide diffuse swell with no discernible edge at all. */
+.screen-ripple.is-layer-2 {
+  background: radial-gradient(circle,
+              rgba(13, 143, 111, 0.015) 0%,
+              rgba(13, 143, 111, 0.03) 44%,
+              rgba(13, 143, 111, 0.18) 60%,
+              rgba(13, 143, 111, 0.11) 69%,
+              transparent 78%);
 }
 
 @keyframes screen-ripple {

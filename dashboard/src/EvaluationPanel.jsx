@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import { buildEvaluation } from './evaluation';
 
 /**
@@ -15,7 +16,7 @@ const CHIP = {
   tie: 'Level',
 };
 
-export default function EvaluationPanel({ wifi5, wifi6, clients, trafficType, aps }) {
+function EvaluationPanel({ wifi5, wifi6, clients, trafficType, aps }) {
   const ev = buildEvaluation({ wifi5, wifi6, clients, trafficType, aps });
 
   return (
@@ -46,3 +47,7 @@ export default function EvaluationPanel({ wifi5, wifi6, clients, trafficType, ap
     </div>
   );
 }
+
+// Rebuilds eight comparisons and every sentence in them. It is inside a
+// dialog that is usually closed, and its inputs cannot change mid-replay.
+export default memo(EvaluationPanel);

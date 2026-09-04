@@ -1,3 +1,4 @@
+import { memo } from 'react';
 import {
   Area,
   CartesianGrid,
@@ -11,7 +12,7 @@ import {
 } from 'recharts';
 import { STANDARD_LABELS, toChartRows } from './metrics';
 
-export default function ComparisonChart({
+function ComparisonChart({
   scenarios,
   topology,
   trafficType,
@@ -118,3 +119,13 @@ export default function ComparisonChart({
     </ResponsiveContainer>
   );
 }
+
+/**
+ * Memoised because the replay sets state roughly sixty times a second, and
+ * without this the whole Recharts SVG was rebuilt on every one of those
+ * frames while none of its inputs had changed. Its props are all stable
+ * during a replay: `scenarios` comes straight from the imported dataset and
+ * `metric` is an object out of the module-level METRICS array, so both keep
+ * their identity across renders and the default shallow compare holds.
+ */
+export default memo(ComparisonChart);
