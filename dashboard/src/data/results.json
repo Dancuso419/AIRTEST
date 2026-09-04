@@ -1,7 +1,7 @@
 {
   "meta": {
     "ns3_version": "3.42",
-    "generated_utc": "2026-09-04T15:02:49+00:00",
+    "generated_utc": "2026-09-04T16:54:34+00:00",
     "measurement_window_s": 3,
     "payload_bytes_by_traffic": {
       "bulk": 1448,
@@ -4860,6 +4860,1078 @@
       "topology": "multi_ap",
       "standard": "wifi6",
       "clients": 10,
+      "traffic_type": "bulk",
+      "offered_load_mbps": 50.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 40.658,
+          "per_user_throughput_mbps": 4.0658,
+          "latency_ms": 4.17,
+          "jitter_ms": 0.845,
+          "packet_loss_pct": 0.16,
+          "satisfaction_ratio_pct": 81.32,
+          "offered_realised_mbps": 40.721,
+          "fairness_index": 0.8721,
+          "airtime_utilization_pct": 64.65,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 114.566,
+              "per_user_throughput_mbps": 11.4566,
+              "packet_loss_pct": 1.885,
+              "latency_ms": 1.381,
+              "airtime_utilization_pct": 56.31
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 133.679,
+              "per_user_throughput_mbps": 13.3679,
+              "packet_loss_pct": 0.603,
+              "latency_ms": 1.357,
+              "airtime_utilization_pct": 58.54
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 135.88,
+              "per_user_throughput_mbps": 13.588,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.706,
+              "airtime_utilization_pct": 58.28
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 134.49,
+              "per_user_throughput_mbps": 13.449,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.59,
+              "airtime_utilization_pct": 57.93
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 134.606,
+              "per_user_throughput_mbps": 13.4606,
+              "packet_loss_pct": 0.172,
+              "latency_ms": 1.487,
+              "airtime_utilization_pct": 58.43
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 125.686,
+              "per_user_throughput_mbps": 12.5686,
+              "packet_loss_pct": 3.298,
+              "latency_ms": 1.463,
+              "airtime_utilization_pct": 59.36
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 142.599,
+              "per_user_throughput_mbps": 14.2599,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.95,
+              "airtime_utilization_pct": 59.78
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 132.984,
+              "per_user_throughput_mbps": 13.2984,
+              "packet_loss_pct": 1.29,
+              "latency_ms": 1.291,
+              "airtime_utilization_pct": 57.76
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 133.679,
+              "per_user_throughput_mbps": 13.3679,
+              "packet_loss_pct": 0.259,
+              "latency_ms": 1.664,
+              "airtime_utilization_pct": 58.58
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 137.502,
+              "per_user_throughput_mbps": 13.7502,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.66,
+              "airtime_utilization_pct": 59.07
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 163.798,
+              "per_user_throughput_mbps": 16.3798,
+              "packet_loss_pct": 3.875,
+              "latency_ms": 5.643,
+              "airtime_utilization_pct": 67.72
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 200.867,
+              "per_user_throughput_mbps": 20.0867,
+              "packet_loss_pct": 0.858,
+              "latency_ms": 4.877,
+              "airtime_utilization_pct": 66.35
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 193.221,
+              "per_user_throughput_mbps": 19.3221,
+              "packet_loss_pct": 3.584,
+              "latency_ms": 5.318,
+              "airtime_utilization_pct": 73.32
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 187.197,
+              "per_user_throughput_mbps": 18.7197,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.885,
+              "airtime_utilization_pct": 71.2
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 215.231,
+              "per_user_throughput_mbps": 21.5231,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.078,
+              "airtime_utilization_pct": 70.66
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 202.836,
+              "per_user_throughput_mbps": 20.2836,
+              "packet_loss_pct": 1.85,
+              "latency_ms": 5.005,
+              "airtime_utilization_pct": 62.57
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 196.349,
+              "per_user_throughput_mbps": 19.6349,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.175,
+              "airtime_utilization_pct": 66.95
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 204.226,
+              "per_user_throughput_mbps": 20.4226,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.13,
+              "airtime_utilization_pct": 67.31
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 196.233,
+              "per_user_throughput_mbps": 19.6233,
+              "packet_loss_pct": 0.645,
+              "latency_ms": 6.225,
+              "airtime_utilization_pct": 73.24
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 204.342,
+              "per_user_throughput_mbps": 20.4342,
+              "packet_loss_pct": 0.339,
+              "latency_ms": 5.0,
+              "airtime_utilization_pct": 70.43
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 205.732,
+              "per_user_throughput_mbps": 20.5732,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.476,
+              "airtime_utilization_pct": 65.73
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 196.349,
+              "per_user_throughput_mbps": 19.6349,
+              "packet_loss_pct": 1.625,
+              "latency_ms": 4.837,
+              "airtime_utilization_pct": 63.28
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 199.129,
+              "per_user_throughput_mbps": 19.9129,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.598,
+              "airtime_utilization_pct": 66.33
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 185.228,
+              "per_user_throughput_mbps": 18.5228,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 3.927,
+              "airtime_utilization_pct": 66.04
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 216.157,
+              "per_user_throughput_mbps": 21.6157,
+              "packet_loss_pct": 1.634,
+              "latency_ms": 4.539,
+              "airtime_utilization_pct": 67.74
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 195.19,
+              "per_user_throughput_mbps": 19.519,
+              "packet_loss_pct": 0.296,
+              "latency_ms": 4.591,
+              "airtime_utilization_pct": 66.16
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 206.659,
+              "per_user_throughput_mbps": 20.6659,
+              "packet_loss_pct": 0.446,
+              "latency_ms": 4.452,
+              "airtime_utilization_pct": 69.89
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 200.751,
+              "per_user_throughput_mbps": 20.0751,
+              "packet_loss_pct": 0.631,
+              "latency_ms": 5.056,
+              "airtime_utilization_pct": 67.56
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 201.909,
+              "per_user_throughput_mbps": 20.1909,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.667,
+              "airtime_utilization_pct": 66.9
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 47.137,
+          "per_user_throughput_mbps": 4.7137,
+          "latency_ms": 5.542,
+          "jitter_ms": 0.902,
+          "packet_loss_pct": 0.042,
+          "satisfaction_ratio_pct": 94.27,
+          "offered_realised_mbps": 47.157,
+          "fairness_index": 0.979,
+          "airtime_utilization_pct": 68.27,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 139.24,
+              "per_user_throughput_mbps": 13.924,
+              "packet_loss_pct": 2.751,
+              "latency_ms": 2.514,
+              "airtime_utilization_pct": 59.98
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 169.821,
+              "per_user_throughput_mbps": 16.9821,
+              "packet_loss_pct": 0.34,
+              "latency_ms": 3.455,
+              "airtime_utilization_pct": 67.0
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 182.216,
+              "per_user_throughput_mbps": 18.2216,
+              "packet_loss_pct": 1.069,
+              "latency_ms": 2.625,
+              "airtime_utilization_pct": 61.93
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 181.058,
+              "per_user_throughput_mbps": 18.1058,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.56,
+              "airtime_utilization_pct": 62.24
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 169.358,
+              "per_user_throughput_mbps": 16.9358,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.856,
+              "airtime_utilization_pct": 63.97
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 174.223,
+              "per_user_throughput_mbps": 17.4223,
+              "packet_loss_pct": 3.959,
+              "latency_ms": 3.701,
+              "airtime_utilization_pct": 63.34
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 172.138,
+              "per_user_throughput_mbps": 17.2138,
+              "packet_loss_pct": 1.197,
+              "latency_ms": 5.556,
+              "airtime_utilization_pct": 69.38
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 192.758,
+              "per_user_throughput_mbps": 19.2758,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 3.785,
+              "airtime_utilization_pct": 68.88
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 176.888,
+              "per_user_throughput_mbps": 17.6888,
+              "packet_loss_pct": 0.909,
+              "latency_ms": 3.596,
+              "airtime_utilization_pct": 62.8
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 181.405,
+              "per_user_throughput_mbps": 18.1405,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 3.186,
+              "airtime_utilization_pct": 61.47
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 196.117,
+              "per_user_throughput_mbps": 19.6117,
+              "packet_loss_pct": 0.294,
+              "latency_ms": 5.371,
+              "airtime_utilization_pct": 63.94
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 210.829,
+              "per_user_throughput_mbps": 21.0829,
+              "packet_loss_pct": 3.755,
+              "latency_ms": 5.592,
+              "airtime_utilization_pct": 72.91
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 232.259,
+              "per_user_throughput_mbps": 23.2259,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.958,
+              "airtime_utilization_pct": 70.23
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 167.736,
+              "per_user_throughput_mbps": 16.7736,
+              "packet_loss_pct": 7.888,
+              "latency_ms": 7.024,
+              "airtime_utilization_pct": 75.1
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 231.332,
+              "per_user_throughput_mbps": 23.1332,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 7.989,
+              "airtime_utilization_pct": 77.7
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 218.358,
+              "per_user_throughput_mbps": 21.8358,
+              "packet_loss_pct": 0.633,
+              "latency_ms": 9.036,
+              "airtime_utilization_pct": 70.91
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 226.931,
+              "per_user_throughput_mbps": 22.6931,
+              "packet_loss_pct": 0.204,
+              "latency_ms": 5.412,
+              "airtime_utilization_pct": 69.16
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 248.245,
+              "per_user_throughput_mbps": 24.8245,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 6.189,
+              "airtime_utilization_pct": 74.4
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 212.566,
+              "per_user_throughput_mbps": 21.2566,
+              "packet_loss_pct": 1.714,
+              "latency_ms": 4.96,
+              "airtime_utilization_pct": 67.32
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 242.569,
+              "per_user_throughput_mbps": 24.2569,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 6.618,
+              "airtime_utilization_pct": 70.2
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 214.304,
+              "per_user_throughput_mbps": 21.4304,
+              "packet_loss_pct": 2.272,
+              "latency_ms": 4.715,
+              "airtime_utilization_pct": 67.7
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 204.342,
+              "per_user_throughput_mbps": 20.4342,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.862,
+              "airtime_utilization_pct": 64.36
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 246.855,
+              "per_user_throughput_mbps": 24.6855,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.99,
+              "airtime_utilization_pct": 68.76
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 218.243,
+              "per_user_throughput_mbps": 21.8243,
+              "packet_loss_pct": 2.937,
+              "latency_ms": 4.689,
+              "airtime_utilization_pct": 68.38
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 215.462,
+              "per_user_throughput_mbps": 21.5462,
+              "packet_loss_pct": 0.054,
+              "latency_ms": 7.108,
+              "airtime_utilization_pct": 71.64
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 228.205,
+              "per_user_throughput_mbps": 22.8205,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 7.788,
+              "airtime_utilization_pct": 70.94
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 210.829,
+              "per_user_throughput_mbps": 21.0829,
+              "packet_loss_pct": 0.383,
+              "latency_ms": 5.983,
+              "airtime_utilization_pct": 70.56
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 222.297,
+              "per_user_throughput_mbps": 22.2297,
+              "packet_loss_pct": 3.374,
+              "latency_ms": 6.261,
+              "airtime_utilization_pct": 63.79
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 221.602,
+              "per_user_throughput_mbps": 22.1602,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.195,
+              "airtime_utilization_pct": 80.45
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 43.898,
+          "std": 4.581
+        },
+        "per_user_throughput_mbps": {
+          "mean": 4.39,
+          "std": 0.458
+        },
+        "latency_ms": {
+          "mean": 4.856,
+          "std": 0.97
+        },
+        "jitter_ms": {
+          "mean": 0.873,
+          "std": 0.04
+        },
+        "packet_loss_pct": {
+          "mean": 0.101,
+          "std": 0.083
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 87.795,
+          "std": 9.157
+        },
+        "fairness_index": {
+          "mean": 0.926,
+          "std": 0.076
+        },
+        "airtime_utilization_pct": {
+          "mean": 66.46,
+          "std": 2.56
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 10,
+      "traffic_type": "video",
+      "offered_load_mbps": 30.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 27.958,
+          "per_user_throughput_mbps": 2.7958,
+          "latency_ms": 2.675,
+          "jitter_ms": 1.283,
+          "packet_loss_pct": 6.756,
+          "satisfaction_ratio_pct": 93.19,
+          "offered_realised_mbps": 29.984,
+          "fairness_index": 0.9803,
+          "airtime_utilization_pct": 46.1,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 22.368,
+              "per_user_throughput_mbps": 2.2368,
+              "packet_loss_pct": 24.839,
+              "latency_ms": 2.168,
+              "airtime_utilization_pct": 41.61
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 24.288,
+              "per_user_throughput_mbps": 2.4288,
+              "packet_loss_pct": 18.387,
+              "latency_ms": 1.623,
+              "airtime_utilization_pct": 42.26
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 24.096,
+              "per_user_throughput_mbps": 2.4096,
+              "packet_loss_pct": 19.032,
+              "latency_ms": 1.671,
+              "airtime_utilization_pct": 42.72
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 23.808,
+              "per_user_throughput_mbps": 2.3808,
+              "packet_loss_pct": 20.0,
+              "latency_ms": 1.59,
+              "airtime_utilization_pct": 40.65
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 23.808,
+              "per_user_throughput_mbps": 2.3808,
+              "packet_loss_pct": 22.5,
+              "latency_ms": 1.599,
+              "airtime_utilization_pct": 41.03
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 23.328,
+              "per_user_throughput_mbps": 2.3328,
+              "packet_loss_pct": 21.613,
+              "latency_ms": 1.731,
+              "airtime_utilization_pct": 46.41
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 24.96,
+              "per_user_throughput_mbps": 2.496,
+              "packet_loss_pct": 16.129,
+              "latency_ms": 10.191,
+              "airtime_utilization_pct": 59.86
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 23.904,
+              "per_user_throughput_mbps": 2.3904,
+              "packet_loss_pct": 19.677,
+              "latency_ms": 1.532,
+              "airtime_utilization_pct": 40.29
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 23.808,
+              "per_user_throughput_mbps": 2.3808,
+              "packet_loss_pct": 22.5,
+              "latency_ms": 1.578,
+              "airtime_utilization_pct": 41.85
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 24.288,
+              "per_user_throughput_mbps": 2.4288,
+              "packet_loss_pct": 18.387,
+              "latency_ms": 1.58,
+              "airtime_utilization_pct": 41.7
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 21.042,
+              "airtime_utilization_pct": 46.55
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 30.24,
+              "per_user_throughput_mbps": 3.024,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.817,
+              "airtime_utilization_pct": 47.29
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 1.752,
+              "airtime_utilization_pct": 47.06
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.664,
+              "airtime_utilization_pct": 45.37
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 30.528,
+              "per_user_throughput_mbps": 3.0528,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.678,
+              "airtime_utilization_pct": 47.09
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.844,
+              "airtime_utilization_pct": 47.83
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 1.848,
+              "airtime_utilization_pct": 47.4
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 3.0336,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.693,
+              "airtime_utilization_pct": 47.33
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.749,
+              "airtime_utilization_pct": 48.6
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.72,
+              "airtime_utilization_pct": 46.26
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 30.048,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 2.188,
+              "latency_ms": 1.765,
+              "airtime_utilization_pct": 48.56
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 29.472,
+              "per_user_throughput_mbps": 2.9472,
+              "packet_loss_pct": 0.968,
+              "latency_ms": 1.769,
+              "airtime_utilization_pct": 45.72
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 30.72,
+              "per_user_throughput_mbps": 3.072,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.786,
+              "airtime_utilization_pct": 47.64
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.774,
+              "airtime_utilization_pct": 45.44
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 30.048,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 2.188,
+              "latency_ms": 1.784,
+              "airtime_utilization_pct": 48.24
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 3.0336,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.825,
+              "airtime_utilization_pct": 48.15
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 29.856,
+              "per_user_throughput_mbps": 2.9856,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.728,
+              "airtime_utilization_pct": 45.87
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.72,
+              "airtime_utilization_pct": 47.42
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 2.5,
+              "latency_ms": 1.799,
+              "airtime_utilization_pct": 47.78
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 28.954,
+          "per_user_throughput_mbps": 2.8954,
+          "latency_ms": 2.077,
+          "jitter_ms": 1.164,
+          "packet_loss_pct": 3.436,
+          "satisfaction_ratio_pct": 96.51,
+          "offered_realised_mbps": 29.984,
+          "fairness_index": 0.9896,
+          "airtime_utilization_pct": 46.54,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 25.536,
+              "per_user_throughput_mbps": 2.5536,
+              "packet_loss_pct": 14.194,
+              "latency_ms": 2.185,
+              "airtime_utilization_pct": 44.76
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 27.168,
+              "per_user_throughput_mbps": 2.7168,
+              "packet_loss_pct": 8.71,
+              "latency_ms": 1.703,
+              "airtime_utilization_pct": 46.51
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 26.976,
+              "per_user_throughput_mbps": 2.6976,
+              "packet_loss_pct": 9.355,
+              "latency_ms": 1.671,
+              "airtime_utilization_pct": 44.58
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 27.072,
+              "per_user_throughput_mbps": 2.7072,
+              "packet_loss_pct": 9.032,
+              "latency_ms": 1.701,
+              "airtime_utilization_pct": 44.89
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 26.784,
+              "per_user_throughput_mbps": 2.6784,
+              "packet_loss_pct": 12.812,
+              "latency_ms": 1.736,
+              "airtime_utilization_pct": 45.51
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 27.264,
+              "per_user_throughput_mbps": 2.7264,
+              "packet_loss_pct": 8.387,
+              "latency_ms": 1.614,
+              "airtime_utilization_pct": 45.44
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 27.168,
+              "per_user_throughput_mbps": 2.7168,
+              "packet_loss_pct": 8.71,
+              "latency_ms": 1.6,
+              "airtime_utilization_pct": 43.86
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 26.784,
+              "per_user_throughput_mbps": 2.6784,
+              "packet_loss_pct": 10.0,
+              "latency_ms": 1.62,
+              "airtime_utilization_pct": 45.73
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 26.784,
+              "per_user_throughput_mbps": 2.6784,
+              "packet_loss_pct": 12.812,
+              "latency_ms": 1.62,
+              "airtime_utilization_pct": 44.57
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 27.264,
+              "per_user_throughput_mbps": 2.7264,
+              "packet_loss_pct": 8.387,
+              "latency_ms": 1.571,
+              "airtime_utilization_pct": 44.64
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 3.0336,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 11.175,
+              "airtime_utilization_pct": 47.01
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.666,
+              "airtime_utilization_pct": 46.53
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 2.5,
+              "latency_ms": 1.717,
+              "airtime_utilization_pct": 46.33
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.014,
+              "airtime_utilization_pct": 48.49
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 29.856,
+              "per_user_throughput_mbps": 2.9856,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.888,
+              "airtime_utilization_pct": 49.2
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 30.24,
+              "per_user_throughput_mbps": 3.024,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.773,
+              "airtime_utilization_pct": 46.44
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 30.048,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 2.188,
+              "latency_ms": 1.822,
+              "airtime_utilization_pct": 46.98
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 3.0336,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.747,
+              "airtime_utilization_pct": 47.26
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 29.568,
+              "per_user_throughput_mbps": 2.9568,
+              "packet_loss_pct": 0.645,
+              "latency_ms": 1.764,
+              "airtime_utilization_pct": 48.08
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 30.048,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.779,
+              "airtime_utilization_pct": 46.27
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 3.0336,
+              "packet_loss_pct": 1.25,
+              "latency_ms": 1.768,
+              "airtime_utilization_pct": 47.78
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 29.472,
+              "per_user_throughput_mbps": 2.9472,
+              "packet_loss_pct": 0.968,
+              "latency_ms": 1.685,
+              "airtime_utilization_pct": 47.0
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 30.432,
+              "per_user_throughput_mbps": 3.0432,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.751,
+              "airtime_utilization_pct": 47.03
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.667,
+              "airtime_utilization_pct": 46.98
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 1.749,
+              "airtime_utilization_pct": 45.77
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.772,
+              "airtime_utilization_pct": 46.88
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.841,
+              "airtime_utilization_pct": 47.55
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.769,
+              "airtime_utilization_pct": 47.92
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 1.758,
+              "airtime_utilization_pct": 47.84
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 28.456,
+          "std": 0.704
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.846,
+          "std": 0.07
+        },
+        "latency_ms": {
+          "mean": 2.376,
+          "std": 0.423
+        },
+        "jitter_ms": {
+          "mean": 1.224,
+          "std": 0.084
+        },
+        "packet_loss_pct": {
+          "mean": 5.096,
+          "std": 2.348
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 94.85,
+          "std": 2.348
+        },
+        "fairness_index": {
+          "mean": 0.985,
+          "std": 0.007
+        },
+        "airtime_utilization_pct": {
+          "mean": 46.32,
+          "std": 0.311
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 10,
       "traffic_type": "web",
       "offered_load_mbps": 5.0,
       "trials": [
@@ -5389,6 +6461,3222 @@
         "airtime_utilization_pct": {
           "mean": 18.845,
           "std": 3.811
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 14,
+      "traffic_type": "bulk",
+      "offered_load_mbps": 70.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 64.25,
+          "per_user_throughput_mbps": 4.5893,
+          "latency_ms": 10.687,
+          "jitter_ms": 1.065,
+          "packet_loss_pct": 0.225,
+          "satisfaction_ratio_pct": 91.79,
+          "offered_realised_mbps": 64.393,
+          "fairness_index": 0.9546,
+          "airtime_utilization_pct": 77.86,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 141.788,
+              "per_user_throughput_mbps": 10.1277,
+              "packet_loss_pct": 7.202,
+              "latency_ms": 4.274,
+              "airtime_utilization_pct": 64.26
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 233.302,
+              "per_user_throughput_mbps": 16.6644,
+              "packet_loss_pct": 4.459,
+              "latency_ms": 5.907,
+              "airtime_utilization_pct": 77.03
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 229.595,
+              "per_user_throughput_mbps": 16.3996,
+              "packet_loss_pct": 4.159,
+              "latency_ms": 7.761,
+              "airtime_utilization_pct": 77.97
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 221.023,
+              "per_user_throughput_mbps": 15.7873,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 16.645,
+              "airtime_utilization_pct": 83.84
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 249.983,
+              "per_user_throughput_mbps": 17.8559,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 7.571,
+              "airtime_utilization_pct": 74.93
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 301.3,
+              "per_user_throughput_mbps": 21.5214,
+              "packet_loss_pct": 0.307,
+              "latency_ms": 8.303,
+              "airtime_utilization_pct": 76.31
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 259.945,
+              "per_user_throughput_mbps": 18.5675,
+              "packet_loss_pct": 5.872,
+              "latency_ms": 8.759,
+              "airtime_utilization_pct": 76.83
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 276.047,
+              "per_user_throughput_mbps": 19.7176,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.97,
+              "airtime_utilization_pct": 77.01
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 261.914,
+              "per_user_throughput_mbps": 18.7082,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.04,
+              "airtime_utilization_pct": 73.81
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 263.884,
+              "per_user_throughput_mbps": 18.8488,
+              "packet_loss_pct": 0.263,
+              "latency_ms": 6.463,
+              "airtime_utilization_pct": 73.59
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 263.304,
+              "per_user_throughput_mbps": 18.8075,
+              "packet_loss_pct": 2.152,
+              "latency_ms": 11.759,
+              "airtime_utilization_pct": 80.48
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 261.567,
+              "per_user_throughput_mbps": 18.6833,
+              "packet_loss_pct": 2.84,
+              "latency_ms": 10.544,
+              "airtime_utilization_pct": 76.37
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 314.042,
+              "per_user_throughput_mbps": 22.4316,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.841,
+              "airtime_utilization_pct": 77.31
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 259.597,
+              "per_user_throughput_mbps": 18.5427,
+              "packet_loss_pct": 0.665,
+              "latency_ms": 11.612,
+              "airtime_utilization_pct": 71.62
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 274.077,
+              "per_user_throughput_mbps": 19.577,
+              "packet_loss_pct": 0.505,
+              "latency_ms": 10.598,
+              "airtime_utilization_pct": 78.27
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 308.134,
+              "per_user_throughput_mbps": 22.0096,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.938,
+              "airtime_utilization_pct": 78.91
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 293.539,
+              "per_user_throughput_mbps": 20.967,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.177,
+              "airtime_utilization_pct": 77.92
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 279.869,
+              "per_user_throughput_mbps": 19.9907,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.544,
+              "airtime_utilization_pct": 80.65
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 285.661,
+              "per_user_throughput_mbps": 20.4044,
+              "packet_loss_pct": 1.948,
+              "latency_ms": 9.883,
+              "airtime_utilization_pct": 79.19
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 261.567,
+              "per_user_throughput_mbps": 18.6833,
+              "packet_loss_pct": 1.911,
+              "latency_ms": 11.713,
+              "airtime_utilization_pct": 81.0
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 297.94,
+              "per_user_throughput_mbps": 21.2815,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.442,
+              "airtime_utilization_pct": 78.31
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 261.914,
+              "per_user_throughput_mbps": 18.7082,
+              "packet_loss_pct": 7.069,
+              "latency_ms": 9.318,
+              "airtime_utilization_pct": 78.13
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 335.82,
+              "per_user_throughput_mbps": 23.9872,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 13.582,
+              "airtime_utilization_pct": 76.14
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 292.148,
+              "per_user_throughput_mbps": 20.8677,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 13.01,
+              "airtime_utilization_pct": 82.75
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 300.026,
+              "per_user_throughput_mbps": 21.4304,
+              "packet_loss_pct": 3.682,
+              "latency_ms": 12.739,
+              "airtime_utilization_pct": 82.02
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 339.99,
+              "per_user_throughput_mbps": 24.285,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.827,
+              "airtime_utilization_pct": 76.82
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 278.595,
+              "per_user_throughput_mbps": 19.8997,
+              "packet_loss_pct": 1.837,
+              "latency_ms": 14.691,
+              "airtime_utilization_pct": 81.75
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 294.349,
+              "per_user_throughput_mbps": 21.025,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.286,
+              "airtime_utilization_pct": 79.61
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 293.423,
+              "per_user_throughput_mbps": 20.9588,
+              "packet_loss_pct": 1.631,
+              "latency_ms": 10.052,
+              "airtime_utilization_pct": 80.75
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 57.775,
+          "per_user_throughput_mbps": 4.1268,
+          "latency_ms": 8.969,
+          "jitter_ms": 1.112,
+          "packet_loss_pct": 0.385,
+          "satisfaction_ratio_pct": 82.54,
+          "offered_realised_mbps": 57.995,
+          "fairness_index": 0.9175,
+          "airtime_utilization_pct": 75.19,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 134.838,
+              "per_user_throughput_mbps": 9.6313,
+              "packet_loss_pct": 8.057,
+              "latency_ms": 3.721,
+              "airtime_utilization_pct": 65.84
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 201.677,
+              "per_user_throughput_mbps": 14.4055,
+              "packet_loss_pct": 1.136,
+              "latency_ms": 5.183,
+              "airtime_utilization_pct": 71.9
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 212.914,
+              "per_user_throughput_mbps": 15.2081,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 5.249,
+              "airtime_utilization_pct": 71.56
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 195.538,
+              "per_user_throughput_mbps": 13.967,
+              "packet_loss_pct": 2.031,
+              "latency_ms": 3.374,
+              "airtime_utilization_pct": 66.71
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 198.55,
+              "per_user_throughput_mbps": 14.1821,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 4.429,
+              "airtime_utilization_pct": 71.06
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 186.271,
+              "per_user_throughput_mbps": 13.3051,
+              "packet_loss_pct": 4.0,
+              "latency_ms": 8.236,
+              "airtime_utilization_pct": 72.73
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 212.335,
+              "per_user_throughput_mbps": 15.1668,
+              "packet_loss_pct": 0.489,
+              "latency_ms": 6.37,
+              "airtime_utilization_pct": 71.12
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 222.529,
+              "per_user_throughput_mbps": 15.8949,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 3.931,
+              "airtime_utilization_pct": 67.86
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 206.195,
+              "per_user_throughput_mbps": 14.7282,
+              "packet_loss_pct": 1.276,
+              "latency_ms": 8.032,
+              "airtime_utilization_pct": 67.31
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 243.959,
+              "per_user_throughput_mbps": 17.4256,
+              "packet_loss_pct": 2.001,
+              "latency_ms": 6.202,
+              "airtime_utilization_pct": 78.49
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 241.295,
+              "per_user_throughput_mbps": 17.2353,
+              "packet_loss_pct": 0.951,
+              "latency_ms": 6.813,
+              "airtime_utilization_pct": 69.7
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 252.068,
+              "per_user_throughput_mbps": 18.0048,
+              "packet_loss_pct": 0.321,
+              "latency_ms": 5.929,
+              "airtime_utilization_pct": 73.24
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 231.101,
+              "per_user_throughput_mbps": 16.5072,
+              "packet_loss_pct": 0.449,
+              "latency_ms": 7.981,
+              "airtime_utilization_pct": 77.01
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 264.463,
+              "per_user_throughput_mbps": 18.8902,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 6.653,
+              "airtime_utilization_pct": 76.34
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 214.42,
+              "per_user_throughput_mbps": 15.3157,
+              "packet_loss_pct": 4.833,
+              "latency_ms": 7.636,
+              "airtime_utilization_pct": 76.56
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 292.496,
+              "per_user_throughput_mbps": 20.8926,
+              "packet_loss_pct": 0.591,
+              "latency_ms": 10.406,
+              "airtime_utilization_pct": 77.96
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 255.196,
+              "per_user_throughput_mbps": 18.2283,
+              "packet_loss_pct": 1.255,
+              "latency_ms": 9.636,
+              "airtime_utilization_pct": 78.55
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 274.425,
+              "per_user_throughput_mbps": 19.6018,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.158,
+              "airtime_utilization_pct": 81.92
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 291.685,
+              "per_user_throughput_mbps": 20.8347,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 6.128,
+              "airtime_utilization_pct": 69.52
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 240.947,
+              "per_user_throughput_mbps": 17.2105,
+              "packet_loss_pct": 3.837,
+              "latency_ms": 8.095,
+              "airtime_utilization_pct": 75.25
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 276.858,
+              "per_user_throughput_mbps": 19.7755,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 10.404,
+              "airtime_utilization_pct": 78.74
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 254.964,
+              "per_user_throughput_mbps": 18.2117,
+              "packet_loss_pct": 3.928,
+              "latency_ms": 10.352,
+              "airtime_utilization_pct": 75.38
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 298.983,
+              "per_user_throughput_mbps": 21.3559,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.141,
+              "airtime_utilization_pct": 78.85
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 309.061,
+              "per_user_throughput_mbps": 22.0758,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 8.91,
+              "airtime_utilization_pct": 83.4
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 261.103,
+              "per_user_throughput_mbps": 18.6502,
+              "packet_loss_pct": 4.895,
+              "latency_ms": 11.502,
+              "airtime_utilization_pct": 81.1
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 239.905,
+              "per_user_throughput_mbps": 17.136,
+              "packet_loss_pct": 0.624,
+              "latency_ms": 17.172,
+              "airtime_utilization_pct": 85.88
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 343.466,
+              "per_user_throughput_mbps": 24.5333,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 13.914,
+              "airtime_utilization_pct": 83.67
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 242.685,
+              "per_user_throughput_mbps": 17.3346,
+              "packet_loss_pct": 5.075,
+              "latency_ms": 6.135,
+              "airtime_utilization_pct": 71.34
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 308.829,
+              "per_user_throughput_mbps": 22.0592,
+              "packet_loss_pct": 0.374,
+              "latency_ms": 16.412,
+              "airtime_utilization_pct": 81.7
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 61.013,
+          "std": 4.579
+        },
+        "per_user_throughput_mbps": {
+          "mean": 4.358,
+          "std": 0.327
+        },
+        "latency_ms": {
+          "mean": 9.828,
+          "std": 1.215
+        },
+        "jitter_ms": {
+          "mean": 1.089,
+          "std": 0.033
+        },
+        "packet_loss_pct": {
+          "mean": 0.305,
+          "std": 0.113
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 87.165,
+          "std": 6.541
+        },
+        "fairness_index": {
+          "mean": 0.936,
+          "std": 0.026
+        },
+        "airtime_utilization_pct": {
+          "mean": 76.525,
+          "std": 1.888
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 14,
+      "traffic_type": "video",
+      "offered_load_mbps": 42.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 37.939,
+          "per_user_throughput_mbps": 2.7099,
+          "latency_ms": 2.929,
+          "jitter_ms": 1.611,
+          "packet_loss_pct": 9.62,
+          "satisfaction_ratio_pct": 90.33,
+          "offered_realised_mbps": 41.978,
+          "fairness_index": 0.9734,
+          "airtime_utilization_pct": 49.46,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 28.032,
+              "per_user_throughput_mbps": 2.0023,
+              "packet_loss_pct": 32.719,
+              "latency_ms": 2.682,
+              "airtime_utilization_pct": 44.41
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 2.1531,
+              "packet_loss_pct": 27.65,
+              "latency_ms": 1.678,
+              "airtime_utilization_pct": 43.41
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 30.336,
+              "per_user_throughput_mbps": 2.1669,
+              "packet_loss_pct": 27.189,
+              "latency_ms": 1.731,
+              "airtime_utilization_pct": 44.35
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.1257,
+              "packet_loss_pct": 28.571,
+              "latency_ms": 1.703,
+              "airtime_utilization_pct": 43.24
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.1257,
+              "packet_loss_pct": 30.804,
+              "latency_ms": 1.671,
+              "airtime_utilization_pct": 44.56
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.1394,
+              "packet_loss_pct": 28.111,
+              "latency_ms": 1.753,
+              "airtime_utilization_pct": 44.72
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 2.1531,
+              "packet_loss_pct": 27.65,
+              "latency_ms": 1.7,
+              "airtime_utilization_pct": 44.78
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 30.144,
+              "per_user_throughput_mbps": 2.1531,
+              "packet_loss_pct": 27.65,
+              "latency_ms": 1.786,
+              "airtime_utilization_pct": 45.62
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 29.76,
+              "per_user_throughput_mbps": 2.1257,
+              "packet_loss_pct": 30.804,
+              "latency_ms": 1.766,
+              "airtime_utilization_pct": 45.82
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.1394,
+              "packet_loss_pct": 28.111,
+              "latency_ms": 1.793,
+              "airtime_utilization_pct": 45.15
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 42.144,
+              "per_user_throughput_mbps": 3.0103,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 29.449,
+              "airtime_utilization_pct": 53.91
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 42.336,
+              "per_user_throughput_mbps": 3.024,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.894,
+              "airtime_utilization_pct": 51.86
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 2.047,
+              "airtime_utilization_pct": 51.85
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 41.952,
+              "per_user_throughput_mbps": 2.9966,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.944,
+              "airtime_utilization_pct": 52.57
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 42.624,
+              "per_user_throughput_mbps": 3.0446,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.894,
+              "airtime_utilization_pct": 49.99
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.933,
+              "airtime_utilization_pct": 51.36
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 41.76,
+              "per_user_throughput_mbps": 2.9829,
+              "packet_loss_pct": 2.902,
+              "latency_ms": 1.966,
+              "airtime_utilization_pct": 52.28
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 42.24,
+              "per_user_throughput_mbps": 3.0171,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.947,
+              "airtime_utilization_pct": 50.89
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.074,
+              "airtime_utilization_pct": 53.31
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 42.048,
+              "per_user_throughput_mbps": 3.0034,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.915,
+              "airtime_utilization_pct": 50.54
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 42.432,
+              "per_user_throughput_mbps": 3.0309,
+              "packet_loss_pct": 1.339,
+              "latency_ms": 1.994,
+              "airtime_utilization_pct": 54.17
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 42.048,
+              "per_user_throughput_mbps": 3.0034,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.77,
+              "airtime_utilization_pct": 50.78
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 41.376,
+              "per_user_throughput_mbps": 2.9554,
+              "packet_loss_pct": 0.691,
+              "latency_ms": 1.909,
+              "airtime_utilization_pct": 51.79
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 41.856,
+              "per_user_throughput_mbps": 2.9897,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.832,
+              "airtime_utilization_pct": 49.63
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 42.816,
+              "per_user_throughput_mbps": 3.0583,
+              "packet_loss_pct": 0.446,
+              "latency_ms": 1.967,
+              "airtime_utilization_pct": 52.7
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 42.336,
+              "per_user_throughput_mbps": 3.024,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.891,
+              "airtime_utilization_pct": 51.95
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 40.896,
+              "per_user_throughput_mbps": 2.9211,
+              "packet_loss_pct": 1.843,
+              "latency_ms": 1.93,
+              "airtime_utilization_pct": 51.44
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 42.624,
+              "per_user_throughput_mbps": 3.0446,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.043,
+              "airtime_utilization_pct": 51.81
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 41.856,
+              "per_user_throughput_mbps": 2.9897,
+              "packet_loss_pct": 2.679,
+              "latency_ms": 1.996,
+              "airtime_utilization_pct": 52.68
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 38.957,
+          "per_user_throughput_mbps": 2.7826,
+          "latency_ms": 2.81,
+          "jitter_ms": 1.461,
+          "packet_loss_pct": 7.196,
+          "satisfaction_ratio_pct": 92.75,
+          "offered_realised_mbps": 41.978,
+          "fairness_index": 0.979,
+          "airtime_utilization_pct": 50.35,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 29.952,
+              "per_user_throughput_mbps": 2.1394,
+              "packet_loss_pct": 28.111,
+              "latency_ms": 2.501,
+              "airtime_utilization_pct": 54.24
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 34.272,
+              "per_user_throughput_mbps": 2.448,
+              "packet_loss_pct": 17.742,
+              "latency_ms": 9.43,
+              "airtime_utilization_pct": 77.07
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 33.12,
+              "per_user_throughput_mbps": 2.3657,
+              "packet_loss_pct": 20.507,
+              "latency_ms": 1.427,
+              "airtime_utilization_pct": 41.46
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 32.736,
+              "per_user_throughput_mbps": 2.3383,
+              "packet_loss_pct": 21.429,
+              "latency_ms": 1.466,
+              "airtime_utilization_pct": 40.41
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 32.928,
+              "per_user_throughput_mbps": 2.352,
+              "packet_loss_pct": 23.438,
+              "latency_ms": 1.622,
+              "airtime_utilization_pct": 44.4
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 33.312,
+              "per_user_throughput_mbps": 2.3794,
+              "packet_loss_pct": 20.046,
+              "latency_ms": 1.492,
+              "airtime_utilization_pct": 41.48
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 33.024,
+              "per_user_throughput_mbps": 2.3589,
+              "packet_loss_pct": 20.737,
+              "latency_ms": 1.472,
+              "airtime_utilization_pct": 41.62
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 32.736,
+              "per_user_throughput_mbps": 2.3383,
+              "packet_loss_pct": 21.429,
+              "latency_ms": 1.394,
+              "airtime_utilization_pct": 41.28
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 33.12,
+              "per_user_throughput_mbps": 2.3657,
+              "packet_loss_pct": 22.991,
+              "latency_ms": 1.494,
+              "airtime_utilization_pct": 41.08
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 33.12,
+              "per_user_throughput_mbps": 2.3657,
+              "packet_loss_pct": 20.507,
+              "latency_ms": 1.472,
+              "airtime_utilization_pct": 42.52
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 42.24,
+              "per_user_throughput_mbps": 3.0171,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 22.508,
+              "airtime_utilization_pct": 51.41
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 41.568,
+              "per_user_throughput_mbps": 2.9691,
+              "packet_loss_pct": 0.23,
+              "latency_ms": 2.075,
+              "airtime_utilization_pct": 50.69
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 42.528,
+              "per_user_throughput_mbps": 3.0377,
+              "packet_loss_pct": 1.116,
+              "latency_ms": 1.951,
+              "airtime_utilization_pct": 52.48
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 41.184,
+              "per_user_throughput_mbps": 2.9417,
+              "packet_loss_pct": 1.152,
+              "latency_ms": 1.826,
+              "airtime_utilization_pct": 51.32
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 42.816,
+              "per_user_throughput_mbps": 3.0583,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.012,
+              "airtime_utilization_pct": 52.02
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.932,
+              "airtime_utilization_pct": 52.61
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 42.432,
+              "per_user_throughput_mbps": 3.0309,
+              "packet_loss_pct": 1.339,
+              "latency_ms": 1.875,
+              "airtime_utilization_pct": 52.09
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 41.472,
+              "per_user_throughput_mbps": 2.9623,
+              "packet_loss_pct": 0.461,
+              "latency_ms": 1.973,
+              "airtime_utilization_pct": 52.27
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 41.952,
+              "per_user_throughput_mbps": 2.9966,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.922,
+              "airtime_utilization_pct": 52.44
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 42.144,
+              "per_user_throughput_mbps": 3.0103,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.8,
+              "airtime_utilization_pct": 51.03
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 2.03,
+              "airtime_utilization_pct": 52.17
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.983,
+              "airtime_utilization_pct": 52.76
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 43.008,
+              "per_user_throughput_mbps": 3.072,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.811,
+              "airtime_utilization_pct": 50.86
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.05,
+              "airtime_utilization_pct": 54.73
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 42.048,
+              "per_user_throughput_mbps": 3.0034,
+              "packet_loss_pct": 2.232,
+              "latency_ms": 1.824,
+              "airtime_utilization_pct": 50.89
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 41.664,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.858,
+              "airtime_utilization_pct": 53.49
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 42.048,
+              "per_user_throughput_mbps": 3.0034,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.835,
+              "airtime_utilization_pct": 52.32
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 42.048,
+              "per_user_throughput_mbps": 3.0034,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.018,
+              "airtime_utilization_pct": 52.76
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 41.856,
+              "per_user_throughput_mbps": 2.9897,
+              "packet_loss_pct": 2.679,
+              "latency_ms": 1.856,
+              "airtime_utilization_pct": 52.36
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 38.448,
+          "std": 0.72
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.746,
+          "std": 0.051
+        },
+        "latency_ms": {
+          "mean": 2.869,
+          "std": 0.084
+        },
+        "jitter_ms": {
+          "mean": 1.536,
+          "std": 0.106
+        },
+        "packet_loss_pct": {
+          "mean": 8.408,
+          "std": 1.714
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 91.54,
+          "std": 1.711
+        },
+        "fairness_index": {
+          "mean": 0.976,
+          "std": 0.004
+        },
+        "airtime_utilization_pct": {
+          "mean": 49.905,
+          "std": 0.629
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 14,
+      "traffic_type": "web",
+      "offered_load_mbps": 7.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 6.974,
+          "per_user_throughput_mbps": 0.4981,
+          "latency_ms": 2.473,
+          "jitter_ms": 0.637,
+          "packet_loss_pct": 3.532,
+          "satisfaction_ratio_pct": 99.63,
+          "offered_realised_mbps": 7.229,
+          "fairness_index": 0.8737,
+          "airtime_utilization_pct": 26.64,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 2.007,
+              "per_user_throughput_mbps": 0.1434,
+              "packet_loss_pct": 2.0,
+              "latency_ms": 0.519,
+              "airtime_utilization_pct": 8.25
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 2.458,
+              "per_user_throughput_mbps": 0.1755,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.097,
+              "airtime_utilization_pct": 8.21
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 2.949,
+              "per_user_throughput_mbps": 0.2107,
+              "packet_loss_pct": 19.101,
+              "latency_ms": 0.394,
+              "airtime_utilization_pct": 13.32
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 2.417,
+              "per_user_throughput_mbps": 0.1726,
+              "packet_loss_pct": 47.788,
+              "latency_ms": 0.432,
+              "airtime_utilization_pct": 44.32
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 6.472,
+              "per_user_throughput_mbps": 0.4623,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.998,
+              "airtime_utilization_pct": 24.16
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 5.734,
+              "per_user_throughput_mbps": 0.4096,
+              "packet_loss_pct": 14.634,
+              "latency_ms": 0.164,
+              "airtime_utilization_pct": 18.98
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 4.997,
+              "per_user_throughput_mbps": 0.3569,
+              "packet_loss_pct": 17.007,
+              "latency_ms": 0.353,
+              "airtime_utilization_pct": 17.04
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 5.652,
+              "per_user_throughput_mbps": 0.4037,
+              "packet_loss_pct": 14.815,
+              "latency_ms": 0.101,
+              "airtime_utilization_pct": 17.99
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 4.424,
+              "per_user_throughput_mbps": 0.316,
+              "packet_loss_pct": 18.797,
+              "latency_ms": 0.079,
+              "airtime_utilization_pct": 13.74
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 4.997,
+              "per_user_throughput_mbps": 0.3569,
+              "packet_loss_pct": 20.261,
+              "latency_ms": 0.103,
+              "airtime_utilization_pct": 22.11
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 6.021,
+              "per_user_throughput_mbps": 0.4301,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 28.726,
+              "airtime_utilization_pct": 53.06
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 7.045,
+              "per_user_throughput_mbps": 0.5032,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.12,
+              "airtime_utilization_pct": 21.62
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 6.636,
+              "per_user_throughput_mbps": 0.474,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.159,
+              "airtime_utilization_pct": 21.06
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 8.438,
+              "per_user_throughput_mbps": 0.6027,
+              "packet_loss_pct": 0.483,
+              "latency_ms": 0.191,
+              "airtime_utilization_pct": 26.15
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 10.322,
+              "per_user_throughput_mbps": 0.7373,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.201,
+              "airtime_utilization_pct": 31.89
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 9.216,
+              "per_user_throughput_mbps": 0.6583,
+              "packet_loss_pct": 0.881,
+              "latency_ms": 0.146,
+              "airtime_utilization_pct": 28.24
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 9.708,
+              "per_user_throughput_mbps": 0.6934,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.157,
+              "airtime_utilization_pct": 27.62
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 7.496,
+              "per_user_throughput_mbps": 0.5354,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.153,
+              "airtime_utilization_pct": 22.67
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 6.39,
+              "per_user_throughput_mbps": 0.4564,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.149,
+              "airtime_utilization_pct": 18.37
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 7.373,
+              "per_user_throughput_mbps": 0.5266,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.291,
+              "airtime_utilization_pct": 22.35
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 8.97,
+              "per_user_throughput_mbps": 0.6407,
+              "packet_loss_pct": 1.351,
+              "latency_ms": 0.323,
+              "airtime_utilization_pct": 25.57
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 8.52,
+              "per_user_throughput_mbps": 0.6085,
+              "packet_loss_pct": 9.957,
+              "latency_ms": 0.697,
+              "airtime_utilization_pct": 57.4
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 9.298,
+              "per_user_throughput_mbps": 0.6641,
+              "packet_loss_pct": 2.155,
+              "latency_ms": 1.609,
+              "airtime_utilization_pct": 65.4
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 12.288,
+              "per_user_throughput_mbps": 0.8777,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 16.671,
+              "airtime_utilization_pct": 44.29
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 10.199,
+              "per_user_throughput_mbps": 0.7285,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.352,
+              "airtime_utilization_pct": 29.36
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 9.748,
+              "per_user_throughput_mbps": 0.6963,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.242,
+              "airtime_utilization_pct": 29.24
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 6.922,
+              "per_user_throughput_mbps": 0.4944,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.176,
+              "airtime_utilization_pct": 22.47
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 8.11,
+              "per_user_throughput_mbps": 0.5793,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.258,
+              "airtime_utilization_pct": 24.33
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 7.086,
+              "per_user_throughput_mbps": 0.5061,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.123,
+              "airtime_utilization_pct": 19.28
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 7.339,
+          "per_user_throughput_mbps": 0.5242,
+          "latency_ms": 0.662,
+          "jitter_ms": 0.248,
+          "packet_loss_pct": 0.0,
+          "satisfaction_ratio_pct": 104.84,
+          "offered_realised_mbps": 7.339,
+          "fairness_index": 0.817,
+          "airtime_utilization_pct": 24.97,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 0.655,
+              "per_user_throughput_mbps": 0.0468,
+              "packet_loss_pct": 15.789,
+              "latency_ms": 1.187,
+              "airtime_utilization_pct": 4.25
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 4.833,
+              "per_user_throughput_mbps": 0.3452,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.293,
+              "airtime_utilization_pct": 16.8
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 4.547,
+              "per_user_throughput_mbps": 0.3248,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.232,
+              "airtime_utilization_pct": 16.04
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 5.202,
+              "per_user_throughput_mbps": 0.3716,
+              "packet_loss_pct": 0.781,
+              "latency_ms": 0.14,
+              "airtime_utilization_pct": 16.94
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 7.823,
+              "per_user_throughput_mbps": 0.5588,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.22,
+              "airtime_utilization_pct": 25.16
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 8.561,
+              "per_user_throughput_mbps": 0.6115,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.091,
+              "airtime_utilization_pct": 26.72
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 7.414,
+              "per_user_throughput_mbps": 0.5296,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.212,
+              "airtime_utilization_pct": 23.64
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 7.004,
+              "per_user_throughput_mbps": 0.5003,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.148,
+              "airtime_utilization_pct": 22.62
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 5.243,
+              "per_user_throughput_mbps": 0.3745,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.095,
+              "airtime_utilization_pct": 16.46
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 4.669,
+              "per_user_throughput_mbps": 0.3335,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.165,
+              "airtime_utilization_pct": 15.86
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 5.284,
+              "per_user_throughput_mbps": 0.3774,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.209,
+              "airtime_utilization_pct": 17.97
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 5.53,
+              "per_user_throughput_mbps": 0.395,
+              "packet_loss_pct": 12.338,
+              "latency_ms": 0.378,
+              "airtime_utilization_pct": 37.23
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 7.741,
+              "per_user_throughput_mbps": 0.553,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.638,
+              "airtime_utilization_pct": 40.85
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 8.438,
+              "per_user_throughput_mbps": 0.6027,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.187,
+              "airtime_utilization_pct": 26.82
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 9.175,
+              "per_user_throughput_mbps": 0.6554,
+              "packet_loss_pct": 7.054,
+              "latency_ms": 0.568,
+              "airtime_utilization_pct": 42.7
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 9.83,
+              "per_user_throughput_mbps": 0.7022,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.982,
+              "airtime_utilization_pct": 34.26
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 8.561,
+              "per_user_throughput_mbps": 0.6115,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.189,
+              "airtime_utilization_pct": 25.44
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 8.847,
+              "per_user_throughput_mbps": 0.632,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.163,
+              "airtime_utilization_pct": 25.26
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 7.66,
+              "per_user_throughput_mbps": 0.5471,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.166,
+              "airtime_utilization_pct": 22.13
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 7.168,
+              "per_user_throughput_mbps": 0.512,
+              "packet_loss_pct": 0.568,
+              "latency_ms": 0.155,
+              "airtime_utilization_pct": 22.5
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 7.537,
+              "per_user_throughput_mbps": 0.5383,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.171,
+              "airtime_utilization_pct": 24.33
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 7.987,
+              "per_user_throughput_mbps": 0.5705,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.101,
+              "airtime_utilization_pct": 24.22
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 7.086,
+              "per_user_throughput_mbps": 0.5061,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.127,
+              "airtime_utilization_pct": 22.2
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 8.356,
+              "per_user_throughput_mbps": 0.5968,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.201,
+              "airtime_utilization_pct": 26.4
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 7.946,
+              "per_user_throughput_mbps": 0.5676,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.218,
+              "airtime_utilization_pct": 24.75
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 8.438,
+              "per_user_throughput_mbps": 0.6027,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.238,
+              "airtime_utilization_pct": 26.56
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 9.83,
+              "per_user_throughput_mbps": 0.7022,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.228,
+              "airtime_utilization_pct": 30.32
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 10.854,
+              "per_user_throughput_mbps": 0.7753,
+              "packet_loss_pct": 0.376,
+              "latency_ms": 0.222,
+              "airtime_utilization_pct": 33.98
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 9.421,
+              "per_user_throughput_mbps": 0.6729,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.168,
+              "airtime_utilization_pct": 29.3
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 7.157,
+          "std": 0.258
+        },
+        "per_user_throughput_mbps": {
+          "mean": 0.511,
+          "std": 0.018
+        },
+        "latency_ms": {
+          "mean": 1.567,
+          "std": 1.281
+        },
+        "jitter_ms": {
+          "mean": 0.443,
+          "std": 0.275
+        },
+        "packet_loss_pct": {
+          "mean": 1.766,
+          "std": 2.498
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 102.235,
+          "std": 3.684
+        },
+        "fairness_index": {
+          "mean": 0.845,
+          "std": 0.04
+        },
+        "airtime_utilization_pct": {
+          "mean": 25.805,
+          "std": 1.181
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 20,
+      "traffic_type": "bulk",
+      "offered_load_mbps": 100.0,
+      "trials": [
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 71.268,
+          "per_user_throughput_mbps": 3.5634,
+          "latency_ms": 17.604,
+          "jitter_ms": 1.153,
+          "packet_loss_pct": 1.826,
+          "satisfaction_ratio_pct": 71.27,
+          "offered_realised_mbps": 72.601,
+          "fairness_index": 0.8589,
+          "airtime_utilization_pct": 83.16,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 110.511,
+              "per_user_throughput_mbps": 5.5256,
+              "packet_loss_pct": 15.125,
+              "latency_ms": 5.976,
+              "airtime_utilization_pct": 67.5
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 246.855,
+              "per_user_throughput_mbps": 12.3428,
+              "packet_loss_pct": 8.383,
+              "latency_ms": 10.671,
+              "airtime_utilization_pct": 81.53
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 271.876,
+              "per_user_throughput_mbps": 13.5938,
+              "packet_loss_pct": 0.551,
+              "latency_ms": 11.305,
+              "airtime_utilization_pct": 84.48
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 276.278,
+              "per_user_throughput_mbps": 13.8139,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 11.159,
+              "airtime_utilization_pct": 84.56
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 277.784,
+              "per_user_throughput_mbps": 13.8892,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 13.081,
+              "airtime_utilization_pct": 75.96
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 284.503,
+              "per_user_throughput_mbps": 14.2252,
+              "packet_loss_pct": 5.21,
+              "latency_ms": 8.86,
+              "airtime_utilization_pct": 83.05
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 280.333,
+              "per_user_throughput_mbps": 14.0166,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.812,
+              "airtime_utilization_pct": 86.15
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 268.98,
+              "per_user_throughput_mbps": 13.449,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.791,
+              "airtime_utilization_pct": 76.08
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 278.132,
+              "per_user_throughput_mbps": 13.9066,
+              "packet_loss_pct": 1.8,
+              "latency_ms": 16.63,
+              "airtime_utilization_pct": 74.8
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 246.16,
+              "per_user_throughput_mbps": 12.308,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 9.697,
+              "airtime_utilization_pct": 74.78
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 278.711,
+              "per_user_throughput_mbps": 13.9356,
+              "packet_loss_pct": 4.067,
+              "latency_ms": 16.581,
+              "airtime_utilization_pct": 82.51
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 272.919,
+              "per_user_throughput_mbps": 13.646,
+              "packet_loss_pct": 4.847,
+              "latency_ms": 17.132,
+              "airtime_utilization_pct": 82.77
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 375.09,
+              "per_user_throughput_mbps": 18.7545,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.709,
+              "airtime_utilization_pct": 82.79
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 210.365,
+              "per_user_throughput_mbps": 10.5183,
+              "packet_loss_pct": 7.77,
+              "latency_ms": 18.324,
+              "airtime_utilization_pct": 82.93
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 310.451,
+              "per_user_throughput_mbps": 15.5226,
+              "packet_loss_pct": 2.722,
+              "latency_ms": 16.52,
+              "airtime_utilization_pct": 82.07
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 349.953,
+              "per_user_throughput_mbps": 17.4976,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 19.205,
+              "airtime_utilization_pct": 80.98
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 291.338,
+              "per_user_throughput_mbps": 14.5669,
+              "packet_loss_pct": 2.633,
+              "latency_ms": 22.298,
+              "airtime_utilization_pct": 89.08
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 298.172,
+              "per_user_throughput_mbps": 14.9086,
+              "packet_loss_pct": 1.493,
+              "latency_ms": 19.445,
+              "airtime_utilization_pct": 83.21
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 354.702,
+              "per_user_throughput_mbps": 17.7351,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 22.078,
+              "airtime_utilization_pct": 91.03
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 317.517,
+              "per_user_throughput_mbps": 15.8759,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 18.739,
+              "airtime_utilization_pct": 83.69
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 312.42,
+              "per_user_throughput_mbps": 15.621,
+              "packet_loss_pct": 0.516,
+              "latency_ms": 20.748,
+              "airtime_utilization_pct": 80.69
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 256.933,
+              "per_user_throughput_mbps": 12.8467,
+              "packet_loss_pct": 3.649,
+              "latency_ms": 21.808,
+              "airtime_utilization_pct": 88.83
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 424.322,
+              "per_user_throughput_mbps": 21.2161,
+              "packet_loss_pct": 0.354,
+              "latency_ms": 15.902,
+              "airtime_utilization_pct": 80.0
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 295.855,
+              "per_user_throughput_mbps": 14.7928,
+              "packet_loss_pct": 5.547,
+              "latency_ms": 26.343,
+              "airtime_utilization_pct": 89.66
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 411.116,
+              "per_user_throughput_mbps": 20.5558,
+              "packet_loss_pct": 0.977,
+              "latency_ms": 19.484,
+              "airtime_utilization_pct": 83.55
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 383.199,
+              "per_user_throughput_mbps": 19.1599,
+              "packet_loss_pct": 0.661,
+              "latency_ms": 27.264,
+              "airtime_utilization_pct": 85.97
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 383.083,
+              "per_user_throughput_mbps": 19.1541,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 21.254,
+              "airtime_utilization_pct": 91.01
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 369.877,
+              "per_user_throughput_mbps": 18.4939,
+              "packet_loss_pct": 2.055,
+              "latency_ms": 24.276,
+              "airtime_utilization_pct": 88.06
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 319.718,
+              "per_user_throughput_mbps": 15.9859,
+              "packet_loss_pct": 6.218,
+              "latency_ms": 20.339,
+              "airtime_utilization_pct": 89.96
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "aggregate_throughput_mbps": 76.898,
+          "per_user_throughput_mbps": 3.8449,
+          "latency_ms": 23.713,
+          "jitter_ms": 1.166,
+          "packet_loss_pct": 1.474,
+          "satisfaction_ratio_pct": 76.9,
+          "offered_realised_mbps": 78.03,
+          "fairness_index": 0.9189,
+          "airtime_utilization_pct": 85.49,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 135.069,
+              "per_user_throughput_mbps": 6.7535,
+              "packet_loss_pct": 14.516,
+              "latency_ms": 5.408,
+              "airtime_utilization_pct": 68.1
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 271.645,
+              "per_user_throughput_mbps": 13.5822,
+              "packet_loss_pct": 5.214,
+              "latency_ms": 9.22,
+              "airtime_utilization_pct": 78.8
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 320.298,
+              "per_user_throughput_mbps": 16.0149,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 11.591,
+              "airtime_utilization_pct": 83.37
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 292.264,
+              "per_user_throughput_mbps": 14.6132,
+              "packet_loss_pct": 2.095,
+              "latency_ms": 14.732,
+              "airtime_utilization_pct": 81.83
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 271.529,
+              "per_user_throughput_mbps": 13.5764,
+              "packet_loss_pct": 4.131,
+              "latency_ms": 15.345,
+              "airtime_utilization_pct": 80.8
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 273.267,
+              "per_user_throughput_mbps": 13.6633,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 13.696,
+              "airtime_utilization_pct": 83.37
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 315.432,
+              "per_user_throughput_mbps": 15.7716,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 11.509,
+              "airtime_utilization_pct": 84.08
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 301.416,
+              "per_user_throughput_mbps": 15.0708,
+              "packet_loss_pct": 3.055,
+              "latency_ms": 19.539,
+              "airtime_utilization_pct": 86.11
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 318.56,
+              "per_user_throughput_mbps": 15.928,
+              "packet_loss_pct": 0.507,
+              "latency_ms": 13.902,
+              "airtime_utilization_pct": 81.85
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 304.428,
+              "per_user_throughput_mbps": 15.2214,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 14.033,
+              "airtime_utilization_pct": 83.8
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 288.442,
+              "per_user_throughput_mbps": 14.4221,
+              "packet_loss_pct": 7.366,
+              "latency_ms": 16.41,
+              "airtime_utilization_pct": 82.38
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 261.567,
+              "per_user_throughput_mbps": 13.0783,
+              "packet_loss_pct": 2.124,
+              "latency_ms": 21.129,
+              "airtime_utilization_pct": 88.54
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 342.886,
+              "per_user_throughput_mbps": 17.1443,
+              "packet_loss_pct": 3.457,
+              "latency_ms": 22.496,
+              "airtime_utilization_pct": 87.06
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 352.849,
+              "per_user_throughput_mbps": 17.6424,
+              "packet_loss_pct": 2.215,
+              "latency_ms": 17.993,
+              "airtime_utilization_pct": 85.83
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 378.797,
+              "per_user_throughput_mbps": 18.9398,
+              "packet_loss_pct": 6.731,
+              "latency_ms": 26.52,
+              "airtime_utilization_pct": 87.68
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 421.658,
+              "per_user_throughput_mbps": 21.0829,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 27.384,
+              "airtime_utilization_pct": 90.9
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 312.768,
+              "per_user_throughput_mbps": 15.6384,
+              "packet_loss_pct": 4.996,
+              "latency_ms": 26.851,
+              "airtime_utilization_pct": 86.29
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 377.754,
+              "per_user_throughput_mbps": 18.8877,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 31.64,
+              "airtime_utilization_pct": 85.69
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 316.012,
+              "per_user_throughput_mbps": 15.8006,
+              "packet_loss_pct": 0.073,
+              "latency_ms": 28.258,
+              "airtime_utilization_pct": 87.0
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 345.551,
+              "per_user_throughput_mbps": 17.2775,
+              "packet_loss_pct": 2.516,
+              "latency_ms": 23.903,
+              "airtime_utilization_pct": 82.44
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 385.284,
+              "per_user_throughput_mbps": 19.2642,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 19.214,
+              "airtime_utilization_pct": 85.54
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 273.151,
+              "per_user_throughput_mbps": 13.6575,
+              "packet_loss_pct": 9.377,
+              "latency_ms": 23.611,
+              "airtime_utilization_pct": 96.33
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 356.671,
+              "per_user_throughput_mbps": 17.8336,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 35.026,
+              "airtime_utilization_pct": 84.4
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 345.319,
+              "per_user_throughput_mbps": 17.266,
+              "packet_loss_pct": 6.698,
+              "latency_ms": 40.454,
+              "airtime_utilization_pct": 86.65
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 386.674,
+              "per_user_throughput_mbps": 19.3337,
+              "packet_loss_pct": 0.03,
+              "latency_ms": 20.216,
+              "airtime_utilization_pct": 88.47
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 299.678,
+              "per_user_throughput_mbps": 14.9839,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 46.483,
+              "airtime_utilization_pct": 84.38
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 420.499,
+              "per_user_throughput_mbps": 21.025,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 28.699,
+              "airtime_utilization_pct": 93.33
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 262.03,
+              "per_user_throughput_mbps": 13.1015,
+              "packet_loss_pct": 11.433,
+              "latency_ms": 24.987,
+              "airtime_utilization_pct": 92.35
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 400.691,
+              "per_user_throughput_mbps": 20.0345,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 30.649,
+              "airtime_utilization_pct": 85.22
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 74.083,
+          "std": 3.981
+        },
+        "per_user_throughput_mbps": {
+          "mean": 3.704,
+          "std": 0.199
+        },
+        "latency_ms": {
+          "mean": 20.659,
+          "std": 4.32
+        },
+        "jitter_ms": {
+          "mean": 1.159,
+          "std": 0.009
+        },
+        "packet_loss_pct": {
+          "mean": 1.65,
+          "std": 0.249
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 74.085,
+          "std": 3.981
+        },
+        "fairness_index": {
+          "mean": 0.889,
+          "std": 0.042
+        },
+        "airtime_utilization_pct": {
+          "mean": 84.325,
+          "std": 1.648
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 20,
+      "traffic_type": "video",
+      "offered_load_mbps": 60.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 56.55,
+          "per_user_throughput_mbps": 2.8275,
+          "latency_ms": 8.416,
+          "jitter_ms": 2.601,
+          "packet_loss_pct": 5.699,
+          "satisfaction_ratio_pct": 94.25,
+          "offered_realised_mbps": 59.968,
+          "fairness_index": 0.9847,
+          "airtime_utilization_pct": 66.11,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 46.08,
+              "per_user_throughput_mbps": 2.304,
+              "packet_loss_pct": 22.581,
+              "latency_ms": 4.516,
+              "airtime_utilization_pct": 58.79
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 49.248,
+              "per_user_throughput_mbps": 2.4624,
+              "packet_loss_pct": 17.258,
+              "latency_ms": 2.101,
+              "airtime_utilization_pct": 59.17
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 50.784,
+              "per_user_throughput_mbps": 2.5392,
+              "packet_loss_pct": 14.677,
+              "latency_ms": 6.91,
+              "airtime_utilization_pct": 71.33
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 52.224,
+              "per_user_throughput_mbps": 2.6112,
+              "packet_loss_pct": 12.258,
+              "latency_ms": 8.614,
+              "airtime_utilization_pct": 79.69
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 51.552,
+              "per_user_throughput_mbps": 2.5776,
+              "packet_loss_pct": 16.094,
+              "latency_ms": 2.105,
+              "airtime_utilization_pct": 55.75
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 50.112,
+              "per_user_throughput_mbps": 2.5056,
+              "packet_loss_pct": 15.806,
+              "latency_ms": 2.108,
+              "airtime_utilization_pct": 55.73
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 50.88,
+              "per_user_throughput_mbps": 2.544,
+              "packet_loss_pct": 14.516,
+              "latency_ms": 2.035,
+              "airtime_utilization_pct": 54.95
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 51.936,
+              "per_user_throughput_mbps": 2.5968,
+              "packet_loss_pct": 12.742,
+              "latency_ms": 2.223,
+              "airtime_utilization_pct": 57.61
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 50.592,
+              "per_user_throughput_mbps": 2.5296,
+              "packet_loss_pct": 17.656,
+              "latency_ms": 2.126,
+              "airtime_utilization_pct": 55.08
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 50.88,
+              "per_user_throughput_mbps": 2.544,
+              "packet_loss_pct": 14.516,
+              "latency_ms": 2.082,
+              "airtime_utilization_pct": 56.34
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 60.288,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 16.56,
+              "airtime_utilization_pct": 58.28
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 59.712,
+              "per_user_throughput_mbps": 2.9856,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.942,
+              "airtime_utilization_pct": 54.8
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 60.096,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 2.188,
+              "latency_ms": 2.356,
+              "airtime_utilization_pct": 59.64
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 59.424,
+              "per_user_throughput_mbps": 2.9712,
+              "packet_loss_pct": 0.161,
+              "latency_ms": 2.099,
+              "airtime_utilization_pct": 60.62
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 56.736,
+              "per_user_throughput_mbps": 2.8368,
+              "packet_loss_pct": 4.677,
+              "latency_ms": 2.754,
+              "airtime_utilization_pct": 82.24
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 54.528,
+              "per_user_throughput_mbps": 2.7264,
+              "packet_loss_pct": 8.387,
+              "latency_ms": 5.366,
+              "airtime_utilization_pct": 85.97
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 59.328,
+              "per_user_throughput_mbps": 2.9664,
+              "packet_loss_pct": 3.438,
+              "latency_ms": 4.964,
+              "airtime_utilization_pct": 84.96
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 44.064,
+              "per_user_throughput_mbps": 2.2032,
+              "packet_loss_pct": 25.968,
+              "latency_ms": 5.02,
+              "airtime_utilization_pct": 87.0
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 62.4,
+              "per_user_throughput_mbps": 3.12,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 19.365,
+              "airtime_utilization_pct": 95.0
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 53.856,
+              "per_user_throughput_mbps": 2.6928,
+              "packet_loss_pct": 9.516,
+              "latency_ms": 9.809,
+              "airtime_utilization_pct": 78.94
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 51.744,
+              "per_user_throughput_mbps": 2.5872,
+              "packet_loss_pct": 15.781,
+              "latency_ms": 8.058,
+              "airtime_utilization_pct": 98.76
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 90.432,
+              "per_user_throughput_mbps": 4.5216,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 76.501,
+              "airtime_utilization_pct": 76.06
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 58.944,
+              "per_user_throughput_mbps": 2.9472,
+              "packet_loss_pct": 0.968,
+              "latency_ms": 2.547,
+              "airtime_utilization_pct": 59.35
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 60.864,
+              "per_user_throughput_mbps": 3.0432,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.146,
+              "airtime_utilization_pct": 58.37
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 59.712,
+              "per_user_throughput_mbps": 2.9856,
+              "packet_loss_pct": 2.812,
+              "latency_ms": 2.182,
+              "airtime_utilization_pct": 55.95
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 61.632,
+              "per_user_throughput_mbps": 3.0816,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.396,
+              "airtime_utilization_pct": 56.65
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 58.944,
+              "per_user_throughput_mbps": 2.9472,
+              "packet_loss_pct": 0.968,
+              "latency_ms": 2.263,
+              "airtime_utilization_pct": 57.16
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 60.288,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.065,
+              "airtime_utilization_pct": 55.97
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 59.52,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 2.665,
+              "airtime_utilization_pct": 56.31
+            }
+          ]
+        },
+        {
+          "seed": 2,
+          "aggregate_throughput_mbps": 53.754,
+          "per_user_throughput_mbps": 2.6877,
+          "latency_ms": 6.613,
+          "jitter_ms": 2.619,
+          "packet_loss_pct": 10.363,
+          "satisfaction_ratio_pct": 89.59,
+          "offered_realised_mbps": 59.968,
+          "fairness_index": 0.9709,
+          "airtime_utilization_pct": 62.39,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 38.784,
+              "per_user_throughput_mbps": 1.9392,
+              "packet_loss_pct": 34.839,
+              "latency_ms": 3.041,
+              "airtime_utilization_pct": 53.25
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 42.144,
+              "per_user_throughput_mbps": 2.1072,
+              "packet_loss_pct": 29.194,
+              "latency_ms": 1.946,
+              "airtime_utilization_pct": 56.03
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 42.24,
+              "per_user_throughput_mbps": 2.112,
+              "packet_loss_pct": 29.032,
+              "latency_ms": 1.942,
+              "airtime_utilization_pct": 50.77
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 41.952,
+              "per_user_throughput_mbps": 2.0976,
+              "packet_loss_pct": 29.516,
+              "latency_ms": 1.893,
+              "airtime_utilization_pct": 53.08
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 41.856,
+              "per_user_throughput_mbps": 2.0928,
+              "packet_loss_pct": 31.875,
+              "latency_ms": 1.983,
+              "airtime_utilization_pct": 53.87
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 41.856,
+              "per_user_throughput_mbps": 2.0928,
+              "packet_loss_pct": 29.677,
+              "latency_ms": 2.019,
+              "airtime_utilization_pct": 52.42
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 41.568,
+              "per_user_throughput_mbps": 2.0784,
+              "packet_loss_pct": 30.161,
+              "latency_ms": 2.163,
+              "airtime_utilization_pct": 53.06
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 42.72,
+              "per_user_throughput_mbps": 2.136,
+              "packet_loss_pct": 28.226,
+              "latency_ms": 2.166,
+              "airtime_utilization_pct": 53.76
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 42.624,
+              "per_user_throughput_mbps": 2.1312,
+              "packet_loss_pct": 30.625,
+              "latency_ms": 1.917,
+              "airtime_utilization_pct": 53.03
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 41.568,
+              "per_user_throughput_mbps": 2.0784,
+              "packet_loss_pct": 30.161,
+              "latency_ms": 1.991,
+              "airtime_utilization_pct": 53.22
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 58.944,
+              "per_user_throughput_mbps": 2.9472,
+              "packet_loss_pct": 0.968,
+              "latency_ms": 32.623,
+              "airtime_utilization_pct": 61.8
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 60.096,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.144,
+              "airtime_utilization_pct": 57.28
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 59.52,
+              "per_user_throughput_mbps": 2.976,
+              "packet_loss_pct": 3.125,
+              "latency_ms": 2.477,
+              "airtime_utilization_pct": 58.0
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 60.096,
+              "per_user_throughput_mbps": 3.0048,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.134,
+              "airtime_utilization_pct": 56.46
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 60.288,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 1.992,
+              "airtime_utilization_pct": 55.21
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 59.712,
+              "per_user_throughput_mbps": 2.9856,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.339,
+              "airtime_utilization_pct": 57.58
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 59.616,
+              "per_user_throughput_mbps": 2.9808,
+              "packet_loss_pct": 2.969,
+              "latency_ms": 2.204,
+              "airtime_utilization_pct": 58.5
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 60.96,
+              "per_user_throughput_mbps": 3.048,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.28,
+              "airtime_utilization_pct": 56.1
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 59.904,
+              "per_user_throughput_mbps": 2.9952,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.299,
+              "airtime_utilization_pct": 57.26
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 59.136,
+              "per_user_throughput_mbps": 2.9568,
+              "packet_loss_pct": 0.645,
+              "latency_ms": 2.094,
+              "airtime_utilization_pct": 56.54
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 60.288,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 1.875,
+              "latency_ms": 2.446,
+              "airtime_utilization_pct": 57.81
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 60.288,
+              "per_user_throughput_mbps": 3.0144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 2.135,
+              "airtime_utilization_pct": 56.83
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 50.784,
+              "per_user_throughput_mbps": 2.5392,
+              "packet_loss_pct": 14.677,
+              "latency_ms": 5.642,
+              "airtime_utilization_pct": 86.73
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 61.536,
+              "per_user_throughput_mbps": 3.0768,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 8.549,
+              "airtime_utilization_pct": 89.54
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 57.6,
+              "per_user_throughput_mbps": 2.88,
+              "packet_loss_pct": 6.25,
+              "latency_ms": 5.036,
+              "airtime_utilization_pct": 87.06
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 54.624,
+              "per_user_throughput_mbps": 2.7312,
+              "packet_loss_pct": 8.226,
+              "latency_ms": 4.668,
+              "airtime_utilization_pct": 88.74
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 56.064,
+              "per_user_throughput_mbps": 2.8032,
+              "packet_loss_pct": 5.806,
+              "latency_ms": 6.561,
+              "airtime_utilization_pct": 91.67
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 58.656,
+              "per_user_throughput_mbps": 2.9328,
+              "packet_loss_pct": 1.452,
+              "latency_ms": 8.283,
+              "airtime_utilization_pct": 84.7
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 77.28,
+              "per_user_throughput_mbps": 3.864,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 52.507,
+              "airtime_utilization_pct": 67.11
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 55.152,
+          "std": 1.977
+        },
+        "per_user_throughput_mbps": {
+          "mean": 2.758,
+          "std": 0.099
+        },
+        "latency_ms": {
+          "mean": 7.514,
+          "std": 1.275
+        },
+        "jitter_ms": {
+          "mean": 2.61,
+          "std": 0.013
+        },
+        "packet_loss_pct": {
+          "mean": 8.031,
+          "std": 3.298
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 91.92,
+          "std": 3.295
+        },
+        "fairness_index": {
+          "mean": 0.978,
+          "std": 0.01
+        },
+        "airtime_utilization_pct": {
+          "mean": 64.25,
+          "std": 2.63
+        }
+      }
+    },
+    {
+      "topology": "multi_ap",
+      "standard": "wifi6",
+      "clients": 20,
+      "traffic_type": "web",
+      "offered_load_mbps": 10.0,
+      "trials": [
+        {
+          "seed": 1,
+          "aggregate_throughput_mbps": 9.182,
+          "per_user_throughput_mbps": 0.4591,
+          "latency_ms": 0.699,
+          "jitter_ms": 0.321,
+          "packet_loss_pct": 0.045,
+          "satisfaction_ratio_pct": 91.82,
+          "offered_realised_mbps": 9.186,
+          "fairness_index": 0.8249,
+          "airtime_utilization_pct": 29.87,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 1.188,
+              "per_user_throughput_mbps": 0.0594,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.456,
+              "airtime_utilization_pct": 5.06
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 1.147,
+              "per_user_throughput_mbps": 0.0573,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.142,
+              "airtime_utilization_pct": 5.3
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 3.768,
+              "per_user_throughput_mbps": 0.1884,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.588,
+              "airtime_utilization_pct": 13.63
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 6.513,
+              "per_user_throughput_mbps": 0.3256,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.356,
+              "airtime_utilization_pct": 22.18
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 7.946,
+              "per_user_throughput_mbps": 0.3973,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.283,
+              "airtime_utilization_pct": 25.63
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 10.199,
+              "per_user_throughput_mbps": 0.51,
+              "packet_loss_pct": 0.4,
+              "latency_ms": 0.573,
+              "airtime_utilization_pct": 31.17
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 12.861,
+              "per_user_throughput_mbps": 0.6431,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.255,
+              "airtime_utilization_pct": 37.95
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 12.001,
+              "per_user_throughput_mbps": 0.6001,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.191,
+              "airtime_utilization_pct": 34.73
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 10.609,
+              "per_user_throughput_mbps": 0.5304,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.267,
+              "airtime_utilization_pct": 34.14
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 8.192,
+              "per_user_throughput_mbps": 0.4096,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.202,
+              "airtime_utilization_pct": 25.86
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 9.912,
+              "per_user_throughput_mbps": 0.4956,
+              "packet_loss_pct": 1.626,
+              "latency_ms": 0.25,
+              "airtime_utilization_pct": 30.61
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 11.428,
+              "per_user_throughput_mbps": 0.5714,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.327,
+              "airtime_utilization_pct": 34.48
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 11.796,
+              "per_user_throughput_mbps": 0.5898,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.985,
+              "airtime_utilization_pct": 40.61
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 12.001,
+              "per_user_throughput_mbps": 0.6001,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.268,
+              "airtime_utilization_pct": 34.87
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 9.011,
+              "per_user_throughput_mbps": 0.4506,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.253,
+              "airtime_utilization_pct": 27.66
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 9.093,
+              "per_user_throughput_mbps": 0.4547,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.314,
+              "airtime_utilization_pct": 29.03
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 10.895,
+              "per_user_throughput_mbps": 0.5448,
+              "packet_loss_pct": 1.115,
+              "latency_ms": 0.23,
+              "airtime_utilization_pct": 35.03
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 9.871,
+              "per_user_throughput_mbps": 0.4936,
+              "packet_loss_pct": 3.984,
+              "latency_ms": 0.557,
+              "airtime_utilization_pct": 51.33
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 10.158,
+              "per_user_throughput_mbps": 0.5079,
+              "packet_loss_pct": 2.362,
+              "latency_ms": 0.404,
+              "airtime_utilization_pct": 51.71
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 10.035,
+              "per_user_throughput_mbps": 0.5018,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 11.03,
+              "airtime_utilization_pct": 36.62
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 11.633,
+              "per_user_throughput_mbps": 0.5816,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.214,
+              "airtime_utilization_pct": 35.32
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 10.977,
+              "per_user_throughput_mbps": 0.5489,
+              "packet_loss_pct": 0.741,
+              "latency_ms": 0.174,
+              "airtime_utilization_pct": 32.62
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 12.288,
+              "per_user_throughput_mbps": 0.6144,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.253,
+              "airtime_utilization_pct": 31.71
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 9.708,
+              "per_user_throughput_mbps": 0.4854,
+              "packet_loss_pct": 0.42,
+              "latency_ms": 0.232,
+              "airtime_utilization_pct": 26.0
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 9.83,
+              "per_user_throughput_mbps": 0.4915,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.229,
+              "airtime_utilization_pct": 28.37
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 10.035,
+              "per_user_throughput_mbps": 0.5018,
+              "packet_loss_pct": 0.407,
+              "latency_ms": 0.202,
+              "airtime_utilization_pct": 31.79
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 8.397,
+              "per_user_throughput_mbps": 0.4198,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.19,
+              "airtime_utilization_pct": 26.84
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 7.045,
+              "per_user_throughput_mbps": 0.3523,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.169,
+              "airtime_utilization_pct": 22.19
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 8.356,
+              "per_user_throughput_mbps": 0.4178,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.191,
+              "airtime_utilization_pct": 26.63
+            }
+          ]
+        },
+        {
+          "seed": 3,
+          "aggregate_throughput_mbps": 8.03,
+          "per_user_throughput_mbps": 0.4015,
+          "latency_ms": 1.245,
+          "jitter_ms": 0.508,
+          "packet_loss_pct": 3.162,
+          "satisfaction_ratio_pct": 80.3,
+          "offered_realised_mbps": 8.292,
+          "fairness_index": 0.9065,
+          "airtime_utilization_pct": 28.35,
+          "series": [
+            {
+              "t": 2.1,
+              "aggregate_throughput_mbps": 1.597,
+              "per_user_throughput_mbps": 0.0799,
+              "packet_loss_pct": 30.357,
+              "latency_ms": 1.085,
+              "airtime_utilization_pct": 6.66
+            },
+            {
+              "t": 2.2,
+              "aggregate_throughput_mbps": 3.113,
+              "per_user_throughput_mbps": 0.1556,
+              "packet_loss_pct": 1.299,
+              "latency_ms": 0.289,
+              "airtime_utilization_pct": 10.88
+            },
+            {
+              "t": 2.3,
+              "aggregate_throughput_mbps": 4.71,
+              "per_user_throughput_mbps": 0.2355,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.312,
+              "airtime_utilization_pct": 16.18
+            },
+            {
+              "t": 2.4,
+              "aggregate_throughput_mbps": 5.448,
+              "per_user_throughput_mbps": 0.2724,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.167,
+              "airtime_utilization_pct": 17.52
+            },
+            {
+              "t": 2.5,
+              "aggregate_throughput_mbps": 7.291,
+              "per_user_throughput_mbps": 0.3645,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.266,
+              "airtime_utilization_pct": 22.32
+            },
+            {
+              "t": 2.6,
+              "aggregate_throughput_mbps": 6.84,
+              "per_user_throughput_mbps": 0.342,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.139,
+              "airtime_utilization_pct": 21.31
+            },
+            {
+              "t": 2.7,
+              "aggregate_throughput_mbps": 7.455,
+              "per_user_throughput_mbps": 0.3727,
+              "packet_loss_pct": 13.333,
+              "latency_ms": 0.264,
+              "airtime_utilization_pct": 30.04
+            },
+            {
+              "t": 2.8,
+              "aggregate_throughput_mbps": 6.308,
+              "per_user_throughput_mbps": 0.3154,
+              "packet_loss_pct": 23.762,
+              "latency_ms": 0.385,
+              "airtime_utilization_pct": 50.78
+            },
+            {
+              "t": 2.9,
+              "aggregate_throughput_mbps": 7.209,
+              "per_user_throughput_mbps": 0.3604,
+              "packet_loss_pct": 32.308,
+              "latency_ms": 0.73,
+              "airtime_utilization_pct": 61.91
+            },
+            {
+              "t": 3.0,
+              "aggregate_throughput_mbps": 10.076,
+              "per_user_throughput_mbps": 0.5038,
+              "packet_loss_pct": 6.107,
+              "latency_ms": 3.324,
+              "airtime_utilization_pct": 36.69
+            },
+            {
+              "t": 3.1,
+              "aggregate_throughput_mbps": 9.748,
+              "per_user_throughput_mbps": 0.4874,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 12.784,
+              "airtime_utilization_pct": 29.13
+            },
+            {
+              "t": 3.2,
+              "aggregate_throughput_mbps": 9.503,
+              "per_user_throughput_mbps": 0.4751,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.234,
+              "airtime_utilization_pct": 29.44
+            },
+            {
+              "t": 3.3,
+              "aggregate_throughput_mbps": 9.708,
+              "per_user_throughput_mbps": 0.4854,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.219,
+              "airtime_utilization_pct": 28.32
+            },
+            {
+              "t": 3.4,
+              "aggregate_throughput_mbps": 8.356,
+              "per_user_throughput_mbps": 0.4178,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.209,
+              "airtime_utilization_pct": 23.58
+            },
+            {
+              "t": 3.5,
+              "aggregate_throughput_mbps": 8.479,
+              "per_user_throughput_mbps": 0.4239,
+              "packet_loss_pct": 1.896,
+              "latency_ms": 0.344,
+              "airtime_utilization_pct": 26.16
+            },
+            {
+              "t": 3.6,
+              "aggregate_throughput_mbps": 8.888,
+              "per_user_throughput_mbps": 0.4444,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.519,
+              "airtime_utilization_pct": 26.99
+            },
+            {
+              "t": 3.7,
+              "aggregate_throughput_mbps": 10.65,
+              "per_user_throughput_mbps": 0.5325,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.37,
+              "airtime_utilization_pct": 28.09
+            },
+            {
+              "t": 3.8,
+              "aggregate_throughput_mbps": 10.813,
+              "per_user_throughput_mbps": 0.5407,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.36,
+              "airtime_utilization_pct": 31.52
+            },
+            {
+              "t": 3.9,
+              "aggregate_throughput_mbps": 11.141,
+              "per_user_throughput_mbps": 0.5571,
+              "packet_loss_pct": 0.73,
+              "latency_ms": 0.28,
+              "airtime_utilization_pct": 32.54
+            },
+            {
+              "t": 4.0,
+              "aggregate_throughput_mbps": 9.339,
+              "per_user_throughput_mbps": 0.4669,
+              "packet_loss_pct": 10.938,
+              "latency_ms": 0.773,
+              "airtime_utilization_pct": 56.24
+            },
+            {
+              "t": 4.1,
+              "aggregate_throughput_mbps": 9.421,
+              "per_user_throughput_mbps": 0.471,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 8.369,
+              "airtime_utilization_pct": 31.94
+            },
+            {
+              "t": 4.2,
+              "aggregate_throughput_mbps": 6.431,
+              "per_user_throughput_mbps": 0.3215,
+              "packet_loss_pct": 0.633,
+              "latency_ms": 0.175,
+              "airtime_utilization_pct": 20.11
+            },
+            {
+              "t": 4.3,
+              "aggregate_throughput_mbps": 6.554,
+              "per_user_throughput_mbps": 0.3277,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.19,
+              "airtime_utilization_pct": 19.56
+            },
+            {
+              "t": 4.4,
+              "aggregate_throughput_mbps": 7.25,
+              "per_user_throughput_mbps": 0.3625,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.288,
+              "airtime_utilization_pct": 21.82
+            },
+            {
+              "t": 4.5,
+              "aggregate_throughput_mbps": 6.103,
+              "per_user_throughput_mbps": 0.3052,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.119,
+              "airtime_utilization_pct": 18.85
+            },
+            {
+              "t": 4.6,
+              "aggregate_throughput_mbps": 8.069,
+              "per_user_throughput_mbps": 0.4035,
+              "packet_loss_pct": 0.505,
+              "latency_ms": 0.144,
+              "airtime_utilization_pct": 25.55
+            },
+            {
+              "t": 4.7,
+              "aggregate_throughput_mbps": 9.011,
+              "per_user_throughput_mbps": 0.4506,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.205,
+              "airtime_utilization_pct": 29.16
+            },
+            {
+              "t": 4.8,
+              "aggregate_throughput_mbps": 10.363,
+              "per_user_throughput_mbps": 0.5181,
+              "packet_loss_pct": 0.0,
+              "latency_ms": 0.168,
+              "airtime_utilization_pct": 32.56
+            },
+            {
+              "t": 4.9,
+              "aggregate_throughput_mbps": 10.486,
+              "per_user_throughput_mbps": 0.5243,
+              "packet_loss_pct": 0.389,
+              "latency_ms": 0.161,
+              "airtime_utilization_pct": 32.67
+            }
+          ]
+        }
+      ],
+      "trial_count": 2,
+      "aggregates": {
+        "aggregate_throughput_mbps": {
+          "mean": 8.606,
+          "std": 0.815
+        },
+        "per_user_throughput_mbps": {
+          "mean": 0.43,
+          "std": 0.041
+        },
+        "latency_ms": {
+          "mean": 0.972,
+          "std": 0.386
+        },
+        "jitter_ms": {
+          "mean": 0.414,
+          "std": 0.132
+        },
+        "packet_loss_pct": {
+          "mean": 1.603,
+          "std": 2.204
+        },
+        "satisfaction_ratio_pct": {
+          "mean": 86.06,
+          "std": 8.146
+        },
+        "fairness_index": {
+          "mean": 0.866,
+          "std": 0.058
+        },
+        "airtime_utilization_pct": {
+          "mean": 29.11,
+          "std": 1.075
         }
       }
     },
@@ -15079,12 +19367,34 @@
       {
         "topology": "multi_ap",
         "standard": "wifi6",
-        "traffic_type": "web",
-        "max_clients": ">10",
+        "traffic_type": "bulk",
+        "max_clients": ">20",
         "threshold_ms": 50.0,
         "sensitivity": {
-          "30.0": ">10",
-          "100.0": ">10"
+          "30.0": ">20",
+          "100.0": ">20"
+        }
+      },
+      {
+        "topology": "multi_ap",
+        "standard": "wifi6",
+        "traffic_type": "video",
+        "max_clients": ">20",
+        "threshold_ms": 50.0,
+        "sensitivity": {
+          "30.0": ">20",
+          "100.0": ">20"
+        }
+      },
+      {
+        "topology": "multi_ap",
+        "standard": "wifi6",
+        "traffic_type": "web",
+        "max_clients": ">20",
+        "threshold_ms": 50.0,
+        "sensitivity": {
+          "30.0": ">20",
+          "100.0": ">20"
         }
       },
       {
@@ -15179,8 +19489,22 @@
       {
         "topology": "multi_ap",
         "standard": "wifi6",
+        "traffic_type": "bulk",
+        "max_clients": ">20",
+        "threshold_pct": 5.0
+      },
+      {
+        "topology": "multi_ap",
+        "standard": "wifi6",
+        "traffic_type": "video",
+        "max_clients": 10,
+        "threshold_pct": 5.0
+      },
+      {
+        "topology": "multi_ap",
+        "standard": "wifi6",
         "traffic_type": "web",
-        "max_clients": ">10",
+        "max_clients": ">20",
         "threshold_pct": 5.0
       },
       {
