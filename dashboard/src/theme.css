@@ -1039,3 +1039,18 @@ body {
   .provenance-note, .eval-source { font-size: 0.66rem; }
   .section-label { font-size: 0.68rem; }
 }
+
+/* The mechanism behind a row. Quieter than the result it explains: the number
+   is the finding, the reason is the support. */
+.eval-why {
+  display: block;
+  margin-top: 0.35rem;
+  padding-left: 0.6rem;
+  border-left: 2px solid var(--rule-strong);
+  font-size: 0.72rem;
+  line-height: 1.5;
+  color: var(--ink-dim);
+}
+
+.eval-row.is-wifi5 .eval-why { border-left-color: var(--wifi5); }
+.eval-row.is-wifi6 .eval-why { border-left-color: var(--wifi6); }

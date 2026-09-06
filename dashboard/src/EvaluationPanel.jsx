@@ -30,7 +30,13 @@ function EvaluationPanel({ wifi5, wifi6, clients, trafficType, aps }) {
             <li key={row.key} className={`eval-row is-${row.winner}`}>
               <span className={`eval-chip is-${row.winner}`}>{CHIP[row.winner]}</span>
               <span className="eval-metric">{row.label}</span>
-              <span className="eval-sentence">{row.sentence}</span>
+              <span className="eval-sentence">
+                {row.sentence}
+                {/* The mechanism, where one honestly applies. A reader whose
+                    expectation was "the newer one wins" needs to know why it
+                    did not, or they will conclude the study is wrong. */}
+                {row.reason && <span className="eval-why">{row.reason}</span>}
+              </span>
             </li>
           ))}
         </ul>

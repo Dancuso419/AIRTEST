@@ -29,12 +29,148 @@ const unitOf = (metric) => {
 };
 
 /**
+ * Why a result came out the way it did.
+ *
+ * The single most common reaction to this dataset is disbelief: WiFi 6 is
+ * newer, so it "should" win everything. It does not, and a reader who is not
+ * told why will assume the study is wrong rather than that the expectation
+ * was wrong.
+ *
+ * Every explanation below is a mechanism, not a guess. Each states something
+ * about how 802.11ax works that predicts the direction actually observed, and
+ * each is keyed on the winner AND the workload, because the same mechanism
+ * helps in one condition and hurts in another. Where a mechanism does not
+ * explain the observation, the entry is absent and no reason is shown — an
+ * invented cause would be worse than none.
+ */
+const REASONS = {
+  per_user_throughput_mbps: {
+    wifi5: {
+      bulk: 'OFDMA divides the channel into slices so several students can be '
+          + 'served at once. With one large download each, a student is better '
+          + 'served by getting the whole channel briefly than a slice of it for '
+          + 'longer, so the mechanism costs WiFi 6 here rather than helping.',
+      _: 'At this density the channel is not busy enough for WiFi 6 to recover '
+       + 'the extra overhead its scheduling adds to every transmission.',
+    },
+    wifi6: {
+      _: 'WiFi 6 serves several students inside one transmission instead of '
+       + 'making each wait its turn, so more of the channel time becomes data.',
+    },
+  },
+
+  aggregate_throughput_mbps: {
+    wifi5: {
+      bulk: 'The same effect as speed per student: slicing the channel suits '
+          + 'many small demands, not a few large ones.',
+      _: 'Neither standard is being stressed at this density, so WiFi 6 pays '
+       + 'its overhead without the congestion that would repay it.',
+    },
+    wifi6: { _: 'Serving several students per transmission raises what the room '
+              + 'gets in total, not just what one student gets.' },
+  },
+
+  latency_ms: {
+    wifi6: {
+      video: 'Every student is sending small packets at the same time, which is '
+           + 'exactly what OFDMA is for: they are bundled into one transmission '
+           + 'rather than queueing behind one another for the channel.',
+      _: 'Scheduled access removes most of the waiting. A WiFi 5 station must '
+       + 'sense the channel idle and then wait a random period before it may '
+       + 'transmit; WiFi 6 can be told when to go.',
+    },
+    wifi5: {
+      bulk: 'WiFi 6 buffers data so it can bundle several students into one '
+          + 'transmission. With one heavy flow each there is little to bundle, '
+          + 'so the wait to fill a transmission becomes pure delay.',
+      _: 'With few students competing there is rarely a queue to schedule, so '
+       + 'WiFi 6 adds the cost of coordination without the benefit.',
+    },
+  },
+
+  jitter_ms: {
+    wifi6: {
+      _: 'Scheduled transmissions arrive on a rhythm. WiFi 5 stations contend '
+       + 'for every frame, and the random wait before each attempt is what '
+       + 'makes the delay vary from packet to packet.',
+    },
+    wifi5: {
+      _: 'At low occupancy a WiFi 5 station usually finds the channel free '
+       + 'immediately, so its delay barely varies and there is little for '
+       + 'scheduling to improve on.',
+    },
+  },
+
+  packet_loss_pct: {
+    wifi6: {
+      _: 'In a room with several access points, WiFi 6 can tell a neighbouring '
+       + 'access point’s transmission from its own and stops backing off '
+       + 'unnecessarily, so fewer packets are dropped waiting for a channel '
+       + 'that was never really busy.',
+    },
+    wifi5: {
+      _: 'Both standards lose very little here; what is lost is mostly packets '
+       + 'still queued when the measurement window closes rather than genuine '
+       + 'failures.',
+    },
+  },
+
+  satisfaction_ratio_pct: {
+    wifi5: {
+      bulk: 'Downloads run over TCP, which sends an acknowledgement back for '
+          + 'every batch received. Those travel upstream, where WiFi 6 is not '
+          + 'scheduling in this configuration, so the return path throttles the '
+          + 'download.',
+      _: 'Neither network is saturated, so this mostly reflects the overhead '
+       + 'WiFi 6 carries rather than any inability to keep up.',
+    },
+    wifi6: {
+      _: 'WiFi 6 keeps more students served at once, so more of what the room '
+       + 'asked for actually arrives.',
+    },
+  },
+
+  fairness_index: {
+    wifi5: {
+      _: 'Contention is blind, which at low density is accidentally fair: every '
+       + 'station has the same chance at the channel. A scheduler can be less '
+       + 'even than chance when it has little to schedule.',
+    },
+    wifi6: {
+      _: 'The access point decides who transmits and when, so no student is '
+       + 'repeatedly unlucky in the contention draw.',
+    },
+  },
+
+  airtime_utilization_pct: {
+    wifi6: {
+      _: 'The same data is delivered using less of the channel, because several '
+       + 'students share one transmission instead of each taking a turn. This '
+       + 'is the efficiency gain 802.11ax was designed for.',
+    },
+    wifi5: {
+      _: 'Past roughly twenty students WiFi 6 spends MORE of the channel, not '
+       + 'less: the scheduling frames it must send to coordinate everyone start '
+       + 'to cost more airtime than the bundling saves.',
+    },
+  },
+};
+
+/** Mechanism behind a row, or null when none applies honestly. */
+export function reasonFor(metricKey, winner, trafficType) {
+  if (winner === 'tie') return null;
+  const byWinner = REASONS[metricKey]?.[winner];
+  if (!byWinner) return null;
+  return byWinner[trafficType] ?? byWinner._ ?? null;
+}
+
+/**
  * Compare one metric across the two standards.
  *
  * Returns null when either side has no data, so an unsimulated cell produces
  * no row at all rather than a row of dashes that still looks like a reading.
  */
-export function compareMetric(metric, agg5, agg6) {
+export function compareMetric(metric, agg5, agg6, trafficType) {
   const m5 = agg5?.mean;
   const m6 = agg6?.mean;
   if (typeof m5 !== 'number' || typeof m6 !== 'number') return null;
@@ -92,7 +228,7 @@ export function compareMetric(metric, agg5, agg6) {
       `${loserName} ran up to ${say(metric, bad)}` +
       (pct === null ? '.' : ` — ${pct}% higher.`);
 
-  return { ...base, winner, sentence };
+  return { ...base, winner, sentence, reason: reasonFor(metric.key, winner, trafficType) };
 }
 
 /**
@@ -103,7 +239,7 @@ export function compareMetric(metric, agg5, agg6) {
  */
 export function buildEvaluation({ wifi5, wifi6, clients, trafficType, aps }) {
   const rows = METRICS
-    .map((m) => compareMetric(m, wifi5?.aggregates?.[m.key], wifi6?.aggregates?.[m.key]))
+    .map((m) => compareMetric(m, wifi5?.aggregates?.[m.key], wifi6?.aggregates?.[m.key], trafficType))
     .filter(Boolean);
 
   const tally = {
