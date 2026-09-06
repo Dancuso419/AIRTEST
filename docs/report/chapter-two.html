@@ -1,0 +1,373 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Two: Literature Review - AIRTEST Project Report</title>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .top-bar h1.bar-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .btn-copy {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #1d4ed8;
+        }
+
+        .page {
+            background-color: #ffffff;
+            width: 900px;
+            min-height: 1100px;
+            margin: 30px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* Typography strict rules */
+        h1, h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+        }
+
+        .chapter-header h1 {
+            font-size: 14pt;
+            margin: 5px 0;
+        }
+
+        h3, h4 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        p, li, td, th {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: normal;
+            line-height: 1.5;
+            text-align: justify;
+            color: #111111;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 14px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #333333;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <h1 class="bar-title">AIRTEST Final Year Project Report - Chapter 2</h1>
+        <button class="btn-copy" onclick="copyChapterToClipboard()">Copy Chapter for Word</button>
+    </div>
+
+    <div class="toast" id="toast">Chapter content copied to clipboard!</div>
+
+    <div class="page" id="chapter-content">
+        
+        <div class="chapter-header">
+            <h1>CHAPTER TWO</h1>
+            <h1>LITERATURE REVIEW</h1>
+        </div>
+
+        <h2>2.0 Overview</h2>
+        <p>This chapter provides an extensive critical review of theoretical foundations, protocol specifications, empirical research findings, and software evaluation methodologies relevant to high-density wireless local area networks (WLANs) in educational environments. The review synthesizes academic literature strictly published between 2010 and 2025, detailing the technical transition from legacy single-user contention protocols (IEEE 802.11ac / Wi-Fi 5) to modern multi-user scheduled access protocols (IEEE 802.11ax / Wi-Fi 6). The chapter establishes the theoretical background of wireless spectrum allocation, physical layer propagation dynamics in enclosed auditoriums, Medium Access Control (MAC) layer overhead, discrete-event network simulation engines, and visual telemetry visualizers.</p>
+
+        <h3>2.0.1 Concept of Wireless Networking and Spectrum Evolution</h3>
+        <p>The historical evolution of unlicenced wireless local area networking has been governed by a continuous trade-off between expanding physical channel bandwidth and mitigating spatial medium contention. Early IEEE 802.11 standards operated exclusively within the 2.4 GHz Industrial, Scientific, and Medical (ISM) frequency band. However, Gast (2013) demonstrated that as consumer mobile device proliferation accelerated, the 2.4 GHz spectrum suffered severe structural saturation. Because the 2.4 GHz band provides only three non-overlapping 20 MHz channels (channels 1, 6, and 11), dense multi-access point (AP) deployments inevitably experience crippling Co-Channel Interference (CCI) and Adjacent Channel Interference (ACI).</p>
+        <p>To overcome 2.4 GHz spectrum exhaustion, protocol standards shifted toward the 5 GHz Unlicensed National Information Infrastructure (UNII) bands. The IEEE 802.11n standard introduced Multiple-Input Multiple-Output (MIMO) spatial multiplexing and 40 MHz channel bonding, establishing the groundwork for high-throughput wireless access. Subsequently, the IEEE 802.11ac standard expanded channel bonding options up to 80 MHz and 160 MHz contiguous and non-contiguous spectrum blocks, alongside 256-QAM modulation (Perahia & Stacey, 2013). However, Khorov et al. (2019) observed that while wider channel bonding increases peak single-user burst throughput in sparse environments, it drastically reduces the total number of independent non-overlapping channels available in multi-AP enterprise topologies. In dense environments, bonding 80 MHz channels reduces 5 GHz channel availability, exacerbating co-channel contention among neighboring access points.</p>
+
+        <h3>2.0.2 Dense WLAN Environments and Campus Lecture Theatres</h3>
+        <p>High-density deployment environments present distinct physical radio frequency (RF) and protocol challenges that differ fundamentally from traditional home or office environments. In a modern 200-seat university lecture theatre, client station density frequently reaches between 0.5 and 1.5 active wireless devices per square metre (Bellalta, 2016). In such spatially constrained spaces, physical signal attenuation caused by human body absorption (which ranges from 3 dB to 9 dB per obstacle at 5 GHz) combines with severe multipath reflections from tiered seating structures, concrete walls, and metallic desks (Al-Samman et al., 2016).</p>
+
+        <p>Empirical field studies conducted by Zubow et al. (2021) in university auditoriums revealed that overall network performance in dense settings is not constrained primarily by received signal strength indicators (RSSI) or link-budget signal-to-noise ratios (SNR), but rather by medium airtime contention. When hundreds of student client devices attempt to negotiate channel access simultaneously, contention window backoff timers expand exponentially. Small background control packets (such as operating system keep-alives, cloud synchronization signals, and TCP acknowledgment frames) consume an outsized fraction of available channel time due to physical preambles and inter-frame spacing overhead. Tan et al. (2022) identified this phenomenon as "airtime starvation," where edge clients operating at lower Modulation and Coding Schemes (MCS) occupy the channel for extended durations, degrading aggregate throughput for all surrounding stations.</p>
+
+        <h3>2.0.3 High-Density IEEE 802.11 Protocols and Channel Access</h3>
+        <p>The core architectural distinction between IEEE 802.11ac (Wi-Fi 5) and IEEE 802.11ax (Wi-Fi 6) lies in their Medium Access Control (MAC) sub-layer protocol mechanics. IEEE 802.11ac relies strictly on Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA) combined with Enhanced Distributed Channel Access (EDCA). Although 802.11ac introduced Downlink Multi-User MIMO (DL MU-MIMO), Deng et al. (2020) highlighted that excessive explicit Channel State Information (CSI) sounding overhead and strict spatial separation requirements rendered 802.11ac MU-MIMO impractical in dense client environments.</p>
+
+        <p>To solve CSMA/CA contention bottlenecks, IEEE 802.11ax incorporates Orthogonal Frequency Division Multiple Access (OFDMA), adapted from 4G/5G cellular architecture. OFDMA partitions a standard 20 MHz, 40 MHz, or 80 MHz channel into smaller sub-carrier groups called Resource Units (RUs). A 20 MHz channel can be sub-divided into up to nine 26-tone RUs, allowing an Access Point (AP) to communicate with up to nine independent client stations simultaneously within a single Transmission Opportunity (TXOP) (IEEE Standard 802.11ax-2021). By multiplexing multiple users simultaneously in the frequency domain, OFDMA eliminates individual preamble and contention overhead for each station, dramatically lowering MAC layer overhead in dense scenarios (Qu et al., 2019; Zhang et al., 2025).</p>
+
+        <p>Furthermore, IEEE 802.11ax introduces Basic Service Set (BSS) Coloring to improve spatial reuse in multi-AP deployments. In legacy 802.11ac networks, overlapping BSS (OBSS) interference forces stations to defer transmission whenever they detect any preamble above the physical preamble detection threshold (-82 dBm). BSS Coloring appends a 6-bit numerical color tag (values 1 to 63) to the PHY frame header. If a station detects a frame originating from a different BSS color, it can dynamically elevate its Clear Channel Assessment (CCA) threshold (for example, from -82 dBm to -62 dBm), allowing simultaneous non-interfering transmissions to proceed (Sethi et al., 2023).</p>
+
+        <h3>2.0.4 Network Simulation Frameworks and FlowMonitor Data Collection</h3>
+        <p>Evaluating dense wireless network performance through physical hardware testbeds presents severe practical limitations, including high capital equipment costs, non-repeatable dynamic RF interference, and lack of deterministic client mobility (Riley & Henderson, 2010). Consequently, discrete-event network simulation frameworks have become the gold standard methodology for rigorous protocol performance evaluation.</p>
+
+        <p>Network Simulator 3 (NS-3) is an open-source discrete-event network simulator widely recognized for its high-fidelity implementation of the IEEE 802.11 protocol stack (Henderson et al., 2014). Unlike simplified high-level simulators, NS-3 models packet transmission down to individual OFDM sub-carriers, preamble reception, state machine backoff timers, and propagation loss models. The `FlowMonitor` module within NS-3 acts as an inline network probe, intercepting packet flows at the IP layer to track offered load, received bit rate, delay sum, jitter, and packet loss ratio across all active simulation nodes (Carneiro et al., 2011).</p>
+
+        <h3>2.0.5 Telemetry and Dashboard Visual Analytics in Network Performance</h3>
+        <p>While discrete-event simulation engines produce granular quantitative data, raw XML or CSV trace logs are dense and difficult to analyze intuitively. Research in human-computer interaction and visual analytics underscores the importance of visual telemetry in network operations (Munzner, 2014). Modern network operations centers (NOCs) rely on real-time visual dashboards that translate complex telemetry streams into intuitive graphical indicators, such as dual-needle gauges, heatmaps, and trend distribution curves (Few, 2013; Tufte, 2018).</p>
+
+        <p>In wireless performance diagnostics, visual interface design must present multi-dimensional metrics (such as protocol comparisons, client density scaling, throughput, and airtime efficiency) without overwhelming the operator. Integrating modern web visualization frameworks (such as React and Recharts) with structured simulation telemetry enables real-time visual inspection of contention bottlenecks and protocol efficiency differentials.</p>
+
+        <h2>2.1 Related Works</h2>
+        <p>To contextualize the AIRTEST framework within the broader landscape of wireless network evaluation tools, this section presents a comprehensive, multi-perspective critical review of three established software categories: Enterprise RF Planning Tools, Commercial Network Monitoring Suites, and Open-Source Network Simulators.</p>
+
+        <h3>2.1.3 Enterprise Wi-Fi Planning Tools and Airtime Analyzers</h3>
+        <p>Enterprise wireless planning and design applications, such as Ekahau AI Pro and iBwave Wi-Fi, are widely utilized by network architects for predictive radio frequency (RF) propagation modeling and site survey planning (Ekahau, 2024). These commercial software platforms import floor plan CAD drawings, allow engineers to define wall attenuation materials (such as drywall, concrete, or glass), and utilize empirical path loss algorithms to generate 2D and 3D signal strength heatmaps (Signal-to-Noise Ratio, Received Signal Strength Indicator). Similarly, dedicated hardware airtime analyzers, such as MetaGeek Wi-Spy and AirMagnet WiFi Analyzer, capture live 802.11 frame headers to compute channel spectrum occupancy percentages (NetAlliance, 2023).</p>
+
+        <p>Critical Evaluation and Research Gap: While enterprise RF planning software excels at static signal coverage estimation, these tools suffer from major theoretical limitations when evaluating dense multi-user performance:</p>
+        <ul>
+            <li><strong>Absence of Dynamic Packet Contention Engines:</strong> Tools like Ekahau compute static RSSI coverage based on Friis or Log-Distance path loss equations. They do not simulate discrete-event packet scheduling, CSMA/CA backoff window expansion, or MAC layer frame collision probabilities under dynamic client traffic loads.</li>
+            <li><strong>Inability to Model Multi-User OFDMA Scheduling:</strong> Commercial planning suites treat 802.11ax channels as monolithic frequency blocks. They cannot simulate the sub-carrier Resource Unit (RU) partitioning mechanics or dynamic BSS Coloring Spatial Reuse CCA adjustments evaluated by AIRTEST.</li>
+            <li><strong>Reactive Limitation of Physical Analyzers:</strong> Hardware analyzers like AirMagnet require an existing, deployed physical network infrastructure. They cannot perform pre-deployment ROI forecasting or simulate hypothetical client density scaling (e.g., comparing 10 vs 20 stations under identical physical conditions).</li>
+        </ul>
+
+        <h3>2.1.4 Commercial Network Monitoring Tools (Wireshark and SolarWinds)</h3>
+        <p>Commercial Network Performance Monitoring and Diagnostics (NPMD) suites, such as SolarWinds Network Performance Monitor, PRTG Network Monitor, and Wireshark protocol analyzer, provide real-time network traffic inspection, SNMP telemetry polling, and packet-level protocol decoding (Wireshark Team, 2023; SolarWinds, 2024). Wireshark captures individual 802.11 radio information headers, enabling deep packet inspection of management frames (beacons, probe requests), control frames (RTS/CTS, ACKs), and data payloads.</p>
+
+        <p>Critical Evaluation and Research Gap: While packet analyzers and SNMP monitors are indispensable for active network troubleshooting, their application to comparative protocol research is constrained by three factors:</p>
+        <ul>
+            <li><strong>Reactive Nature:</strong> Commercial monitoring suites are passive observers of production environments. They cannot manipulate experimental variables deterministically (such as forcing an identical auditorium client topology to execute under 802.11ac and subsequently 802.11ax under identical random seeds).</li>
+            <li><strong>Telemetry Fragmentation:</strong> SNMP polling cycles in enterprise APs operate at 1-minute to 5-minute intervals, completely obscuring transient sub-second CSMA/CA contention spikes and frame retry bursts.</li>
+            <li><strong>Lack of Visual Telemetry Diagnostics:</strong> Wireshark produces dense packet trace tables containing thousands of individual frame rows. It lacks high-level visual analytics, such as dual-needle cockpit gauges or density stress curves, required by executive IT decision-makers to evaluate protocol ROI quickly.</li>
+        </ul>
+
+        <h3>2.1.5 Open-Source Network Simulators (OMNeT++ and Mininet)</h3>
+        <p>In academic research, open-source simulation and emulation platforms - most notably OMNeT++ (with the INET framework) and Mininet-WiFi - are frequently employed as alternatives to NS-3 (Varga & Hornig, 2012; Lantz et al., 2010; Fontes et al., 2017). OMNeT++ provides an object-oriented modular C++ simulation environment with component-based architecture. Mininet-WiFi extends lightweight container-based SDN emulation to model mobile wireless stations using Linux kernel `mac80211_hwsim` virtual interfaces.</p>
+
+        <p>Critical Evaluation and Justification of NS-3: A rigorous comparative analysis reveals why NS-3 3.42 was selected over OMNeT++ and Mininet-WiFi for the AIRTEST framework:</p>
+        <ul>
+            <li><strong>Superior 802.11ax MAC/PHY Model Fidelity:</strong> Patici et al. (2022) conducted a comparative fidelity study demonstrating that NS-3 version 3.42 features the most complete open-source C++ implementation of IEEE 802.11ax OFDMA sub-carrier allocation and BSS Coloring spatial reuse mechanics. The OMNeT++ INET framework lacks fine-grained multi-user OFDMA scheduling models for 80 MHz channels.</li>
+            <li><strong>Kernel Emulation Limitations in Mininet-WiFi:</strong> While Mininet-WiFi provides excellent container-level emulation for OpenFlow SDN controllers, its reliance on Linux kernel virtual wireless interfaces prevents accurate discrete-event sub-carrier PHY preamble simulation and fine-grained airtime calculation.</li>
+            <li><strong>FlowMonitor Telemetry Engine:</strong> NS-3 features the integrated `FlowMonitor` architecture (Carneiro et al., 2011), which automatically intercepts flow statistics across all simulation nodes without altering MAC state machines. Neither OMNeT++ nor Mininet provides a comparable native flow tracing probe.</li>
+        </ul>
+
+        <h2>2.2 Comparative Analysis</h2>
+        <p>Table 2.1 presents a structured comparative analysis matrix evaluating the AIRTEST project against established enterprise planning tools, commercial packet analyzers, and alternative simulation frameworks across key technical and functional criteria.</p>
+
+        <h3>Table 2.1: Comparative Analysis Matrix of Wireless Network Evaluation Tools</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Evaluation Criteria</th>
+                    <th>Enterprise RF Planners (Ekahau)</th>
+                    <th>Packet Analyzers (Wireshark)</th>
+                    <th>Alternative Simulators (OMNeT++)</th>
+                    <th>AIRTEST System (NS-3 + React)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Primary Focus</strong></td>
+                    <td>Predictive RF Coverage & Heatmaps</td>
+                    <td>Real-time Frame Inspection</td>
+                    <td>Generic Protocol Simulation</td>
+                    <td>Dense WLAN Airtime & Protocol Stress Testing</td>
+                </tr>
+                <tr>
+                    <td><strong>802.11ax OFDMA Modeling</strong></td>
+                    <td>Static / Theoretical</td>
+                    <td>Capture Only (No Simulation)</td>
+                    <td>Partial / Basic Model</td>
+                    <td>Full Discrete-Event NS-3.42 OFDMA Scheduler</td>
+                </tr>
+                <tr>
+                    <td><strong>Contention & Backoff Fidelity</strong></td>
+                    <td>None (Static Estimation)</td>
+                    <td>Observed Live Only</td>
+                    <td>High</td>
+                    <td>Deterministic Packet-Level Contention Engine</td>
+                </tr>
+                <tr>
+                    <td><strong>Scenario Density Scaling</strong></td>
+                    <td>Manual AP / Client Placement</td>
+                    <td>Restricted to Physical Environment</td>
+                    <td>Scripted (Requires C++ Recompile)</td>
+                    <td>Automated Parameter Matrix (10, 14, 20 Stations)</td>
+                </tr>
+                <tr>
+                    <td><strong>Telemetry Granularity</strong></td>
+                    <td>Aggregated RSSI / SNR</td>
+                    <td>Per-Frame Decoding Logs</td>
+                    <td>Raw Text / CSV Traces</td>
+                    <td>FlowMonitor XML Parsed JSON Metrics</td>
+                </tr>
+                <tr>
+                    <td><strong>Visual Interface Design</strong></td>
+                    <td>2D Floorplan Heatmap</td>
+                    <td>Detailed Packet List Table</td>
+                    <td>Basic Canvas / GUI Output</td>
+                    <td>Aircraft Cockpit Dual-Needle Instrument Dashboard</td>
+                </tr>
+                <tr>
+                    <td><strong>Comparative Wi-Fi 5 vs 6 ROI Data</strong></td>
+                    <td>Vendor Marketing Estimates</td>
+                    <td>Manual Capture Comparison</td>
+                    <td>Manual Custom Scripting</td>
+                    <td>Automated Side-by-Side Dual Gauges & Curves</td>
+                </tr>
+                <tr>
+                    <td><strong>Deployment Cost</strong></td>
+                    <td>High ($3,000+ per license)</td>
+                    <td>Free / Open Source</td>
+                    <td>Free / Open Source</td>
+                    <td>100% Free / Open Source Pipeline</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>2.3 Summary</h2>
+        <p>The literature review demonstrates that while the technological transition from IEEE 802.11ac to IEEE 802.11ax represents a major architectural milestone in wireless networking, evaluating its empirical performance benefits in dense campus lecture theatres requires specialized tools. Legacy contention-based CSMA/CA protocols suffer severe airtime degradation as client density increases, whereas IEEE 802.11ax leverages OFDMA and BSS Coloring to maintain airtime efficiency and lower latency jitter. Existing commercial planning and monitoring tools either rely on static RF abstractions or are limited to reactive live network captures. Open-source network simulators like NS-3 provide the deterministic fidelity necessary to evaluate multi-user MAC/PHY mechanisms, but lack intuitive visual interfaces. The AIRTEST project addresses this critical gap by combining deterministic NS-3 discrete-event simulation with an interactive, cockpit-styled telemetry visualizer, providing actionable ROI data for campus network infrastructure decisions.</p>
+
+    </div>
+
+    <script>
+        function copyChapterToClipboard() {
+            const content = document.getElementById('chapter-content');
+            
+            const blobInput = new Blob([content.outerHTML], { type: 'text/html' });
+            const textInput = new Blob([content.innerText], { type: 'text/plain' });
+            
+            if (navigator.clipboard && navigator.clipboard.write) {
+                const item = new ClipboardItem({
+                    'text/html': blobInput,
+                    'text/plain': textInput
+                });
+                navigator.clipboard.write([item]).then(() => {
+                    showToast();
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+
+        function fallbackCopy(content) {
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Failed to copy. Please manually select and copy the text.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

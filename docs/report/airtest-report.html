@@ -1,0 +1,1445 @@
+<title>AIRTEST Project Report</title>
+<style>
+  :root {
+    --paper: #ffffff;
+    --ink: #000000;
+    --ink-mid: #333333;
+    --rule: #cccccc;
+    --sunk: #f9f9f9;
+    --flag: #8a4b00;
+  }
+
+  body {
+    background: #f4f4f4;
+    color: var(--ink);
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 12pt;
+    line-height: 1.5;
+    margin: 0;
+    padding: 20px;
+  }
+
+  .sheet {
+    background: var(--paper);
+    max-width: 850px;
+    margin: 0 auto;
+    padding: 40px 50px 60px;
+    box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    border: 1px solid #ddd;
+  }
+
+  .bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 12px;
+    background: var(--sunk);
+    border: 1px solid var(--rule);
+    padding: 10px 15px;
+    margin-bottom: 30px;
+  }
+
+  .bar p { margin: 0; font-size: 10pt; color: var(--ink-mid); }
+
+  button {
+    font-family: 'Times New Roman', Times, serif;
+    font-size: 11pt;
+    font-weight: bold;
+    color: #ffffff;
+    background: #003366;
+    border: none;
+    padding: 8px 16px;
+    cursor: pointer;
+    border-radius: 3px;
+    white-space: nowrap;
+  }
+
+  button:hover { background: #002244; }
+
+  h1 {
+    font-size: 14pt;
+    font-weight: bold;
+    text-transform: uppercase;
+    text-align: center;
+    margin: 45px 0 20px;
+    page-break-before: always;
+  }
+
+  h1:first-of-type { margin-top: 0; }
+
+  h2 {
+    font-size: 14pt;
+    font-weight: bold;
+    margin: 30px 0 10px;
+    border-bottom: 1px solid var(--ink);
+    padding-bottom: 3px;
+  }
+
+  h3 { font-size: 12pt; font-weight: bold; margin: 20px 0 8px; }
+  h4 { font-size: 12pt; font-weight: bold; margin: 16px 0 6px; font-style: italic; }
+
+  p { margin: 0 0 12px; text-align: justify; text-indent: 0.5in; }
+  p.no-indent, li p { text-indent: 0; }
+
+  ul, ol { margin: 0 0 12px; padding-left: 0.5in; }
+  li { margin-bottom: 4px; }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+    margin: 15px 0 20px;
+    font-size: 10.5pt;
+  }
+
+  th, td {
+    border: 1px solid var(--ink);
+    padding: 7px 9px;
+    text-align: left;
+    vertical-align: top;
+  }
+
+  th { background-color: var(--sunk); font-weight: bold; }
+  td.n { text-align: right; font-variant-numeric: tabular-nums; }
+
+  code {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 10.5pt;
+  }
+
+  pre {
+    font-family: 'Courier New', Courier, monospace;
+    font-size: 9.5pt;
+    line-height: 1.4;
+    background: var(--sunk);
+    border: 1px solid var(--rule);
+    padding: 10px 12px;
+    overflow-x: auto;
+    margin: 0 0 15px;
+  }
+
+  figure { margin: 20px 0; text-align: center; page-break-inside: avoid; }
+  figure svg { max-width: 100%; height: auto; border: 1px solid var(--rule); background: #fff; }
+  figcaption {
+    font-size: 11pt;
+    font-weight: bold;
+    margin-top: 8px;
+    text-align: center;
+  }
+
+  .toc { margin-bottom: 10px; }
+  .toc ul { list-style: none; padding-left: 0.3in; margin: 0; }
+  .toc > ul { padding-left: 0; }
+  .toc li { margin-bottom: 2px; }
+  .toc .chap { font-weight: bold; text-transform: uppercase; margin-top: 10px; }
+
+  .flag {
+    border-left: 4px solid var(--flag);
+    background: #fdf7f0;
+    padding: 8px 12px;
+    margin: 0 0 15px;
+    font-size: 11pt;
+  }
+  .flag p { text-indent: 0; margin: 0; }
+  .flag strong { color: var(--flag); }
+
+  footer {
+    margin-top: 40px;
+    padding-top: 15px;
+    border-top: 1px solid var(--rule);
+    font-size: 10pt;
+    text-align: center;
+    color: var(--ink-mid);
+  }
+
+  @media print {
+    body { background: #fff; padding: 0; }
+    .sheet { box-shadow: none; border: 0; max-width: none; }
+    .bar { display: none; }
+  }
+</style>
+
+<div class="sheet">
+
+<div class="bar">
+  <p>AIRTEST — Full project report. Select and paste into Word, or use the button.</p>
+  <button id="copy">Copy report</button>
+</div>
+
+<div id="doc">
+
+<h1 style="margin-top:0">AIRTEST<br>Comparative Analysis of WiFi 5 and WiFi 6<br>in Dense University Lecture Theatres</h1>
+
+<h2>Table of Contents</h2>
+<div class="toc">
+  <ul>
+    <li class="chap">Chapter One: Introduction</li>
+    <ul>
+      <li>1.0 Introduction</li>
+      <li>1.1 Background and Motivation</li>
+      <li>1.2 Problem Statement</li>
+      <li>1.3 Aims and Objectives</li>
+      <li>1.4 Project Scope</li>
+      <li>1.5 Risk Management</li>
+      <li>1.6 SWOT Analysis</li>
+      <li>1.7 Significance of the Project</li>
+      <li>1.8 Organizational Structure</li>
+    </ul>
+    <li class="chap">Chapter Two: Literature Review</li>
+    <ul>
+      <li>2.0 Overview</li>
+      <li>2.0.1 Evolution of the IEEE 802.11 Standards</li>
+      <li>2.0.2 High-Density Wireless Environments</li>
+      <li>2.0.3 WiFi 6 Mechanisms: OFDMA, MU-MIMO, BSS Colouring and TWT</li>
+      <li>2.0.4 Network Simulation Tools and Discrete-Event Modelling</li>
+      <li>2.0.5 Performance Metrics for Wireless LAN Evaluation</li>
+      <li>2.1 Related Works</li>
+      <li>2.1.1 Simulation-Based 802.11ax Studies</li>
+      <li>2.1.2 Measurement Studies in High-Density Deployments</li>
+      <li>2.1.3 Interactive Network Performance Visualisation Tools</li>
+      <li>2.2 Comparative Analysis</li>
+      <li>2.3 Summary</li>
+    </ul>
+    <li class="chap">Chapter Three: Methodology</li>
+    <ul>
+      <li>3.0 Overview</li>
+      <li>3.1 Methodology</li>
+      <li>3.2 Development Method (3.2.1 Waterfall, 3.2.2 Incremental, 3.2.3 Iterative, 3.2.4 Prototype)</li>
+      <li>3.3 Proposed Model</li>
+      <li>3.4 Fact-Finding Techniques (3.4.1 Observation, 3.4.2 Interview, 3.4.3 Data Analysis)</li>
+      <li>3.5 Tools and Technologies (3.5.1 Developer Hardware, 3.5.2 Developer Software, 3.5.3 Client Minimum)</li>
+      <li>3.6 Ethical Considerations</li>
+      <li>3.7 Requirement Analysis</li>
+      <li>3.8 Requirements Specifications (3.8.1 Functional, 3.8.2 Non-Functional)</li>
+      <li>3.9 System Design (3.9.1 Architecture, 3.9.2 Use Case, 3.9.3 Data Design, 3.9.4 Activity, 3.9.5 Dataflow, 3.9.6 Control Flow, 3.9.7 Data Model, 3.9.8 User Interface)</li>
+      <li>3.10 Summary</li>
+    </ul>
+    <li class="chap">Chapter Four: Implementation and Testing</li>
+    <ul>
+      <li>4.0 Overview</li>
+      <li>4.1 Main Features</li>
+      <li>4.2 Implementation Problems</li>
+      <li>4.3 Overcoming Implementation Problems</li>
+      <li>4.4 Testing</li>
+      <li>4.5 User Guide</li>
+      <li>4.6 Summary</li>
+    </ul>
+    <li class="chap">Chapter Five: Discussion, Conclusion and Recommendations</li>
+    <ul>
+      <li>5.0 Overview</li>
+      <li>5.1 Objective Assessment</li>
+      <li>5.2 Limitations and Challenges</li>
+      <li>5.3 Future Enhancements</li>
+      <li>5.4 Recommendations</li>
+      <li>5.5 Summary</li>
+    </ul>
+    <li class="chap">References</li>
+    <li class="chap">Appendices A–E</li>
+  </ul>
+</div>
+
+<!-- ==================== CHAPTER ONE ==================== -->
+
+<h1>Chapter One: Introduction</h1>
+
+<h2>1.0 Introduction</h2>
+<p>This project presents a comparative performance analysis of IEEE 802.11ac (WiFi 5) and IEEE 802.11ax (WiFi 6) in high-density university lecture theatres. A lecture theatre is among the most demanding wireless environments on a campus: a single room may hold well over a hundred devices, all associated with the same access point, all contending for the same medium, and all active at the same moments — during a streamed lecture, an in-class poll, or a mass download of course material.</p>
+<p>Because no 802.11ac or 802.11ax hardware was available for controlled testing at this scale, the study is conducted entirely through discrete-event network simulation using NS-3 version 3.42. The simulation produces the evidence; a static web dashboard, named AIRTEST, presents that evidence to a reader who must decide whether an upgrade is justified. The dashboard replays stored trials and never performs a live measurement, a distinction it states explicitly in its own interface.</p>
+<p>This chapter establishes the background and motivation for the work, states the problem it addresses, sets out its aims and objectives, defines its scope, records the risks identified and how they were managed, presents a SWOT analysis, explains the significance of the work, and describes how the remainder of the report is organised.</p>
+
+<h2>1.1 Background and Motivation</h2>
+<p>For most of its history, the IEEE 802.11 family of standards advanced by raising peak data rate. Each generation widened channels, added spatial streams, or increased modulation density. IEEE 802.11ac, published in 2013 and marketed as WiFi 5, followed that pattern: 80 and 160 MHz channel bonding, up to eight spatial streams, 256-QAM modulation, and downlink multi-user MIMO.</p>
+<p>IEEE 802.11ax departs from it. Its principal additions are not primarily concerned with making a single link faster; they are concerned with making a congested medium more efficient. The mechanisms of interest to this study are:</p>
+<ul>
+  <li><strong>Orthogonal Frequency-Division Multiple Access (OFDMA).</strong> The channel is subdivided into resource units so that several stations can be served within a single transmission opportunity, rather than each contending for the whole channel in turn.</li>
+  <li><strong>Bi-directional multi-user MIMO.</strong> Multi-user spatial multiplexing is extended to the uplink as well as the downlink.</li>
+  <li><strong>BSS colouring.</strong> A numerical identifier in the PHY header allows a station to distinguish transmissions belonging to a neighbouring basic service set from its own, and to avoid deferring unnecessarily.</li>
+  <li><strong>Target Wake Time (TWT).</strong> Station wake periods are scheduled to reduce contention and power consumption.</li>
+</ul>
+<p>These are precisely the conditions a lecture theatre creates. The motivation for this project is therefore not the general question of whether WiFi 6 is newer — it is — but the specific and practical question of whether its mechanisms deliver measurable benefit under the traffic and density a lecture theatre actually produces, and if so, from what density onward.</p>
+
+<h2>1.2 Problem Statement</h2>
+<p>Universities operating legacy WiFi 5 infrastructure report well-documented symptoms in large teaching spaces: dropped associations, degraded video streaming, and rising latency during interactive activities such as live polling. WiFi 6 is marketed as the remedy.</p>
+<p class="no-indent">The difficulty is that the case for upgrading is typically made in terms of headline specifications rather than in terms of the environment an institution actually operates. A campus-wide upgrade is a substantial capital commitment, and the institution rarely holds quantified, environment-specific evidence on which to base it. Three questions in particular remain unanswered:</p>
+<ol>
+  <li>How large is the performance difference between the two standards, and how does it change as the number of active clients in a room increases?</li>
+  <li>Which specific 802.11ax mechanisms account for any difference observed, rather than being assumed to contribute?</li>
+  <li>At what client density does each standard cease to meet the demand placed upon it?</li>
+</ol>
+<p>A secondary problem concerns presentation. Conventional network diagnostic output is a table of aggregated averages, which conceals both run-to-run variability and the conditions under which a figure was obtained. A decision-maker reading such a table cannot distinguish a robust difference from a sampling artefact.</p>
+
+<h2>1.3 Aims and Objectives</h2>
+<p>The aim of this project is to quantify, through discrete-event network simulation, the performance difference between WiFi 5 and WiFi 6 in a dense lecture-theatre environment, and to present the results in an interactive dashboard that communicates both the findings and their limitations.</p>
+<p class="no-indent">The objectives are:</p>
+<ol>
+  <li><strong>To construct a parameterised lecture-theatre simulation scenario.</strong> A single C++ scenario in NS-3 3.42 modelling a seated lecture theatre, parameterised by standard, client density, traffic profile, access-point count and random seed.</li>
+  <li><strong>To execute a systematic scenario matrix.</strong> An automated Python orchestrator running every combination across multiple randomised seeds, with idempotent resumption and per-run fault isolation.</li>
+  <li><strong>To extract and validate flow telemetry.</strong> A Python parser converting FlowMonitor XML and PHY state traces into a single structured dataset, with internal reconciliation checks that detect inconsistent results rather than publishing them.</li>
+  <li><strong>To build an interactive comparison dashboard.</strong> A static web application presenting the dataset as paired instrument readings, with explicit provenance and disclosure of conditions the simulation did not cover.</li>
+  <li><strong>To quantify the difference and attribute it to mechanisms.</strong> To analyse the resulting dataset and identify which 802.11ax mechanisms account for the observed differences, using controlled ablation where a mechanism can be disabled independently.</li>
+</ol>
+
+<h2>1.4 Project Scope</h2>
+<p class="no-indent">The scope of the project is bounded as follows.</p>
+<ul>
+  <li><strong>Protocol scope.</strong> IEEE 802.11ac (WiFi 5) against IEEE 802.11ax (WiFi 6), both in the 5 GHz band on an 80 MHz channel, with identical rate control.</li>
+  <li><strong>Simulation environment.</strong> NS-3 version 3.42 under WSL2 (Ubuntu), using <code>SpectrumWifiPhy</code> with <code>MultiModelSpectrumChannel</code>, <code>LogDistancePropagationLossModel</code> for path loss and a Nakagami fading model.</li>
+  <li><strong>Density and topology.</strong> Client densities of 10, 14, 20, 30 and 40 stations, in a single-access-point topology and a three-access-point topology.</li>
+  <li><strong>Traffic profiles.</strong> Three profiles: light interactive browsing, constant-bit-rate video streaming, and rate-limited bulk transfer over TCP.</li>
+  <li><strong>Presentation scope.</strong> A static web dashboard built with React 19 and Vite, consuming a pre-generated JSON dataset. No backend, database or authentication.</li>
+</ul>
+<p class="no-indent"><strong>Out of scope:</strong> physical hardware testing; the 6 GHz band (WiFi 6E) and 802.11be (WiFi 7); Target Wake Time, which is not implemented in the NS-3 3.42 WiFi model and was therefore excluded rather than approximated; and live or on-demand simulation triggered from the dashboard.</p>
+<p><strong>Density boundary.</strong> The originally planned grid extended to 200 stations. Timing measurements taken during implementation established that 802.11ax runs cost approximately five times their 802.11ac equivalents and rise sharply beyond a knee between sixteen and twenty stations; a single 802.11ax run at 40 stations required approximately thirty minutes of wall-clock time for five seconds of simulated time. The upper densities were therefore unreachable within the compute available, and the measured range is reported as a constraint of the study rather than presented as a design choice.</p>
+
+<h2>1.5 Risk Management</h2>
+<p>Risks were identified at the outset and reviewed throughout. Table 1.1 records each risk, its assessed likelihood and impact, the mitigation adopted, and — where applicable — the outcome. Several risks materialised and were handled; recording the outcome alongside the plan is more informative than recording the plan alone.</p>
+
+<h3>Table 1.1: Project Risk Management Matrix</h3>
+<table>
+  <thead>
+    <tr><th>ID</th><th>Risk</th><th>Likelihood</th><th>Impact</th><th>Mitigation</th><th>Outcome</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>R-01</td><td>No physical WiFi 5 or WiFi 6 hardware available for validation.</td><td>Certain</td><td>High</td><td>Fully simulation-based approach; documented explicitly as a limitation of methodology.</td><td>Accepted; stated in §5.2.</td></tr>
+    <tr><td>R-02</td><td>High-density 802.11ax simulation may be computationally infeasible.</td><td>High</td><td>High</td><td>Early timing test; reduce density grid or simulated duration if the matrix cannot complete.</td><td>Materialised. Grid reduced to a measured maximum of 40 stations.</td></tr>
+    <tr><td>R-03</td><td>NS-3 802.11ax model may not implement all mechanisms under study.</td><td>Medium</td><td>Medium</td><td>Verify module support before committing to metrics; drop unsupported features rather than approximate them.</td><td>Materialised. TWT unsupported; energy-efficiency objective withdrawn.</td></tr>
+    <tr><td>R-04</td><td>Simulator or parser defects producing plausible but incorrect figures.</td><td>High</td><td>High</td><td>Vertical-slice implementation; automated reconciliation checks; unit tests over the parser independent of the simulator.</td><td>Materialised repeatedly. See §4.2.</td></tr>
+    <tr><td>R-05</td><td>Saturation point may fall outside the achievable density grid.</td><td>Medium</td><td>Medium</td><td>Linear interpolation between bracketing densities; report as a bound where no threshold crossing occurs.</td><td>Materialised. Reported as a bound, never extrapolated.</td></tr>
+    <tr><td>R-06</td><td>Replayed results mistaken by a reader for live measurement.</td><td>Medium</td><td>High</td><td>Explicit labelling in the interface; no progress bar, spinner or timer implying live execution; provenance badge on every reading.</td><td>Mitigated in the delivered interface.</td></tr>
+    <tr><td>R-07</td><td>Defects in the NS-3 802.11ax implementation itself aborting runs.</td><td>Low</td><td>Medium</td><td>Per-run fault isolation in the orchestrator; failures recorded in a manifest rather than silently dropped.</td><td>Materialised. See §4.2.5.</td></tr>
+  </tbody>
+</table>
+
+<h2>1.6 SWOT Analysis</h2>
+<p>Table 1.2 presents a SWOT analysis of the project as delivered.</p>
+
+<h3>Table 1.2: SWOT Analysis</h3>
+<table>
+  <thead><tr><th style="width:15%">&nbsp;</th><th>Internal</th><th>External</th></tr></thead>
+  <tbody>
+    <tr>
+      <td><strong>Positive</strong></td>
+      <td><strong>Strengths</strong>
+        <ol>
+          <li>Full experimental control: both standards are compared under identical rooms, traffic, channel width, rate control and seeds, so the standard is the only independent variable.</li>
+          <li>Reproducibility: every published figure traces to a recorded run that carries its own configuration metadata.</li>
+          <li>Independent verification of the analysis pipeline by automated tests, separate from the simulator.</li>
+          <li>A presentation layer that discloses the boundaries of its own dataset instead of presenting an unbroken surface of numbers.</li>
+        </ol>
+      </td>
+      <td><strong>Opportunities</strong>
+        <ol>
+          <li>Directly informs an institutional upgrade decision with environment-specific evidence.</li>
+          <li>The parameterised scenario extends to further densities, topologies and traffic profiles without redesign.</li>
+          <li>The method — reconciliation checks plus controlled ablation — transfers to other protocol comparisons.</li>
+        </ol>
+      </td>
+    </tr>
+    <tr>
+      <td><strong>Negative</strong></td>
+      <td><strong>Weaknesses</strong>
+        <ol>
+          <li>No hardware validation; results are only as accurate as the simulator's models.</li>
+          <li>Computational cost restricted the density range actually measured.</li>
+          <li>Short measurement windows inflate packet loss relative to a steady-state deployment.</li>
+          <li>Latency and jitter are conditioned on delivery and therefore understate delay where loss is non-trivial.</li>
+        </ol>
+      </td>
+      <td><strong>Threats</strong>
+        <ol>
+          <li>Simulator defects can yield plausible but incorrect figures, which are harder to detect than outright failures.</li>
+          <li>Configuration choices materially affect outcomes and can understate a standard if set incorrectly.</li>
+          <li>Findings are specific to the modelled environment and do not generalise unconditionally.</li>
+        </ol>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<h2>1.7 Significance of the Project</h2>
+<p>The project has two audiences. The primary audience is academic: the supervisor and examiners assessing the work. The secondary audience is practical: university IT and network planning staff deciding whether, where and when to invest in an 802.11ax upgrade.</p>
+<p>For the second audience the significance lies in specificity. A vendor datasheet states what a standard can do under favourable conditions. This project states what it does under one institution's conditions, with the measurement method, the configuration and the limitations all disclosed. A finding that an upgrade is <em>not</em> justified for a given room is as useful to that reader as a finding that it is, and the study is designed so that either outcome can be reported honestly.</p>
+<p>Methodologically, the project demonstrates three practices that are transferable: reconciliation checks that verify the internal consistency of derived results before they are published; controlled ablation, in which a single mechanism is disabled to attribute an observed effect to it; and an interface that refuses to display a condition the simulation never ran.</p>
+
+<h2>1.8 Organizational Structure</h2>
+<p class="no-indent">The remainder of this report is organised as follows.</p>
+<table>
+  <thead><tr><th style="width:18%">Chapter</th><th>Content</th></tr></thead>
+  <tbody>
+    <tr><td><strong>Two</strong></td><td>Reviews the evolution of the 802.11 standards, high-density wireless environments, the 802.11ax mechanisms under study, network simulation tools, and wireless performance metrics; surveys related work and compares it in tabular form.</td></tr>
+    <tr><td><strong>Three</strong></td><td>Presents the methodology: the development models considered and the model adopted, fact-finding techniques, tools and specifications, ethical considerations, requirements analysis and specification, and the system design with supporting diagrams.</td></tr>
+    <tr><td><strong>Four</strong></td><td>Describes implementation and testing: the delivered features, the defects encountered and how they were resolved, the test strategy, traceability and results, and a user guide.</td></tr>
+    <tr><td><strong>Five</strong></td><td>Discusses the findings against the stated objectives, records limitations and challenges, and sets out future enhancements and recommendations.</td></tr>
+  </tbody>
+</table>
+
+<!-- ==================== CHAPTER TWO ==================== -->
+
+<h1>Chapter Two: Literature Review</h1>
+
+<h2>2.0 Overview</h2>
+<p>This chapter establishes the technical and academic context for the study. It traces the evolution of the IEEE 802.11 standards to the point at which the design goal shifted from peak rate to medium efficiency; characterises the high-density environment that motivates that shift; examines the specific 802.11ax mechanisms under investigation; reviews the simulation tools available for evaluating them; and surveys the metrics by which wireless local area network performance is judged. It then examines related work and compares it with the present study.</p>
+
+<div class="flag">
+  <p><strong>On the references in this chapter.</strong> Every source cited below was checked against its publisher or indexing record for title, venue and year before being used; none was generated from memory. All are published in 2010 or later. Three entries are marked &ldquo;author list to confirm&rdquo; in the reference list &mdash; the work exists and the venue is correct, but you should confirm the full author list from the publisher's record before submission. Cite nothing you have not opened yourself.</p>
+</div>
+
+<h3>2.0.1 Evolution of the IEEE 802.11 Standards</h3>
+<p>The 802.11 family has progressed through successive amendments, each raising the theoretical maximum throughput of a single link. 802.11n introduced MIMO and channel bonding to 40 MHz; 802.11ac extended bonding to 80 and 160 MHz, raised modulation to 256-QAM, and added downlink multi-user MIMO. Each of these advances improves the rate at which one station can be served (Bellalta, 2016; Chotalia &amp; Gajjar, 2023).</p>
+<p>802.11ax marks a change in objective. Where earlier amendments optimised for peak rate under favourable conditions, 802.11ax optimises for aggregate efficiency when many stations contend simultaneously — the condition under which earlier standards degrade most sharply. The amendment retains and slightly extends the physical-layer gains (1024-QAM) but concentrates on medium access (Khorov, Kiryanov, Lyakhov, &amp; Bianchi, 2019; Afaqui, Garcia-Villegas, &amp; Lopez-Aguilera, 2017).</p>
+
+<h3>2.0.2 High-Density Wireless Environments</h3>
+<p>A high-density environment is characterised not by traffic volume alone but by the number of stations contending for a shared medium. Under the distributed coordination function used by 802.11, each station that wishes to transmit must sense the medium idle and then wait a randomised backoff interval. As station count rises, the probability that two stations select overlapping backoff intervals rises with it, and the proportion of channel time consumed by collisions and retransmissions grows (Bellalta, 2016; Khorov et al., 2019).</p>
+<p>Lecture theatres, conference halls and stadiums are the canonical examples. What distinguishes a lecture theatre is the synchronisation of demand: devices are not merely numerous but active at the same instants, because the activity is directed from the front of the room (Afaqui et al., 2017; Qu et al., 2019).</p>
+
+<h3>2.0.3 WiFi 6 Mechanisms: OFDMA, MU-MIMO, BSS Colouring and TWT</h3>
+<p><strong>OFDMA.</strong> The channel is divided into resource units, and the access point schedules several stations within a single transmission opportunity. The gain is a reduction in per-frame overhead when many stations have small quantities of data to send; the corresponding cost is that any one station receives a fraction of the channel rather than the whole of it (Khorov et al., 2019; Bellalta, 2016). Simulation studies of OFDMA under contention-driven load report the same trade-off (Chotalia &amp; Gajjar, 2023).</p>
+<p><strong>Multi-user MIMO.</strong> 802.11ax extends multi-user spatial multiplexing to the uplink, allowing several stations to transmit simultaneously under access-point coordination (Bellalta, 2016; Qu et al., 2019).</p>
+<p><strong>BSS colouring.</strong> Each basic service set is assigned a colour carried in the PHY header. A station receiving a frame with a foreign colour may apply a more permissive clear-channel assessment threshold, reducing unnecessary deferral in deployments where cells overlap (Wilhelmi, Barrachina-Mu&ntilde;oz, Cano, Selinis, &amp; Bellalta, 2021; Wilhelmi, Barrachina-Mu&ntilde;oz, &amp; Bellalta, 2019).</p>
+<p><strong>Target Wake Time.</strong> Stations negotiate scheduled wake intervals, reducing both power consumption and contention. TWT is not implemented in the NS-3 3.42 WiFi module and is therefore outside the scope of this study.</p>
+
+<h3>2.0.4 Network Simulation Tools and Discrete-Event Modelling</h3>
+<p>Where hardware is unavailable, evaluation proceeds by simulation. A discrete-event simulator maintains a queue of timestamped events and advances a virtual clock from one event to the next, so that simulated time is decoupled from wall-clock time. This permits exact control of every parameter and exact repeatability given a fixed random seed (Banks et al., 2010).</p>
+<p>NS-3 is an open-source discrete-event network simulator with a detailed 802.11 model (Riley &amp; Henderson, 2010; ns-3 Project, 2024), including physical-layer abstractions at both the <code>YansWifiPhy</code> and <code>SpectrumWifiPhy</code> levels. The latter models per-subband spectral density and is required for any scenario involving OFDMA, since resource-unit transmissions cannot be represented in a model that treats the channel as indivisible. Alternatives include OMNeT++ with the INET framework, which has also been extended to model 802.11ax (Inzillo &amp; Ariza Quintana, 2025), and ns-2, now largely superseded (Riley &amp; Henderson, 2010).</p>
+
+<h3>2.0.5 Performance Metrics for Wireless LAN Evaluation</h3>
+<p class="no-indent">The literature converges on a small set of metrics for evaluating WLAN performance, all of which are adopted here.</p>
+<ul>
+  <li><strong>Aggregate and per-user throughput</strong>, in Mbps. Aggregate throughput measures the network; per-user throughput measures the experience of an individual.</li>
+  <li><strong>Latency and jitter</strong>, in milliseconds. Jitter — the variation in delay — determines whether a stream can be played back smoothly.</li>
+  <li><strong>Packet loss ratio</strong>, as a percentage of transmitted packets.</li>
+  <li><strong>Jain's fairness index</strong>, in the range 0 to 1, quantifying how evenly capacity is distributed among stations (Jain, Chiu, &amp; Hawe, 1984).</li>
+  <li><strong>Airtime or channel utilisation</strong>, as a percentage of time the medium is occupied. This is the efficiency measure: two standards may deliver identical throughput while consuming very different amounts of channel time.</li>
+  <li><strong>Offered-load satisfaction ratio</strong>, delivered throughput as a proportion of demand. This measures whether the network met what was asked of it, which is distinct from whether it was fast.</li>
+</ul>
+
+<h2>2.1 Related Works</h2>
+
+<h3>2.1.1 Simulation-Based 802.11ax Studies</h3>
+<p>A body of simulation work evaluates 802.11ax mechanisms in isolation, typically comparing OFDMA-enabled and OFDMA-disabled configurations under synthetic traffic. Chotalia and Gajjar (2023) compare 802.11n, 802.11ac and 802.11ax in ns-3 and report throughput gains for 802.11ax under multi-station load. Work presented at the ns-3 workshop has validated the simulator's own OFDMA implementation against analytical prediction (WNS3, 2021), and subsequent analysis has extended that validation to contention-driven scenarios (PeerJ Computer Science, 2025). Such studies establish a mechanism's theoretical contribution but frequently model a single traffic type and a uniform station population.</p>
+
+<h3>2.1.2 Measurement Studies in High-Density Deployments</h3>
+<p>Where hardware is available, measurement studies report performance in real dense venues. These carry higher external validity than simulation but sacrifice control: the station population, background interference and traffic mix cannot be held constant between the two standards, so an observed difference cannot be attributed unambiguously to the standard (Afaqui et al., 2017; Qu et al., 2019). Comparable trade-offs are discussed in evaluations of spatial reuse, where measured gain depends heavily on the density and geometry of the deployment (Wilhelmi et al., 2021).</p>
+
+<h3>2.1.3 Interactive Network Performance Visualisation Tools</h3>
+<p>Tools for presenting network measurement to non-specialists range from consumer speed tests, which report a single instantaneous figure, to enterprise monitoring dashboards, which report time series for operators. Neither is designed to compare two protocol standards under matched conditions while disclosing the provenance and variability of each figure, which is the presentation problem this project addresses. Simulation studies conventionally report results as static plots in a paper (Chotalia &amp; Gajjar, 2023; Wilhelmi et al., 2021) rather than as an artefact a reader can interrogate.</p>
+
+<h2>2.2 Comparative Analysis</h2>
+<p>Table 2.1 compares the reviewed categories of prior work with the present study.</p>
+
+<h3>Table 2.1: Comparative Analysis of Related Work</h3>
+<table>
+  <thead>
+    <tr><th>Criterion</th><th>Isolated mechanism simulations</th><th>Field measurement studies</th><th>Visualisation tools</th><th>AIRTEST (this project)</th></tr>
+  </thead>
+  <tbody>
+    <tr><td>Method</td><td>Discrete-event simulation</td><td>Hardware measurement</td><td>Live instrumentation</td><td>Discrete-event simulation (NS-3 3.42)</td></tr>
+    <tr><td>Experimental control</td><td>High</td><td>Low</td><td>None</td><td>High — standard is the only independent variable</td></tr>
+    <tr><td>External validity</td><td>Low</td><td>High</td><td>High</td><td>Low; stated explicitly as a limitation</td></tr>
+    <tr><td>Traffic profiles</td><td>Usually one</td><td>Uncontrolled mix</td><td>Whatever is present</td><td>Three (browse, stream, bulk)</td></tr>
+    <tr><td>Repeated trials</td><td>Varies</td><td>Rare</td><td>Not applicable</td><td>Multiple seeds per cell; variability reported</td></tr>
+    <tr><td>Mechanism attribution</td><td>Yes, by design</td><td>Not possible</td><td>No</td><td>Yes, by controlled ablation</td></tr>
+    <tr><td>Presentation to non-specialists</td><td>No</td><td>No</td><td>Partial</td><td>Yes, with plain-language evaluation</td></tr>
+    <tr><td>Disclosure of unmeasured conditions</td><td>Rare</td><td>Not applicable</td><td>No</td><td>Yes; unsimulated positions are shown but disabled</td></tr>
+  </tbody>
+</table>
+
+<h2>2.3 Summary</h2>
+<p>The literature establishes that 802.11ax was designed to improve efficiency under contention rather than peak rate, and identifies OFDMA, uplink multi-user operation and BSS colouring as the mechanisms responsible. It also establishes a settled set of evaluation metrics. What is less well covered is the combination this project addresses: a controlled comparison across several traffic profiles and densities, with the difference attributed to specific mechanisms by ablation, and the result presented in a form a non-specialist can act on without misreading it. Chapter Three sets out the methodology adopted to do so.</p>
+
+<!-- ==================== CHAPTER THREE ==================== -->
+
+<h1>Chapter Three: Methodology</h1>
+
+<h2>3.0 Overview</h2>
+<p>This chapter sets out how the project was carried out. The design is documented using standard UML notation for use case, activity and class-equivalent structure diagrams, together with structured-analysis notation for dataflow (Fowler, 2004). It states the research methodology, reviews four candidate software development models and justifies the one adopted, describes the fact-finding techniques used, specifies the tools and hardware, addresses ethical considerations, presents the requirements analysis and specification, and documents the system design through architecture, use case, data, activity, dataflow, control flow and interface diagrams.</p>
+
+<h2>3.1 Methodology</h2>
+<p>The project follows a quantitative, experimental methodology, structured according to established practice for discrete-event simulation studies (Banks, Carson, Nelson, &amp; Nicol, 2010). The independent variables are the wireless standard, the client density, the traffic profile and the access-point count. The dependent variables are the eight performance metrics listed in §2.0.5. All other parameters — room geometry, propagation model, channel width, band, rate-control algorithm, simulated duration and random seed sequence — are held constant between the two standards, so that any measured difference is attributable to the standard and its mechanisms.</p>
+<p>Each experimental cell is repeated across multiple random seeds. Reporting a single run would conflate the difference between standards with the variability of an individual run; repeating the cell allows the mean and the spread to be reported together, and allows a difference smaller than the spread to be identified as such rather than presented as a finding.</p>
+
+<h2>3.2 Development Method</h2>
+<p>Four development models were considered before the approach was fixed. The characterisations below follow the standard treatments in the software engineering literature (Sommerville, 2016; Pressman &amp; Maxim, 2014). Each is described below with its characteristics, strengths and weaknesses, and its applicability to a project of this kind.</p>
+
+<h3>3.2.1 Waterfall Model</h3>
+<p>The Waterfall model organises development into sequential phases — requirements, design, implementation, verification, maintenance — in which each phase is completed and signed off before the next begins. The model is conventionally traced to Royce (1970), who presented the sequential diagram while simultaneously arguing that it is &ldquo;risky and invites failure&rdquo; without iteration between phases; the diagram was subsequently adopted more widely than the caution that accompanied it (Larman &amp; Basili, 2003). Its defining property is that phases do not overlap and that requirements are fixed before design commences.</p>
+<p>Its strengths are documentation and predictability (Sommerville, 2016). Because every phase produces a defined artefact before the next begins, progress is visible and the project's state at any moment is unambiguous. Where requirements are genuinely known in advance and unlikely to change — as in a regulated or contractual context — this produces an orderly and auditable process. It is also straightforward to plan and to teach, since responsibilities and deliverables map directly onto phases.</p>
+<p>Its weaknesses follow from the same property (Pressman &amp; Maxim, 2014). Because verification occurs only after implementation is complete, a defect in an early assumption is not discovered until late, when the cost of correcting it is highest. The model assumes requirements can be fully specified before any code is written, which is rarely true of research or exploratory work. It accommodates change poorly: a requirement discovered during implementation cannot be absorbed without returning to an earlier phase, and the model provides no mechanism for doing so.</p>
+<p>For a simulation study, the decisive weakness is that correctness cannot be established by inspection. A simulation scenario that compiles, runs to completion and produces plausible numbers may nevertheless be measuring the wrong quantity. Under a strict Waterfall process, that class of defect would surface only in the verification phase, after the entire scenario matrix had been executed — at which point every result produced would be invalid and the compute expended would be unrecoverable. In this project the full matrix required several hours of computation, so discovering a measurement defect after it would have been a serious loss.</p>
+
+<h3>3.2.2 Incremental Model</h3>
+<p>The Incremental model divides the system into portions delivered in sequence, each adding function to a working whole (Sommerville, 2016). Larman and Basili (2003) record that incremental and iterative practice long predates its formalisation, with documented use in large engineering projects from the 1950s onward. Requirements are partitioned rather than fixed in advance, and each increment passes through its own design, implementation and test.</p>
+<p>Its strength is that working software exists early and defects are found within the increment that introduced them. Risk is distributed across increments rather than concentrated at a single verification phase. Its weakness is that the architecture must be sound from the first increment; a structural error is expensive to correct once several increments depend on it. Effective partitioning also requires a good understanding of the system boundaries at the outset.</p>
+
+<h3>3.2.3 Iterative Model</h3>
+<p>The Iterative model builds an initial version of the whole system and refines it through repeated cycles, each revisiting requirements, design and implementation (Larman &amp; Basili, 2003). Boehm&rsquo;s (1988) spiral model formalises the approach by making risk assessment the criterion that governs each cycle. It differs from the Incremental model in that each cycle revises existing function rather than adding new function to a fixed plan.</p>
+<p>Its strength is suitability to problems that are not fully understood at the start, since understanding is expected to change and each cycle incorporates what the previous cycle revealed. Its weaknesses are that the end point is harder to predict, that repeated revision can consume effort without converging, and that documentation tends to lag the implementation.</p>
+
+<h3>3.2.4 Prototype Model</h3>
+<p>The Prototype model builds a working but incomplete version of the system to elicit or validate requirements, which is then either refined into the product or discarded and rebuilt (Pressman &amp; Maxim, 2014; Sommerville, 2016).</p>
+<p>Its strength is in resolving uncertainty about requirements, particularly where users cannot articulate what they need until they see something concrete — which makes it well suited to interface design. Its weaknesses are that a prototype built for demonstration is rarely built for production, and that stakeholders may mistake a prototype for a nearly finished system and underestimate the work remaining.</p>
+
+<h2>3.3 Proposed Model</h2>
+<p>The model adopted for this project was <strong>incremental development structured around an initial end-to-end vertical slice</strong>, with prototyping applied specifically to the interface (Larman &amp; Basili, 2003; Sommerville, 2016). This is a considered departure from a pure Waterfall process, and the justification is empirical rather than stylistic.</p>
+<p>The defining risk of this project was not that the software would fail to run, but that it would run and produce numbers that were wrong in ways not visible on inspection. That risk cannot be managed by a process that defers verification until after implementation. Boehm&rsquo;s (1988) principle — that each development cycle should address the greatest outstanding risk first — applies directly: the greatest risk here was measurement validity, so the first increment was made to exercise measurement end to end. It is managed by building one complete path through the system — a single simulation run, parsed, validated and displayed — and verifying that path end to end before extending it in any direction.</p>
+<p>That decision is justified by its result. The vertical slice identified thirteen defects before the full scenario matrix was executed, of which the majority would have produced plausible but incorrect figures rather than visible failures. These are documented individually in §4.2. Under a sequential process, each would have been discovered only after the complete matrix had run, and every published figure would have required recomputation.</p>
+<p>Prototyping was applied to the dashboard, where the requirement — that a non-specialist reader can interpret the comparison without misreading it — could not be specified in the abstract and had to be evaluated against something concrete.</p>
+<p>Elements of Waterfall were retained where they were appropriate: the requirements and technical specification were written and fixed before implementation began, and the metric definitions were settled in advance so that they could not be adjusted to suit results after the fact. That last point is a matter of research integrity as much as process.</p>
+
+<h2>3.4 Fact-Finding Techniques</h2>
+
+<h3>3.4.1 Observation</h3>
+<p>Direct observation was used to characterise the environment being modelled. Observation, interview and documentary analysis are the three conventional elicitation techniques for establishing system requirements (Sommerville, 2016). The parameters requiring observation were the physical dimensions of a lecture theatre, the seating arrangement, the typical number of simultaneously active devices, and the mix of activities conducted during a session. These informed the room geometry, the station placement grid, the density range and the three traffic profiles.</p>
+<div class="flag">
+  <p><strong>To confirm:</strong> state here what you personally observed — which theatre, its dimensions, seat count, and any device counts you took — and when. If the parameters were instead taken from published sources or institutional documentation, say so plainly and cite them. Do not describe observation that did not occur.</p>
+</div>
+
+<h3>3.4.2 Interview</h3>
+<div class="flag">
+  <p><strong>To confirm:</strong> this section assumes interviews were conducted with university IT or network staff. If they were, record who was interviewed by role, when, what was asked and what was learned, and place the instrument in Appendix A. <strong>If no interviews were conducted, this section must say so</strong> and explain what was used instead — documentary sources, the technical standards, and NS-3 module documentation. An invented interview is a fabrication and must not appear.</p>
+</div>
+
+<h3>3.4.3 Data Analysis</h3>
+<p>Data analysis was the principal fact-finding technique and the source of every result reported. The four-stage structure below — trace extraction, per-run parsing, aggregation across replications, and derivation — follows standard practice for output analysis in discrete-event simulation, in which multiple independent replications are required before any statistic is reported (Banks et al., 2010). It proceeded in four stages. First, raw telemetry was extracted from each simulation run: a FlowMonitor XML trace of per-flow counters, a PHY state trace of channel occupancy, a run metadata record, and a time series sampled at fixed intervals of simulated time. Second, the traces were parsed into per-run metrics. Third, runs sharing a configuration were aggregated across seeds into a mean and standard deviation. Fourth, derived quantities — per-user throughput, satisfaction ratio, fairness index and interpolated maximum supported clients — were computed from the aggregates.</p>
+<p>Reconciliation checks were applied at the second stage. The quantity transmitted must equal the quantity received plus the quantity lost; where the identity failed beyond a tolerance, the run was flagged rather than published. This check detected several defects described in §4.2.</p>
+
+<h2>3.5 Tools and Technologies</h2>
+
+<h3>3.5.1 Developer Hardware Specification</h3>
+<table>
+  <thead><tr><th style="width:32%">Component</th><th>Specification</th></tr></thead>
+  <tbody>
+    <tr><td>Processor</td><td>Intel Core i7-4702HQ @ 2.20 GHz, 4 physical cores, 8 logical processors</td></tr>
+    <tr><td>Memory</td><td>16 GB system RAM (8 GB allocated to the WSL2 virtual machine)</td></tr>
+    <tr><td>Host operating system</td><td>Windows 11 Pro</td></tr>
+    <tr><td>Simulation environment</td><td>WSL2, Ubuntu</td></tr>
+    <tr><td>Storage</td><td>Local SSD; raw trace artefacts retained outside the version-controlled repository</td></tr>
+  </tbody>
+</table>
+<p>The hardware is a material constraint on the study rather than an incidental detail. Simulation is single-threaded per run, so parallelism is limited to the number of concurrent runs the processor can sustain. The eight logical processors set the practical ceiling on matrix throughput and, together with the per-run cost at high density, determined the maximum density that could be simulated.</p>
+
+<h3>3.5.2 Developer Software Specification</h3>
+<table>
+  <thead><tr><th style="width:32%">Component</th><th>Version and purpose</th></tr></thead>
+  <tbody>
+    <tr><td>NS-3</td><td>3.42, built in optimised profile with a trimmed module set — discrete-event simulation (Riley &amp; Henderson, 2010; ns-3 Project, 2024)</td></tr>
+    <tr><td>C++</td><td>C++17 — simulation scenario</td></tr>
+    <tr><td>Python</td><td>3 — matrix orchestration and telemetry parsing</td></tr>
+    <tr><td>pytest</td><td>Unit testing of the analysis pipeline (39 tests)</td></tr>
+    <tr><td>Node.js</td><td>24, with the built-in test runner (47 tests)</td></tr>
+    <tr><td>React</td><td>19 — dashboard user interface</td></tr>
+    <tr><td>Vite</td><td>8 — build tooling</td></tr>
+    <tr><td>Recharts</td><td>3 — density comparison charts</td></tr>
+    <tr><td>Git / GitHub</td><td>Version control and source hosting</td></tr>
+    <tr><td>Render</td><td>Static site hosting for the deployed dashboard</td></tr>
+  </tbody>
+</table>
+
+<h3>3.5.3 Client Minimum Specification</h3>
+<table>
+  <thead><tr><th style="width:32%">Requirement</th><th>Minimum</th></tr></thead>
+  <tbody>
+    <tr><td>Browser</td><td>Any current release of Chrome, Edge, Firefox or Safari with JavaScript enabled</td></tr>
+    <tr><td>Network</td><td>Sufficient to retrieve approximately 1 MB of static assets on first load; no connectivity required thereafter</td></tr>
+    <tr><td>Display</td><td>320 px minimum width; the layout adapts from mobile to desktop</td></tr>
+    <tr><td>Other</td><td>No installation, account, plug-in or backend service required</td></tr>
+  </tbody>
+</table>
+
+<h2>3.6 Ethical Considerations</h2>
+<p>The project involves no human participants, no personal data and no live network capture. All traffic analysed is synthetic and generated within the simulator, so there is no risk to privacy and no requirement for ethical approval on those grounds.</p>
+<p class="no-indent">The ethical obligations that do apply concern the integrity of the results, and were treated as binding constraints on both the analysis and the interface:</p>
+<ul>
+  <li><strong>No fabricated data.</strong> No figure appears in the dataset or the dashboard that was not produced by a recorded simulation run.</li>
+  <li><strong>No substitution.</strong> Where a requested combination was never simulated, the interface discloses this and offers nothing in its place. It does not display the nearest available scenario.</li>
+  <li><strong>No manufactured contrast.</strong> Where the difference between the two standards is smaller than the variation between repeated runs, the result is reported as level rather than as a win for either standard.</li>
+  <li><strong>No implied live measurement.</strong> The dashboard replays stored trials, and states so beside the readings rather than in a footnote.</li>
+  <li><strong>Disclosure of limitations beside the figures.</strong> Metrics subject to known measurement artefacts carry that caveat at the point of reading.</li>
+</ul>
+
+<h2>3.7 Requirement Analysis</h2>
+<p>Requirements were derived from the objectives in §1.3 and from the constraints established during fact-finding. The analysis identified three subsystems with distinct responsibilities: a simulation subsystem that produces raw telemetry, an analysis subsystem that converts telemetry into validated metrics, and a presentation subsystem that communicates those metrics to a reader.</p>
+<p>The decisive analytical finding was that the presentation subsystem must be able to represent absence. Because the study cannot cover the full parameter space, the interface must distinguish between a condition that was simulated and produced a result, and a condition that was never simulated — and must do so without inviting the reader to infer the missing value. This requirement shaped the control design described in §3.9.8.</p>
+<p>A second finding was that the analysis subsystem must be verifiable independently of the simulator. Since simulator defects produce plausible outputs, correctness cannot be established by observing that the pipeline runs. The parser was therefore designed as a set of pure functions testable against fixtures with known correct answers.</p>
+
+<h2>3.8 Requirements Specifications</h2>
+
+<h3>3.8.1 Functional Requirements</h3>
+<table>
+  <thead><tr><th style="width:12%">ID</th><th>Requirement</th><th style="width:14%">Priority</th></tr></thead>
+  <tbody>
+    <tr><td>FR-01</td><td>The system shall simulate a lecture theatre parameterised by wireless standard, client density, traffic profile, access-point count, random seed and simulated duration.</td><td>Must</td></tr>
+    <tr><td>FR-02</td><td>The system shall support both IEEE 802.11ac and IEEE 802.11ax under otherwise identical configuration.</td><td>Must</td></tr>
+    <tr><td>FR-03</td><td>The system shall support three traffic profiles: interactive browsing, constant-bit-rate video, and bulk transfer over TCP.</td><td>Must</td></tr>
+    <tr><td>FR-04</td><td>The system shall execute the full scenario matrix automatically, skipping runs whose artefacts already exist and isolating individual run failures.</td><td>Must</td></tr>
+    <tr><td>FR-05</td><td>Each run shall emit flow telemetry, PHY channel-occupancy state, run metadata, and a time series sampled in simulated time.</td><td>Must</td></tr>
+    <tr><td>FR-06</td><td>The analysis pipeline shall compute the eight defined metrics per run and aggregate them across seeds as mean and standard deviation.</td><td>Must</td></tr>
+    <tr><td>FR-07</td><td>The analysis pipeline shall verify that transmitted equals received plus lost, and flag any run failing reconciliation.</td><td>Must</td></tr>
+    <tr><td>FR-08</td><td>The dashboard shall present both standards on a shared scale for each metric, so the difference is read directly.</td><td>Must</td></tr>
+    <tr><td>FR-09</td><td>The dashboard shall allow selection of density, traffic profile and access-point count, and shall disable any position with no data behind it.</td><td>Must</td></tr>
+    <tr><td>FR-10</td><td>The dashboard shall replay a stored run's time series over a fixed playback interval, labelled with its rate relative to simulated time.</td><td>Should</td></tr>
+    <tr><td>FR-11</td><td>The dashboard shall generate a plain-language evaluation naming the better standard per metric, or reporting a level result where the difference falls within run-to-run variation.</td><td>Should</td></tr>
+    <tr><td>FR-12</td><td>The dashboard shall display the provenance of every reading: seed, trial index, simulator version and pre-computed status.</td><td>Must</td></tr>
+    <tr><td>FR-13</td><td>The dashboard shall plot any metric against client density across the full dataset.</td><td>Should</td></tr>
+  </tbody>
+</table>
+
+<h3>3.8.2 Non-Functional Requirements</h3>
+<table>
+  <thead><tr><th style="width:12%">ID</th><th>Requirement</th><th style="width:20%">Category</th></tr></thead>
+  <tbody>
+    <tr><td>NFR-01</td><td>A run shall be exactly reproducible given the same parameters and seed.</td><td>Reliability</td></tr>
+    <tr><td>NFR-02</td><td>The analysis pipeline shall be verifiable by automated tests independent of the simulator.</td><td>Verifiability</td></tr>
+    <tr><td>NFR-03</td><td>An interrupted matrix shall resume without recomputing completed runs.</td><td>Reliability</td></tr>
+    <tr><td>NFR-04</td><td>A single failing run shall not terminate the batch; failures shall be recorded in a manifest.</td><td>Robustness</td></tr>
+    <tr><td>NFR-05</td><td>The dashboard shall be a static site requiring no backend, database or authentication.</td><td>Portability</td></tr>
+    <tr><td>NFR-06</td><td>The interface shall remain usable from 320 px width upward.</td><td>Usability</td></tr>
+    <tr><td>NFR-07</td><td>Controls shall be operable by keyboard and expose accessible semantics; motion shall respect the reduced-motion preference.</td><td>Accessibility</td></tr>
+    <tr><td>NFR-08</td><td>The interface shall never imply that a displayed measurement is live.</td><td>Integrity</td></tr>
+    <tr><td>NFR-09</td><td>Replay animation shall not degrade interface responsiveness.</td><td>Performance</td></tr>
+    <tr><td>NFR-10</td><td>Every run artefact shall record the configuration that produced it.</td><td>Traceability</td></tr>
+  </tbody>
+</table>
+
+<h2>3.9 System Design</h2>
+
+<h3>3.9.1 Application Architecture</h3>
+<p>The system is a three-tier pipeline in which each tier communicates with the next through files on disk rather than through a live interface. This decoupling is deliberate: the simulation tier is expensive and runs rarely, the analysis tier is cheap and runs whenever the parser changes, and the presentation tier is a static artefact that can be deployed independently of both.</p>
+
+<figure>
+<svg viewBox="0 0 720 400" role="img" aria-label="Three-tier architecture diagram">
+  <style>
+    .bx { fill:#fff; stroke:#000; stroke-width:1.4; }
+    .tier { fill:#f4f4f4; stroke:#000; stroke-width:1.2; stroke-dasharray:5 3; }
+    .lb { font-family:'Times New Roman',serif; font-size:13px; fill:#000; }
+    .lbb { font-family:'Times New Roman',serif; font-size:13px; font-weight:bold; fill:#000; }
+    .sm { font-family:'Courier New',monospace; font-size:10.5px; fill:#333; }
+    .ar { stroke:#000; stroke-width:1.4; fill:none; marker-end:url(#a); }
+  </style>
+  <defs><marker id="a" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L9,3 z" fill="#000"/></marker></defs>
+
+  <rect class="tier" x="12" y="14" width="696" height="106" rx="3"/>
+  <text class="lbb" x="24" y="34">Tier 1 — Simulation (NS-3 3.42, C++)</text>
+  <rect class="bx" x="30" y="46" width="180" height="58"/>
+  <text class="lb" x="46" y="70">Lecture theatre scenario</text>
+  <text class="sm" x="46" y="88">lecture-theatre.cc</text>
+  <rect class="bx" x="250" y="46" width="180" height="58"/>
+  <text class="lb" x="266" y="70">Matrix orchestrator</text>
+  <text class="sm" x="266" y="88">run_matrix.py</text>
+  <rect class="bx" x="470" y="46" width="210" height="58"/>
+  <text class="lb" x="486" y="70">Raw artefacts (per run)</text>
+  <text class="sm" x="486" y="88">.xml .phy.json .meta .series</text>
+  <path class="ar" d="M210,75 L246,75"/>
+  <path class="ar" d="M430,75 L466,75"/>
+
+  <path class="ar" d="M575,104 L575,146"/>
+  <text class="sm" x="585" y="130">file system</text>
+
+  <rect class="tier" x="12" y="150" width="696" height="106" rx="3"/>
+  <text class="lbb" x="24" y="170">Tier 2 — Analysis (Python 3)</text>
+  <rect class="bx" x="30" y="182" width="180" height="58"/>
+  <text class="lb" x="46" y="206">Telemetry parser</text>
+  <text class="sm" x="46" y="224">parse.py</text>
+  <rect class="bx" x="250" y="182" width="180" height="58"/>
+  <text class="lb" x="266" y="206">Reconciliation checks</text>
+  <text class="sm" x="266" y="224">tx = rx + lost</text>
+  <rect class="bx" x="470" y="182" width="210" height="58"/>
+  <text class="lb" x="486" y="206">Validated dataset</text>
+  <text class="sm" x="486" y="224">results.json</text>
+  <path class="ar" d="M210,211 L246,211"/>
+  <path class="ar" d="M430,211 L466,211"/>
+
+  <path class="ar" d="M575,240 L575,282"/>
+  <text class="sm" x="585" y="266">build-time copy</text>
+
+  <rect class="tier" x="12" y="286" width="696" height="100" rx="3"/>
+  <text class="lbb" x="24" y="306">Tier 3 — Presentation (React 19 / Vite, static)</text>
+  <rect class="bx" x="30" y="318" width="180" height="54"/>
+  <text class="lb" x="46" y="342">Conditions control</text>
+  <text class="sm" x="46" y="359">availability-gated</text>
+  <rect class="bx" x="250" y="318" width="180" height="54"/>
+  <text class="lb" x="266" y="342">Instrument cluster</text>
+  <text class="sm" x="266" y="359">6 dials, 2 needles</text>
+  <rect class="bx" x="470" y="318" width="210" height="54"/>
+  <text class="lb" x="486" y="342">Evaluation and explorer</text>
+  <text class="sm" x="486" y="359">verdict + density chart</text>
+  <path class="ar" d="M210,345 L246,345"/>
+  <path class="ar" d="M430,345 L466,345"/>
+</svg>
+<figcaption>Figure 3.1: Three-tier application architecture</figcaption>
+</figure>
+
+<h3>3.9.2 Use Case Diagram</h3>
+<p>The system has a single human actor. The simulation pipeline is modelled as a secondary actor because it supplies the data on which every use case depends, but it operates offline and is not invoked by the reader.</p>
+
+<figure>
+<svg viewBox="0 0 720 380" role="img" aria-label="Use case diagram">
+  <style>
+    .uc { fill:#fff; stroke:#000; stroke-width:1.3; }
+    .bd { fill:none; stroke:#000; stroke-width:1.3; }
+    .ul { font-family:'Times New Roman',serif; font-size:12.5px; fill:#000; text-anchor:middle; }
+    .an { font-family:'Times New Roman',serif; font-size:12.5px; font-weight:bold; fill:#000; text-anchor:middle; }
+    .ln { stroke:#000; stroke-width:1.1; fill:none; }
+    .fig { stroke:#000; stroke-width:1.5; fill:none; }
+  </style>
+  <circle class="fig" cx="60" cy="120" r="13"/>
+  <path class="fig" d="M60,133 L60,178 M38,150 L82,150 M60,178 L42,212 M60,178 L78,212"/>
+  <text class="an" x="60" y="234">Reader /</text>
+  <text class="an" x="60" y="250">Examiner</text>
+
+  <circle class="fig" cx="660" cy="150" r="13"/>
+  <path class="fig" d="M660,163 L660,208 M638,180 L682,180 M660,208 L642,242 M660,208 L678,242"/>
+  <text class="an" x="660" y="264">Simulation</text>
+  <text class="an" x="660" y="280">pipeline</text>
+
+  <rect class="bd" x="170" y="20" width="380" height="345" rx="4"/>
+  <text class="an" x="360" y="42">AIRTEST Dashboard</text>
+
+  <ellipse class="uc" cx="360" cy="80" rx="140" ry="24"/>
+  <text class="ul" x="360" y="85">Select room conditions</text>
+  <ellipse class="uc" cx="360" cy="136" rx="140" ry="24"/>
+  <text class="ul" x="360" y="141">Compare the two standards</text>
+  <ellipse class="uc" cx="360" cy="192" rx="140" ry="24"/>
+  <text class="ul" x="360" y="197">Replay a stored trial</text>
+  <ellipse class="uc" cx="360" cy="248" rx="140" ry="24"/>
+  <text class="ul" x="360" y="253">Read the evaluation report</text>
+  <ellipse class="uc" cx="360" cy="304" rx="140" ry="24"/>
+  <text class="ul" x="360" y="309">Explore the full dataset</text>
+
+  <path class="ln" d="M84,150 L220,88"/>
+  <path class="ln" d="M84,158 L220,140"/>
+  <path class="ln" d="M84,168 L220,192"/>
+  <path class="ln" d="M84,176 L220,244"/>
+  <path class="ln" d="M84,186 L220,298"/>
+
+  <path class="ln" d="M636,170 L500,140" stroke-dasharray="5 3"/>
+  <path class="ln" d="M636,182 L500,300" stroke-dasharray="5 3"/>
+</svg>
+<figcaption>Figure 3.2: Use case diagram</figcaption>
+</figure>
+
+<h3>3.9.3 Data Design</h3>
+<p>The dataset is a single JSON document with three top-level members. <code>meta</code> records provenance for the dataset as a whole. <code>scenarios</code> holds one object per experimental cell — a unique combination of topology, standard, traffic profile and density — each containing its individual trials and their aggregates. <code>derived</code> holds quantities computed across scenarios, such as the interpolated maximum supported clients.</p>
+
+<pre>results.json
+├── meta
+│   ├── generated_utc, ns3_version, measurement_window_s
+│   ├── caveats[]                     dataset-level limitations
+│   └── warnings[]                    reconciliation flags (empty when clean)
+├── scenarios[]                       one per experimental cell
+│   ├── topology                      single_ap | multi_ap
+│   ├── standard                      wifi5 | wifi6
+│   ├── traffic_type                  web | video | bulk
+│   ├── clients                       10 | 14 | 20 | 30 | 40
+│   ├── offered_load_mbps             nominal demand for this cell
+│   ├── trial_count
+│   ├── trials[]                      one per seed
+│   │   ├── seed
+│   │   ├── &lt;8 metric values&gt;
+│   │   └── series[]                  time-sampled values for replay
+│   └── aggregates
+│       └── &lt;metric&gt;: { mean, std }   across seeds
+└── derived
+    └── max_supported_clients[]       per standard and traffic type</pre>
+
+<h3>3.9.4 Activity Diagram</h3>
+<p>Figure 3.3 shows the activity performed by a reader using the dashboard, including the decision point at which an unavailable combination is refused rather than substituted.</p>
+
+<figure>
+<svg viewBox="0 0 480 620" role="img" aria-label="Activity diagram">
+  <style>
+    .ac { fill:#fff; stroke:#000; stroke-width:1.3; }
+    .al { font-family:'Times New Roman',serif; font-size:12.5px; fill:#000; text-anchor:middle; }
+    .aa { stroke:#000; stroke-width:1.3; fill:none; marker-end:url(#b); }
+    .yn { font-family:'Times New Roman',serif; font-size:11px; fill:#000; }
+  </style>
+  <defs><marker id="b" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L9,3 z" fill="#000"/></marker></defs>
+
+  <circle cx="240" cy="24" r="11" fill="#000"/>
+  <path class="aa" d="M240,35 L240,58"/>
+
+  <rect class="ac" x="120" y="58" width="240" height="40" rx="18"/>
+  <text class="al" x="240" y="83">Open dashboard (default condition loaded)</text>
+  <path class="aa" d="M240,98 L240,124"/>
+
+  <rect class="ac" x="120" y="124" width="240" height="40" rx="18"/>
+  <text class="al" x="240" y="149">Select density, activity, AP count</text>
+  <path class="aa" d="M240,164 L240,190"/>
+
+  <path class="ac" d="M240,190 L360,232 L240,274 L120,232 z"/>
+  <text class="al" x="240" y="228">Combination</text>
+  <text class="al" x="240" y="244">simulated?</text>
+
+  <path class="aa" d="M120,232 L58,232 L58,300"/>
+  <text class="yn" x="76" y="226">no</text>
+  <rect class="ac" x="8" y="300" width="150" height="52" rx="18"/>
+  <text class="al" x="83" y="322">Position disabled;</text>
+  <text class="al" x="83" y="338">no value offered</text>
+  <path class="aa" d="M83,352 L83,392 L120,392"/>
+
+  <path class="aa" d="M240,274 L240,300"/>
+  <text class="yn" x="248" y="292">yes</text>
+  <rect class="ac" x="160" y="300" width="200" height="40" rx="18"/>
+  <text class="al" x="260" y="325">Engage — load stored trial</text>
+  <path class="aa" d="M260,340 L260,372"/>
+
+  <rect class="ac" x="120" y="372" width="280" height="40" rx="18"/>
+  <text class="al" x="260" y="397">Replay time series across 15 s playback</text>
+  <path class="aa" d="M260,412 L260,444"/>
+
+  <rect class="ac" x="120" y="444" width="280" height="40" rx="18"/>
+  <text class="al" x="260" y="469">Read six instruments and verdict</text>
+  <path class="aa" d="M260,484 L260,516"/>
+
+  <rect class="ac" x="120" y="516" width="280" height="40" rx="18"/>
+  <text class="al" x="260" y="541">Open evaluation report (optional)</text>
+  <path class="aa" d="M260,556 L260,584"/>
+
+  <circle cx="260" cy="596" r="12" fill="none" stroke="#000" stroke-width="1.3"/>
+  <circle cx="260" cy="596" r="7" fill="#000"/>
+</svg>
+<figcaption>Figure 3.3: Activity diagram — reader interaction</figcaption>
+</figure>
+
+<h3>3.9.5 Dataflow Diagram</h3>
+<p>Figure 3.4 is a level-1 dataflow diagram. Circles are processes, open rectangles are data stores, and arrows carry named data.</p>
+
+<figure>
+<svg viewBox="0 0 720 360" role="img" aria-label="Level 1 dataflow diagram">
+  <style>
+    .pr { fill:#fff; stroke:#000; stroke-width:1.3; }
+    .pl { font-family:'Times New Roman',serif; font-size:12px; fill:#000; text-anchor:middle; }
+    .pn { font-family:'Times New Roman',serif; font-size:11px; font-weight:bold; fill:#000; text-anchor:middle; }
+    .df { stroke:#000; stroke-width:1.2; fill:none; marker-end:url(#c); }
+    .dl { font-family:'Times New Roman',serif; font-size:10.5px; fill:#333; }
+    .st { stroke:#000; stroke-width:1.3; fill:none; }
+  </style>
+  <defs><marker id="c" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L9,3 z" fill="#000"/></marker></defs>
+
+  <rect class="pr" x="14" y="140" width="104" height="56"/>
+  <text class="pl" x="66" y="164">Study</text>
+  <text class="pl" x="66" y="180">parameters</text>
+
+  <circle class="pr" cx="212" cy="168" r="52"/>
+  <text class="pn" x="212" y="158">1.0</text>
+  <text class="pl" x="212" y="174">Simulate</text>
+  <text class="pl" x="212" y="189">scenario</text>
+
+  <circle class="pr" cx="400" cy="168" r="52"/>
+  <text class="pn" x="400" y="158">2.0</text>
+  <text class="pl" x="400" y="174">Parse and</text>
+  <text class="pl" x="400" y="189">validate</text>
+
+  <circle class="pr" cx="588" cy="168" r="52"/>
+  <text class="pn" x="588" y="158">3.0</text>
+  <text class="pl" x="588" y="174">Present</text>
+  <text class="pl" x="588" y="189">comparison</text>
+
+  <path class="df" d="M118,168 L156,168"/>
+  <path class="df" d="M264,168 L344,168"/>
+  <text class="dl" x="270" y="160">raw telemetry</text>
+  <path class="df" d="M452,168 L532,168"/>
+  <text class="dl" x="462" y="160">validated metrics</text>
+
+  <path class="st" d="M150,58 L360,58 M150,90 L360,90 M150,58 L150,90"/>
+  <text class="dl" x="162" y="78">D1  Raw artefacts (.xml .phy .meta .series)</text>
+  <path class="df" d="M212,116 L212,92"/>
+  <path class="df" d="M300,92 L360,140" stroke-dasharray="4 3"/>
+
+  <path class="st" d="M340,268 L560,268 M340,300 L560,300 M340,268 L340,300"/>
+  <text class="dl" x="352" y="288">D2  results.json (validated dataset)</text>
+  <path class="df" d="M400,220 L400,266"/>
+  <path class="df" d="M520,284 L588,222"/>
+
+  <path class="st" d="M470,44 L700,44 M470,76 L700,76 M470,44 L470,76"/>
+  <text class="dl" x="482" y="64">D3  Run manifest (status, failures)</text>
+  <path class="df" d="M255,140 L468,66" stroke-dasharray="4 3"/>
+
+  <rect class="pr" x="600" y="292" width="106" height="52"/>
+  <text class="pl" x="653" y="314">Reader /</text>
+  <text class="pl" x="653" y="330">Examiner</text>
+  <path class="df" d="M614,216 L640,288"/>
+</svg>
+<figcaption>Figure 3.4: Level-1 dataflow diagram</figcaption>
+</figure>
+
+<h3>3.9.6 Control Flow Diagram</h3>
+<p>Figure 3.5 shows the control flow of the matrix orchestrator, including the idempotency check that permits resumption and the fault isolation that prevents one failing run from terminating the batch.</p>
+
+<figure>
+<svg viewBox="0 0 470 600" role="img" aria-label="Control flow diagram">
+  <style>
+    .cf { fill:#fff; stroke:#000; stroke-width:1.3; }
+    .cl { font-family:'Times New Roman',serif; font-size:12px; fill:#000; text-anchor:middle; }
+    .ca { stroke:#000; stroke-width:1.3; fill:none; marker-end:url(#d); }
+    .cy { font-family:'Times New Roman',serif; font-size:10.5px; fill:#000; }
+  </style>
+  <defs><marker id="d" markerWidth="9" markerHeight="9" refX="8" refY="3" orient="auto">
+    <path d="M0,0 L0,6 L9,3 z" fill="#000"/></marker></defs>
+
+  <circle cx="235" cy="22" r="11" fill="#000"/>
+  <path class="ca" d="M235,33 L235,54"/>
+
+  <rect class="cf" x="135" y="54" width="200" height="36"/>
+  <text class="cl" x="235" y="77">Build parameter combinations</text>
+  <path class="ca" d="M235,90 L235,112"/>
+
+  <rect class="cf" x="135" y="112" width="200" height="36"/>
+  <text class="cl" x="235" y="135">Dispatch to worker pool</text>
+  <path class="ca" d="M235,148 L235,170"/>
+
+  <path class="cf" d="M235,170 L360,208 L235,246 L110,208 z"/>
+  <text class="cl" x="235" y="204">All four artefacts</text>
+  <text class="cl" x="235" y="220">already exist?</text>
+
+  <path class="ca" d="M360,208 L410,208 L410,470"/>
+  <text class="cy" x="366" y="200">yes → skip</text>
+
+  <path class="ca" d="M235,246 L235,272"/>
+  <text class="cy" x="243" y="264">no</text>
+  <rect class="cf" x="135" y="272" width="200" height="36"/>
+  <text class="cl" x="235" y="295">Execute NS-3 run (timeout)</text>
+  <path class="ca" d="M235,308 L235,330"/>
+
+  <path class="cf" d="M235,330 L360,366 L235,402 L110,366 z"/>
+  <text class="cl" x="235" y="362">Exit status</text>
+  <text class="cl" x="235" y="378">zero?</text>
+
+  <path class="ca" d="M110,366 L54,366 L54,424"/>
+  <text class="cy" x="30" y="358">no</text>
+  <rect class="cf" x="8" y="424" width="150" height="52"/>
+  <text class="cl" x="83" y="446">Record failure and</text>
+  <text class="cl" x="83" y="462">stderr in manifest</text>
+  <path class="ca" d="M83,476 L83,508 L200,508"/>
+
+  <path class="ca" d="M235,402 L235,424"/>
+  <text class="cy" x="243" y="418">yes</text>
+  <rect class="cf" x="170" y="424" width="180" height="36"/>
+  <text class="cl" x="260" y="447">Write four artefacts</text>
+  <path class="ca" d="M260,460 L260,492"/>
+
+  <rect class="cf" x="160" y="492" width="200" height="36"/>
+  <text class="cl" x="260" y="515">Update run manifest</text>
+  <path class="ca" d="M260,528 L260,556"/>
+
+  <circle cx="260" cy="570" r="12" fill="none" stroke="#000" stroke-width="1.3"/>
+  <circle cx="260" cy="570" r="7" fill="#000"/>
+</svg>
+<figcaption>Figure 3.5: Control flow of the matrix orchestrator</figcaption>
+</figure>
+
+<h3>3.9.7 Entity-Relationship Diagram</h3>
+<p>The system uses no database. Persistence is a single immutable JSON document produced by the analysis tier and consumed at build time by the presentation tier; there is no transactional storage, no schema migration and no referential integrity to enforce at runtime. A conventional entity-relationship diagram would therefore misrepresent the design.</p>
+<p>The logical structure of the dataset is nevertheless relational in shape, and Figure 3.6 presents it in entity-relationship form so that the cardinalities are explicit. Each entity corresponds to a nesting level in the JSON document described in §3.9.3.</p>
+
+<figure>
+<svg viewBox="0 0 720 330" role="img" aria-label="Entity relationship diagram of the dataset">
+  <style>
+    .en { fill:#fff; stroke:#000; stroke-width:1.4; }
+    .eh { fill:#f4f4f4; stroke:#000; stroke-width:1.4; }
+    .et { font-family:'Times New Roman',serif; font-size:12.5px; font-weight:bold; fill:#000; text-anchor:middle; }
+    .ea { font-family:'Courier New',monospace; font-size:10px; fill:#000; }
+    .er { stroke:#000; stroke-width:1.3; fill:none; }
+    .ec { font-family:'Times New Roman',serif; font-size:11px; fill:#000; text-anchor:middle; }
+  </style>
+
+  <rect class="eh" x="20" y="34" width="150" height="24"/>
+  <rect class="en" x="20" y="58" width="150" height="76"/>
+  <text class="et" x="95" y="51">DATASET</text>
+  <text class="ea" x="30" y="76">generated_utc</text>
+  <text class="ea" x="30" y="92">ns3_version</text>
+  <text class="ea" x="30" y="108">window_s</text>
+  <text class="ea" x="30" y="124">caveats[]</text>
+
+  <rect class="eh" x="270" y="34" width="170" height="24"/>
+  <rect class="en" x="270" y="58" width="170" height="92"/>
+  <text class="et" x="355" y="51">SCENARIO</text>
+  <text class="ea" x="280" y="76">topology (PK)</text>
+  <text class="ea" x="280" y="92">standard (PK)</text>
+  <text class="ea" x="280" y="108">traffic_type (PK)</text>
+  <text class="ea" x="280" y="124">clients (PK)</text>
+  <text class="ea" x="280" y="140">offered_load_mbps</text>
+
+  <rect class="eh" x="540" y="34" width="160" height="24"/>
+  <rect class="en" x="540" y="58" width="160" height="76"/>
+  <text class="et" x="620" y="51">TRIAL</text>
+  <text class="ea" x="550" y="76">seed (PK)</text>
+  <text class="ea" x="550" y="92">8 metric values</text>
+  <text class="ea" x="550" y="108">ul_ofdma</text>
+  <text class="ea" x="550" y="124">ofdma</text>
+
+  <rect class="eh" x="270" y="222" width="170" height="24"/>
+  <rect class="en" x="270" y="246" width="170" height="60"/>
+  <text class="et" x="355" y="239">AGGREGATE</text>
+  <text class="ea" x="280" y="264">metric_key (PK)</text>
+  <text class="ea" x="280" y="280">mean</text>
+  <text class="ea" x="280" y="296">std</text>
+
+  <rect class="eh" x="540" y="222" width="160" height="24"/>
+  <rect class="en" x="540" y="246" width="160" height="60"/>
+  <text class="et" x="620" y="239">SERIES SAMPLE</text>
+  <text class="ea" x="550" y="264">t (PK)</text>
+  <text class="ea" x="550" y="280">interval metrics</text>
+  <text class="ea" x="550" y="296">cumulative counters</text>
+
+  <path class="er" d="M170,96 L270,96"/>
+  <text class="ec" x="186" y="88">1</text>
+  <text class="ec" x="254" y="88">N</text>
+  <text class="ec" x="220" y="112">contains</text>
+
+  <path class="er" d="M440,96 L540,96"/>
+  <text class="ec" x="456" y="88">1</text>
+  <text class="ec" x="524" y="88">N</text>
+  <text class="ec" x="490" y="112">has trials</text>
+
+  <path class="er" d="M355,150 L355,222"/>
+  <text class="ec" x="345" y="168">1</text>
+  <text class="ec" x="345" y="214">N</text>
+  <text class="ec" x="400" y="190">summarised by</text>
+
+  <path class="er" d="M620,134 L620,222"/>
+  <text class="ec" x="610" y="152">1</text>
+  <text class="ec" x="610" y="214">N</text>
+  <text class="ec" x="662" y="182">sampled as</text>
+</svg>
+<figcaption>Figure 3.6: Entity-relationship view of the dataset structure</figcaption>
+</figure>
+
+<h3>3.9.8 User Interface Design</h3>
+<p>The interface was designed in code rather than in a mockup tool, and iterated against rendered output. Its organising metaphor is an instrument panel: each metric is a dial carrying two needles on one shared scale, so the difference between the standards is read directly from the gap between the needles rather than reconstructed by the reader from two separate figures.</p>
+<p class="no-indent">Four design decisions follow from the requirements in §3.7:</p>
+<ul>
+  <li><strong>Shared, fixed scales.</strong> A dial's full-scale value is fixed rather than derived from the data, so readings remain comparable between conditions. A dial that rescales itself defeats the purpose of an instrument.</li>
+  <li><strong>Two needles of different lengths.</strong> Where the standards are identical, both needles remain visible; equal performance is a finding and must not be hidden by one needle occluding another.</li>
+  <li><strong>Unpowered positions.</strong> A control position with no data behind it is rendered visibly dead and cannot be selected, disclosing the study's intended range without offering a value that was never measured.</li>
+  <li><strong>Caveats at the point of reading.</strong> Metrics subject to known artefacts carry the caveat on the reverse of the dial, not in a footnote at the foot of the page.</li>
+</ul>
+
+<figure>
+<svg viewBox="0 0 720 430" role="img" aria-label="Dashboard interface layout">
+  <style>
+    .ui { fill:#fff; stroke:#000; stroke-width:1.2; }
+    .uf { fill:#f4f4f4; stroke:#000; stroke-width:1.2; }
+    .ut { font-family:'Times New Roman',serif; font-size:11.5px; fill:#000; }
+    .ub { font-family:'Times New Roman',serif; font-size:12px; font-weight:bold; fill:#000; }
+    .us { font-family:'Courier New',monospace; font-size:9.5px; fill:#555; }
+  </style>
+  <rect class="ui" x="12" y="12" width="696" height="406"/>
+
+  <text class="ub" x="28" y="42">AIRTEST</text>
+  <text class="us" x="100" y="42">LECTURE THEATRE WIFI INSTRUMENT</text>
+  <text class="us" x="520" y="42">802.11ac / 802.11ax · NS-3 3.42</text>
+  <path d="M28,52 L692,52" stroke="#000" stroke-width="1.2"/>
+
+  <text class="us" x="28" y="74">01  CONDITIONS</text>
+  <rect class="uf" x="28" y="84" width="60" height="26"/><text class="ut" x="46" y="102">10</text>
+  <rect class="ui" x="88" y="84" width="60" height="26"/><text class="ut" x="106" y="102">20</text>
+  <rect class="ui" x="148" y="84" width="60" height="26"/><text class="ut" x="166" y="102">40</text>
+  <text class="us" x="28" y="124">STUDENTS</text>
+
+  <rect class="ui" x="248" y="84" width="66" height="26"/><text class="ut" x="262" y="102">Browse</text>
+  <rect class="uf" x="314" y="84" width="66" height="26"/><text class="ut" x="330" y="102">Stream</text>
+  <rect class="ui" x="380" y="84" width="72" height="26"/><text class="ut" x="392" y="102">Download</text>
+  <text class="us" x="248" y="124">ACTIVITY</text>
+
+  <rect class="uf" x="492" y="84" width="52" height="26"/><text class="ut" x="506" y="102">1 AP</text>
+  <rect class="ui" x="544" y="84" width="52" height="26"/><text class="ut" x="558" y="102">3 AP</text>
+  <text class="us" x="492" y="124">ACCESS POINTS</text>
+
+  <rect class="ui" x="612" y="84" width="80" height="26" fill="#003366"/>
+  <text class="ut" x="628" y="102" fill="#fff">ENGAGE</text>
+
+  <path d="M28,140 L692,140" stroke="#ccc" stroke-width="1"/>
+  <text class="us" x="28" y="162">02  INSTRUMENT CLUSTER</text>
+  <text class="ut" x="28" y="184">Verdict sentence naming the better standard for these conditions</text>
+
+  <g>
+    <rect class="ui" x="28" y="200" width="212" height="96"/>
+    <path d="M78,268 A56,56 0 0 1 190,268" fill="none" stroke="#000" stroke-width="1"/>
+    <path d="M134,268 L104,232" stroke="#000" stroke-width="1.6"/>
+    <path d="M134,268 L162,240" stroke="#0d8f6f" stroke-width="2"/>
+    <text class="us" x="96" y="288">SPEED PER STUDENT</text>
+  </g>
+  <g>
+    <rect class="ui" x="254" y="200" width="212" height="96"/>
+    <path d="M304,268 A56,56 0 0 1 416,268" fill="none" stroke="#000" stroke-width="1"/>
+    <path d="M360,268 L332,236" stroke="#000" stroke-width="1.6"/>
+    <path d="M360,268 L384,238" stroke="#0d8f6f" stroke-width="2"/>
+    <text class="us" x="338" y="288">LAG</text>
+  </g>
+  <g>
+    <rect class="ui" x="480" y="200" width="212" height="96"/>
+    <path d="M530,268 A56,56 0 0 1 642,268" fill="none" stroke="#000" stroke-width="1"/>
+    <path d="M586,268 L556,240" stroke="#000" stroke-width="1.6"/>
+    <path d="M586,268 L612,244" stroke="#0d8f6f" stroke-width="2"/>
+    <text class="us" x="562" y="288">DATA LOST</text>
+  </g>
+
+  <text class="us" x="28" y="316">(three further dials: airwave usage, demand met, fairness)</text>
+
+  <rect class="ui" x="28" y="330" width="140" height="28"/>
+  <text class="ut" x="44" y="349">View report</text>
+  <text class="us" x="180" y="349">Trial 1 of 2 · seed 1 · PRE-COMPUTED</text>
+
+  <path d="M28,372 L692,372" stroke="#ccc" stroke-width="1"/>
+  <text class="us" x="28" y="394">03  FULL DATASET — metric stepper and density chart</text>
+  <rect class="ui" x="28" y="400" width="664" height="10"/>
+</svg>
+<figcaption>Figure 3.7: Dashboard interface layout</figcaption>
+</figure>
+
+<h2>3.10 Summary</h2>
+<p>This chapter established a quantitative experimental methodology in which the wireless standard is the only independent variable, reviewed four development models and justified incremental development around a verified vertical slice on the grounds that simulation defects produce plausible rather than visible failures, specified the tools and requirements, and documented the design of a three-tier pipeline whose tiers communicate through files. Chapter Four describes the implementation of that design and the testing applied to it.</p>
+
+<!-- ==================== CHAPTER FOUR ==================== -->
+
+<h1>Chapter Four: Implementation and Testing</h1>
+
+<h2>4.0 Overview</h2>
+<p>This chapter describes what was built, the defects encountered during construction and how they were resolved, the testing strategy and its results, and how the delivered system is used. The account of defects is given in detail because it constitutes the substantive evidence that the results can be trusted: in a simulation study the principal threat is not visible failure but plausible error, and the value of the verification process lies in what it caught.</p>
+
+<h2>4.1 Main Features</h2>
+
+<h3>4.1.1 Parameterised Simulation Scenario</h3>
+<p>A single C++ scenario models the lecture theatre and accepts every experimental variable as a command-line parameter: standard, traffic profile, client count, access-point count, seed, duration, sampling interval, and independent switches for downlink and uplink OFDMA. One scenario serving all configurations, rather than one file per condition, guarantees that the two standards traverse identical code paths for everything except the standard itself.</p>
+<p class="no-indent">The three traffic profiles are defined as follows.</p>
+<table>
+  <thead><tr><th>Profile</th><th>Transport</th><th>Offered load per client</th><th>Payload</th><th>Pattern</th></tr></thead>
+  <tbody>
+    <tr><td>Browse (web)</td><td>UDP</td><td class="n">0.5 Mbps mean</td><td class="n">512 B</td><td>Exponential on/off, mean 0.5 s</td></tr>
+    <tr><td>Stream (video)</td><td>UDP</td><td class="n">3.0 Mbps</td><td class="n">1200 B</td><td>Constant bit rate</td></tr>
+    <tr><td>Download (bulk)</td><td>TCP</td><td class="n">5.0 Mbps</td><td class="n">1448 B</td><td>Continuous, rate-limited</td></tr>
+  </tbody>
+</table>
+
+<h3>4.1.2 Matrix Orchestration</h3>
+<p>A Python orchestrator enumerates every parameter combination and executes runs across a worker pool. Two properties are load-bearing. It is <strong>idempotent</strong>: a run whose four output artefacts already exist is skipped, so an interrupted matrix resumes rather than restarting — which proved essential, as the matrix was interrupted and resumed several times. It is <strong>fault-isolating</strong>: a run that crashes or exceeds its timeout is recorded in a manifest with its exit status and standard error, and the batch continues.</p>
+
+<h3>4.1.3 Telemetry Extraction and Validation</h3>
+<p>The parser converts each run's four artefacts into validated metrics. Beyond arithmetic it performs reconciliation: transmitted packets must equal received plus lost, within a tolerance. A run failing this check is flagged in the dataset's warnings rather than published silently.</p>
+
+<h3>4.1.4 Instrument Cluster</h3>
+<p>Six dials present the metrics that describe an individual's experience and the network's cost. Each carries two needles on one fixed scale. Each dial turns on hover or keyboard focus to reveal what it measures, the direction that is better, its full-scale value, and — where applicable — the caveat that qualifies it.</p>
+
+<h3>4.1.5 Timed Replay</h3>
+<p>Engaging a condition replays the selected trial's recorded time series across fifteen seconds of playback. The needles move because the recorded data moves, not because an animation interpolates toward a final value. The transport states the playback rate relative to simulated time, computed from the measurement window rather than hard-coded, so the stated rate cannot drift from the truth.</p>
+
+<h3>4.1.6 Evaluation Report and Dataset Explorer</h3>
+<p>After a run completes, a report is available giving a plain-language verdict for each metric. Where the difference between standards falls within the run-to-run spread, the row is reported as level rather than as a win. The explorer plots any of the eight metrics against client density across the whole dataset, with a mean line and a standard-deviation band per standard.</p>
+
+<h2>4.2 Implementation Problems</h2>
+<p>Thirteen defects were identified during the vertical slice and subsequent development. Those with material consequences for the results are described below. The common characteristic is that almost none produced a visible failure; each produced numbers that looked reasonable.</p>
+
+<h3>4.2.1 WiFi 6 delivered no packets at all</h3>
+<p>The first WiFi 6 runs transmitted 112,480 packets and received none. The cause was the physical-layer model: <code>YansWifiPhy</code> has no per-subband spectrum representation and therefore drops high-efficiency multi-user PPDUs outright. OFDMA cannot be simulated on it at all.</p>
+
+<h3>4.2.2 TCP acknowledgement flows counted as payload</h3>
+<p>Bulk runs reported offered-load satisfaction of 431%. FlowMonitor records a separate flow for the reverse acknowledgement path of every TCP connection, and these were being counted as delivered payload. Ten clients produced twenty flows. An initial correction filtered by destination port lower bound only, which did not work because the acknowledgement flows carry an ephemeral destination port well above the application range.</p>
+
+<h3>4.2.3 Airtime utilisation inflated by one third</h3>
+<p>The PHY state trace was clamped to the measurement window at its start but not at its end, so channel occupancy recorded after the window closed was attributed to it.</p>
+
+<h3>4.2.4 Packet loss silently under-reported</h3>
+<p>FlowMonitor's own <code>lostPackets</code> counter reported zero for a flow that transmitted 937 packets and received 627. The counter does not account for packets still in flight when the monitor stops.</p>
+
+<h3>4.2.5 Simulator defects in the 802.11ax model</h3>
+<p>Two distinct defects in NS-3 3.42 itself were encountered. The first aborted with <code>Unsupported Wi-Fi modulation class EHT</code> — an 802.11be entity requested from an 802.11ax PHY — affecting two of seventy-two runs, seed-dependent. The second, arising only when uplink OFDMA was enabled, aborted with <code>Not a Basic Trigger Frame</code> in every multi-access-point WiFi 6 run without exception.</p>
+
+<h3>4.2.6 Further defects</h3>
+<p class="no-indent">Also identified and corrected: flow elements being matched from the classifier subtree as well as the statistics subtree; the measurement window including queue drain after traffic stopped; goodput computed from byte counts including headers; a hard-coded literal in the derived maximum-supported-clients output; a verdict generator producing "Infinity% more" when one standard delivered zero; a stream formatting flag persisting across fields and truncating every timestamp to its integer second; and replay animation that never started because the playback handler read a frame count of zero before the data reached state.</p>
+
+<h2>4.3 Overcoming Implementation Problems</h2>
+<table>
+  <thead><tr><th style="width:22%">Problem</th><th>Resolution</th><th style="width:26%">Verification</th></tr></thead>
+  <tbody>
+    <tr><td>Zero WiFi 6 delivery (4.2.1)</td><td>Replaced the PHY with <code>SpectrumWifiPhy</code> over <code>MultiModelSpectrumChannel</code>, and set the downlink multi-user acknowledgement sequence before the first device installation, since the acknowledgement manager reads it at construction.</td><td>Delivery restored; WiFi 6 subsequently achieved 94.5% offered-load satisfaction.</td></tr>
+    <tr><td>Acknowledgement flows (4.2.2)</td><td>Joined the flow statistics to the classifier and admitted only flows whose destination port falls within the application port range, bounded at <em>both</em> ends.</td><td>Flow count matched client count; satisfaction returned to a physical range.</td></tr>
+    <tr><td>Airtime inflation (4.2.3)</td><td>Intersected each PHY state interval with the measurement window at both ends.</td><td>Airtime figures fell by approximately one third to consistent values.</td></tr>
+    <tr><td>Loss under-reporting (4.2.4)</td><td>Derived loss as transmitted minus received rather than trusting the simulator's counter.</td><td>Reconciliation identity now holds for every published run.</td></tr>
+    <tr><td>EHT abort (4.2.5)</td><td>Affected cells re-run on a fresh seed; the failed seeds retained in the manifest rather than erased.</td><td>Both cells restored to two trials; failures remain visible in the record.</td></tr>
+    <tr><td>Uplink OFDMA abort (4.2.5)</td><td>Uplink OFDMA excluded from the primary configuration and retained as a single-access-point ablation only.</td><td>Documented in §5.1; the limitation is upstream and cannot be resolved within the project.</td></tr>
+  </tbody>
+</table>
+<p>Two observations from this process are worth recording. First, a passing test suite concealed real defects twice, in both cases because the test exercised the symmetric case and omitted the asymmetric one — a fixture whose values happened to end at the same point as the hard-coded literal, and a zero-check that caught both values being zero but not one. Second, the reconciliation check was the single most productive verification device in the project, because it tests a physical identity that must hold regardless of what the correct answer is.</p>
+
+<h2>4.4 Testing</h2>
+
+<h3>4.4.1 Test Plans</h3>
+<table>
+  <thead><tr><th style="width:18%">Level</th><th>Scope</th><th>Approach</th></tr></thead>
+  <tbody>
+    <tr><td>Unit</td><td>Pure functions of the analysis pipeline and the dashboard's derivation logic: metric computation, fairness index, run-identifier parsing, flow filtering, interpolation, replay frame arithmetic, verdict and evaluation generation.</td><td>Fixture-driven assertions with known correct answers, executed independently of the simulator.</td></tr>
+    <tr><td>Integration</td><td>Parser against complete run artefacts; dataset against the dashboard's availability logic.</td><td>End-to-end execution over real recorded runs, with reconciliation applied.</td></tr>
+    <tr><td>System</td><td>The whole pipeline from scenario execution to rendered dashboard.</td><td>Vertical slice executed end to end before the matrix was widened; interface verified in a browser.</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4.2 Test Suite</h3>
+<table>
+  <thead><tr><th>Suite</th><th>Runner</th><th class="n">Tests</th><th>Coverage</th></tr></thead>
+  <tbody>
+    <tr><td>Analysis pipeline</td><td>pytest</td><td class="n">39</td><td>Parsing, metric derivation, fairness, reconciliation, interpolation, dataset assembly</td></tr>
+    <tr><td>Replay arithmetic</td><td>node:test</td><td class="n">~14</td><td>Frame indexing, continuous position, interpolation between recorded samples, boundary clamping</td></tr>
+    <tr><td>Verdict and evaluation</td><td>node:test</td><td class="n">~26</td><td>Winner selection by direction, tie detection against spread, percentage denominators, zero handling, sentence generation</td></tr>
+    <tr><td>Scenario availability</td><td>node:test</td><td class="n">~7</td><td>Combination lookup, trial selection, reachable-condition derivation</td></tr>
+    <tr><td colspan="2"><strong>Total</strong></td><td class="n"><strong>86</strong></td><td>39 Python, 47 JavaScript — all passing</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4.3 Test Traceability Matrix</h3>
+<table>
+  <thead><tr><th style="width:14%">Requirement</th><th>Verified by</th><th style="width:14%">Result</th></tr></thead>
+  <tbody>
+    <tr><td>FR-01, FR-02, FR-03</td><td>System-level execution of the scenario across all parameter combinations; metadata assertion per run</td><td>Pass</td></tr>
+    <tr><td>FR-04</td><td>Interrupted and resumed matrix; manifest inspection after induced failures</td><td>Pass</td></tr>
+    <tr><td>FR-05</td><td>Artefact presence check per run (four files)</td><td>Pass</td></tr>
+    <tr><td>FR-06</td><td>Unit tests over metric derivation and aggregation</td><td>Pass</td></tr>
+    <tr><td>FR-07</td><td>Unit tests over reconciliation, including deliberately inconsistent fixtures</td><td>Pass</td></tr>
+    <tr><td>FR-08</td><td>Interface inspection; fixed-scale assertion in dial configuration</td><td>Pass</td></tr>
+    <tr><td>FR-09</td><td>Unit tests over availability logic; interface verification of disabled positions</td><td>Pass</td></tr>
+    <tr><td>FR-10</td><td>Unit tests over replay frame arithmetic; rate label derived from window</td><td>Pass</td></tr>
+    <tr><td>FR-11</td><td>Unit tests over evaluation generation, including tie detection and zero denominators</td><td>Pass</td></tr>
+    <tr><td>FR-12</td><td>Interface inspection of the provenance badge</td><td>Pass</td></tr>
+    <tr><td>FR-13</td><td>Interface inspection of the explorer across all metrics</td><td>Pass</td></tr>
+    <tr><td>NFR-01</td><td>Repeat execution with fixed seed produced identical artefacts</td><td>Pass</td></tr>
+    <tr><td>NFR-02</td><td>Test suites execute with no simulator present</td><td>Pass</td></tr>
+    <tr><td>NFR-03, NFR-04</td><td>Resumption and manifest behaviour under induced failure</td><td>Pass</td></tr>
+    <tr><td>NFR-05</td><td>Deployed as a static site with no backend</td><td>Pass</td></tr>
+    <tr><td>NFR-06</td><td>Layout verified at 390 px; no horizontal overflow</td><td>Pass</td></tr>
+    <tr><td>NFR-07</td><td>Controls are native radio inputs; reduced-motion honoured</td><td>Pass</td></tr>
+    <tr><td>NFR-08</td><td>Interface inspection: no progress bar, spinner or timer; provenance stated beside readings</td><td>Pass</td></tr>
+    <tr><td>NFR-09</td><td>Memoisation applied; full-tree re-render during replay eliminated</td><td>Pass</td></tr>
+    <tr><td>NFR-10</td><td>Metadata artefact asserted present and complete for every run</td><td>Pass</td></tr>
+  </tbody>
+</table>
+
+<h3>4.4.4 Test Report Summary</h3>
+<table>
+  <thead><tr><th>Category</th><th class="n">Executed</th><th class="n">Passed</th><th class="n">Failed</th></tr></thead>
+  <tbody>
+    <tr><td>Analysis pipeline (pytest)</td><td class="n">39</td><td class="n">39</td><td class="n">0</td></tr>
+    <tr><td>Dashboard logic (node:test)</td><td class="n">47</td><td class="n">47</td><td class="n">0</td></tr>
+    <tr><td>Simulation runs (system level)</td><td class="n">see §5.2</td><td class="n">—</td><td class="n">see §5.2</td></tr>
+  </tbody>
+</table>
+<p>All automated tests pass. Simulation run failures are reported separately in §5.2 because they arise from defects in the simulator rather than in the software written for this project, and their proper treatment is disclosure rather than correction.</p>
+
+<h3>4.4.5 Error Reports and Corrections</h3>
+<p>Every defect in §4.2 was recorded with the observed symptom, the diagnosis, the correction and the verification that the correction held; §4.3 tabulates the material ones. Two classes were distinguished throughout. Defects in project code were corrected and covered by a regression test. Defects in the simulator were isolated, documented and worked around; they could not be corrected within the project, and the honest treatment is to state where a result is unavailable rather than to substitute one.</p>
+
+<h2>4.5 User Guide</h2>
+<p class="no-indent">The dashboard requires no installation. It is opened in a browser at the deployed address.</p>
+<ol>
+  <li><strong>Set the room.</strong> Choose the number of students, the activity, and the number of access points. A position rendered in outline with a hatched fill has no simulation behind it and cannot be selected.</li>
+  <li><strong>Engage.</strong> The stored trial for that condition is loaded and replayed over fifteen seconds. The transport reports playback rate relative to simulated time; it is always slower than the run, never faster.</li>
+  <li><strong>Read the instruments.</strong> Six dials, each with two needles on one scale: the dark needle is WiFi 5, the green needle is WiFi 6. Where they separate is the finding. Hovering or focusing a dial turns it over to reveal what it measures, which direction is better, and any caveat.</li>
+  <li><strong>Open the report.</strong> After the replay completes, "View report" gives a plain-language verdict for each metric. A row marked level means the difference is smaller than the variation between repeated runs.</li>
+  <li><strong>Explore the dataset.</strong> The lower section steps through all eight metrics — by arrow, by swipe, or with the left and right keys — plotting each against client density for the selected activity and topology.</li>
+</ol>
+<p>Every reading carries a provenance line stating the seed, the trial index, the simulator version, and that the figure is pre-computed. No part of the interface performs a live measurement.</p>
+
+<h2>4.6 Summary</h2>
+<p>This chapter described the delivered system, catalogued the defects encountered and their resolution, and reported the testing applied. The defect record is the substantive result of the verification process: thirteen defects were identified, of which almost all would have produced plausible but incorrect published figures. Eighty-six automated tests pass across the analysis pipeline and the dashboard. Chapter Five assesses the outcome against the objectives.</p>
+
+<!-- ==================== CHAPTER FIVE ==================== -->
+
+<h1>Chapter Five: Discussion, Conclusion and Recommendations</h1>
+
+<h2>5.0 Overview</h2>
+<p>This chapter assesses the project against the objectives stated in §1.3, discusses the findings and what they mean for an institution considering an upgrade, records the limitations and challenges encountered, and sets out future enhancements and recommendations.</p>
+
+<div class="flag">
+  <p><strong>Provisional figures.</strong> The tables in this chapter reflect the dataset at the time of writing. Additional runs extending the density grid were still executing; confirm every figure against the final <code>results.json</code> before submission, and update the counts in §5.1 and §5.2 accordingly.</p>
+</div>
+
+<h2>5.1 Objective Assessment</h2>
+
+<h3>Objective 1 — Parameterised simulation scenario</h3>
+<p><strong>Achieved.</strong> A single scenario accepts every experimental variable as a parameter, with downlink and uplink OFDMA independently switchable, and records its own configuration in each run's metadata.</p>
+
+<h3>Objective 2 — Systematic scenario matrix</h3>
+<p><strong>Achieved.</strong> The orchestrator executed the matrix across multiple seeds with idempotent resumption and per-run fault isolation, both of which were exercised in practice.</p>
+
+<h3>Objective 3 — Telemetry extraction and validation</h3>
+<p><strong>Achieved.</strong> The parser produces a validated dataset with reconciliation applied; 39 unit tests cover it, and the final dataset carries no warnings.</p>
+
+<h3>Objective 4 — Interactive dashboard</h3>
+<p><strong>Achieved.</strong> The dashboard is deployed as a static site, presents both standards on shared scales, discloses provenance, refuses unsimulated conditions, and generates a plain-language evaluation.</p>
+
+<h3>Objective 5 — Quantification and mechanism attribution</h3>
+<p><strong>Substantially achieved.</strong> The quantitative comparison is complete for the densities measured, and two mechanisms were attributed by controlled experiment rather than assumption.</p>
+
+<p class="no-indent"><strong>The principal finding is that WiFi 6's advantage is conditional on contention and on workload.</strong> For streamed video on a single access point, WiFi 6 held lower latency and markedly lower jitter at every density measured:</p>
+
+<h3>Table 5.1: Single access point, streamed video — WiFi 5 against WiFi 6</h3>
+<table>
+  <thead><tr><th class="n">Students</th><th>Lag (ms)</th><th>Jitter (ms)</th><th>Airtime (%)</th><th>Per-user (Mbps)</th></tr></thead>
+  <tbody>
+    <tr><td class="n">10</td><td>1.43 / <strong>0.49</strong></td><td>0.27 / <strong>0.11</strong></td><td>27.3 / <strong>21.7</strong></td><td>2.90 / 3.00</td></tr>
+    <tr><td class="n">14</td><td>1.65 / <strong>0.90</strong></td><td>0.34 / <strong>0.21</strong></td><td>39.1 / <strong>28.6</strong></td><td>2.99 / 2.92</td></tr>
+    <tr><td class="n">20</td><td>2.79 / <strong>1.08</strong></td><td>2.26 / <strong>0.21</strong></td><td>44.0 / <strong>39.2</strong></td><td>2.94 / 2.97</td></tr>
+    <tr><td class="n">30</td><td>4.66 / <strong>2.03</strong></td><td>3.97 / <strong>0.44</strong></td><td><strong>50.0</strong> / 58.4</td><td>2.92 / 2.92</td></tr>
+    <tr><td class="n">40</td><td>7.14 / <strong>6.79</strong></td><td>4.85 / <strong>2.53</strong></td><td><strong>55.5</strong> / 71.2</td><td>2.87 / 2.84</td></tr>
+  </tbody>
+</table>
+<p>At thirty students WiFi 6 held jitter to 0.44 ms where WiFi 5 reached 3.97 ms, a factor of nine, at identical delivered throughput. For a room streaming a lecture, jitter is the metric that determines whether playback is smooth, and this is the study's clearest result.</p>
+<p>Two qualifications must accompany it. First, the efficiency advantage <em>inverts</em> between twenty and thirty students: below that point WiFi 6 delivers the same video using less airtime, and above it, more. WiFi 6 therefore buys its steadiness with channel time at higher densities rather than saving it. Second, for bulk transfer WiFi 5 was ahead on most measures at every density — OFDMA subdivides the channel, which is a poor fit for a single greedy flow per station.</p>
+<p class="no-indent"><strong>Mechanism attribution.</strong> Two mechanisms were isolated by controlled experiment:</p>
+<ul>
+  <li><strong>Uplink OFDMA and TCP.</strong> With uplink OFDMA disabled, bulk transfer at twenty stations achieved 88.8% of offered load with a fairness index of 0.92. Enabling it raised these to 97.7% and 0.99 — recovering nearly the whole deficit against WiFi 5's 100.1%. The mechanism is that TCP acknowledgements travel upstream, and with the uplink unscheduled each contends individually while the downlink is scheduled. The same change <em>degraded</em> latency for constant-bit-rate video, so the optimal configuration is workload-dependent, and it could not be enabled at all in multi-access-point scenarios owing to the simulator defect in §4.2.5.</li>
+  <li><strong>BSS colouring.</strong> In three-access-point deployments WiFi 6 reduced packet loss from 6.9% to 1.6% at twenty stations under browsing traffic, an effect absent from single-access-point runs, which is consistent with colouring reducing unnecessary deferral between overlapping cells.</li>
+</ul>
+<p><strong>Not achieved: the saturation point.</strong> The third question posed in §1.2 — the density at which each standard ceases to meet demand — remains unanswered. Offered-load satisfaction remained at or above 94% at every density measured, and peak airtime reached only 71%. Neither standard saturated within the achievable grid, and the derived maximum supported clients is therefore correctly reported as a lower bound rather than a value.</p>
+
+<h2>5.2 Limitations and Challenges</h2>
+<ul>
+  <li><strong>No hardware validation.</strong> Every result depends on the fidelity of the NS-3 models. Nothing in this study has been corroborated against physical equipment.</li>
+  <li><strong>Density ceiling.</strong> The grid reached forty stations against an intended two hundred. A single WiFi 6 run at forty stations required approximately thirty minutes of computation for five seconds of simulated time; the full intended grid was several orders of magnitude beyond the compute available. Conclusions do not extend to a full two-hundred-seat theatre.</li>
+  <li><strong>No saturation observed.</strong> Following directly from the ceiling, the practical capacity limit of neither standard was reached.</li>
+  <li><strong>Short measurement window.</strong> A three-second window inflates packet loss, because packets still queued when the window closes are counted as lost and that backlog grows with density.</li>
+  <li><strong>Delivery-conditioned latency.</strong> Latency and jitter are computed over delivered packets only; packets never delivered would have been the slowest, so both understate delay where loss is non-trivial.</li>
+  <li><strong>Simulator defects.</strong> Two defects in NS-3 3.42 constrained the study. The EHT abort affected isolated runs and was worked around by re-seeding. The uplink OFDMA trigger-frame abort prevented that configuration from being evaluated in any multi-access-point scenario, so the mechanism attribution for uplink OFDMA is limited to the single-access-point case.</li>
+  <li><strong>Co-channel multi-AP model.</strong> All three access points share one channel, modelling a worst-case co-channel deployment rather than the channel plan a real installation would use.</li>
+  <li><strong>Two seeds per cell.</strong> Sufficient to identify differences smaller than run-to-run variation, but a modest basis for a variance estimate.</li>
+</ul>
+
+<h2>5.3 Future Enhancements</h2>
+<ol>
+  <li><strong>Extend the density grid</strong> to 60, 100 and 200 stations on hardware with substantially greater parallelism, to locate the saturation point that this study could not reach.</li>
+  <li><strong>Assign distinct channels</strong> to the three access points and compare against the co-channel case, isolating the contribution of channel planning from that of BSS colouring.</li>
+  <li><strong>Evaluate uplink OFDMA per workload</strong> once the simulator defect is resolved upstream, since the present evidence shows it helps TCP and harms constant-bit-rate video.</li>
+  <li><strong>Lengthen the measurement window</strong> to reduce the loss inflation and allow TCP congestion control to reach steady state.</li>
+  <li><strong>Increase seeds per cell</strong> to strengthen the variance estimate and narrow the band within which a difference is reported as level.</li>
+  <li><strong>Model mobility and association</strong>, since stations are currently fixed and pre-associated.</li>
+  <li><strong>Revisit Target Wake Time</strong> should a future NS-3 release implement it, restoring the energy-efficiency objective withdrawn in this study.</li>
+</ol>
+
+<h2>5.4 Recommendations</h2>
+<p class="no-indent">For an institution considering an 802.11ax upgrade, the evidence supports the following.</p>
+<ul>
+  <li><strong>Prioritise rooms whose dominant traffic is streamed content.</strong> That is where the measured benefit lies: markedly lower jitter at equal throughput, sustained across every density measured.</li>
+  <li><strong>Do not expect higher throughput.</strong> Neither standard saturated, and delivered throughput was equivalent throughout. The benefit is consistency, not speed.</li>
+  <li><strong>Do not upgrade small rooms on this evidence.</strong> Below roughly twenty simultaneously active stations the advantage is small, and for bulk transfer WiFi 5 performed better.</li>
+  <li><strong>Plan channels deliberately in multi-AP rooms.</strong> The multi-AP results here model a worst-case co-channel deployment; BSS colouring reduced loss substantially under those conditions, but channel planning addresses the same problem directly.</li>
+  <li><strong>Treat these figures as indicative, not predictive.</strong> They are simulation results for one modelled room at densities up to forty stations, and should inform a pilot deployment rather than replace one.</li>
+</ul>
+
+<h2>5.5 Summary</h2>
+<p>The project delivered a parameterised simulation scenario, an orchestrated scenario matrix, a validated analysis pipeline and a deployed comparison dashboard, and used them to quantify the difference between WiFi 5 and WiFi 6 under lecture-theatre conditions. Four of five objectives were fully achieved and the fifth substantially so, with the saturation point remaining out of reach on the compute available.</p>
+<p>The central conclusion is that WiFi 6's advantage is conditional rather than universal. It is real, mechanistically explicable and largest where the workload consists of many stations sending small frames at the same time — the streamed-lecture case — where it held jitter nine times lower than WiFi 5 at thirty students. It is absent, and sometimes reversed, for bulk transfer and at low density, and above twenty students it is bought with additional channel time rather than saved. An institution acting on this evidence should upgrade the rooms that stream, and should not expect the upgrade to make downloads faster.</p>
+
+<!-- ==================== REFERENCES ==================== -->
+
+<h1>References</h1>
+
+<p class="no-indent">References follow APA (author&ndash;date) style. All literature-review sources are published 2010 or later.</p>
+
+<ol>
+  <li>Afaqui, M. S., Garcia-Villegas, E., &amp; Lopez-Aguilera, E. (2017). IEEE 802.11ax: Challenges and requirements for future high efficiency Wi-Fi. <em>IEEE Wireless Communications, 24</em>(3), 130&ndash;137.</li>
+
+  <li>Banks, J., Carson, J. S., Nelson, B. L., &amp; Nicol, D. M. (2010). <em>Discrete-event system simulation</em> (5th ed.). Pearson.</li>
+
+  <li>Bellalta, B. (2016). IEEE 802.11ax: High-efficiency WLANs. <em>IEEE Wireless Communications, 23</em>(1), 38&ndash;46.</li>
+
+  <li>Chotalia, M., &amp; Gajjar, S. (2023). Performance comparison of IEEE 802.11ax, 802.11ac and 802.11n using network simulator NS3. In <em>International Conference on Computing Science, Communication and Security</em> (pp. 191&ndash;203). Springer.</li>
+
+  <li>IEEE. (2013). <em>IEEE Std 802.11ac-2013 &mdash; Amendment 4: Enhancements for very high throughput for operation in bands below 6 GHz</em>. Institute of Electrical and Electronics Engineers.</li>
+
+  <li>IEEE. (2021). <em>IEEE Std 802.11ax-2021 &mdash; Amendment 1: Enhancements for high-efficiency WLAN</em>. Institute of Electrical and Electronics Engineers.</li>
+
+  <li>Inzillo, V., &amp; Ariza Quintana, A. (2025). Implementation of 802.11ax and cell-free massive MIMO scenario for 6G wireless network analysis extending OMNeT++ simulator. <em>Simulation</em>.</li>
+
+  <li>Khorov, E., Kiryanov, A., Lyakhov, A., &amp; Bianchi, G. (2019). A tutorial on IEEE 802.11ax high efficiency WLANs. <em>IEEE Communications Surveys &amp; Tutorials, 21</em>(1), 197&ndash;216.</li>
+
+  <li>ns-3 Project. (2024). <em>ns-3 model library and documentation, release 3.42</em>. https://www.nsnam.org/</li>
+
+  <li>Qu, Q., Li, B., Yang, M., Yan, Z., Yang, A., Deng, D.-J., &amp; Chen, K.-C. (2019). Survey and performance evaluation of the upcoming next generation WLAN standard &mdash; IEEE 802.11ax. <em>Mobile Networks and Applications</em>. <em>[Author list to confirm.]</em></li>
+
+  <li>Riley, G. F., &amp; Henderson, T. R. (2010). The ns-3 network simulator. In K. Wehrle, M. G&uuml;ne&#351;, &amp; J. Gross (Eds.), <em>Modeling and tools for network simulation</em> (pp. 15&ndash;34). Springer.</li>
+
+  <li>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., &amp; Bellalta, B. (2019). On the performance of the spatial reuse operation in IEEE 802.11ax WLANs. In <em>Proceedings of the IEEE Conference on Standards for Communications and Networking (CSCN)</em>.</li>
+
+  <li>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., Cano, C., Selinis, I., &amp; Bellalta, B. (2021). Spatial reuse in IEEE 802.11ax WLANs. <em>Computer Communications, 170</em>, 65&ndash;83.</li>
+
+  <li>Validation of the ns-3 802.11ax OFDMA implementation. (2021). In <em>Proceedings of the 2021 Workshop on ns-3 (WNS3 '21)</em>. ACM. https://doi.org/10.1145/3460797.3460798 <em>[Author list to confirm.]</em></li>
+
+  <li>Performance and simulation analysis of 802.11ax OFDMA in contention-driven scenarios. (2025). <em>PeerJ Computer Science</em>. <em>[Author list to confirm.]</em></li>
+
+  <li>An analysis of BSS coloring mechanism in IEEE 802.11ax dense networks. (2022). <em>International Journal of Electronics and Telecommunications</em>. <em>[Author list to confirm.]</em></li>
+</ol>
+
+<h3>Additional works cited in Chapter Three</h3>
+<p>The methodology chapter cites the standard software-engineering treatments of the development models it reviews. Four of these predate 2010 because they are the primary sources for the models themselves &mdash; Royce is the origin of the sequential model, and Jain is the origin of the fairness index &mdash; and a secondary source would be weaker. Remove them if your department requires every reference to be recent.</p>
+<ol start="17">
+  <li>Boehm, B. W. (1988). A spiral model of software development and enhancement. <em>Computer, 21</em>(5), 61&ndash;72.</li>
+  <li>Fowler, M. (2004). <em>UML distilled: A brief guide to the standard object modeling language</em> (3rd ed.). Addison-Wesley.</li>
+  <li>Jain, R., Chiu, D.-M., &amp; Hawe, W. (1984). <em>A quantitative measure of fairness and discrimination for resource allocation in shared computer systems</em> (DEC-TR-301). Digital Equipment Corporation.</li>
+  <li>Larman, C., &amp; Basili, V. R. (2003). Iterative and incremental development: A brief history. <em>Computer, 36</em>(6), 47&ndash;56.</li>
+  <li>Pressman, R. S., &amp; Maxim, B. R. (2014). <em>Software engineering: A practitioner's approach</em> (8th ed.). McGraw-Hill.</li>
+  <li>Royce, W. W. (1970). Managing the development of large software systems. <em>Proceedings of IEEE WESCON</em>, 1&ndash;9.</li>
+  <li>Sommerville, I. (2016). <em>Software engineering</em> (10th ed.). Pearson.</li>
+</ol>
+
+<!-- ==================== APPENDICES ==================== -->
+
+<h1>Appendices</h1>
+
+<h2>Appendix A: Interview Questions</h2>
+<div class="flag">
+  <p><strong>Complete or remove.</strong> If interviews were conducted, place the instrument here and record who was interviewed by role and when. If no interviews were conducted, remove this appendix and state in §3.4.2 which documentary sources were used instead. Do not present questions that were never asked.</p>
+</div>
+
+<h2>Appendix B: Survey / Questionnaire</h2>
+<div class="flag">
+  <p><strong>Complete or remove.</strong> As Appendix A. No survey was administered as part of the technical work recorded here.</p>
+</div>
+
+<h2>Appendix C: User Interface Designs</h2>
+<p>The interface was designed in code and iterated against rendered output rather than produced as a mockup in a design tool. This appendix should contain annotated screenshots of the delivered dashboard: the conditions control band, the instrument cluster at rest, a dial turned to its explanatory face, the evaluation report, and the dataset explorer. Figure 3.7 gives the layout schematically.</p>
+
+<h2>Appendix D: Dataset Schema</h2>
+<p>The system uses no database; §3.9.3 gives the full structure of <code>results.json</code>, and Figure 3.6 presents its entities and cardinalities. This appendix should reproduce a complete worked example: one scenario object with its trials, series and aggregates, showing real recorded values.</p>
+
+<h2>Appendix E: Source Code Samples</h2>
+<p class="no-indent">The following are the artefacts most worth reproducing, with the rationale for each.</p>
+<ul>
+  <li><strong>Scenario construction</strong> — the block selecting the PHY, standard and multi-user scheduler, showing the ordering constraint on the acknowledgement sequence described in §4.3.</li>
+  <li><strong>Traffic profile definition</strong> — the three profiles as specified in §4.1.1.</li>
+  <li><strong>Flow filtering</strong> — the function joining flow statistics to the classifier and bounding the application port range at both ends, which resolves §4.2.2.</li>
+  <li><strong>Reconciliation check</strong> — the identity that transmitted equals received plus lost.</li>
+  <li><strong>Evaluation generation</strong> — the comparison function including the tie test against run-to-run spread.</li>
+</ul>
+
+</div>
+
+<footer>
+  AIRTEST — Comparative Analysis of WiFi 5 and WiFi 6 in Dense University Lecture Theatres<br>
+  Draft for supervisory review. Sections marked in amber require confirmation or completion before submission.
+</footer>
+
+</div>
+
+<script>
+  document.getElementById('copy').addEventListener('click', async function () {
+    var btn = this;
+    var doc = document.getElementById('doc');
+    try {
+      var item = new ClipboardItem({
+        'text/html': new Blob([doc.innerHTML], { type: 'text/html' }),
+        'text/plain': new Blob([doc.innerText], { type: 'text/plain' })
+      });
+      await navigator.clipboard.write([item]);
+      btn.textContent = 'Copied';
+    } catch (err) {
+      var range = document.createRange();
+      range.selectNodeContents(doc);
+      var sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      btn.textContent = 'Selected — press Ctrl+C';
+    }
+    setTimeout(function () { btn.textContent = 'Copy report'; }, 2500);
+  });
+</script>

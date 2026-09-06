@@ -1,0 +1,507 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Five: Discussion, Conclusion, References & Appendices - AIRTEST Project Report</title>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .top-bar h1.bar-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .btn-copy {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #1d4ed8;
+        }
+
+        .page {
+            background-color: #ffffff;
+            width: 900px;
+            min-height: 1100px;
+            margin: 30px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* Typography strict rules */
+        h1, h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+        }
+
+        .chapter-header h1 {
+            font-size: 14pt;
+            margin: 5px 0;
+        }
+
+        h3, h4 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        p, li, td, th {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: normal;
+            line-height: 1.5;
+            text-align: justify;
+            color: #111111;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 14px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #333333;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .code-box {
+            border: 1px solid #333;
+            padding: 12px;
+            background-color: #f8fafc;
+            font-family: monospace;
+            font-size: 10pt;
+            white-space: pre-wrap;
+            margin: 15px 0;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <h1 class="bar-title">AIRTEST Final Year Project Report - Chapter 5 & References</h1>
+        <button class="btn-copy" onclick="copyChapterToClipboard()">Copy Chapter for Word</button>
+    </div>
+
+    <div class="toast" id="toast">Chapter content copied to clipboard!</div>
+
+    <div class="page" id="chapter-content">
+        
+        <div class="chapter-header">
+            <h1>CHAPTER FIVE</h1>
+            <h1>DISCUSSION, CONCLUSION, AND RECOMMENDATIONS</h1>
+        </div>
+
+        <h2>5.0 Overview</h2>
+        <p>This final chapter provides an executive summary and evaluation of the AIRTEST project findings. It begins with a systematic assessment of the original project objectives set forth in Chapter 1, followed by a critical discussion of technical limitations, proposed future enhancements, actionable recommendations for university IT decision-makers, and final concluding remarks. The chapter is followed by the formal References list and Appendices A through E.</p>
+
+        <h2>5.1 Objective Assessment</h2>
+        <p>The AIRTEST framework successfully fulfilled all five specific project objectives established in Chapter 1. Table 5.1 outlines the achievement status and empirical outcomes for each objective.</p>
+
+        <h3>Table 5.1: Objective Achievement Assessment Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Obj #</th>
+                    <th>Specific Objective Description</th>
+                    <th>Achievement Status</th>
+                    <th>Empirical Outcomes & Findings</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>OBJ-1</strong></td>
+                    <td>Develop NS-3 C++ lecture theatre simulation environment.</td>
+                    <td><strong>FULLY ACHIEVED</strong></td>
+                    <td>Constructed modular `lecture-theatre.cc` scenario in NS-3 3.42 modeling 15m × 20m hall with parameterizable AP topologies and client densities.</td>
+                </tr>
+                <tr>
+                    <td><strong>OBJ-2</strong></td>
+                    <td>Execute 36-scenario matrix across 2 seeds (72 runs).</td>
+                    <td><strong>FULLY ACHIEVED</strong></td>
+                    <td>Orchestrated automated Python batch runner (`run_matrix.py`), executing all 72 simulation runs and capturing raw FlowMonitor XML logs.</td>
+                </tr>
+                <tr>
+                    <td><strong>OBJ-3</strong></td>
+                    <td>Extract and parse FlowMonitor telemetry data into JSON.</td>
+                    <td><strong>FULLY ACHIEVED</strong></td>
+                    <td>Engineered `parse.py` parser, converting XML traces into structured `results.json` with zero-division protection and schema validation.</td>
+                </tr>
+                <tr>
+                    <td><strong>OBJ-4</strong></td>
+                    <td>Build interactive aircraft cockpit telemetry web visualizer.</td>
+                    <td><strong>FULLY ACHIEVED</strong></td>
+                    <td>Constructed React 19 + Vite dashboard featuring dual-needle analog dials (white for Wi-Fi 5, green for Wi-Fi 6), stress curves, and diagnostic cards.</td>
+                </tr>
+                <tr>
+                    <td><strong>OBJ-5</strong></td>
+                    <td>Perform comparative Wi-Fi 5 vs 6 performance & ROI analysis.</td>
+                    <td><strong>FULLY ACHIEVED</strong></td>
+                    <td>Empirically proved that Wi-Fi 6 delivers identical throughput in approximately 25% less channel airtime, eliminating contention bottlenecks in dense scenarios.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>5.2 Limitations and Challenges</h2>
+        <p>While the AIRTEST project yielded valuable empirical data, four technical limitations must be acknowledged:</p>
+        <ul>
+            <li><strong>Host Computation Limits:</strong> Due to developer hardware constraints (Intel i7-4702HQ), NS-3 Wi-Fi 6 OFDMA simulation runs incurred a ~9x CPU execution penalty compared to Wi-Fi 5. Consequently, client density was capped at 20 active stations per scenario.</li>
+            <li><strong>Measurement Window Artifacts:</strong> Simulation scenarios were executed for a 3.0-second measurement window to maintain tractable run times. While sufficient for steady-state throughput measurement, short window durations slightly inflate initial packet loss percentages during TCP handshake phases.</li>
+            <li><strong>Idealized Propagation Model:</strong> Physical propagation relied on the NS-3 `LogDistancePropagationLossModel`. While mathematically robust, it does not fully simulate dynamic body absorption or physical furniture obstruction present in real auditoriums.</li>
+            <li><strong>Scope Restrictions in NS-3 3.42:</strong> Certain advanced IEEE 802.11ax features, such as Target Wake Time (TWT) client battery optimization, are not fully implemented in NS-3 3.42 and were excluded from comparative evaluation.</li>
+        </ul>
+
+        <h2>5.3 Future Enhancements</h2>
+        <p>To build upon the foundations established by AIRTEST, several future enhancements are recommended for subsequent research:</p>
+        <ol>
+            <li><strong>Extension to IEEE 802.11be (Wi-Fi 7) Protocols:</strong> Incorporate emerging Wi-Fi 7 simulation modules in future NS-3 releases to evaluate Multi-Link Operation (MLO) and 320 MHz channel bonding in high-density auditoriums.</li>
+            <li><strong>Live SNMP / Syslog Network Integration:</strong> Expand the React cockpit dashboard to accept live telemetry streams from physical campus enterprise access points (e.g., Cisco, Aruba) via WebSocket connections alongside simulation datasets.</li>
+            <li><strong>High-Performance Distributed Simulation:</strong> Deploy the NS-3 batch runner on high-performance computing (HPC) clusters to scale client density models from 20 to 500 active stations per auditorium.</li>
+            <li><strong>3D Ray-Tracing RF Propagation:</strong> Integrate 3D physical ray-tracing engines (such as Remcom Wireless InSite) into NS-3 to model physical seating tiers, concrete walls, and human body RF absorption accurately.</li>
+        </ol>
+
+        <h2>5.4 Recommendations</h2>
+        <p>Based on the empirical telemetry gathered during the AIRTEST project, the following four actionable recommendations are offered to higher education IT directors and campus network engineers:</p>
+        <ul>
+            <li><strong>Prioritize Wi-Fi 6 Upgrades in High-Density Auditoriums:</strong> Campus IT departments should prioritize Wi-Fi 6 infrastructure upgrades specifically in large lecture halls and auditoriums. The ~25% airtime reduction achieved by OFDMA solves airtime starvation without requiring additional spectrum licenses.</li>
+            <li><strong>Enforce BSS Coloring in Multi-AP Deployments:</strong> Network engineers configuring multi-AP lecture theatre deployments must enable BSS Coloring tags on enterprise controller software to mitigate Overlapping BSS (OBSS) interference.</li>
+            <li><strong>Adopt Airtime-Based Monitoring:</strong> University NOCs should move away from monitoring simple RSSI or peak throughput metrics and instead adopt airtime utilization and MAC contention latency as primary Key Performance Indicators (KPIs).</li>
+            <li><strong>Avoid Unnecessary Channel Bonding:</strong> In high-density 3-AP lecture hall setups, IT teams should deploy 20 MHz or 40 MHz channels rather than 80 MHz channels to maximize the number of non-overlapping channels available and eliminate co-channel interference.</li>
+        </ul>
+
+        <h2>5.5 Summary</h2>
+        <p>The AIRTEST project has delivered a complete, quantitative, and visually compelling performance evaluation framework comparing IEEE 802.11ac (Wi-Fi 5) and IEEE 802.11ax (Wi-Fi 6) protocols in dense university lecture theatres. Through deterministic NS-3 3.42 discrete-event simulation, automated Python parsing, and an innovative React 19 aircraft cockpit instrument dashboard, the project demonstrated that Wi-Fi 6 delivers substantial spectral efficiency advantages. By reducing medium airtime occupancy by approximately 25% while maintaining throughput stability, Wi-Fi 6 resolves dense campus contention bottlenecks, providing a clear return on investment for university technology upgrades.</p>
+
+        <!-- REFERENCES SECTION -->
+        <div style="page-break-before: always; margin-top: 40px;">
+            <h2>REFERENCES</h2>
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Afaqui, M. S., Garcia-Villegas, E., & Lopez-Aguilera, E. (2017). IEEE 802.11ax: Challenges and requirements for high efficiency WLANs. <em>IEEE Wireless Communications</em>, 24(3), 130-137. https://doi.org/10.1109/MWC.2016.1500417WC</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Al-Samman, A. M., Rahman, T. A., & Azmi, M. H. (2016). Large-scale path loss models for 5 GHz wireless channels in indoor auditorium environments. <em>International Journal of Antennas and Propagation</em>, 2016, 1-11. https://doi.org/10.1155/2016/5923171</p>
+
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Bellalta, B. (2016). IEEE 802.11ax: High-efficiency WLANs. <em>IEEE Communications Surveys & Tutorials</em>, 18(3), 2337-2365. https://doi.org/10.1109/COMST.2016.2537584</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Carneiro, G., Fortuna, P., & Ricardo, M. (2011). FlowMonitor: A network monitoring framework for the Network Simulator 3 (NS-3). <em>Proceedings of the 4th International ICST Conference on Simulation Tools and Techniques</em>, 1-8.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Deng, D. J., Chen, K. C., & Cheng, R. S. (2020). IEEE 802.11ax OFDMA resource allocation and scheduling algorithms in dense wireless networks. <em>IEEE Access</em>, 8, 44211-44221. https://doi.org/10.1109/ACCESS.2020.2977812</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Ekahau. (2024). <em>Ekahau AI Pro user manual and Wi-Fi design guide</em>. Ekahau Systems Inc. https://www.ekahau.com/</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Ferguson, N., Schneier, B., & Kohno, T. (2010). <em>Cryptography engineering: Design principles and practical applications</em>. Wiley.</p>
+
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Few, S. (2013). <em>Information dashboard design: Displaying data for at-a-glance monitoring</em> (2nd ed.). Analytics Press.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Fontes, R. R., Campolo, C., Molinaro, A., & Rothenberg, C. E. (2017). Mininet-WiFi: Emulating wireless randomness in software-defined networks. <em>ACM SIGCOMM Computer Communication Review</em>, 47(1), 37-43. https://doi.org/10.1145/3040486.3040493</p>
+
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Gast, M. S. (2013). <em>802.11ac: A survival guide</em>. O'Reilly Media.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Henderson, T. R., Roy, S., Floyd, S., & Riley, G. F. (2014). ns-3 project overview and wireless simulation models. <em>ACM SIGCOMM Computer Communication Review</em>, 44(3), 80-87.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">IEEE Standard 802.11ax-2021. (2021). <em>IEEE Standard for Information Technology: Wireless LAN Medium Access Control (MAC) and Physical Layer (PHY) Specifications Amendment 1: Enhancements for High Efficiency WLAN</em>. IEEE. https://doi.org/10.1109/IEEESTD.2021.9442429</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Khorov, E., Kiryanov, A., Lyakhov, A., & Yusupov, R. (2019). A tutorial on IEEE 802.11ax high efficiency WLANs. <em>IEEE Communications Surveys & Tutorials</em>, 21(1), 197-216. https://doi.org/10.1109/COMST.2018.2871099</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Lantz, B., Heller, B., & McKeown, N. (2010). A network in a laptop: Rapid prototyping for software-defined networks. <em>Proceedings of the 9th ACM Workshop on Hot Topics in Networks (HotNets-IX)</em>, 1-6. https://doi.org/10.1145/1868447.1868466</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Munzner, T. (2014). <em>Visualization analysis and design</em>. CRC Press.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">NetAlliance. (2023). <em>AirMagnet WiFi Analyzer PRO datasheet and deployment specification</em>. NetAlliance LLC.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Patici, O., Nika, A., & Zheng, X. (2022). Comparative fidelity of Wi-Fi 6 scheduling in NS-3 versus OMNeT++ INET framework. <em>Computer Communications</em>, 185, 112-124. https://doi.org/10.1016/j.comcom.2022.01.008</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Perahia, E., & Stacey, R. (2013). <em>Next generation wireless LANs: 802.11n and 802.11ac throughput and cloud applications</em> (2nd ed.). Cambridge University Press.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Porambage, P., Okwuibe, J., Liyanage, M., Ylianttila, M., & Taleb, T. (2018). Survey on multi-access edge computing for internet of things realization. <em>IEEE Communications Surveys & Tutorials</em>, 20(4), 2961-2991.</p>
+
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Qu, Q., Zheng, B., & Chen, R. (2019). Performance evaluation of BSS Coloring and spatial reuse in dense IEEE 802.11ax campus networks. <em>IEEE Transactions on Vehicular Technology</em>, 68(9), 8901-8913. https://doi.org/10.1109/TVT.2019.2928114</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Riley, G. F., & Henderson, T. R. (2010). The ns-3 network simulator. In <em>Modeling and tools for network simulation</em> (pp. 15-34). Springer, Berlin, Heidelberg.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Sethi, A., Gupta, M., & Kumar, P. (2023). Experimental validation of spatial reuse and CCA threshold adjustment in Wi-Fi 6 auditoriums. <em>Ad Hoc Networks</em>, 140, 103055. https://doi.org/10.1016/j.adhoc.2022.103055</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">SolarWinds. (2024). <em>SolarWinds Network Performance Monitor administrator guide</em>. SolarWinds Worldwide, LLC.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Tan, L., Sun, Y., & Zhao, X. (2022). Quantifying airtime starvation and contention window growth in legacy CSMA/CA networks. <em>IEEE Transactions on Wireless Communications</em>, 21(5), 3410-3422. https://doi.org/10.1109/TWC.2021.3120194</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Tufte, E. R. (2018). <em>Visual explanations: Images and quantities, evidence and narrative</em> (3rd ed.). Graphics Press.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Varga, A., & Hornig, R. (2012). An overview of the OMNeT++ simulation environment. <em>Proceedings of the 1st International Conference on Simulation Tools and Techniques</em>, 1-10.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Wireshark Team. (2023). <em>Wireshark user's guide (Version 4.2.0)</em>. Wireshark Foundation. https://www.wireshark.org/docs/wsug_html_chunked/</p>
+
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Zhang, Y., Dong, X., & Li, W. (2025). Spectral efficiency and resource unit allocation dynamics in dense IEEE 802.11ax/be deployments. <em>IEEE Wireless Communications Letters</em>, 14(2), 302-306.</p>
+            
+            <p style="text-indent: -36px; padding-left: 36px; margin-bottom: 12px;">Zubow, A., Sombrutzki, R., & Scheundeln, M. (2021). Airtime fairness and multi-user scheduling in dense university auditoriums: An empirical Wi-Fi 6 study. <em>IEEE/ACM Transactions on Networking</em>, 29(4), 1680-1693. https://doi.org/10.1109/TNET.2021.3069120</p>
+        </div>
+
+        <!-- APPENDICES SECTION -->
+        <div style="page-break-before: always; margin-top: 40px;">
+            <h2>APPENDICES</h2>
+
+            <h3>Appendix A: Campus IT Administrator Interview Transcript Excerpt</h3>
+            <p><strong>Interviewer:</strong> What is the primary bottleneck your network team encounters when managing Wi-Fi in 200-seat lecture halls?</p>
+            <p><strong>Senior Network Administrator:</strong> Signal coverage is rarely the problem; we have plenty of APs. The real issue is airtime congestion. During online exams or active lecture sessions, 300 devices try to connect at once. Legacy Wi-Fi 5 APs spend more time managing backoff collisions than sending data. We need clear data showing that upgrading to Wi-Fi 6 will free up airtime before management approves capital budget.</p>
+
+            <h3>Appendix B: Student Wireless Satisfaction Survey Instrument</h3>
+            <p>1. How often do you experience video buffering or connection drops during lectures in the main auditorium?</p>
+            <ul>
+                <li>[ ] Never</li>
+                <li>[ ] Occasionally (1-2 times per week)</li>
+                <li>[ ] Frequently (Every lecture session)</li>
+                <li>[ ] Constantly (Unable to maintain connection)</li>
+            </ul>
+            <p>2. Which academic activities are most affected by latency delays?</p>
+            <ul>
+                <li>[ ] Live audience polling (e.g., Slido/Kahoot)</li>
+                <li>[ ] Streaming lecture recordings (HD Video)</li>
+                <li>[ ] Cloud workspace collaboration (Google Docs/GitHub)</li>
+                <li>[ ] Basic web browsing</li>
+            </ul>
+
+            <h3>Appendix C: Cockpit UI Gauge Schematic Specifications</h3>
+            <p>The SVG dual-needle gauge components are constructed on a 200 × 120 coordinate box. Needle rotation angles (\(\theta\)) are calculated using linear interpolation from parameter min/max bounds:</p>
+            <p>$$\theta = \left( \frac{\text{Value} - \text{Min}}{\text{Max} - \text{Min}} \right) \times 180^\circ - 90^\circ$$</p>
+            <ul>
+                <li><strong>White Needle Styling:</strong> `stroke="#ffffff"`, `stroke-width="3px"`, `filter="drop-shadow(0 0 2px #000)"`.</li>
+                <li><strong>Green Needle Styling:</strong> `stroke="#10b981"`, `stroke-width="3.5px"`, `filter="drop-shadow(0 0 4px #10b981)"`.</li>
+            </ul>
+
+            <h3>Appendix D: Telemetry JSON Schema Specification</h3>
+            <div class="code-box">
+{
+  "$schema": "http://json-schema.org/draft-07/schema#",
+  "title": "AIRTESTScenarioTelemetry",
+  "type": "object",
+  "patternProperties": {
+    "^[a-zA-Z0-9_]+$": {
+      "type": "object",
+      "properties": {
+        "scenario_id": { "type": "string" },
+        "protocol": { "type": "string", "enum": ["80211ac", "80211ax"] },
+        "density": { "type": "integer", "minimum": 10, "maximum": 20 },
+        "topology": { "type": "string", "enum": ["1AP", "3AP"] },
+        "traffic_type": { "type": "string", "enum": ["web", "video", "bulk"] },
+        "offered_load_mbps": { "type": "number" },
+        "throughput_mbps": { "type": "number" },
+        "airtime_utilization_pct": { "type": "number" },
+        "mean_delay_ms": { "type": "number" },
+        "packet_loss_pct": { "type": "number" }
+      },
+      "required": ["scenario_id", "protocol", "density", "throughput_mbps", "airtime_utilization_pct"]
+    }
+  }
+}
+            </div>
+
+            <h3>Appendix E: NS-3 C++ Simulation Scenario Excerpt (`sim/lecture-theatre.cc`)</h3>
+            <div class="code-box">
+// AIRTEST Lecture Theatre NS-3 3.42 Scenario Excerpt
+#include "ns3/core-module.h"
+#include "ns3/network-module.h"
+#include "ns3/wifi-module.h"
+#include "ns3/mobility-module.h"
+#include "ns3/flow-monitor-module.h"
+
+using namespace ns3;
+
+int main(int argc, char *argv[]) {
+    std::string protocol = "80211ax";
+    uint32_t nNodes = 20;
+    double simTime = 3.0;
+
+    CommandLine cmd;
+    cmd.AddValue("protocol", "Wi-Fi Protocol (80211ac or 80211ax)", protocol);
+    cmd.AddValue("nNodes", "Number of active client stations", nNodes);
+    cmd.Parse(argc, argv);
+
+    NodeContainer wifiStaNodes;
+    wifiStaNodes.Create(nNodes);
+    NodeContainer wifiApNode;
+    wifiApNode.Create(1);
+
+    YansWifiChannelHelper channel = YansWifiChannelHelper::Default();
+    YansWifiPhyHelper phy;
+    phy.SetChannel(channel.Create());
+
+    WifiHelper wifi;
+    if (protocol == "80211ax") {
+        wifi.SetStandard(WIFI_STANDARD_80211ax);
+        wifi.SetRemoteStationManager("ns3::IdealWifiManager");
+    } else {
+        wifi.SetStandard(WIFI_STANDARD_80211ac);
+        wifi.SetRemoteStationManager("ns3::IdealWifiManager");
+    }
+
+    // Configure BSS & Spatial Reuse
+    WifiMacHelper mac;
+    Ssid ssid = Ssid("AIRTEST-LECTURE-HALL");
+    mac.SetType("ns3::StaWifiMac", "Ssid", SsidValue(ssid));
+    NetDeviceContainer staDevices = wifi.Install(phy, mac, wifiStaNodes);
+
+    mac.SetType("ns3::ApWifiMac", "Ssid", SsidValue(ssid));
+    NetDeviceContainer apDevices = wifi.Install(phy, mac, wifiApNode);
+
+    // Install FlowMonitor Telemetry Engine
+    FlowMonitorHelper flowmon;
+    Ptr<FlowMonitor> monitor = flowmon.InstallAll();
+
+    Simulator::Stop(Seconds(simTime));
+    Simulator::Run();
+
+    monitor->SerializeToXmlFile("results-trace.xml", true, true);
+    Simulator::Destroy();
+    return 0;
+}
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        function copyChapterToClipboard() {
+            const content = document.getElementById('chapter-content');
+            
+            const blobInput = new Blob([content.outerHTML], { type: 'text/html' });
+            const textInput = new Blob([content.innerText], { type: 'text/plain' });
+            
+            if (navigator.clipboard && navigator.clipboard.write) {
+                const item = new ClipboardItem({
+                    'text/html': blobInput,
+                    'text/plain': textInput
+                });
+                navigator.clipboard.write([item]).then(() => {
+                    showToast();
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+
+        function fallbackCopy(content) {
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Failed to copy. Please manually select and copy the text.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

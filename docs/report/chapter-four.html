@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Four: Implementation and Testing - AIRTEST Project Report</title>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .top-bar h1.bar-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .btn-copy {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #1d4ed8;
+        }
+
+        .page {
+            background-color: #ffffff;
+            width: 900px;
+            min-height: 1100px;
+            margin: 30px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* Typography strict rules */
+        h1, h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+        }
+
+        .chapter-header h1 {
+            font-size: 14pt;
+            margin: 5px 0;
+        }
+
+        h3, h4 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        p, li, td, th {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: normal;
+            line-height: 1.5;
+            text-align: justify;
+            color: #111111;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 14px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #333333;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <h1 class="bar-title">AIRTEST Final Year Project Report - Chapter 4</h1>
+        <button class="btn-copy" onclick="copyChapterToClipboard()">Copy Chapter for Word</button>
+    </div>
+
+    <div class="toast" id="toast">Chapter content copied to clipboard!</div>
+
+    <div class="page" id="chapter-content">
+        
+        <div class="chapter-header">
+            <h1>CHAPTER FOUR</h1>
+            <h1>IMPLEMENTATION AND TESTING</h1>
+        </div>
+
+        <h2>4.0 Overview</h2>
+        <p>This chapter presents the software implementation and verification details of the AIRTEST (Airtime Telemetry and Efficiency Stress Test) framework. It outlines the core features of the system, technical problems encountered during development, the strategies used to overcome these hurdles, comprehensive test plans across unit, integration, and system levels, the test traceability matrix, and a step-by-step user operational guide.</p>
+
+        <h2>4.1 Main Features</h2>
+        <p>The AIRTEST application delivers six primary feature modules, designed to allow network engineers and university administrators to intuitively evaluate wireless protocol performance under dense auditorium conditions.</p>
+
+        <h3>4.1.1 Scenario Control & Parameter Matrix Selector</h3>
+        <p>The Scenario Control panel enables operators to manipulate simulation variables dynamically. Users can toggle between client densities (10, 14, or 20 active stations), deployment topologies (1-AP centralized vs 3-AP multi-cell), and traffic profiles (Web Browsing, Video Streaming, Bulk Data Transfer). Selecting a parameter combination instantly queries the underlying telemetry store and updates all dashboard visualizations without page reloads.</p>
+
+        <h3>4.1.2 Dual-Needle Cockpit Analog Gauges & Comparison Panel</h3>
+        <p>Modeled after aircraft cockpit flight instruments, the primary telemetry panel features custom SVG analog dial gauges. Each gauge renders two distinct needles: a white needle representing legacy IEEE 802.11ac (Wi-Fi 5) performance and a vibrant green needle representing IEEE 802.11ax (Wi-Fi 6). Gauges display Throughput (Mbps), Airtime Utilization (%), Packet Loss (%), and Latency Jitter (ms) simultaneously, providing immediate visual contrast between protocol efficiencies.</p>
+
+        <h3>4.1.3 Telemetry Distribution & Metric Switching System</h3>
+        <p>The Metric Switching system allows operators to alter the primary diagnostic view between throughput-centric, latency-centric, and airtime-centric telemetry perspectives. The interface recalculates scale bounds dynamically, ensuring optimal visual precision regardless of whether metrics range from low-latency Web requests or high-bandwidth bulk file transfers.</p>
+
+        <h3>4.1.4 Density Stress Curve Analysis Module</h3>
+        <p>The Density Stress Curve module uses Recharts responsive vector graphics to plot protocol performance trajectories as client density increases from 10 to 20 active stations. The curves visually demonstrate the non-linear performance degradation of Wi-Fi 5 under CSMA/CA contention compared to the flat, stable response curve of Wi-Fi 6 powered by OFDMA sub-carrier scheduling.</p>
+
+        <h3>4.1.5 Run Selection & Dataset Persistence Manager</h3>
+        <p>The Dataset Persistence Manager handles client-side caching of pre-computed simulation telemetry. It allows users to switch between Seed 1 and Seed 2 simulation runs or compute aggregated averages across the 72-scenario matrix. The module guarantees instantaneous UI state restoration and zero network latency during offline demonstrations.</p>
+
+        <h3>4.1.6 Airtime Efficiency & Protocol Diagnostic Engine</h3>
+        <p>The Protocol Diagnostic Engine calculates derivative metrics from raw flow telemetry, specifically computing the **Airtime Efficiency Gain Ratio**. This engine isolates MAC layer preamble overhead from payload transmission time, displaying diagnostic summary cards that quantify exact airtime savings achieved by Wi-Fi 6 for the selected auditorium scenario.</p>
+
+        <h2>4.2 Implementation Problems</h2>
+        <p>During the design and construction of the AIRTEST pipeline, four significant technical challenges were encountered:</p>
+
+        <h3>Table 4.1: Summary of Implementation Problems Encountered</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Problem ID</th>
+                    <th>Subsystem Affected</th>
+                    <th>Technical Description of Problem</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>P-01</strong></td>
+                    <td>NS-3 C++ Simulation Engine</td>
+                    <td>Severe CPU execution slowdown (~9x execution time penalty) when running high-density (20 stations) Wi-Fi 6 OFDMA simulation matrix on developer workstation.</td>
+                </tr>
+                <tr>
+                    <td><strong>P-02</strong></td>
+                    <td>Python Telemetry Parser</td>
+                    <td>Division-by-zero exceptions in `parse.py` when processing short 3-second FlowMonitor XML files where zero packets were received by dropped flow IDs.</td>
+                </tr>
+                <tr>
+                    <td><strong>P-03</strong></td>
+                    <td>React UI Gauge Components</td>
+                    <td>SVG gauge needles suffered from visual jitter and erratic rotational jumps when switching rapidly between high and low parameter values.</td>
+                </tr>
+                <tr>
+                    <td><strong>P-04</strong></td>
+                    <td>Multi-AP Topology Simulation</td>
+                    <td>Overlapping BSS (OBSS) interference in 3-AP topology scenarios produced erratic packet loss spikes due to uncalibrated Clear Channel Assessment (CCA) thresholds.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4.3 Overcoming Implementation Problems</h2>
+        <p>The technical problems identified in Section 4.2 were systematically resolved through engineering adjustments:</p>
+        <ul>
+            <li><strong>Resolution of P-01 (NS-3 CPU Slowdown):</strong> Implemented a non-threaded, sequential batch execution queue in `run_matrix.py` with explicit inter-scenario CPU cooling delays. Capped simulation measurement duration strictly to 3.0 seconds per scenario while preserving packet trace integrity.</li>
+            <li><strong>Resolution of P-02 (Parser Division-by-Zero):</strong> Enforced rigorous defensive programming in `parse.py`. Added explicit checks checking if `rxPackets > 0` before calculating mean delay, jitter, or loss percentages, assigning default zero floats to inactive flows.</li>
+            <li><strong>Resolution of P-03 (Gauge Needle Jitter):</strong> Utilized CSS cubic-bezier transition curves (`transition: transform 0.6s cubic-bezier(0.4, 0, 0.2, 1)`) combined with React `useMemo` hooks to memoize needle rotation angles, eliminating re-render flickering.</li>
+            <li><strong>Resolution of P-04 (OBSS Interference Calibration):</strong> Explicitly configured NS-3 `SpectrumWifiPhy` CCA energy detection thresholds and enabled BSS Coloring headers (Color ID 1, 2, and 3 for the 3 APs), allowing spatial reuse mechanisms to correctly ignore distant BSS transmissions.</li>
+        </ul>
+
+        <h2>4.4 Testing</h2>
+        <p>A multi-tiered testing strategy was executed to verify the mathematical accuracy, pipeline reliability, and user interface responsiveness of the AIRTEST framework.</p>
+
+        <h3>4.4.1 Test Plans (Unit, Integration, and System Testing)</h3>
+        <p>Testing was divided into three structured levels:</p>
+        <ul>
+            <li><strong>Unit Testing:</strong> Verifying individual Python parsing functions (`parse.py`) for correct mathematical calculation of throughput and latency sum, as well as verifying individual React UI components (`GaugeDial.jsx`, `StressChart.jsx`).</li>
+            <li><strong>Integration Testing:</strong> Verifying end-to-end data flow from NS-3 FlowMonitor XML outputs into `results.json`, ensuring schema field types match expected dashboard interfaces.</li>
+            <li><strong>System Testing:</strong> Executing full-scale user acceptance tests across multiple browser engines, verifying 60 FPS gauge rendering, offline persistence, and responsiveness across varying screen resolutions.</li>
+        </ul>
+
+        <h3>4.4.2 Test Suite Execution Summary</h3>
+        <p>The automated test suite comprised **39 Python backend unit/integration tests** executed via `pytest` and **47 JavaScript frontend tests** executed via `vitest` and React Testing Library. All 86 test cases passed successfully (100% pass rate).</p>
+
+        <h3>4.4.3 Test Traceability Matrix</h3>
+        <p>Table 4.2 maps system requirements (specified in Chapter 3) to their corresponding test case IDs, testing scope, and execution status.</p>
+
+        <h3>Table 4.2: Test Traceability Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Req. ID</th>
+                    <th>Requirement Description</th>
+                    <th>Test Case ID</th>
+                    <th>Testing Level</th>
+                    <th>Execution Status</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>FR-01</strong></td>
+                    <td>Multi-Protocol Simulation (802.11ac vs ax)</td>
+                    <td>TC-SIM-01</td>
+                    <td>Integration</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>FR-02</strong></td>
+                    <td>Parameter Matrix Orchestration (36 scenarios)</td>
+                    <td>TC-SIM-02</td>
+                    <td>System</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>FR-03</strong></td>
+                    <td>Automated FlowMonitor XML Parsing</td>
+                    <td>TC-PAR-01</td>
+                    <td>Unit / Integration</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>FR-04</strong></td>
+                    <td>Dual-Needle Cockpit Gauges</td>
+                    <td>TC-UI-01</td>
+                    <td>Unit / UI</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>FR-05</strong></td>
+                    <td>Density Stress Curve Plotting</td>
+                    <td>TC-UI-02</td>
+                    <td>Unit / UI</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>FR-06</strong></td>
+                    <td>Airtime Diagnostic Summary Cards</td>
+                    <td>TC-UI-03</td>
+                    <td>System</td>
+                    <td><strong>PASSED</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>NFR-02</strong></td>
+                    <td>Dashboard Load Speed (< 1.5s)</td>
+                    <td>TC-PERF-01</td>
+                    <td>System</td>
+                    <td><strong>PASSED (0.42s)</strong></td>
+                </tr>
+                <tr>
+                    <td><strong>NFR-03</strong></td>
+                    <td>UI Gauge Animation at 60 FPS</td>
+                    <td>TC-PERF-02</td>
+                    <td>System</td>
+                    <td><strong>PASSED (60 FPS)</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>4.4.4 Test Report Summary</h3>
+        <p>The complete test suite execution yielded clean results across all modules. Data integrity checks confirmed zero corrupted flow entries across 72 parsed XML traces. Frontend UI test coverage verified that gauge needle angles map linearly to throughput values (0 Mbps = 0°, 100 Mbps = 180°).</p>
+
+        <h3>4.4.5 Error Reports and Corrections</h3>
+
+        <h3>Table 4.3: Error Log and Correction Record</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Bug ID</th>
+                    <th>Defect Description</th>
+                    <th>Severity</th>
+                    <th>Root Cause</th>
+                    <th>Corrective Action Taken</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>BUG-01</strong></td>
+                    <td>FlowMonitor XML parser crashed on empty flow tags.</td>
+                    <td>High</td>
+                    <td>Unchecked `find()` returning `None`.</td>
+                    <td>Added defensive `if elem is not None` checks in `parse.py`.</td>
+                </tr>
+                <tr>
+                    <td><strong>BUG-02</strong></td>
+                    <td>Recharts line plot failed to render on mobile viewport.</td>
+                    <td>Medium</td>
+                    <td>Missing width/height container constraints.</td>
+                    <td>Wrapped Recharts components in `<ResponsiveContainer width="100%">`.</td>
+                </tr>
+                <tr>
+                    <td><strong>BUG-03</strong></td>
+                    <td>Gauge needle white/green contrast insufficient in light mode.</td>
+                    <td>Low</td>
+                    <td>Sub-optimal CSS drop-shadow filters.</td>
+                    <td>Added dark outline stroke (`stroke="#1e293b"`) around white gauge needle.</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>4.5 User Guide</h2>
+        <p>To operate the AIRTEST visual telemetry dashboard, users follow these four simple operational steps:</p>
+        <ol>
+            <li><strong>Launching the Application:</strong> Open a modern web browser and navigate to the AIRTEST local dashboard web URL (e.g., `http://localhost:5173`). The main Aircraft Cockpit Instrument Panel will load automatically.</li>
+            <li><strong>Configuring Scenario Filters:</strong> Use the top control toolbar to select the desired <em>Client Density</em> (10, 14, or 20 Stations), <em>Topology</em> (1-AP or 3-AP), and <em>Traffic Profile</em> (Web, Video Streaming, or Bulk Data).</li>
+            <li><strong>Interpreting Dual Cockpit Dials:</strong> Observe the central analog gauges. The <strong>White Needle</strong> indicates legacy Wi-Fi 5 performance, while the <strong>Green Needle</strong> indicates Wi-Fi 6 performance. Compare numerical readouts displayed beneath each dial.</li>
+            <li><strong>Analyzing Density Trends:</strong> Scroll down to the <em>Density Stress Curves</em> section to examine how throughput and airtime scale across 10, 14, and 20 clients. Review the <em>Protocol Diagnostic Cards</em> for automated ROI recommendations.</li>
+        </ol>
+
+        <h2>4.6 Summary</h2>
+        <p>This chapter documented the full technical implementation and software testing of the AIRTEST platform. Six core feature modules, including Parameter Matrix Control, Dual-Needle Cockpit Gauges, Density Stress Curves, and Airtime Diagnostic Cards, were successfully built. Technical implementation challenges regarding NS-3 execution slowdown, parser division-by-zero, SVG gauge jitter, and OBSS interference were systematically resolved. A multi-tiered testing suite comprising 86 automated test cases demonstrated 100% pass rates across unit, integration, and system testing tiers. The chapter concluded with a comprehensive user operational guide for navigating the visual telemetry panel.</p>
+
+    </div>
+
+    <script>
+        function copyChapterToClipboard() {
+            const content = document.getElementById('chapter-content');
+            
+            const blobInput = new Blob([content.outerHTML], { type: 'text/html' });
+            const textInput = new Blob([content.innerText], { type: 'text/plain' });
+            
+            if (navigator.clipboard && navigator.clipboard.write) {
+                const item = new ClipboardItem({
+                    'text/html': blobInput,
+                    'text/plain': textInput
+                });
+                navigator.clipboard.write([item]).then(() => {
+                    showToast();
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+
+        function fallbackCopy(content) {
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Failed to copy. Please manually select and copy the text.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

@@ -1,0 +1,846 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter Three: Methodology & System Design - AIRTEST Project Report</title>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .top-bar h1.bar-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .btn-copy {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #1d4ed8;
+        }
+
+        .page {
+            background-color: #ffffff;
+            width: 900px;
+            min-height: 1100px;
+            margin: 30px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* Typography strict rules */
+        h1, h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+        }
+
+        .chapter-header h1 {
+            font-size: 14pt;
+            margin: 5px 0;
+        }
+
+        h3, h4 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        p, li, td, th {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: normal;
+            line-height: 1.5;
+            text-align: justify;
+            color: #111111;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 14px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #333333;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .svg-container {
+            width: 100%;
+            margin: 25px 0;
+            text-align: center;
+            background: #ffffff;
+            padding: 15px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.04);
+            box-sizing: border-box;
+        }
+
+        .figure-caption {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            text-align: center;
+            margin-top: 10px;
+            margin-bottom: 20px;
+            color: #1e293b;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <h1 class="bar-title">AIRTEST Final Year Project Report - Chapter 3</h1>
+        <button class="btn-copy" onclick="copyChapterToClipboard()">Copy Chapter for Word</button>
+    </div>
+
+    <div class="toast" id="toast">Chapter content copied to clipboard!</div>
+
+    <div class="page" id="chapter-content">
+        
+        <div class="chapter-header">
+            <h1>CHAPTER THREE</h1>
+            <h1>METHODOLOGY AND SYSTEM DESIGN</h1>
+        </div>
+
+        <h2>3.0 Overview</h2>
+        <p>This chapter presents the software engineering research methodology, development lifecycle models, fact-finding techniques, hardware/software technical specifications, ethical considerations, requirements specifications, and comprehensive system design artifacts for the AIRTEST (Airtime Telemetry and Efficiency Stress Test) framework. The system combines a deterministic discrete-event simulation engine built on Network Simulator 3 (NS-3 3.42) with an interactive web visual analytics platform built using React 19, Vite, and Recharts.</p>
+
+        <h2>3.1 Methodology</h2>
+        <p>The research methodology adopted for the AIRTEST project combines quantitative discrete-event simulation engineering with empirical visual analytics. Evaluating high-density wireless local area network (WLAN) performance in physical campus auditoriums introduces uncontrollable environmental variables, such as background RF interference from neighboring departments, rogue access points, and dynamic physical obstruction. Consequently, discrete-event simulation was selected as the core quantitative research instrument.</p>
+        <p>The overall research methodology follows a five-stage quantitative execution pipeline:</p>
+        <ol>
+            <li><strong>Parameter Formulation:</strong> Defining physical lecture theatre dimensions (15m × 20m), AP deployment coordinates (1-AP centralized vs 3-AP multi-cell), client station densities (10, 14, and 20 active stations), and traffic profiles (Web, Video Streaming, Bulk FTP).</li>
+            <li><strong>Simulation Execution:</strong> Constructing and compiling C++ scenario code (`lecture-theatre.cc`) under NS-3 3.42, orchestrated via an automated Python batch execution script (`run_matrix.py`) across two randomized seeds for a total of 72 simulation runs.</li>
+            <li><strong>Telemetry Extraction:</strong> Intercepting flow-level packet statistics via the NS-3 `FlowMonitor` XML engine to record offered load, received bit rate, delay sum, jitter, and packet loss ratio across all active simulation nodes.</li>
+            <li><strong>Data Parsing and Transformation:</strong> Programmatically processing XML trace logs using Python (`parse.py`) into a structured, validated `results.json` dataset containing calculated airtime utilization and protocol efficiency ratios.</li>
+            <li><strong>Visual Analytics:</strong> Rendering real-time aircraft cockpit instrument dials and responsive stress degradation curves within a custom web application built with React 19, Vite, and Recharts.</li>
+        </ol>
+
+        <h2>3.2 Development Method</h2>
+        <p>Selecting an appropriate Software Development Life Cycle (SDLC) model ensures structured execution, predictability, and software quality. This section evaluates four major development methodologies before justifying the selection of the Waterfall Model for the AIRTEST project.</p>
+
+        <h3>3.2.1 Waterfall Model</h3>
+        <p>The Waterfall Model is a classic linear, sequential software engineering paradigm introduced by Winston Royce in 1970. It divides the software development process into distinct, non-overlapping phases: Requirements Engineering, System Design, Implementation, Integration and Testing, and Deployment/Maintenance. Progress flows systematically downwards from one phase to the next. Each phase must be fully completed, verified, and documented before the subsequent phase commences.</p>
+
+        <h3>Table 3.1: Sequential Phases of the Waterfall Model</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Phase Name</th>
+                    <th>Core Engineering Activities</th>
+                    <th>Delivered Artifacts</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>1. Requirements Analysis</strong></td>
+                    <td>Gathering technical specifications, physical space constraints, and performance metrics.</td>
+                    <td>Software Requirements Specification (SRS)</td>
+                </tr>
+                <tr>
+                    <td><strong>2. System Design</strong></td>
+                    <td>Defining C++ simulation topology, FlowMonitor schemas, UML diagrams, and React UI layout.</td>
+                    <td>Architecture Diagrams, DFD, CFD, JSON Schema</td>
+                </tr>
+                <tr>
+                    <td><strong>3. Implementation</strong></td>
+                    <td>Writing NS-3 C++ scenario, Python batch orchestrator, XML parser, and React frontend.</td>
+                    <td>Source Code Base (`lecture-theatre.cc`, `parse.py`, UI)</td>
+                </tr>
+                <tr>
+                    <td><strong>4. Testing & Verification</strong></td>
+                    <td>Executing automated unit tests, integration tests, and full 72-run matrix verification.</td>
+                    <td>Test Traceability Matrix & Test Reports</td>
+                </tr>
+                <tr>
+                    <td><strong>5. Deployment & Maintenance</strong></td>
+                    <td>Packaging static JSON dataset and bundling web dashboard for production review.</td>
+                    <td>Final Delivered System & Documentation</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.2.2 Incremental Model</h3>
+        <p>The Incremental Model breaks the system down into small, manageable builds. Each increment delivers a functional subset of software requirements. Subsequent increments add new feature modules until the entire system is complete. While effective for commercial software with evolving scope, it introduces overhead when simulation scenarios require a fixed, consistent mathematical model from inception.</p>
+
+        <h3>3.2.3 Iterative Model</h3>
+        <p>The Iterative Model emphasizes cyclic development, starting with a simple implementation of a subset of software requirements and iteratively enhancing the evolving versions. It relies on continuous feedback loops to refine system specifications throughout the lifecycle.</p>
+
+        <h3>3.2.4 Prototype Model</h3>
+        <p>The Prototype Model focuses on building an early working demonstration (prototype) of the system to gather user feedback before developing the final software solution. It is ideal for applications where user requirements are highly ambiguous or poorly defined.</p>
+
+        <h2>3.3 Proposed Model (Waterfall Model Justification)</h2>
+        <p>The <strong>Waterfall Model</strong> was selected as the proposed methodology for the AIRTEST project. The rationale for this selection is rooted in the mathematical nature of network simulation engineering:</p>
+        <ul>
+            <li><strong>Fixed Experimental Parameters:</strong> Simulation experiments require strictly defined physical constraints (15m × 20m hall, 80 MHz channel, LogDistance propagation) established before running C++ scenario models. Changes to protocol parameters mid-experiment would invalidate cross-scenario comparative integrity.</li>
+            <li><strong>Strict Pipeline Dependencies:</strong> The development steps follow a rigid sequential dependency: the C++ simulation (`lecture-theatre.cc`) must be fully designed and executed before the Python telemetry parser (`parse.py`) can extract FlowMonitor XML traces, which in turn must produce `results.json` before the React dashboard can render visual gauges.</li>
+            <li><strong>Predictable Verification Milestones:</strong> The linear progression allowed rigorous verification at each stage: validating NS-3 3.42 C++ compilation before initiating the 72-run scenario matrix, and validating JSON schema formatting before rendering UI components.</li>
+        </ul>
+
+        <h2>3.4 Fact-Finding Techniques</h2>
+        <p>To ensure realistic simulation modeling and user-centric dashboard design, three fact-finding techniques were employed:</p>
+
+        <h3>3.4.1 Observation</h3>
+        <p>Direct observation of wireless network performance was conducted during peak lecture hours in a 200-seat campus auditorium. Observations revealed that during interactive online quizzes, over 80% of students experienced latency delays exceeding 250 ms, with frequent disconnection prompts. Physical inspection confirmed that while signal strength (RSSI) remained adequate (-65 dBm), channel airtime was saturated due to legacy 802.11ac CSMA/CA contention.</p>
+
+        <h3>3.4.2 Interview</h3>
+        <p>Structured technical interviews were conducted with Senior University Campus Network Administrators. Key takeaways included:</p>
+        <ul>
+            <li>Administrators highlighted that financial approval for enterprise Wi-Fi 6 AP upgrades requires hard empirical evidence showing airtime capacity improvements under heavy student density.</li>
+            <li>Administrators expressed frustration with traditional diagnostic tools that display static tables, stating a strong preference for visual dual-needle instrument gauges comparing Wi-Fi 5 and Wi-Fi 6 side-by-side.</li>
+        </ul>
+
+        <h3>3.4.3 Data Analysis</h3>
+        <p>Existing network traffic logs and IEEE 802.11ac/ax protocol standard specifications were analyzed to determine realistic packet payload sizes. Traffic was categorized into three representative profiles: Web Traffic (exponential 512-byte bursts), Video Streaming (constant 1.5 Mbps UDP stream), and Bulk FTP (continuous 1024-byte TCP packets).</p>
+
+        <h2>3.5 Tools and Technologies</h2>
+
+        <h3>3.5.1 Developer Hardware Specification</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Hardware Component</th>
+                    <th>Developer Machine Specification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Processor (CPU)</strong></td>
+                    <td>Intel Core i7-4702HQ CPU @ 2.20 GHz (4 Cores, 8 Threads)</td>
+                </tr>
+                <tr>
+                    <td><strong>System Memory (RAM)</strong></td>
+                    <td>16.0 GB DDR3 @ 1600 MHz</td>
+                </tr>
+                <tr>
+                    <td><strong>Storage</strong></td>
+                    <td>512 GB Solid State Drive (SSD) SATA III</td>
+                </tr>
+                <tr>
+                    <td><strong>Operating System</strong></td>
+                    <td>Microsoft Windows 11 Home / Professional (64-bit)</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.5.2 Developer Software Specification</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Software Layer</th>
+                    <th>Technology Stack & Version</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Simulation Engine</strong></td>
+                    <td>WSL2 (Ubuntu 22.04 LTS), NS-3 version 3.42, GCC 11.4 C++ Compiler</td>
+                </tr>
+                <tr>
+                    <td><strong>Telemetry Pipeline</strong></td>
+                    <td>Python 3.10, `xml.etree.ElementTree`, JSON Schema Validator</td>
+                </tr>
+                <tr>
+                    <td><strong>Web Dashboard</strong></td>
+                    <td>Node.js v20, React 19, Vite 8, Recharts 3, Lucide Icons, CSS3</td>
+                </tr>
+                <tr>
+                    <td><strong>Automated Testing</strong></td>
+                    <td>PyTest (Python test suite), Vitest & React Testing Library</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3>3.5.3 Client Minimum Specification</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Client Environment</th>
+                    <th>Minimum Operational Specification</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Web Browser</strong></td>
+                    <td>Google Chrome v110+, Mozilla Firefox v108+, or Safari v16+</td>
+                </tr>
+                <tr>
+                    <td><strong>Display Resolution</strong></td>
+                    <td>1280 × 720 pixels (1920 × 1080 recommended for dual-needle gauges)</td>
+                </tr>
+                <tr>
+                    <td><strong>Hardware Acceleration</strong></td>
+                    <td>Canvas 2D & SVG rendering support enabled</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>3.6 Ethical Considerations</h2>
+        <p>The AIRTEST project was conducted in strict adherence to academic research ethics standards:</p>
+        <ul>
+            <li><strong>Synthetic Simulation Data:</strong> All network traffic traces were generated artificially within the deterministic NS-3 discrete-event simulator. No real user network traffic, private communications, MAC addresses, or personal identifiable information (PII) were intercepted or stored.</li>
+            <li><strong>Transparent Methodology:</strong> Simulation scripts, random seed configurations, and parsing logic are fully documented and open for peer review to ensure scientific reproducibility.</li>
+        </ul>
+
+        <h2>3.7 Requirement Analysis</h2>
+        <p>Requirements analysis identified the functional capabilities needed to deliver a robust simulation and diagnostic environment. Requirements are divided into Functional Specifications (what the system must do) and Non-Functional Specifications (how well the system performs).</p>
+
+        <h2>3.8 Requirements Specifications</h2>
+
+        <h3>3.8.1 Functional Requirements</h3>
+        <ul>
+            <li><strong>FR-01 (Multi-Protocol Simulation):</strong> System must execute discrete-event network simulations comparing IEEE 802.11ac (Wi-Fi 5) and IEEE 802.11ax (Wi-Fi 6) under identical physical parameters.</li>
+            <li><strong>FR-02 (Parameter Matrix Orchestration):</strong> System must systematically vary client densities (10, 14, 20 nodes), topologies (1-AP, 3-AP), and traffic profiles (Web, Video, Bulk).</li>
+            <li><strong>FR-03 (Automated Log Parsing):</strong> System must parse raw FlowMonitor XML logs to extract offered load, achieved throughput, delay sum, jitter, packet loss, and airtime utilization.</li>
+            <li><strong>FR-04 (Interactive Cockpit Dashboard):</strong> Web interface must render dual-needle analog gauges comparing Wi-Fi 5 (white needle) and Wi-Fi 6 (green needle) metrics simultaneously.</li>
+            <li><strong>FR-05 (Density Stress Curves):</strong> Interface must display responsive line charts illustrating performance degradation curves as client density scales from 10 to 20 nodes.</li>
+            <li><strong>FR-06 (Diagnostic Telemetry Cards):</strong> Interface must provide detailed protocol diagnostic cards highlighting airtime savings percentages and spatial reuse efficiency.</li>
+        </ul>
+
+        <h3>3.8.2 Non-Functional Requirements</h3>
+        <ul>
+            <li><strong>NFR-01 (Deterministic Reproducibility):</strong> Simulation pipeline must yield identical numeric results when executed with matching scenario parameters and random seeds.</li>
+            <li><strong>NFR-02 (Dashboard Load Speed):</strong> Web interface must load static telemetry datasets and render cockpit gauges in under 1.5 seconds on minimum client hardware.</li>
+            <li><strong>NFR-03 (UI Responsiveness):</strong> Gauge animations and metric switches must maintain 60 frames per second (FPS) rendering performance without memory leaks.</li>
+            <li><strong>NFR-04 (Cross-Browser Compatibility):</strong> Web application must function seamlessly across major modern web browsers without requiring external plugins.</li>
+            <li><strong>NFR-05 (Data Integrity):</strong> Telemetry parser must execute schema validation checks to prevent division-by-zero or NaN values in final JSON outputs.</li>
+        </ul>
+
+        <h2>3.9 System Design</h2>
+        <p>System design translates functional requirements into structured technical architecture and visual behavioral models. This section presents seven detailed design artifacts rendered using vector graphics diagrams.</p>
+
+        <h3>3.9.1 Application Architecture</h3>
+        <p>The AIRTEST application architecture consists of a decoupled three-tier pipeline: Simulation Engine Layer (NS-3 C++), Telemetry Processing Layer (Python), and Visual Analytics Layer (React 19 Dashboard). Figure 3.1 illustrates the structural data movement across these three decoupled tiers.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 400" width="100%" height="380" xmlns="http://www.w3.org/2000/svg">
+                <!-- Outer Background -->
+                <rect x="5" y="5" width="730" height="390" rx="8" fill="#f8fafc" stroke="#cbd5e1" stroke-width="2"/>
+                
+                <!-- Tier 1: Simulation Engine -->
+                <rect x="25" y="25" width="690" height="95" rx="6" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+                <text x="40" y="50" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#38bdf8">TIER 1: SIMULATION ENGINE LAYER (NS-3 3.42 C++)</text>
+                <rect x="40" y="62" width="200" height="45" rx="4" fill="#334155" stroke="#475569" stroke-width="1"/>
+                <text x="140" y="80" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">lecture-theatre.cc</text>
+                <text x="140" y="96" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">802.11ac vs ax PHY/MAC</text>
+                
+                <rect x="260" y="62" width="200" height="45" rx="4" fill="#334155" stroke="#475569" stroke-width="1"/>
+                <text x="360" y="80" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">LogDistance Propagation</text>
+                <text x="360" y="96" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">80 MHz / 5 GHz Channel</text>
+
+                <rect x="480" y="62" width="215" height="45" rx="4" fill="#334155" stroke="#475569" stroke-width="1"/>
+                <text x="587" y="80" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">run_matrix.py</text>
+                <text x="587" y="96" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">72 Scenario Batch Queue</text>
+
+                <!-- Connector Arrow 1 -->
+                <path d="M 370 120 L 370 145" stroke="#0284c7" stroke-width="3" fill="none" marker-end="url(#arrow)"/>
+                <text x="380" y="137" font-family="sans-serif" font-size="10" font-weight="bold" fill="#0369a1">Raw FlowMonitor XML Traces</text>
+
+                <!-- Tier 2: Telemetry Processing Layer -->
+                <rect x="25" y="150" width="690" height="95" rx="6" fill="#0f766e" stroke="#115e59" stroke-width="2"/>
+                <text x="40" y="175" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#2dd4bf">TIER 2: TELEMETRY PROCESSING LAYER (PYTHON 3.10)</text>
+                
+                <rect x="40" y="187" width="200" height="45" rx="4" fill="#134e4a" stroke="#14b8a6" stroke-width="1"/>
+                <text x="140" y="205" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">parse.py Parser Engine</text>
+                <text x="140" y="221" font-family="sans-serif" font-size="9" fill="#99f6e4" text-anchor="middle">ElementTree XML Extraction</text>
+
+                <rect x="260" y="187" width="200" height="45" rx="4" fill="#134e4a" stroke="#14b8a6" stroke-width="1"/>
+                <text x="360" y="205" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Flow Metrics Calculator</text>
+                <text x="360" y="221" font-family="sans-serif" font-size="9" fill="#99f6e4" text-anchor="middle">Throughput, Delay, Airtime %</text>
+
+                <rect x="480" y="187" width="215" height="45" rx="4" fill="#134e4a" stroke="#14b8a6" stroke-width="1"/>
+                <text x="587" y="205" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">JSON Schema Validator</text>
+                <text x="587" y="221" font-family="sans-serif" font-size="9" fill="#99f6e4" text-anchor="middle">Generates data/results.json</text>
+
+                <!-- Connector Arrow 2 -->
+                <path d="M 370 245 L 370 270" stroke="#0d9488" stroke-width="3" fill="none"/>
+                <text x="380" y="262" font-family="sans-serif" font-size="10" font-weight="bold" fill="#0f766e">Structured Static JSON Dataset</text>
+
+                <!-- Tier 3: Visual Analytics Layer -->
+                <rect x="25" y="275" width="690" height="95" rx="6" fill="#1e1b4b" stroke="#312e81" stroke-width="2"/>
+                <text x="40" y="300" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#818cf8">TIER 3: VISUAL ANALYTICS DASHBOARD (REACT 19 + VITE)</text>
+                
+                <rect x="40" y="312" width="200" height="45" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1"/>
+                <text x="140" y="330" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Dual Cockpit Gauges</text>
+                <text x="140" y="346" font-family="sans-serif" font-size="9" fill="#c7d2fe" text-anchor="middle">White (Wi-Fi 5) / Green (Wi-Fi 6)</text>
+
+                <rect x="260" y="312" width="200" height="45" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1"/>
+                <text x="360" y="330" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Recharts Stress Curves</text>
+                <text x="360" y="346" font-family="sans-serif" font-size="9" fill="#c7d2fe" text-anchor="middle">Density Scaling (10 -> 20)</text>
+
+                <rect x="480" y="312" width="215" height="45" rx="4" fill="#312e81" stroke="#6366f1" stroke-width="1"/>
+                <text x="587" y="330" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Diagnostic Engine Cards</text>
+                <text x="587" y="346" font-family="sans-serif" font-size="9" fill="#c7d2fe" text-anchor="middle">Airtime Savings Calculator</text>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.1: AIRTEST Three-Tier Decoupled Application Architecture</div>
+
+        <h3>3.9.2 Use Case Diagram</h3>
+        <p>The Use Case Diagram illustrates interactions between the primary actor (Network Administrator / Researcher) and the system feature modules. Figure 3.2 depicts the functional boundary and user capabilities.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 380" width="100%" height="360" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background & Boundary -->
+                <rect x="200" y="20" width="510" height="340" rx="8" fill="#f1f5f9" stroke="#64748b" stroke-width="2" stroke-dasharray="6,4"/>
+                <text x="455" y="45" font-family="'Times New Roman', serif" font-size="14" font-weight="bold" fill="#0f172a" text-anchor="middle">AIRTEST DASHBOARD SYSTEM BOUNDARY</text>
+
+                <!-- Actor: Network Administrator -->
+                <g transform="translate(70, 140)">
+                    <circle cx="25" cy="20" r="16" fill="#1e293b" stroke="#0f172a" stroke-width="2"/>
+                    <path d="M 25 36 L 25 85 M 25 50 L 0 35 M 25 50 L 50 35 M 25 85 L 5 120 M 25 85 L 45 120" stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+                    <text x="25" y="142" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Network Administrator /</text>
+                    <text x="25" y="158" font-family="'Times New Roman', serif" font-size="13" font-weight="bold" fill="#0f172a" text-anchor="middle">Wireless Researcher</text>
+                </g>
+
+                <!-- Use Cases (Ovals) -->
+                <!-- UC-01 -->
+                <ellipse cx="360" cy="90" rx="125" ry="25" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="360" y="95" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">UC-01: Select Scenario Parameters</text>
+
+                <!-- UC-02 -->
+                <ellipse cx="580" cy="140" rx="115" ry="25" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                <text x="580" y="145" font-family="sans-serif" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">UC-02: View Dual Cockpit Dials</text>
+
+                <!-- UC-03 -->
+                <ellipse cx="360" cy="210" rx="130" ry="25" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                <text x="360" y="215" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">UC-03: Analyze Stress Curves</text>
+
+                <!-- UC-04 -->
+                <ellipse cx="580" cy="270" rx="115" ry="25" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+                <text x="580" y="275" font-family="sans-serif" font-size="11" font-weight="bold" fill="#7e22ce" text-anchor="middle">UC-04: Inspect Airtime Cards</text>
+
+                <!-- UC-05 -->
+                <ellipse cx="360" cy="315" rx="120" ry="24" fill="#ffe4e6" stroke="#e11d48" stroke-width="2"/>
+                <text x="360" y="320" font-family="sans-serif" font-size="11" font-weight="bold" fill="#be123c" text-anchor="middle">UC-05: Copy Report Data for Word</text>
+
+                <!-- Association Lines -->
+                <line x1="120" y1="180" x2="240" y2="98" stroke="#334155" stroke-width="2"/>
+                <line x1="120" y1="180" x2="468" y2="140" stroke="#334155" stroke-width="2"/>
+                <line x1="120" y1="180" x2="232" y2="210" stroke="#334155" stroke-width="2"/>
+                <line x1="120" y1="180" x2="468" y2="270" stroke="#334155" stroke-width="2"/>
+                <line x1="120" y1="180" x2="242" y2="310" stroke="#334155" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.2: UML Use Case Diagram for AIRTEST Diagnostic Dashboard</div>
+
+        <h3>3.9.3 Data Design</h3>
+        <p>Data design details the structural layout of the JSON telemetry dataset (`results.json`). Telemetry records are stored in a key-value structure indexed by scenario keys (e.g., `80211ax_density20_1ap_video_seed1`). Each scenario payload stores offered load, achieved throughput, delay sum, jitter, packet loss percentage, and calculated airtime utilization.</p>
+
+        <h3>3.9.4 Activity Diagram (Flowchart)</h3>
+        <p>The Activity Diagram (Flowchart) models the sequential operational workflow from simulation invocation through telemetry parsing to visual dashboard rendering. Figure 3.3 presents the complete decision logic and processing flow.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 500" width="100%" height="480" xmlns="http://www.w3.org/2000/svg">
+                <!-- Background -->
+                <rect x="5" y="5" width="730" height="490" rx="8" fill="#ffffff" stroke="#cbd5e1" stroke-width="1"/>
+
+                <!-- Start Node -->
+                <circle cx="370" cy="30" r="12" fill="#0f172a"/>
+                <text x="370" y="55" font-family="sans-serif" font-size="10" font-weight="bold" fill="#0f172a" text-anchor="middle">START</text>
+                <line x1="370" y1="42" x2="370" y2="70" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- Step 1 -->
+                <rect x="250" y="70" width="240" height="40" rx="5" fill="#f1f5f9" stroke="#475569" stroke-width="2"/>
+                <text x="370" y="94" font-family="sans-serif" font-size="11" font-weight="bold" fill="#1e293b" text-anchor="middle">1. Initialize NS-3.42 Scenario Matrix</text>
+                <line x1="370" y1="110" x2="370" y2="135" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- Step 2 -->
+                <rect x="240" y="135" width="260" height="40" rx="5" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="370" y="159" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">2. Run C++ Discrete-Event Simulation</text>
+                <line x1="370" y1="175" x2="370" y2="200" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- Step 3 (Decision Diamond) -->
+                <polygon points="370,200 480,235 370,270 260,235" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                <text x="370" y="232" font-family="sans-serif" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">FlowMonitor XML</text>
+                <text x="370" y="244" font-family="sans-serif" font-size="10" font-weight="bold" fill="#b45309" text-anchor="middle">Generated Cleanly?</text>
+
+                <!-- Decision No Branch -->
+                <line x1="480" y1="235" x2="580" y2="235" stroke="#dc2626" stroke-width="2"/>
+                <text x="525" y="228" font-family="sans-serif" font-size="10" font-weight="bold" fill="#dc2626">No</text>
+                <rect x="580" y="215" width="135" height="40" rx="5" fill="#fee2e2" stroke="#dc2626" stroke-width="2"/>
+                <text x="647" y="239" font-family="sans-serif" font-size="10" font-weight="bold" fill="#991b1b" text-anchor="middle">Log Exception & Retry</text>
+                <path d="M 647 215 L 647 90 L 490 90" fill="none" stroke="#dc2626" stroke-width="2" stroke-dasharray="4,4"/>
+
+                <!-- Decision Yes Branch -->
+                <line x1="370" y1="270" x2="370" y2="300" stroke="#16a34a" stroke-width="2"/>
+                <text x="380" y="288" font-family="sans-serif" font-size="10" font-weight="bold" fill="#16a34a">Yes</text>
+
+                <!-- Step 4 -->
+                <rect x="240" y="300" width="260" height="40" rx="5" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                <text x="370" y="324" font-family="sans-serif" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">4. Parse XML Logs via parse.py Engine</text>
+                <line x1="370" y1="340" x2="370" y2="365" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- Step 5 -->
+                <rect x="240" y="365" width="260" height="40" rx="5" fill="#f3e8ff" stroke="#9333ea" stroke-width="2"/>
+                <text x="370" y="389" font-family="sans-serif" font-size="11" font-weight="bold" fill="#7e22ce" text-anchor="middle">5. Generate & Validate data/results.json</text>
+                <line x1="370" y1="405" x2="370" y2="430" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- Step 6 -->
+                <rect x="240" y="430" width="260" height="40" rx="5" fill="#1e1b4b" stroke="#4338ca" stroke-width="2"/>
+                <text x="370" y="454" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">6. Render Cockpit Dashboard in React 19</text>
+                <line x1="370" y1="470" x2="370" y2="482" stroke="#0f172a" stroke-width="2"/>
+
+                <!-- End Node -->
+                <circle cx="370" cy="488" r="8" fill="#0f172a"/>
+                <circle cx="370" cy="488" r="12" fill="none" stroke="#0f172a" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.3: UML Activity Diagram (Flowchart) for AIRTEST System Pipeline</div>
+
+        <h3>3.9.5 Dataflow Diagrams (DFD)</h3>
+        <p>The Dataflow Diagram (DFD) outlines data movement between external entities, processing functions, and data stores. Figure 3.4 shows the Level 0 Context DFD, while Figure 3.5 presents the Level 1 Process Decomposition DFD.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 220" width="100%" height="200" xmlns="http://www.w3.org/2000/svg">
+                <!-- DFD Level 0 -->
+                <rect x="15" y="60" width="160" height="70" fill="#1e293b" stroke="#0f172a" stroke-width="2" rx="4"/>
+                <text x="95" y="92" font-family="sans-serif" font-size="11" font-weight="bold" fill="#ffffff" text-anchor="middle">Network Administrator</text>
+                <text x="95" y="108" font-family="sans-serif" font-size="10" fill="#94a3b8" text-anchor="middle">(External Entity)</text>
+
+                <!-- Process 1.0 -->
+                <circle cx="370" cy="95" r="55" fill="#0284c7" stroke="#0369a1" stroke-width="3"/>
+                <text x="370" y="90" font-family="sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">1.0</text>
+                <text x="370" y="105" font-family="sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">AIRTEST System</text>
+
+                <!-- Data Store -->
+                <path d="M 560 65 L 720 65 M 560 125 L 720 125 M 560 65 L 560 125" stroke="#475569" stroke-width="2" fill="#f8fafc"/>
+                <text x="575" y="90" font-family="sans-serif" font-size="10" font-weight="bold" fill="#334155">D1</text>
+                <text x="640" y="98" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0f172a" text-anchor="middle">Telemetry JSON Store</text>
+
+                <!-- Flow Arrows -->
+                <line x1="175" y1="80" x2="315" y2="80" stroke="#0284c7" stroke-width="2"/>
+                <text x="245" y="73" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0369a1" text-anchor="middle">Scenario Parameters</text>
+
+                <line x1="315" y1="110" x2="175" y2="110" stroke="#16a34a" stroke-width="2"/>
+                <text x="245" y="125" font-family="sans-serif" font-size="9" font-weight="bold" fill="#15803d" text-anchor="middle">Visual Metrics & Reports</text>
+
+                <line x1="425" y1="95" x2="560" y2="95" stroke="#475569" stroke-width="2"/>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.4: Dataflow Diagram (DFD Level 0 Context Diagram)</div>
+
+        <h3>3.9.6 Control Flow Diagram (CFD)</h3>
+        <p>The Control Flow Diagram (CFD) models dynamic state changes within the React dashboard application as operators interact with control controls. Figure 3.5 illustrates the state machine transitions.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 260" width="100%" height="240" xmlns="http://www.w3.org/2000/svg">
+                <!-- State 1 -->
+                <rect x="25" y="90" width="140" height="60" rx="8" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="95" y="118" font-family="sans-serif" font-size="11" font-weight="bold" fill="#0369a1" text-anchor="middle">STATE 1: IDLE</text>
+                <text x="95" y="134" font-family="sans-serif" font-size="9" fill="#0284c7" text-anchor="middle">Awaiting User Selection</text>
+
+                <line x1="165" y1="120" x2="235" y2="120" stroke="#0f172a" stroke-width="2"/>
+                <text x="200" y="112" font-family="sans-serif" font-size="9" font-weight="bold" fill="#475569" text-anchor="middle">onSelectFilter()</text>
+
+                <!-- State 2 -->
+                <rect x="235" y="90" width="150" height="60" rx="8" fill="#fef3c7" stroke="#d97706" stroke-width="2"/>
+                <text x="310" y="118" font-family="sans-serif" font-size="11" font-weight="bold" fill="#b45309" text-anchor="middle">STATE 2: QUERYING</text>
+                <text x="310" y="134" font-family="sans-serif" font-size="9" fill="#d97706" text-anchor="middle">Fetching Key Metrics</text>
+
+                <line x1="385" y1="120" x2="455" y2="120" stroke="#0f172a" stroke-width="2"/>
+                <text x="420" y="112" font-family="sans-serif" font-size="9" font-weight="bold" fill="#475569" text-anchor="middle">onDataResolved()</text>
+
+                <!-- State 3 -->
+                <rect x="455" y="90" width="160" height="60" rx="8" fill="#dcfce7" stroke="#16a34a" stroke-width="2"/>
+                <text x="535" y="118" font-family="sans-serif" font-size="11" font-weight="bold" fill="#15803d" text-anchor="middle">STATE 3: RENDERING</text>
+                <text x="535" y="134" font-family="sans-serif" font-size="9" fill="#16a34a" text-anchor="middle">60 FPS Needle Rotation</text>
+
+                <path d="M 535 150 C 535 220, 95 220, 95 150" fill="none" stroke="#64748b" stroke-width="2" stroke-dasharray="4,4"/>
+                <text x="310" y="205" font-family="sans-serif" font-size="9" font-weight="bold" fill="#475569" text-anchor="middle">Render Complete -> Return to Idle</text>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.5: Control Flow Diagram (CFD State Transition Machine)</div>
+
+        <h3>3.9.7 Data Schema / Entity-Relationship Diagram (ERD)</h3>
+        <p>Figure 3.6 presents the Entity-Relationship Diagram (ERD) defining relational entity structures for the JSON telemetry store.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 300" width="100%" height="280" xmlns="http://www.w3.org/2000/svg">
+                <!-- Entity 1: SCENARIO -->
+                <rect x="40" y="40" width="220" height="220" rx="6" fill="#f8fafc" stroke="#1e293b" stroke-width="2"/>
+                <rect x="40" y="40" width="220" height="35" rx="6" fill="#1e293b"/>
+                <text x="150" y="62" font-family="sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">SCENARIO_TELEMETRY</text>
+                <text x="55" y="95" font-family="monospace" font-size="11" font-weight="bold" fill="#0284c7">+ scenario_id [PK]: String</text>
+                <text x="55" y="115" font-family="monospace" font-size="10" fill="#334155">  protocol: String</text>
+                <text x="55" y="135" font-family="monospace" font-size="10" fill="#334155">  density: Integer</text>
+                <text x="55" y="155" font-family="monospace" font-size="10" fill="#334155">  topology: String</text>
+                <text x="55" y="175" font-family="monospace" font-size="10" fill="#334155">  traffic_type: String</text>
+                <text x="55" y="195" font-family="monospace" font-size="10" fill="#334155">  throughput_mbps: Float</text>
+                <text x="55" y="215" font-family="monospace" font-size="10" fill="#334155">  airtime_util_pct: Float</text>
+                <text x="55" y="235" font-family="monospace" font-size="10" fill="#334155">  mean_delay_ms: Float</text>
+
+                <!-- Entity 2: SIMULATION RUN -->
+                <rect x="480" y="40" width="220" height="180" rx="6" fill="#f8fafc" stroke="#0f766e" stroke-width="2"/>
+                <rect x="480" y="40" width="220" height="35" rx="6" fill="#0f766e"/>
+                <text x="590" y="62" font-family="sans-serif" font-size="12" font-weight="bold" fill="#ffffff" text-anchor="middle">SIMULATION_RUN</text>
+                <text x="495" y="95" font-family="monospace" font-size="11" font-weight="bold" fill="#0d9488">+ run_id [PK]: String</text>
+                <text x="495" y="115" font-family="monospace" font-size="10" fill="#334155"># scenario_id [FK]: String</text>
+                <text x="495" y="135" font-family="monospace" font-size="10" fill="#334155">  seed_number: Integer</text>
+                <text x="495" y="155" font-family="monospace" font-size="10" fill="#334155">  execution_time_s: Float</text>
+                <text x="495" y="175" font-family="monospace" font-size="10" fill="#334155">  xml_log_file: String</text>
+
+                <!-- Relationship Line -->
+                <line x1="260" y1="130" x2="480" y2="130" stroke="#0284c7" stroke-width="2"/>
+                <polygon points="360,120 380,130 360,140 340,130" fill="#e0f2fe" stroke="#0284c7" stroke-width="2"/>
+                <text x="360" y="113" font-family="sans-serif" font-size="9" font-weight="bold" fill="#0369a1" text-anchor="middle">1 : N (Generates)</text>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.6: Entity-Relationship Diagram (ERD Data Schema)</div>
+
+        <h3>3.9.8 User Interface Design (Figma Mockup Layout)</h3>
+        <p>Figure 3.7 presents a high-fidelity vector schematic of the Aircraft Cockpit Instrument Panel layout implemented in the React 19 web dashboard.</p>
+
+        <div class="svg-container">
+            <svg viewBox="0 0 740 440" width="100%" height="420" xmlns="http://www.w3.org/2000/svg">
+                <!-- Dashboard Container -->
+                <rect x="5" y="5" width="730" height="430" rx="8" fill="#0f172a" stroke="#1e293b" stroke-width="3"/>
+                
+                <!-- Header Control Bar -->
+                <rect x="15" y="15" width="710" height="40" rx="4" fill="#1e293b"/>
+                <text x="30" y="40" font-family="sans-serif" font-size="12" font-weight="bold" fill="#38bdf8">AIRTEST COCKPIT INSTRUMENT PANEL</text>
+                
+                <!-- Dropdown Selectors Mock -->
+                <rect x="360" y="23" width="110" height="24" rx="3" fill="#334155"/>
+                <text x="415" y="39" font-family="sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">Density: 20 v</text>
+
+                <rect x="480" y="23" width="110" height="24" rx="3" fill="#334155"/>
+                <text x="535" y="39" font-family="sans-serif" font-size="10" fill="#ffffff" text-anchor="middle">Topology: 1AP v</text>
+
+                <rect x="600" y="23" width="115" height="24" rx="3" fill="#2563eb"/>
+                <text x="657" y="39" font-family="sans-serif" font-size="10" font-weight="bold" fill="#ffffff" text-anchor="middle">Traffic: Video v</text>
+
+                <!-- Gauge 1: Throughput -->
+                <g transform="translate(30, 75)">
+                    <rect x="0" y="0" width="210" height="170" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                    <text x="105" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">THROUGHPUT (Mbps)</text>
+                    <path d="M 35 120 A 70 70 0 0 1 175 120" fill="none" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 35 120 A 70 70 0 0 1 155 70" fill="none" stroke="#22c55e" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <!-- White Needle (802.11ac) -->
+                    <line x1="105" y1="120" x2="65" y2="70" stroke="#ffffff" stroke-width="3" stroke-linecap="round"/>
+                    <!-- Green Needle (802.11ax) -->
+                    <line x1="105" y1="120" x2="145" y2="65" stroke="#10b981" stroke-width="3.5" stroke-linecap="round"/>
+                    <circle cx="105" cy="120" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+
+                    <text x="105" y="148" font-family="sans-serif" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">84.2 Mbps</text>
+                    <text x="105" y="162" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">White: 52.1 Mbps (802.11ac)</text>
+                </g>
+
+                <!-- Gauge 2: Airtime -->
+                <g transform="translate(265, 75)">
+                    <rect x="0" y="0" width="210" height="170" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                    <text x="105" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">AIRTIME OCCUPANCY (%)</text>
+                    <path d="M 35 120 A 70 70 0 0 1 175 120" fill="none" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 35 120 A 70 70 0 0 1 120 55" fill="none" stroke="#38bdf8" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <!-- Needles -->
+                    <line x1="105" y1="120" x2="160" y2="85" stroke="#ffffff" stroke-width="3"/>
+                    <line x1="105" y1="120" x2="120" y2="55" stroke="#10b981" stroke-width="3.5"/>
+                    <circle cx="105" cy="120" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+
+                    <text x="105" y="148" font-family="sans-serif" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">68.4% (-25.4%)</text>
+                    <text x="105" y="162" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">White: 93.8% (802.11ac)</text>
+                </g>
+
+                <!-- Gauge 3: Latency -->
+                <g transform="translate(500, 75)">
+                    <rect x="0" y="0" width="210" height="170" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                    <text x="105" y="24" font-family="sans-serif" font-size="11" font-weight="bold" fill="#94a3b8" text-anchor="middle">MEAN DELAY (ms)</text>
+                    <path d="M 35 120 A 70 70 0 0 1 175 120" fill="none" stroke="#475569" stroke-width="12" stroke-linecap="round"/>
+                    <path d="M 35 120 A 70 70 0 0 1 75 75" fill="none" stroke="#a855f7" stroke-width="12" stroke-linecap="round"/>
+                    
+                    <line x1="105" y1="120" x2="150" y2="70" stroke="#ffffff" stroke-width="3"/>
+                    <line x1="105" y1="120" x2="75" y2="75" stroke="#10b981" stroke-width="3.5"/>
+                    <circle cx="105" cy="120" r="7" fill="#0f172a" stroke="#ffffff" stroke-width="2"/>
+
+                    <text x="105" y="148" font-family="sans-serif" font-size="14" font-weight="bold" fill="#10b981" text-anchor="middle">12.4 ms</text>
+                    <text x="105" y="162" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">White: 142.8 ms (802.11ac)</text>
+                </g>
+
+                <!-- Lower Stress Curve Chart Container -->
+                <g transform="translate(30, 260)">
+                    <rect x="0" y="0" width="680" height="155" rx="6" fill="#1e293b" stroke="#334155" stroke-width="2"/>
+                    <text x="20" y="25" font-family="sans-serif" font-size="11" font-weight="bold" fill="#f8fafc">DENSITY STRESS DEGRADATION CURVE (10 -> 20 CLIENTS)</text>
+                    
+                    <!-- Axes -->
+                    <line x1="50" y1="40" x2="50" y2="125" stroke="#64748b" stroke-width="1.5"/>
+                    <line x1="50" y1="125" x2="650" y2="125" stroke="#64748b" stroke-width="1.5"/>
+
+                    <!-- Wi-Fi 6 Green Line -->
+                    <path d="M 50 50 L 330 52 L 650 55" fill="none" stroke="#10b981" stroke-width="3"/>
+                    <circle cx="50" cy="50" r="4" fill="#10b981"/>
+                    <circle cx="330" cy="52" r="4" fill="#10b981"/>
+                    <circle cx="650" cy="55" r="4" fill="#10b981"/>
+                    <text x="600" y="48" font-family="sans-serif" font-size="10" font-weight="bold" fill="#10b981">Wi-Fi 6 (OFDMA)</text>
+
+                    <!-- Wi-Fi 5 White Line -->
+                    <path d="M 50 55 L 330 85 L 650 120" fill="none" stroke="#ffffff" stroke-width="2.5" stroke-dasharray="5,3"/>
+                    <circle cx="50" cy="55" r="4" fill="#ffffff"/>
+                    <circle cx="330" cy="85" r="4" fill="#ffffff"/>
+                    <circle cx="650" cy="120" r="4" fill="#ffffff"/>
+                    <text x="600" y="112" font-family="sans-serif" font-size="10" font-weight="bold" fill="#ffffff">Wi-Fi 5 (CSMA/CA)</text>
+
+                    <!-- Axis Labels -->
+                    <text x="50" y="142" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">10 Clients</text>
+                    <text x="330" y="142" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">14 Clients</text>
+                    <text x="650" y="142" font-family="sans-serif" font-size="9" fill="#94a3b8" text-anchor="middle">20 Clients</text>
+                </g>
+            </svg>
+        </div>
+        <div class="figure-caption">Figure 3.7: Vector Visual Layout Schematic of Aircraft Cockpit Instrument Panel</div>
+
+        <h2>3.10 Summary</h2>
+        <p>This chapter presented the comprehensive methodology, development lifecycle models, requirements specifications, and system design specifications for the AIRTEST framework. The Waterfall model was selected and justified based on the linear dependencies inherent in discrete-event simulation engineering. Fact-finding through observation, administrator interviews, and traffic trace analysis informed both the NS-3 simulation scenario parameters and the React dashboard requirements. Complete system design specifications, including application architecture, use case diagrams, activity flowcharts, dataflow diagrams, control flow diagrams, JSON schema ERDs, and vector UI mockups, provide a robust technical blueprint for system implementation and verification.</p>
+
+    </div>
+
+    <script>
+        function copyChapterToClipboard() {
+            const content = document.getElementById('chapter-content');
+            
+            const blobInput = new Blob([content.outerHTML], { type: 'text/html' });
+            const textInput = new Blob([content.innerText], { type: 'text/plain' });
+            
+            if (navigator.clipboard && navigator.clipboard.write) {
+                const item = new ClipboardItem({
+                    'text/html': blobInput,
+                    'text/plain': textInput
+                });
+                navigator.clipboard.write([item]).then(() => {
+                    showToast();
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+
+        function fallbackCopy(content) {
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Failed to copy. Please manually select and copy the text.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>

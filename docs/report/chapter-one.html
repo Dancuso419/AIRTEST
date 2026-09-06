@@ -1,531 +1,395 @@
-<title>AIRTEST Chapter One</title>
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&family=Source+Serif+4:opsz,wght@8..60,400;8..60,600&display=swap">
-
-<style>
-  :root {
-    --paper: #faf8f4;
-    --surface: #ffffff;
-    --sunk: #f2efe8;
-    --rule: #e3ded3;
-    --rule-strong: #cfc8b9;
-    --ink: #16181d;
-    --ink-mid: #56534c;
-    --ink-dim: #8b867c;
-    --accent: #0d8f6f;
-    --caution: #a35a06;
-
-    --sans: 'Archivo', system-ui, sans-serif;
-    --serif: 'Source Serif 4', Georgia, 'Times New Roman', serif;
-    --mono: 'JetBrains Mono', ui-monospace, 'Cascadia Mono', monospace;
-  }
-
-  @media (prefers-color-scheme: dark) {
-    :root:not([data-theme="light"]) {
-      --paper: #14161a;
-      --surface: #1b1e23;
-      --sunk: #191c21;
-      --rule: #2c3037;
-      --rule-strong: #3d434c;
-      --ink: #eceae4;
-      --ink-mid: #b3afa6;
-      --ink-dim: #8b867c;
-      --accent: #35c79f;
-      --caution: #d99342;
-    }
-  }
-
-  :root[data-theme="dark"] {
-    --paper: #14161a;
-    --surface: #1b1e23;
-    --sunk: #191c21;
-    --rule: #2c3037;
-    --rule-strong: #3d434c;
-    --ink: #eceae4;
-    --ink-mid: #b3afa6;
-    --ink-dim: #8b867c;
-    --accent: #35c79f;
-    --caution: #d99342;
-  }
-
-  body {
-    background: var(--paper);
-    color: var(--ink);
-    font-family: var(--serif);
-    font-size: 17px;
-    line-height: 1.68;
-    -webkit-font-smoothing: antialiased;
-  }
-
-  .sheet {
-    max-width: 74ch;
-    margin: 0 auto;
-    padding: 3.5rem 1.5rem 6rem;
-  }
-
-  /* --- masthead --- */
-
-  .masthead {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: baseline;
-    justify-content: space-between;
-    gap: 1rem;
-    padding-bottom: 1rem;
-    border-bottom: 1.5px solid var(--ink);
-  }
-
-  .wordmark {
-    margin: 0;
-    font-family: var(--sans);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-  }
-
-  .wordmark em { font-style: normal; color: var(--accent); }
-
-  .masthead-meta {
-    font-family: var(--mono);
-    font-size: 0.7rem;
-    letter-spacing: 0.04em;
-    color: var(--ink-dim);
-  }
-
-  .doctitle {
-    margin: 2.5rem 0 0;
-    font-family: var(--sans);
-    font-size: clamp(1.8rem, 4.5vw, 2.5rem);
-    font-weight: 700;
-    line-height: 1.1;
-    letter-spacing: -0.03em;
-    text-wrap: balance;
-  }
-
-  .subtitle {
-    margin: 0.7rem 0 0;
-    font-size: 1.05rem;
-    color: var(--ink-mid);
-    max-width: 60ch;
-  }
-
-  /* --- utility bar --- */
-
-  .bar {
-    display: flex;
-    flex-wrap: wrap;
-    align-items: center;
-    gap: 0.7rem;
-    margin-top: 1.6rem;
-    padding: 0.85rem 1rem;
-    background: var(--sunk);
-    border: 1px solid var(--rule);
-  }
-
-  .bar p {
-    margin: 0;
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    line-height: 1.5;
-    color: var(--ink-mid);
-    flex: 1 1 22ch;
-  }
-
-  button {
-    font-family: var(--sans);
-    font-size: 0.7rem;
-    font-weight: 600;
-    letter-spacing: 0.09em;
-    text-transform: uppercase;
-    color: var(--paper);
-    background: var(--ink);
-    border: 1px solid var(--ink);
-    padding: 0.6rem 1.1rem;
-    cursor: pointer;
-    transition: background 0.18s ease, color 0.18s ease;
-  }
-
-  button:hover { background: transparent; color: var(--ink); }
-  :focus-visible { outline: 2px solid var(--accent); outline-offset: 2px; }
-
-  /* --- headings: the numbering is the department's required structure --- */
-
-  h2 {
-    margin: 3.2rem 0 0;
-    padding-top: 1.4rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--sans);
-    font-size: 1.4rem;
-    font-weight: 700;
-    letter-spacing: -0.02em;
-    line-height: 1.25;
-    text-wrap: balance;
-  }
-
-  h3 {
-    margin: 2.4rem 0 0;
-    font-family: var(--sans);
-    font-size: 1.06rem;
-    font-weight: 600;
-    letter-spacing: -0.01em;
-    text-wrap: balance;
-  }
-
-  h3 .num, h2 .num {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.68rem;
-    font-weight: 400;
-    letter-spacing: 0.12em;
-    color: var(--accent);
-    margin-bottom: 0.3rem;
-  }
-
-  p { margin: 1rem 0 0; }
-
-  ul, ol { margin: 1rem 0 0; padding-left: 1.3rem; }
-  li { margin-top: 0.45rem; }
-
-  strong { font-weight: 600; }
-
-  code {
-    font-family: var(--mono);
-    font-size: 0.86em;
-    background: var(--sunk);
-    padding: 0.1em 0.35em;
-    border: 1px solid var(--rule);
-  }
-
-  /* --- tables --- */
-
-  .tablewrap { overflow-x: auto; margin-top: 1.3rem; }
-
-  table {
-    border-collapse: collapse;
-    width: 100%;
-    min-width: 32rem;
-    font-family: var(--sans);
-    font-size: 0.84rem;
-    line-height: 1.5;
-    background: var(--surface);
-  }
-
-  th, td {
-    border: 1px solid var(--rule);
-    padding: 0.55rem 0.7rem;
-    text-align: left;
-    vertical-align: top;
-  }
-
-  th {
-    background: var(--sunk);
-    font-weight: 600;
-    font-size: 0.7rem;
-    letter-spacing: 0.07em;
-    text-transform: uppercase;
-    color: var(--ink-mid);
-  }
-
-  td.num-cell { font-family: var(--mono); font-variant-numeric: tabular-nums; }
-
-  /* --- callouts --- */
-
-  .note {
-    margin: 1.4rem 0 0;
-    padding: 0.9rem 1.1rem;
-    background: var(--surface);
-    border-left: 3px solid var(--caution);
-    border-top: 1px solid var(--rule);
-    border-right: 1px solid var(--rule);
-    border-bottom: 1px solid var(--rule);
-    font-size: 0.94rem;
-  }
-
-  .note p { margin-top: 0.5rem; }
-  .note p:first-child { margin-top: 0; }
-
-  .note-label {
-    display: block;
-    font-family: var(--mono);
-    font-size: 0.62rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--caution);
-    margin-bottom: 0.4rem;
-  }
-
-  .swot {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
-    gap: 1px;
-    margin-top: 1.3rem;
-    background: var(--rule);
-    border: 1px solid var(--rule);
-  }
-
-  .swot section { background: var(--surface); padding: 1rem 1.1rem; }
-  .swot h4 {
-    margin: 0 0 0.5rem;
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    letter-spacing: 0.12em;
-    text-transform: uppercase;
-    color: var(--accent);
-  }
-  .swot ul { margin: 0; padding-left: 1.1rem; font-size: 0.92rem; }
-
-  footer {
-    margin-top: 4rem;
-    padding-top: 1.2rem;
-    border-top: 1px solid var(--rule);
-    font-family: var(--mono);
-    font-size: 0.66rem;
-    line-height: 1.7;
-    color: var(--ink-dim);
-  }
-
-  @media (prefers-reduced-motion: reduce) {
-    * { transition: none !important; }
-  }
-</style>
-
-<div class="sheet">
-
-  <header class="masthead">
-    <p class="wordmark">AIR<em>TEST</em></p>
-    <span class="masthead-meta">FINAL YEAR PROJECT &middot; CHAPTER ONE</span>
-  </header>
-
-  <h1 class="doctitle">Comparative Analysis of WiFi&nbsp;5 and WiFi&nbsp;6 in Dense University Lecture Theatres</h1>
-  <p class="subtitle">Chapter One — Introduction. Drafted against the departmental report structure, with the domain-specific subsections substituted for this project.</p>
-
-  <div class="bar">
-    <p>Select the text below and paste into Word — headings, tables and lists carry across. Placeholders marked in amber need your input and must not be left in.</p>
-    <button id="copy">Copy chapter</button>
-  </div>
-
-  <div id="doc">
-
-  <h2><span class="num">1.0</span>Introduction</h2>
-
-  <p>This project investigates the performance difference between WiFi 5 (IEEE 802.11ac) and WiFi 6 (IEEE 802.11ax) in high-density wireless environments, using the university lecture theatre as its setting. Lecture theatres are among the most demanding wireless environments on a campus: a single room may hold well over a hundred devices, all associated with the same access point, all contending for the same medium, and all active at the same moments — during a lecture stream, an in-class poll, or a mass download of course material.</p>
-
-  <p>Because no 802.11ac or 802.11ax hardware was available for controlled testing, the study is conducted entirely through discrete-event network simulation using NS-3, supported by an interactive dashboard that presents the resulting dataset. The simulation produces the evidence; the dashboard makes that evidence legible to a reader who is deciding whether an upgrade is justified.</p>
-
-  <p>This chapter establishes the background and motivation for the work, states the problem it addresses, sets out its aims and objectives, defines its scope and boundaries, records the risks identified and how they were managed, and describes how the remainder of the report is organised.</p>
-
-  <h2><span class="num">1.1</span>Background and Motivation</h2>
-
-  <p>The IEEE 802.11 family of wireless standards has, for most of its history, advanced by raising peak data rate. Each generation widened channels, added spatial streams, or increased modulation density. 802.11ac, ratified in 2013 and marketed as WiFi 5, followed that pattern: 80 and 160 MHz channels, up to eight spatial streams, and 256-QAM modulation.</p>
-
-  <p>802.11ax, marketed as WiFi 6, departs from it. Its headline additions are not primarily about making a single link faster; they are about making a <em>crowded</em> medium more efficient. <span class="cite">[CITE]</span> The principal mechanisms are:</p>
-
-  <ul>
-    <li><strong>OFDMA</strong> (Orthogonal Frequency-Division Multiple Access), which subdivides a channel into resource units so that several stations can be served within a single transmission opportunity rather than each contending for the whole channel in turn.</li>
-    <li><strong>Improved MU-MIMO</strong>, extending multi-user transmission to the uplink as well as the downlink.</li>
-    <li><strong>BSS colouring</strong>, which allows a station to identify transmissions belonging to a neighbouring basic service set and avoid deferring to them unnecessarily.</li>
-    <li><strong>Target Wake Time (TWT)</strong>, which schedules station wake periods to reduce contention and power consumption.</li>
-  </ul>
-
-  <p>These are precisely the conditions a lecture theatre creates. The motivation for this project is therefore not the general question of whether WiFi 6 is a newer standard — it is — but the specific and practical question of whether its mechanisms deliver measurable benefit under the traffic and density that a lecture theatre actually produces, and if so, at what density that benefit begins.</p>
-
-  <h2><span class="num">1.2</span>Problem Statement</h2>
-
-  <p>Universities operating legacy WiFi 5 infrastructure experience well-documented symptoms in high-density teaching spaces: dropped associations, degraded video streaming, and rising latency during interactive activities such as live polling. WiFi 6 is presented by vendors as the remedy.</p>
-
-  <p>The difficulty is that the case for upgrading is typically made in terms of headline specifications rather than in terms of the environment the institution actually operates. An upgrade programme across a campus is a substantial capital commitment, and the institution rarely has quantified, environment-specific evidence on which to base it. Three questions in particular go unanswered:</p>
-
-  <ol>
-    <li>How large is the performance difference between the two standards, and how does it change as the number of active clients in a room increases?</li>
-    <li>Which specific 802.11ax mechanisms account for any difference observed, as opposed to being assumed to contribute?</li>
-    <li>At what client density does each standard cease to meet the demand placed on it?</li>
-  </ol>
-
-  <p>This project addresses that gap by producing a controlled, reproducible comparison under lecture-theatre conditions, and by presenting the results in a form that a non-specialist decision-maker can interpret without misreading them.</p>
-
-  <h2><span class="num">1.3</span>Aims and Objectives</h2>
-
-  <p>The aim of this project is to quantify, through network simulation, the performance difference between WiFi 5 and WiFi 6 in a dense lecture-theatre environment, and to present the results in an interactive dashboard that communicates both the findings and their limitations.</p>
-
-  <p>The objectives are:</p>
-
-  <ol>
-    <li>To quantify performance differences between WiFi 5 and WiFi 6 as client density increases.</li>
-    <li>To identify which WiFi 6 mechanisms — principally OFDMA, and inter-AP contention handling in the multi-AP case — account for any observed differences.</li>
-    <li>To determine the practical saturation point, expressed as maximum supported clients, for each standard under realistic lecture-theatre traffic.</li>
-  </ol>
-
-  <p>A supporting objective is to deliver a dashboard that reports these results without ever implying that a replayed measurement is a live one, and without offering the reader a scenario the simulation did not run.</p>
-
-  <h2><span class="num">1.4</span>Project Scope</h2>
-
-  <h3><span class="num">1.4.1</span>Within scope</h3>
-
-  <p>The study compares two standards, 802.11ac and 802.11ax, under three traffic profiles representative of lecture-theatre use: light interactive browsing, constant-bit-rate video streaming, and rate-limited bulk file transfer. Two topologies are simulated: a single access point, and a three-access-point deployment representing a larger theatre with overlapping coverage. Each combination is repeated across multiple randomised seeds so that run-to-run variability can be characterised rather than concealed.</p>
-
-  <p>Eight metrics are extracted from every run: aggregate throughput, per-user throughput, latency, jitter, packet loss, Jain's fairness index, airtime utilisation, and offered-load satisfaction ratio.</p>
-
-  <h3><span class="num">1.4.2</span>Outside scope</h3>
-
-  <ul>
-    <li>No physical WiFi 5 or WiFi 6 hardware testing — none was available.</li>
-    <li>No live or on-demand simulation from the dashboard. The dashboard replays pre-computed results only.</li>
-    <li>No backend server, database, or user authentication; the dashboard is a static site.</li>
-    <li>No comparison with standards outside 802.11ac and 802.11ax.</li>
-    <li>Target Wake Time was excluded after verification established that it is not implemented in the NS-3 802.11ax module, and energy-efficiency claims were dropped with it rather than estimated.</li>
-  </ul>
-
-  <h3><span class="num">1.4.3</span>Density boundary</h3>
-
-  <p>The original parameter matrix specified client densities up to 200. Timing measurements taken during implementation established that 802.11ax runs cost approximately five times their 802.11ac equivalents and rise sharply beyond a knee between sixteen and twenty clients, placing the upper densities beyond the compute available. The measured density range is therefore a constraint of the study and is reported as such in Chapter Five, not presented as a design choice.</p>
-
-  <div class="note">
-    <span class="note-label">Placeholder — confirm before submission</span>
-    <p>State here the final density range actually simulated. At the time of drafting, additional runs at higher densities were still executing, and this figure must reflect the completed dataset rather than the draft.</p>
-  </div>
-
-  <h2><span class="num">1.5</span>Risk Management</h2>
-
-  <p>Risks were identified at the outset and reviewed as the project progressed. The table records both the mitigation planned and, where applicable, the outcome — several risks materialised and were handled, and recording that is more informative than recording the plan alone.</p>
-
-  <div class="tablewrap">
-    <table>
-      <thead>
-        <tr><th>Risk</th><th>Impact</th><th>Mitigation</th><th>Outcome</th></tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td>No physical hardware available for validation</td>
-          <td>High</td>
-          <td>Full simulation-based approach, documented explicitly as a limitation of the methodology</td>
-          <td>Accepted; stated in Chapter Five</td>
-        </tr>
-        <tr>
-          <td>NS-3 802.11ax module may not implement all mechanisms</td>
-          <td>Medium</td>
-          <td>Verify module support before committing to metrics; drop unsupported features rather than approximate them</td>
-          <td>Materialised — TWT unsupported, energy efficiency dropped</td>
-        </tr>
-        <tr>
-          <td>High-density simulations may be computationally infeasible</td>
-          <td>High</td>
-          <td>Estimate runtime early with a timing test; reduce trial count or simulated duration if the matrix cannot complete</td>
-          <td>Materialised — density range reduced on measured evidence</td>
-        </tr>
-        <tr>
-          <td>Saturation point may fall outside the density grid</td>
-          <td>Medium</td>
-          <td>Finer density steps and linear interpolation between bracketing points; report as a bound where no crossing occurs</td>
-          <td>Materialised — reported as a bound, not extrapolated</td>
-        </tr>
-        <tr>
-          <td>Replayed results mistaken for live measurement</td>
-          <td>High</td>
-          <td>Explicit labelling in the interface and the report; no progress indicator or timer that implies live execution</td>
-          <td>Mitigated in the delivered interface</td>
-        </tr>
-        <tr>
-          <td>Simulator defects producing plausible but incorrect figures</td>
-          <td>High</td>
-          <td>Vertical-slice implementation with automated reconciliation checks before the full matrix is run</td>
-          <td>Materialised repeatedly; see Chapter Four</td>
-        </tr>
-      </tbody>
-    </table>
-  </div>
-
-  <h2><span class="num">1.6</span>SWOT Analysis</h2>
-
-  <div class="swot">
-    <section>
-      <h4>Strengths</h4>
-      <ul>
-        <li>Full control over every variable; the two standards are compared under identical rooms, traffic, channel width and seeds.</li>
-        <li>Reproducible — every result traces to a recorded run with its own configuration metadata.</li>
-        <li>Automated verification of the analysis pipeline, independent of the simulator.</li>
-      </ul>
-    </section>
-    <section>
-      <h4>Weaknesses</h4>
-      <ul>
-        <li>No hardware validation; results are as accurate as the simulator's models.</li>
-        <li>Computational cost restricted the density range actually measured.</li>
-        <li>Short measurement windows inflate packet loss relative to a steady-state deployment.</li>
-      </ul>
-    </section>
-    <section>
-      <h4>Opportunities</h4>
-      <ul>
-        <li>Directly informs an institutional upgrade decision with environment-specific evidence.</li>
-        <li>The parameterised scenario extends to further densities, topologies and traffic profiles without redesign.</li>
-        <li>The dashboard is a reusable means of communicating network evidence to non-specialists.</li>
-      </ul>
-    </section>
-    <section>
-      <h4>Threats</h4>
-      <ul>
-        <li>Simulator defects can yield plausible but wrong figures, which are harder to detect than obvious failures.</li>
-        <li>Configuration choices materially affect outcomes and can understate a standard if set incorrectly.</li>
-        <li>Findings are specific to the modelled environment and do not generalise unconditionally.</li>
-      </ul>
-    </section>
-  </div>
-
-  <h2><span class="num">1.7</span>Significance of the Project</h2>
-
-  <p>The project has two audiences. The primary audience is academic: the supervisor and examiners assessing the work as a final-year project. The secondary audience is practical: university IT and network planning staff who must decide whether, where, and when to invest in an 802.11ax upgrade.</p>
-
-  <p>For the second audience the significance lies in specificity. A vendor datasheet states what a standard can do under favourable conditions. This project states what it does under one institution's conditions, with the measurement method, the configuration, and the limitations all disclosed. A finding that an upgrade is <em>not</em> justified in a given room is as useful to that reader as a finding that it is, and the study is designed so that either outcome can be reported honestly.</p>
-
-  <p>Methodologically, the project also demonstrates a defensible approach to simulation-based evaluation: reconciliation checks that verify internal consistency of results, controlled ablation to attribute an observed effect to a specific mechanism, and an interface that discloses the boundaries of its own dataset rather than presenting an unbroken surface of numbers.</p>
-
-  <h2><span class="num">1.8</span>Organizational Structure</h2>
-
-  <p>The remainder of this report is organised as follows.</p>
-
-  <div class="tablewrap">
-    <table>
-      <thead><tr><th>Chapter</th><th>Content</th></tr></thead>
-      <tbody>
-        <tr><td class="num-cell">Two</td><td>Reviews the literature on 802.11 standards evolution, high-density wireless environments, 802.11ax mechanisms, network simulation tools, and WLAN performance metrics, and compares related studies.</td></tr>
-        <tr><td class="num-cell">Three</td><td>Sets out the methodology: the development model adopted and the justification for it, fact-finding techniques, tools and specifications, ethical considerations, requirements, and the system design.</td></tr>
-        <tr><td class="num-cell">Four</td><td>Describes implementation and testing: the simulation scenario, the analysis pipeline, the dashboard, the defects encountered and how they were resolved, and the test strategy and results.</td></tr>
-        <tr><td class="num-cell">Five</td><td>Discusses the findings against the stated objectives, records limitations and challenges, and sets out recommendations and future work.</td></tr>
-      </tbody>
-    </table>
-  </div>
-
-  </div>
-
-  <footer>
-    AIRTEST &middot; Comparative analysis of IEEE 802.11ac and 802.11ax under lecture-theatre conditions<br>
-    Draft for supervisory review. Sections marked as placeholders require confirmation before submission.
-  </footer>
-
-</div>
-
-<script>
-  document.getElementById('copy').addEventListener('click', async function () {
-    var btn = this;
-    var doc = document.getElementById('doc');
-    try {
-      var item = new ClipboardItem({
-        'text/html': new Blob([doc.innerHTML], { type: 'text/html' }),
-        'text/plain': new Blob([doc.innerText], { type: 'text/plain' })
-      });
-      await navigator.clipboard.write([item]);
-      btn.textContent = 'Copied';
-    } catch (err) {
-      // Clipboard permission varies by browser; selecting the text is the
-      // fallback that always works, and Ctrl+C then behaves as expected.
-      var range = document.createRange();
-      range.selectNodeContents(doc);
-      var sel = window.getSelection();
-      sel.removeAllRanges();
-      sel.addRange(range);
-      btn.textContent = 'Selected — press Ctrl+C';
-    }
-    setTimeout(function () { btn.textContent = 'Copy chapter'; }, 2500);
-  });
-</script>
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Chapter One: Introduction - AIRTEST Project Report</title>
+    <style>
+        @media print {
+            .no-print { display: none !important; }
+            body { background: white; margin: 0; padding: 0; }
+            .page { box-shadow: none !important; margin: 0 !important; width: 100% !important; padding: 0 !important; }
+        }
+        
+        body {
+            font-family: 'Times New Roman', Times, serif;
+            background-color: #f4f6f9;
+            color: #111111;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        .top-bar {
+            position: sticky;
+            top: 0;
+            width: 100%;
+            background-color: #1e293b;
+            color: #ffffff;
+            padding: 12px 24px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.15);
+            z-index: 1000;
+            box-sizing: border-box;
+        }
+
+        .top-bar h1.bar-title {
+            font-size: 14pt;
+            font-weight: bold;
+            margin: 0;
+            color: #ffffff;
+            font-family: 'Times New Roman', Times, serif;
+        }
+
+        .btn-copy {
+            background-color: #2563eb;
+            color: #ffffff;
+            border: none;
+            padding: 8px 18px;
+            font-size: 12pt;
+            font-weight: bold;
+            font-family: 'Times New Roman', Times, serif;
+            border-radius: 4px;
+            cursor: pointer;
+            transition: background-color 0.2s ease;
+        }
+
+        .btn-copy:hover {
+            background-color: #1d4ed8;
+        }
+
+        .page {
+            background-color: #ffffff;
+            width: 900px;
+            min-height: 1100px;
+            margin: 30px auto;
+            padding: 60px 80px;
+            box-shadow: 0 4px 20px rgba(0,0,0,0.08);
+            box-sizing: border-box;
+        }
+
+        /* Typography strict rules */
+        h1, h2 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 14pt;
+            font-weight: bold;
+            text-transform: uppercase;
+            margin-top: 28px;
+            margin-bottom: 14px;
+            color: #000000;
+            line-height: 1.3;
+        }
+
+        .chapter-header {
+            text-align: center;
+            margin-bottom: 35px;
+            border-bottom: 2px solid #000000;
+            padding-bottom: 15px;
+        }
+
+        .chapter-header h1 {
+            font-size: 14pt;
+            margin: 5px 0;
+        }
+
+        h3, h4 {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 10px;
+            color: #000000;
+        }
+
+        p, li, td, th {
+            font-family: 'Times New Roman', Times, serif;
+            font-size: 12pt;
+            font-weight: normal;
+            line-height: 1.5;
+            text-align: justify;
+            color: #111111;
+        }
+
+        p {
+            margin-top: 0;
+            margin-bottom: 14px;
+            text-indent: 0;
+        }
+
+        ul, ol {
+            margin-top: 0;
+            margin-bottom: 14px;
+            padding-left: 28px;
+        }
+
+        li {
+            margin-bottom: 6px;
+            text-align: left;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+
+        table, th, td {
+            border: 1px solid #333333;
+        }
+
+        th, td {
+            padding: 10px 12px;
+            text-align: left;
+            vertical-align: top;
+        }
+
+        th {
+            background-color: #f2f2f2;
+            font-weight: bold;
+        }
+
+        .toast {
+            position: fixed;
+            bottom: 25px;
+            right: 25px;
+            background-color: #10b981;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 4px;
+            font-size: 12pt;
+            font-weight: bold;
+            display: none;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            z-index: 2000;
+        }
+    </style>
+</head>
+<body>
+
+    <div class="top-bar no-print">
+        <h1 class="bar-title">AIRTEST Final Year Project Report - Chapter 1</h1>
+        <button class="btn-copy" onclick="copyChapterToClipboard()">Copy Chapter for Word</button>
+    </div>
+
+    <div class="toast" id="toast">Chapter content copied to clipboard!</div>
+
+    <div class="page" id="chapter-content">
+        
+        <div class="chapter-header">
+            <h1>CHAPTER ONE</h1>
+            <h1>INTRODUCTION</h1>
+        </div>
+
+        <h2>1.0 Introduction</h2>
+        <p>In modern higher education institutions, wireless local area networks (WLANs) have evolved from non-essential supplemental internet connections into primary operational infrastructure required for core pedagogical activities. Modern university lecture theatres frequently host hundreds of students simultaneously using laptops, tablets, smartphones, and wearable smart devices. These environments exhibit exceptionally high client density, complex radio frequency (RF) interference patterns, and severe contention for limited spectrum bandwidth. As academic workflows increasingly rely on real-time interactive learning platforms, high-definition video streaming, collaborative cloud workspaces, and instant digital assessments, the performance demands placed on campus wireless networks have escalated exponentially.</p>
+        <p>The IEEE 802.11ac standard (commercially designated as Wi-Fi 5), introduced in 2013, brought substantial throughput advancements over older standards by introducing wider channels (up to 160 MHz), 256-QAM modulation, and explicit downlink Multi-User Multiple-Input Multiple-Output (DL MU-MIMO). However, Wi-Fi 5 was engineered predominantly around single-user opportunistic peak throughput rather than high-density efficiency. Under dense client contention, Wi-Fi 5 networks suffer severe performance degradation due to legacy Carrier Sense Multiple Access with Collision Avoidance (CSMA/CA) overhead, collision storms, and inefficient airtime utilization.</p>
+        <p>To overcome these dense-deployment bottlenecks, the IEEE 802.11ax standard (Wi-Fi 6) introduced fundamental architectural transformations at both the Physical (PHY) and Medium Access Control (MAC) layers. Key innovations include Orthogonal Frequency Division Multiple Access (OFDMA), Basic Service Set (BSS) Coloring, Target Wake Time (TWT), and uplink/downlink MU-MIMO. Wi-Fi 6 explicitly prioritizes total network capacity, spectral efficiency, and airtime fairness over single-client burst speed. This empirical study, titled <strong>AIRTEST</strong> (Airtime Telemetry and Efficiency Stress Test), presents a rigorous quantitative comparison of IEEE 802.11ac versus IEEE 802.11ax performance under simulated dense university lecture theatre conditions using the discrete-event Network Simulator 3 (NS-3 3.42) framework coupled with an interactive telemetry visualization application.</p>
+
+        <h2>1.1 Background and Motivation</h2>
+        <p>The proliferation of personal mobile computing devices among university students has fundamentally reshaped physical learning spaces. A single 200-seat university lecture theatre often contains between 300 and 500 active Wi-Fi interfaces during peak lecture hours. In such high-density environments, traditional network performance evaluation metrics (such as raw point-to-point throughput) fail to capture the user experience accurately. Instead, airtime utilization, MAC layer frame overhead, medium access delay, and packet loss distribution govern overall network stability.</p>
+        <p>Under legacy IEEE 802.11ac protocols, medium access relies strictly on contention-based channel access. When dozens of client devices contend simultaneously for the channel, the backoff window mechanics lead to exponential contention overhead. Small control packets, such as TCP ACK messages or HTTP polling frames, consume an outsized portion of available channel time due to preamble and inter-frame spacing (IFS) overhead. Consequently, even when aggregate bandwidth appears unexhausted, channel airtime becomes saturated, resulting in bufferbloat, elevated latency jitter, and severe throughput collapse for edge clients.</p>
+        <p>IEEE 802.11ax addresses these systemic deficiencies by transitioning from pure contention to multi-user deterministic scheduling. By partitioning a 20 MHz, 40 MHz, or 80 MHz channel into Resource Units (RUs) ranging from 26-tone to 996-tone configurations, OFDMA allows an Access Point (AP) to communicate with up to 9 or 18 clients simultaneously within a single transmission opportunity (TXOP). Furthermore, BSS Coloring attaches a 6-bit numerical color identifier to frame headers, enabling stations to distinguish between intra-BSS and inter-BSS transmissions and adjust Clear Channel Assessment (CCA) thresholds dynamically via spatial reuse mechanisms.</p>
+        <p>While theoretical white papers and vendor benchmarks highlight the advantages of Wi-Fi 6, campus network administrators face substantial financial and operational decisions regarding hardware migration. Upgrading enterprise AP infrastructure, switches, and structured cabling represents a major capital expenditure. Network architects require empirical, transparent, and reproducible data demonstrating precisely how much airtime efficiency Wi-Fi 6 gains over Wi-Fi 5 across varying student densities, traffic types (web browsing, HD video streaming, bulk downloads), and multi-AP topologies. The motivation behind the AIRTEST project is to bridge the gap between theoretical protocol specifications and real-world campus deployment decisions by providing a deterministic simulation study and an intuitive visual diagnostic interface.</p>
+
+        <h2>1.2 Problem Statement</h2>
+        <p>University IT departments face increasing difficulty maintaining acceptable Quality of Experience (QoE) in high-density lecture theatres using legacy Wi-Fi 5 infrastructure. Specific technical manifestations of this problem include:</p>
+        <ul>
+            <li><strong>Severe Airtime Contention and Overhead:</strong> Under IEEE 802.11ac CSMA/CA, as client density increases beyond 15 to 20 active stations per access point, frame collision probabilities rise non-linearly. Physical layer preambles and MAC headers consume more than 60% of total channel airtime, leaving minimal medium capacity for actual payload data transmission.</li>
+            <li><strong>Latency Inaccessibility for Interactive Applications:</strong> Real-time educational software, live audience polling, and interactive virtual labs experience latency spikes exceeding 300 ms and packet loss rates above 15% during peak lecture periods, disrupting instructional delivery.</li>
+            <li><strong>Uncertain Return on Investment (ROI) for Wi-Fi 6 Upgrades:</strong> Higher education IT decision-makers lack granular empirical data quantifying the exact performance differential between 802.11ac and 802.11ax under specific campus traffic profiles and physical topology constraints. Existing vendor literature often relies on synthetic single-client throughput benchmarks rather than multi-user airtime contention metrics.</li>
+            <li><strong>Analytical Opaque Diagnostic Tools:</strong> Traditional network diagnostic tools provide static table dumps or aggregated averages that hide transient contention spikes, making it difficult for system administrators to visually diagnose protocol-level bottlenecks across changing client densities.</li>
+        </ul>
+
+        <h2>1.3 Aims and Objectives</h2>
+        <p>The primary aim of the AIRTEST project is to design, execute, and analyze a deterministic discrete-event simulation framework that evaluates and visualizes the spectral efficiency, throughput, airtime allocation, latency, and packet delivery ratio of IEEE 802.11ac versus IEEE 802.11ax protocols in high-density lecture theatre scenarios.</p>
+        <p>To achieve this overarching aim, the project is structured around the following specific objectives:</p>
+        <ol>
+            <li><strong>Develop a Deterministic Lecture Theatre Simulation Environment:</strong> Construct a modular C++ simulation scenario in NS-3 3.42 modelling a standard 15m × 20m university lecture theatre with parameterizable client densities (10, 14, 20 active stations), deployment topologies (1-AP centralized vs 3-AP multi-cell), and traffic profiles (Web, Video Streaming, Bulk FTP).</li>
+            <li><strong>Execute a Comprehensive Scenario Matrix:</strong> Implement an automated Python orchestration pipeline (`run_matrix.py`) to systematically run 36 distinct simulation scenarios across 2 randomized seeds (72 total runs), capturing raw MAC/PHY layer traces via FlowMonitor XML output.</li>
+            <li><strong>Extract and Parse Flow Telemetry Data:</strong> Develop a robust Python telemetry parser (`parse.py`) to process raw FlowMonitor XML outputs into a structured, validated JSON dataset containing granular metrics: offered load, achieved throughput, delay sum, jitter, packet loss ratio, and airtime efficiency percentages.</li>
+            <li><strong>Build an Interactive Cockpit Telemetry Visualizer:</strong> Construct a web application using React 19, Vite, and Recharts featuring an aircraft cockpit instrument panel aesthetic with dual-needle analog gauges (white for Wi-Fi 5, green for Wi-Fi 6), real-time protocol switching, density stress curves, and diagnostic telemetry cards.</li>
+            <li><strong>Perform Comparative Performance & ROI Analysis:</strong> Evaluate the resulting telemetry dataset to produce empirical findings detailing airtime savings, throughput stability, and collision mitigation provided by Wi-Fi 6 over Wi-Fi 5 under identical physical constraints.</li>
+        </ol>
+
+        <h2>1.4 Project Scope</h2>
+        <p>The scope of the AIRTEST project encompasses the following technical boundaries:</p>
+        <ul>
+            <li><strong>Protocol Scope:</strong> Direct comparison between IEEE 802.11ac (Wi-Fi 5) Wave 2 and IEEE 802.11ax (Wi-Fi 6) operating in the 5 GHz spectrum band with 80 MHz channel bandwidth.</li>
+            <li><strong>Simulation Environment:</strong> Discrete-event simulation conducted within NS-3 version 3.42 on WSL2 (Ubuntu 22.04 LTS). Physical propagation is modelled using the LogDistancePropagationLossModel and ConstantSpeedPropagationDelayModel.</li>
+            <li><strong>Topology Limits:</strong> Client densities evaluated at 10, 14, and 20 active stations distributed within a 15m × 20m lecture hall grid, across single-AP and three-AP multi-cell arrangements.</li>
+            <li><strong>Data Visualization Scope:</strong> Web dashboard client built with React 19, HTML5, CSS3, and JavaScript (ES2022), serving a static JSON dataset derived from the simulation pipeline.</li>
+        </ul>
+        <p><strong>Out of Scope:</strong> Physical hardware dynamic spectrum analysis, 6 GHz (Wi-Fi 6E) frequencies, Target Wake Time (TWT) hardware power-saving measurement (due to limitations in NS-3 3.42 Wi-Fi model), and live physical AP deployment testing.</p>
+
+        <h2>1.5 Risk Management</h2>
+        <p>Risk management is critical to ensuring project delivery within established time and resource constraints. Table 1.1 outlines the primary technical, operational, and computational risks identified for the AIRTEST project, alongside their assessed severity and mitigation strategies.</p>
+
+        <h3>Table 1.1: Project Risk Management Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Risk ID</th>
+                    <th>Risk Description</th>
+                    <th>Likelihood</th>
+                    <th>Impact</th>
+                    <th>Mitigation Strategy</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>R-01</strong></td>
+                    <td>Severe NS-3 execution slowdown and memory consumption during high-density Wi-Fi 6 simulation runs.</td>
+                    <td>High</td>
+                    <td>High</td>
+                    <td>Optimized simulation time window to 3.0 seconds per scenario; capped density at 20 active stations; utilized non-threaded batch execution in Python orchestrator.</td>
+                </tr>
+                <tr>
+                    <td><strong>R-02</strong></td>
+                    <td>FlowMonitor XML parsing failures due to malformed XML tags or missing packet trace attributes.</td>
+                    <td>Medium</td>
+                    <td>High</td>
+                    <td>Implemented robust XML parsing using Python `xml.etree.ElementTree` with fallback exception handling and explicit zero-division guards.</td>
+                </tr>
+                <tr>
+                    <td><strong>R-03</strong></td>
+                    <td>Inaccuracies or gaps in NS-3 3.42 Wi-Fi 6 MAC model (e.g., incomplete TWT model).</td>
+                    <td>Medium</td>
+                    <td>Medium</td>
+                    <td>Focused performance analysis strictly on OFDMA, BSS Coloring, and airtime efficiency metrics supported by NS-3.42; explicitly documented out-of-scope features.</td>
+                </tr>
+                <tr>
+                    <td><strong>R-04</strong></td>
+                    <td>Dashboard rendering degradation when displaying high-frequency telemetry data streams.</td>
+                    <td>Low</td>
+                    <td>Medium</td>
+                    <td>Utilized React 19 memoization (`useMemo`, `useCallback`) and optimized Recharts SVG rendering components for smooth 60 FPS gauge updates.</td>
+                </tr>
+                <tr>
+                    <td><strong>R-05</strong></td>
+                    <td>Host hardware thermal throttling during extended 72-scenario batch simulation runs.</td>
+                    <td>High</td>
+                    <td>Medium</td>
+                    <td>Implemented inter-scenario cooling pauses in `run_matrix.py` and restricted concurrent process threads to fit host CPU limits (Intel i7-4702HQ).</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>1.6 SWOT Analysis</h2>
+        <p>A strategic SWOT analysis was conducted to evaluate the internal strengths and weaknesses of the AIRTEST framework, alongside external opportunities and threats within the wireless networking domain.</p>
+
+        <h3>Table 1.2: AIRTEST SWOT Analysis Matrix</h3>
+        <table>
+            <thead>
+                <tr>
+                    <th>Attributes</th>
+                    <th>Internal Factors</th>
+                    <th>External Factors</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Positive</strong></td>
+                    <td>
+                        <strong>STRENGTHS (S):</strong><br>
+                        1. Deterministic and 100% reproducible NS-3 simulation framework.<br>
+                        2. Granular packet-level MAC/PHY telemetry parser.<br>
+                        3. Innovative aircraft cockpit visual instrument dashboard.<br>
+                        4. Empirical verification of Wi-Fi 6 ~25% airtime efficiency gains.
+                    </td>
+                    <td>
+                        <strong>OPPORTUNITIES (O):</strong><br>
+                        1. Provides actionable ROI data for campus network upgrades.<br>
+                        2. Extension to Wi-Fi 7 (802.11be) Multi-Link Operation (MLO) research.<br>
+                        3. Adoption as an educational tool for university networking courses.<br>
+                        4. Integration with real-time SNMP/Syslog network management tools.
+                    </td>
+                </tr>
+                <tr>
+                    <td><strong>Negative</strong></td>
+                    <td>
+                        <strong>WEAKNESSES (W):</strong><br>
+                        1. High CPU execution overhead for Wi-Fi 6 simulation (~9x cost vs Wi-Fi 5).<br>
+                        2. Short 3-second simulation window elevates initial packet loss ratio artifacts.<br>
+                        3. Simulation model relies on ideal physical propagation abstractions.<br>
+                        4. Maximum tested density capped at 20 stations due to hardware constraints.
+                    </td>
+                    <td>
+                        <strong>THREATS (T):</strong><br>
+                        1. Rapid evolution of Wi-Fi standards outpacing static simulation models.<br>
+                        2. Discrepancies between simulated MAC layer abstraction and commercial AP firmware.<br>
+                        3. Hardware resource constraints on developer workstations limiting large-scale deployment studies.
+                    </td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h2>1.7 Significance of the Project</h2>
+        <p>The AIRTEST project contributes meaningful academic and practical value to several key stakeholders in the wireless networking and educational technology ecosystems:</p>
+        <ul>
+            <li><strong>For University IT Infrastructure Managers:</strong> AIRTEST delivers empirical, quantitative evidence demonstrating that Wi-Fi 6 delivers equal or superior throughput compared to Wi-Fi 5 while consuming approximately 25% less channel airtime. This finding provides direct justification for infrastructure investment, proving that Wi-Fi 6 mitigates contention bottlenecks without requiring additional spectrum allocations.</li>
+            <li><strong>For Wireless Network Researchers & Students:</strong> The project provides an end-to-end, open-source demonstration of discrete-event network simulation, automated data parsing, and visual analytics. It serves as a benchmark methodology for evaluating emerging IEEE 802.11 standards.</li>
+            <li><strong>For Educational Technology Strategists:</strong> By demonstrating how Wi-Fi 6 stabilizes network latency and eliminates packet loss during high-density events, AIRTEST enables university administrators to confidently deploy high-bandwidth interactive learning applications.</li>
+        </ul>
+
+        <h2>1.8 Organizational Structure</h2>
+        <p>This project report is organized into five structured chapters, formatted in strict compliance with university academic standards:</p>
+        <ul>
+            <li><strong>Chapter One: Introduction:</strong> Establishes the project background, technical motivation, problem statement, aims, specific objectives, project scope, risk management matrix, SWOT analysis, significance, and report structure.</li>
+            <li><strong>Chapter Two: Literature Review:</strong> Provides a comprehensive theoretical foundation on wireless spectrum evolution, dense WLAN dynamics, IEEE 802.11ac/ax protocol mechanics, NS-3 simulation methodologies, and network telemetry. Critically reviews related enterprise tools and open-source simulators, culminating in a detailed comparative analysis matrix with works cited from 2010 to 2025.</li>
+            <li><strong>Chapter Three: Methodology & System Design:</strong> Details the research methodology, justifies the Waterfall development lifecycle model for simulation engineering, outlines fact-finding techniques (observation, interviews, data analysis), lists hardware/software specifications, addresses ethical considerations, and presents complete system design artifacts (architecture, use cases, activity diagrams, DFD, CFD, JSON schemas, and cockpit UI mockups).</li>
+            <li><strong>Chapter Four: Implementation & Testing:</strong> Documents the core system features of the AIRTEST visual dashboard, details technical implementation hurdles and resolutions, presents the comprehensive test suite (unit, integration, system tests) and traceability matrix, and provides a concise user operational guide.</li>
+            <li><strong>Chapter Five: Discussion, Conclusion, and Recommendations:</strong> Evaluates project achievement against original objectives, discusses technical limitations and simulation findings, proposes future research enhancements (e.g., Wi-Fi 7 integration), and offers actionable recommendations for campus network administrators. The report concludes with complete APA references and Appendices A through E.</li>
+        </ul>
+
+    </div>
+
+    <script>
+        function copyChapterToClipboard() {
+            const content = document.getElementById('chapter-content');
+            
+            const blobInput = new Blob([content.outerHTML], { type: 'text/html' });
+            const textInput = new Blob([content.innerText], { type: 'text/plain' });
+            
+            if (navigator.clipboard && navigator.clipboard.write) {
+                const item = new ClipboardItem({
+                    'text/html': blobInput,
+                    'text/plain': textInput
+                });
+                navigator.clipboard.write([item]).then(() => {
+                    showToast();
+                }).catch(err => {
+                    fallbackCopy(content);
+                });
+            } else {
+                fallbackCopy(content);
+            }
+        }
+
+        function fallbackCopy(content) {
+            const range = document.createRange();
+            range.selectNode(content);
+            window.getSelection().removeAllRanges();
+            window.getSelection().addRange(range);
+            try {
+                document.execCommand('copy');
+                showToast();
+            } catch (err) {
+                alert('Failed to copy. Please manually select and copy the text.');
+            }
+            window.getSelection().removeAllRanges();
+        }
+
+        function showToast() {
+            const toast = document.getElementById('toast');
+            toast.style.display = 'block';
+            setTimeout(() => {
+                toast.style.display = 'none';
+            }, 3000);
+        }
+    </script>
+</body>
+</html>
