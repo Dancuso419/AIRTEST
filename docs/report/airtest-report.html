@@ -150,6 +150,14 @@
     text-align: center;
   }
 
+  /* APA 7th: hanging indent, alphabetical order, no numbering. */
+  .apa p {
+    text-indent: -0.5in;
+    padding-left: 0.5in;
+    margin-bottom: 12px;
+    text-align: left;
+  }
+
   .toc { margin-bottom: 10px; }
   .toc ul { list-style: none; padding-left: 0.3in; margin: 0; }
   .toc > ul { padding-left: 0; }
@@ -431,7 +439,7 @@
   <li><strong>Aggregate and per-user throughput</strong>, in Mbps. Aggregate throughput measures the network; per-user throughput measures the experience of an individual.</li>
   <li><strong>Latency and jitter</strong>, in milliseconds. Jitter — the variation in delay — determines whether a stream can be played back smoothly.</li>
   <li><strong>Packet loss ratio</strong>, as a percentage of transmitted packets.</li>
-  <li><strong>Jain's fairness index</strong>, in the range 0 to 1, quantifying how evenly capacity is distributed among stations (Jain, Chiu, &amp; Hawe, 1984).</li>
+  <li><strong>Jain's fairness index</strong>, in the range 0 to 1, quantifying how evenly capacity is distributed among stations. It is the standard fairness measure used in WLAN evaluation (Wilhelmi et al., 2021).</li>
   <li><strong>Airtime or channel utilisation</strong>, as a percentage of time the medium is occupied. This is the efficiency measure: two standards may deliver identical throughput while consuming very different amounts of channel time.</li>
   <li><strong>Offered-load satisfaction ratio</strong>, delivered throughput as a proportion of demand. This measures whether the network met what was asked of it, which is distinct from whether it was fast.</li>
 </ul>
@@ -475,7 +483,7 @@
 <h1>Chapter Three: Methodology</h1>
 
 <h2>3.0 Overview</h2>
-<p>This chapter sets out how the project was carried out. The design is documented using standard UML notation for use case, activity and class-equivalent structure diagrams, together with structured-analysis notation for dataflow (Fowler, 2004). It states the research methodology, reviews four candidate software development models and justifies the one adopted, describes the fact-finding techniques used, specifies the tools and hardware, addresses ethical considerations, presents the requirements analysis and specification, and documents the system design through architecture, use case, data, activity, dataflow, control flow and interface diagrams.</p>
+<p>This chapter sets out how the project was carried out. The design is documented using standard UML notation for use case, activity and class-equivalent structure diagrams, together with structured-analysis notation for dataflow (Sommerville, 2016). It states the research methodology, reviews four candidate software development models and justifies the one adopted, describes the fact-finding techniques used, specifies the tools and hardware, addresses ethical considerations, presents the requirements analysis and specification, and documents the system design through architecture, use case, data, activity, dataflow, control flow and interface diagrams.</p>
 
 <h2>3.1 Methodology</h2>
 <p>The project follows a quantitative, experimental methodology, structured according to established practice for discrete-event simulation studies (Banks, Carson, Nelson, &amp; Nicol, 2010). The independent variables are the wireless standard, the client density, the traffic profile and the access-point count. The dependent variables are the eight performance metrics listed in §2.0.5. All other parameters — room geometry, propagation model, channel width, band, rate-control algorithm, simulated duration and random seed sequence — are held constant between the two standards, so that any measured difference is attributable to the standard and its mechanisms.</p>
@@ -485,17 +493,17 @@
 <p>Four development models were considered before the approach was fixed. The characterisations below follow the standard treatments in the software engineering literature (Sommerville, 2016; Pressman &amp; Maxim, 2014). Each is described below with its characteristics, strengths and weaknesses, and its applicability to a project of this kind.</p>
 
 <h3>3.2.1 Waterfall Model</h3>
-<p>The Waterfall model organises development into sequential phases — requirements, design, implementation, verification, maintenance — in which each phase is completed and signed off before the next begins. The model is conventionally traced to Royce (1970), who presented the sequential diagram while simultaneously arguing that it is &ldquo;risky and invites failure&rdquo; without iteration between phases; the diagram was subsequently adopted more widely than the caution that accompanied it (Larman &amp; Basili, 2003). Its defining property is that phases do not overlap and that requirements are fixed before design commences.</p>
+<p>The Waterfall model organises development into sequential phases — requirements, design, implementation, verification, maintenance — in which each phase is completed and signed off before the next begins. It is the oldest formally described software process model, and remains the reference point against which later models are contrasted (Sommerville, 2016; Pressman &amp; Maxim, 2014). Its defining property is that phases do not overlap and that requirements are fixed before design commences.</p>
 <p>Its strengths are documentation and predictability (Sommerville, 2016). Because every phase produces a defined artefact before the next begins, progress is visible and the project's state at any moment is unambiguous. Where requirements are genuinely known in advance and unlikely to change — as in a regulated or contractual context — this produces an orderly and auditable process. It is also straightforward to plan and to teach, since responsibilities and deliverables map directly onto phases.</p>
 <p>Its weaknesses follow from the same property (Pressman &amp; Maxim, 2014). Because verification occurs only after implementation is complete, a defect in an early assumption is not discovered until late, when the cost of correcting it is highest. The model assumes requirements can be fully specified before any code is written, which is rarely true of research or exploratory work. It accommodates change poorly: a requirement discovered during implementation cannot be absorbed without returning to an earlier phase, and the model provides no mechanism for doing so.</p>
 <p>For a simulation study, the decisive weakness is that correctness cannot be established by inspection. A simulation scenario that compiles, runs to completion and produces plausible numbers may nevertheless be measuring the wrong quantity. Under a strict Waterfall process, that class of defect would surface only in the verification phase, after the entire scenario matrix had been executed — at which point every result produced would be invalid and the compute expended would be unrecoverable. In this project the full matrix required several hours of computation, so discovering a measurement defect after it would have been a serious loss.</p>
 
 <h3>3.2.2 Incremental Model</h3>
-<p>The Incremental model divides the system into portions delivered in sequence, each adding function to a working whole (Sommerville, 2016). Larman and Basili (2003) record that incremental and iterative practice long predates its formalisation, with documented use in large engineering projects from the 1950s onward. Requirements are partitioned rather than fixed in advance, and each increment passes through its own design, implementation and test.</p>
+<p>The Incremental model divides the system into portions delivered in sequence, each adding function to a working whole (Sommerville, 2016). Requirements are partitioned rather than fixed in advance, and each increment passes through its own design, implementation and test (Pressman &amp; Maxim, 2014). Requirements are partitioned rather than fixed in advance, and each increment passes through its own design, implementation and test.</p>
 <p>Its strength is that working software exists early and defects are found within the increment that introduced them. Risk is distributed across increments rather than concentrated at a single verification phase. Its weakness is that the architecture must be sound from the first increment; a structural error is expensive to correct once several increments depend on it. Effective partitioning also requires a good understanding of the system boundaries at the outset.</p>
 
 <h3>3.2.3 Iterative Model</h3>
-<p>The Iterative model builds an initial version of the whole system and refines it through repeated cycles, each revisiting requirements, design and implementation (Larman &amp; Basili, 2003). Boehm&rsquo;s (1988) spiral model formalises the approach by making risk assessment the criterion that governs each cycle. It differs from the Incremental model in that each cycle revises existing function rather than adding new function to a fixed plan.</p>
+<p>The Iterative model builds an initial version of the whole system and refines it through repeated cycles, each revisiting requirements, design and implementation (Sommerville, 2016). Risk-driven variants make the assessment of outstanding risk the criterion that governs what each cycle addresses (Pressman &amp; Maxim, 2014). It differs from the Incremental model in that each cycle revises existing function rather than adding new function to a fixed plan.</p>
 <p>Its strength is suitability to problems that are not fully understood at the start, since understanding is expected to change and each cycle incorporates what the previous cycle revealed. Its weaknesses are that the end point is harder to predict, that repeated revision can consume effort without converging, and that documentation tends to lag the implementation.</p>
 
 <h3>3.2.4 Prototype Model</h3>
@@ -503,8 +511,8 @@
 <p>Its strength is in resolving uncertainty about requirements, particularly where users cannot articulate what they need until they see something concrete — which makes it well suited to interface design. Its weaknesses are that a prototype built for demonstration is rarely built for production, and that stakeholders may mistake a prototype for a nearly finished system and underestimate the work remaining.</p>
 
 <h2>3.3 Proposed Model</h2>
-<p>The model adopted for this project was <strong>incremental development structured around an initial end-to-end vertical slice</strong>, with prototyping applied specifically to the interface (Larman &amp; Basili, 2003; Sommerville, 2016). This is a considered departure from a pure Waterfall process, and the justification is empirical rather than stylistic.</p>
-<p>The defining risk of this project was not that the software would fail to run, but that it would run and produce numbers that were wrong in ways not visible on inspection. That risk cannot be managed by a process that defers verification until after implementation. Boehm&rsquo;s (1988) principle — that each development cycle should address the greatest outstanding risk first — applies directly: the greatest risk here was measurement validity, so the first increment was made to exercise measurement end to end. It is managed by building one complete path through the system — a single simulation run, parsed, validated and displayed — and verifying that path end to end before extending it in any direction.</p>
+<p>The model adopted for this project was <strong>incremental development structured around an initial end-to-end vertical slice</strong>, with prototyping applied specifically to the interface (Sommerville, 2016). This is a considered departure from a pure Waterfall process, and the justification is empirical rather than stylistic.</p>
+<p>The defining risk of this project was not that the software would fail to run, but that it would run and produce numbers that were wrong in ways not visible on inspection. That risk cannot be managed by a process that defers verification until after implementation. The risk-driven principle that each development cycle should address the greatest outstanding risk first (Pressman &amp; Maxim, 2014) applies directly: the greatest risk here was measurement validity, so the first increment was made to exercise measurement end to end. It is managed by building one complete path through the system — a single simulation run, parsed, validated and displayed — and verifying that path end to end before extending it in any direction.</p>
 <p>That decision is justified by its result. The vertical slice identified thirteen defects before the full scenario matrix was executed, of which the majority would have produced plausible but incorrect figures rather than visible failures. These are documented individually in §4.2. Under a sequential process, each would have been discovered only after the complete matrix had run, and every published figure would have required recomputation.</p>
 <p>Prototyping was applied to the dashboard, where the requirement — that a non-specialist reader can interpret the comparison without misreading it — could not be specified in the abstract and had to be evaluated against something concrete.</p>
 <p>Elements of Waterfall were retained where they were appropriate: the requirements and technical specification were written and fixed before implementation began, and the metric definitions were settled in advance so that they could not be adjusted to suit results after the fact. That last point is a matter of research integrity as much as process.</p>
@@ -1467,53 +1475,49 @@
 
 <h1>References</h1>
 
-<p class="no-indent">References follow APA (author&ndash;date) style. All literature-review sources are published 2010 or later.</p>
+<p class="no-indent">Formatted in APA (7th edition) style. All sources are published in 2010 or later.</p>
 
-<ol>
-  <li>Afaqui, M. S., Garcia-Villegas, E., &amp; Lopez-Aguilera, E. (2017). IEEE 802.11ax: Challenges and requirements for future high efficiency Wi-Fi. <em>IEEE Wireless Communications, 24</em>(3), 130&ndash;137.</li>
+<div class="apa">
+<p>Afaqui, M. S., Garcia-Villegas, E., &amp; Lopez-Aguilera, E. (2017). IEEE 802.11ax: Challenges and requirements for future high efficiency Wi-Fi. <em>IEEE Wireless Communications, 24</em>(3), 130&ndash;137.</p>
 
-  <li>Banks, J., Carson, J. S., Nelson, B. L., &amp; Nicol, D. M. (2010). <em>Discrete-event system simulation</em> (5th ed.). Pearson.</li>
+<p>Banks, J., Carson, J. S., Nelson, B. L., &amp; Nicol, D. M. (2010). <em>Discrete-event system simulation</em> (5th ed.). Pearson.</p>
 
-  <li>Bellalta, B. (2016). IEEE 802.11ax: High-efficiency WLANs. <em>IEEE Wireless Communications, 23</em>(1), 38&ndash;46.</li>
+<p>Bellalta, B. (2016). IEEE 802.11ax: High-efficiency WLANs. <em>IEEE Wireless Communications, 23</em>(1), 38&ndash;46.</p>
 
-  <li>Chotalia, M., &amp; Gajjar, S. (2023). Performance comparison of IEEE 802.11ax, 802.11ac and 802.11n using network simulator NS3. In <em>International Conference on Computing Science, Communication and Security</em> (pp. 191&ndash;203). Springer.</li>
+<p>Chotalia, M., &amp; Gajjar, S. (2023). Performance comparison of IEEE 802.11ax, 802.11ac and 802.11n using network simulator NS3. In <em>Proceedings of the International Conference on Computing Science, Communication and Security</em> (pp. 191&ndash;203). Springer.</p>
 
-  <li>IEEE. (2013). <em>IEEE Std 802.11ac-2013 &mdash; Amendment 4: Enhancements for very high throughput for operation in bands below 6 GHz</em>. Institute of Electrical and Electronics Engineers.</li>
+<p>Institute of Electrical and Electronics Engineers. (2013). <em>IEEE standard for information technology&mdash;Local and metropolitan area networks&mdash;Part 11: Wireless LAN medium access control (MAC) and physical layer (PHY) specifications&mdash;Amendment 4: Enhancements for very high throughput for operation in bands below 6 GHz</em> (IEEE Std 802.11ac-2013).</p>
 
-  <li>IEEE. (2021). <em>IEEE Std 802.11ax-2021 &mdash; Amendment 1: Enhancements for high-efficiency WLAN</em>. Institute of Electrical and Electronics Engineers.</li>
+<p>Institute of Electrical and Electronics Engineers. (2021). <em>IEEE standard for information technology&mdash;Local and metropolitan area networks&mdash;Part 11: Wireless LAN medium access control (MAC) and physical layer (PHY) specifications&mdash;Amendment 1: Enhancements for high-efficiency WLAN</em> (IEEE Std 802.11ax-2021).</p>
 
-  <li>Inzillo, V., &amp; Ariza Quintana, A. (2025). Implementation of 802.11ax and cell-free massive MIMO scenario for 6G wireless network analysis extending OMNeT++ simulator. <em>Simulation</em>.</li>
+<p>Inzillo, V., &amp; Ariza Quintana, A. (2025). Implementation of 802.11ax and cell-free massive MIMO scenario for 6G wireless network analysis extending OMNeT++ simulator. <em>Simulation</em>. https://doi.org/10.1177/00375497241266256</p>
 
-  <li>Khorov, E., Kiryanov, A., Lyakhov, A., &amp; Bianchi, G. (2019). A tutorial on IEEE 802.11ax high efficiency WLANs. <em>IEEE Communications Surveys &amp; Tutorials, 21</em>(1), 197&ndash;216.</li>
+<p>Khorov, E., Kiryanov, A., Lyakhov, A., &amp; Bianchi, G. (2019). A tutorial on IEEE 802.11ax high efficiency WLANs. <em>IEEE Communications Surveys &amp; Tutorials, 21</em>(1), 197&ndash;216.</p>
 
-  <li>ns-3 Project. (2024). <em>ns-3 model library and documentation, release 3.42</em>. https://www.nsnam.org/</li>
+<p>Magrin, D., Avallone, S., Roy, S., &amp; Zorzi, M. (2021). Validation of the ns-3 802.11ax OFDMA implementation. In <em>Proceedings of the 2021 Workshop on ns-3</em> (pp. 1&ndash;8). Association for Computing Machinery. https://doi.org/10.1145/3460797.3460798</p>
 
-  <li>Qu, Q., Li, B., Yang, M., Yan, Z., Yang, A., Deng, D.-J., &amp; Chen, K.-C. (2019). Survey and performance evaluation of the upcoming next generation WLAN standard &mdash; IEEE 802.11ax. <em>Mobile Networks and Applications</em>. <em>[Author list to confirm.]</em></li>
+<p>Memoona, &amp; Kim, S. W. (2025). Performance and simulation analysis of 802.11ax OFDMA in contention-driven scenarios. <em>PeerJ Computer Science, 11</em>, Article e2687. https://doi.org/10.7717/peerj-cs.2687</p>
 
-  <li>Riley, G. F., &amp; Henderson, T. R. (2010). The ns-3 network simulator. In K. Wehrle, M. G&uuml;ne&#351;, &amp; J. Gross (Eds.), <em>Modeling and tools for network simulation</em> (pp. 15&ndash;34). Springer.</li>
+<p>Natkaniec, M., &amp; Bieryt, N. (2022). An analysis of BSS coloring mechanism in IEEE 802.11ax dense networks. <em>International Journal of Electronics and Telecommunications, 68</em>(4), 855&ndash;862. https://doi.org/10.24425/ijet.2022.143894</p>
 
-  <li>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., &amp; Bellalta, B. (2019). On the performance of the spatial reuse operation in IEEE 802.11ax WLANs. In <em>Proceedings of the IEEE Conference on Standards for Communications and Networking (CSCN)</em>.</li>
+<p>ns-3 Project. (2024). <em>ns-3 model library and documentation: Release 3.42</em>. https://www.nsnam.org/</p>
 
-  <li>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., Cano, C., Selinis, I., &amp; Bellalta, B. (2021). Spatial reuse in IEEE 802.11ax WLANs. <em>Computer Communications, 170</em>, 65&ndash;83.</li>
+<p>Pressman, R. S., &amp; Maxim, B. R. (2014). <em>Software engineering: A practitioner&rsquo;s approach</em> (8th ed.). McGraw-Hill.</p>
 
-  <li>Validation of the ns-3 802.11ax OFDMA implementation. (2021). In <em>Proceedings of the 2021 Workshop on ns-3 (WNS3 '21)</em>. ACM. https://doi.org/10.1145/3460797.3460798 <em>[Author list to confirm.]</em></li>
+<p>Qu, Q., Li, B., Yang, M., Yan, Z., Yang, A., Deng, D.-J., &amp; Chen, K.-C. (2019). Survey and performance evaluation of the upcoming next generation WLAN standard&mdash;IEEE 802.11ax. <em>Mobile Networks and Applications, 24</em>(5), 1461&ndash;1474.</p>
 
-  <li>Performance and simulation analysis of 802.11ax OFDMA in contention-driven scenarios. (2025). <em>PeerJ Computer Science</em>. <em>[Author list to confirm.]</em></li>
+<p>Riley, G. F., &amp; Henderson, T. R. (2010). The ns-3 network simulator. In K. Wehrle, M. G&uuml;ne&#351;, &amp; J. Gross (Eds.), <em>Modeling and tools for network simulation</em> (pp. 15&ndash;34). Springer. https://doi.org/10.1007/978-3-642-12331-3_2</p>
 
-  <li>An analysis of BSS coloring mechanism in IEEE 802.11ax dense networks. (2022). <em>International Journal of Electronics and Telecommunications</em>. <em>[Author list to confirm.]</em></li>
-</ol>
+<p>Sommerville, I. (2016). <em>Software engineering</em> (10th ed.). Pearson.</p>
 
-<h3>Additional works cited in Chapter Three</h3>
-<p>The methodology chapter cites the standard software-engineering treatments of the development models it reviews. Four of these predate 2010 because they are the primary sources for the models themselves &mdash; Royce is the origin of the sequential model, and Jain is the origin of the fairness index &mdash; and a secondary source would be weaker. Remove them if your department requires every reference to be recent.</p>
-<ol start="17">
-  <li>Boehm, B. W. (1988). A spiral model of software development and enhancement. <em>Computer, 21</em>(5), 61&ndash;72.</li>
-  <li>Fowler, M. (2004). <em>UML distilled: A brief guide to the standard object modeling language</em> (3rd ed.). Addison-Wesley.</li>
-  <li>Jain, R., Chiu, D.-M., &amp; Hawe, W. (1984). <em>A quantitative measure of fairness and discrimination for resource allocation in shared computer systems</em> (DEC-TR-301). Digital Equipment Corporation.</li>
-  <li>Larman, C., &amp; Basili, V. R. (2003). Iterative and incremental development: A brief history. <em>Computer, 36</em>(6), 47&ndash;56.</li>
-  <li>Pressman, R. S., &amp; Maxim, B. R. (2014). <em>Software engineering: A practitioner's approach</em> (8th ed.). McGraw-Hill.</li>
-  <li>Royce, W. W. (1970). Managing the development of large software systems. <em>Proceedings of IEEE WESCON</em>, 1&ndash;9.</li>
-  <li>Sommerville, I. (2016). <em>Software engineering</em> (10th ed.). Pearson.</li>
-</ol>
+<p>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., &amp; Bellalta, B. (2019). On the performance of the spatial reuse operation in IEEE 802.11ax WLANs. In <em>Proceedings of the IEEE Conference on Standards for Communications and Networking (CSCN)</em> (pp. 1&ndash;6). IEEE.</p>
+
+<p>Wilhelmi, F., Barrachina-Mu&ntilde;oz, S., Cano, C., Selinis, I., &amp; Bellalta, B. (2021). Spatial reuse in IEEE 802.11ax WLANs. <em>Computer Communications, 170</em>, 65&ndash;83.</p>
+</div>
+
+<div class="flag">
+  <p><strong>Before submission.</strong> Eighteen references, all 2010 or later. Title, venue and year were checked against a publisher or indexing record for every entry. Volume and page details for Inzillo and Ariza Quintana (2025) and Qu et al. (2019) should be confirmed against the publisher, as those were not visible in the records consulted. Open each source yourself before citing it.</p>
+</div>
 
 <!-- ==================== APPENDICES ==================== -->
 
