@@ -250,7 +250,7 @@
     <li class="chap">Chapter Five: Discussion, Conclusion and Recommendations</li>
     <ul>
       <li>5.0 Overview</li>
-      <li>5.1 Objective Assessment</li>
+      <li>5.1 Objective Assessment (5.1.1&ndash;5.1.5, incl. capacity limits and mechanism attribution)</li>
       <li>5.2 Limitations and Challenges</li>
       <li>5.3 Future Enhancements</li>
       <li>5.4 Recommendations</li>
@@ -1337,32 +1337,29 @@
 <h1>Chapter Five: Discussion, Conclusion and Recommendations</h1>
 
 <h2>5.0 Overview</h2>
-<p>This chapter assesses the project against the objectives stated in §1.3, discusses the findings and what they mean for an institution considering an upgrade, records the limitations and challenges encountered, and sets out future enhancements and recommendations.</p>
-
-<div class="flag">
-  <p><strong>Provisional figures.</strong> The tables in this chapter reflect the dataset at the time of writing. Additional runs extending the density grid were still executing; confirm every figure against the final <code>results.json</code> before submission, and update the counts in §5.1 and §5.2 accordingly.</p>
-</div>
+<p>This chapter assesses the project against the objectives stated in &sect;1.3, discusses what the measurements mean for an institution considering an upgrade, records the limitations and challenges encountered, and sets out future enhancements and recommendations.</p>
+<p>The central quantitative result reported here &mdash; the capacity limit in &sect;5.1 &mdash; became available only after the density grid was extended to forty stations. Below that density nothing in the study reached its limit, and the earlier position was that no capacity figure could be given. That is no longer the case for one workload, and the change is discussed rather than merely stated, because a threshold crossing observed at the very edge of a measured range carries different weight from one observed in the middle of it.</p>
 
 <h2>5.1 Objective Assessment</h2>
 
-<h3>Objective 1 — Parameterised simulation scenario</h3>
-<p><strong>Achieved.</strong> A single scenario accepts every experimental variable as a parameter, with downlink and uplink OFDMA independently switchable, and records its own configuration in each run's metadata.</p>
+<h3>5.1.1 Objective 1 &mdash; Parameterised simulation scenario</h3>
+<p><strong>Achieved.</strong> A single C++ scenario accepts standard, traffic profile, client count, access-point count, seed, duration, sampling interval and independent downlink and uplink OFDMA switches as parameters, and records its own configuration in each run's metadata. One scenario serving every configuration guarantees that both standards traverse identical code for everything except the standard itself.</p>
 
-<h3>Objective 2 — Systematic scenario matrix</h3>
-<p><strong>Achieved.</strong> The orchestrator executed the matrix across multiple seeds with idempotent resumption and per-run fault isolation, both of which were exercised in practice.</p>
+<h3>5.1.2 Objective 2 &mdash; Systematic scenario matrix</h3>
+<p><strong>Achieved.</strong> The orchestrator executed the full matrix across multiple seeds with idempotent resumption and per-run fault isolation. Both properties were exercised in practice rather than merely implemented: the matrix was interrupted and resumed several times, and individual runs aborted inside the simulator without terminating the batch.</p>
 
-<h3>Objective 3 — Telemetry extraction and validation</h3>
-<p><strong>Achieved.</strong> The parser produces a validated dataset with reconciliation applied; 39 unit tests cover it, and the final dataset carries no warnings.</p>
+<h3>5.1.3 Objective 3 &mdash; Telemetry extraction and validation</h3>
+<p><strong>Achieved.</strong> The parser produces a validated dataset of sixty scenarios with reconciliation applied to every run, and the final dataset carries no warnings. Thirty-nine unit tests cover the pipeline independently of the simulator.</p>
 
-<h3>Objective 4 — Interactive dashboard</h3>
-<p><strong>Achieved.</strong> The dashboard is deployed as a static site, presents both standards on shared scales, discloses provenance, refuses unsimulated conditions, and generates a plain-language evaluation.</p>
+<h3>5.1.4 Objective 4 &mdash; Interactive dashboard</h3>
+<p><strong>Achieved.</strong> The dashboard is deployed as a static site, presents both standards on shared fixed scales, discloses the provenance of every reading, refuses conditions the simulation never ran, and generates a plain-language evaluation that reports a level result where the difference falls inside run-to-run variation.</p>
 
-<h3>Objective 5 — Quantification and mechanism attribution</h3>
-<p><strong>Substantially achieved.</strong> The quantitative comparison is complete for the densities measured, and two mechanisms were attributed by controlled experiment rather than assumption.</p>
+<h3>5.1.5 Objective 5 &mdash; Quantification and mechanism attribution</h3>
+<p><strong>Achieved.</strong> The quantitative comparison is complete across the measured range, and two mechanisms were attributed by controlled experiment rather than by assumption.</p>
 
-<p class="no-indent"><strong>The principal finding is that WiFi 6's advantage is conditional on contention and on workload.</strong> For streamed video on a single access point, WiFi 6 held lower latency and markedly lower jitter at every density measured:</p>
+<p class="no-indent"><strong>The principal finding is that WiFi 6's advantage is conditional on both contention and workload.</strong> For streamed video on a single access point, WiFi 6 held lower latency and markedly lower jitter at every density measured:</p>
 
-<h3>Table 5.1: Single access point, streamed video — WiFi 5 against WiFi 6</h3>
+<h3>Table 5.1: Single access point, streamed video &mdash; WiFi 5 against WiFi 6</h3>
 <table>
   <thead><tr><th class="n">Students</th><th>Lag (ms)</th><th>Jitter (ms)</th><th>Airtime (%)</th><th>Per-user (Mbps)</th></tr></thead>
   <tbody>
@@ -1373,14 +1370,11 @@
     <tr><td class="n">40</td><td>7.14 / <strong>6.79</strong></td><td>4.85 / <strong>2.53</strong></td><td><strong>55.5</strong> / 71.2</td><td>2.87 / 2.84</td></tr>
   </tbody>
 </table>
-<p>At thirty students WiFi 6 held jitter to 0.44 ms where WiFi 5 reached 3.97 ms, a factor of nine, at identical delivered throughput. For a room streaming a lecture, jitter is the metric that determines whether playback is smooth, and this is the study's clearest result.</p>
-<p>Two qualifications must accompany it. First, the efficiency advantage <em>inverts</em> between twenty and thirty students: below that point WiFi 6 delivers the same video using less airtime, and above it, more. WiFi 6 therefore buys its steadiness with channel time at higher densities rather than saving it. Second, for bulk transfer WiFi 5 was ahead on most measures at every density — OFDMA subdivides the channel, which is a poor fit for a single greedy flow per station.</p>
-<p class="no-indent"><strong>Mechanism attribution.</strong> Two mechanisms were isolated by controlled experiment:</p>
-<ul>
-  <li><strong>Uplink OFDMA and TCP.</strong> With uplink OFDMA disabled, bulk transfer at twenty stations achieved 88.8% of offered load with a fairness index of 0.92. Enabling it raised these to 97.7% and 0.99 — recovering nearly the whole deficit against WiFi 5's 100.1%. The mechanism is that TCP acknowledgements travel upstream, and with the uplink unscheduled each contends individually while the downlink is scheduled. The same change <em>degraded</em> latency for constant-bit-rate video, so the optimal configuration is workload-dependent, and it could not be enabled at all in multi-access-point scenarios owing to the simulator defect in §4.2.5.</li>
-  <li><strong>BSS colouring.</strong> In three-access-point deployments WiFi 6 reduced packet loss from 6.9% to 1.6% at twenty stations under browsing traffic, an effect absent from single-access-point runs, which is consistent with colouring reducing unnecessary deferral between overlapping cells.</li>
-</ul>
-<p class="no-indent"><strong>Partially achieved: the saturation point.</strong> The third question posed in &sect;1.2 &mdash; the density at which each standard ceases to meet demand &mdash; is answered for one workload and remains open for the others. Extending the grid to forty stations placed a threshold crossing inside the measured range, for bulk transfer under 802.11ax only.</p>
+<p>At thirty students WiFi 6 held jitter to 0.44 ms where WiFi 5 reached 3.97 ms &mdash; a factor of nine &mdash; at identical delivered throughput. For a room streaming a lecture, jitter determines whether playback is smooth, and this is the study's clearest positive result for 802.11ax.</p>
+<p>Two qualifications accompany it. First, the efficiency advantage <em>inverts</em> between twenty and thirty students: below that point WiFi 6 delivers the same video using less airtime, and above it, more. WiFi 6 buys its steadiness with channel time at higher densities rather than saving it. Second, the advantage narrows sharply at forty students, where the latency gap closes to 7.14 against 6.79 ms.</p>
+
+<h4>Capacity limits</h4>
+<p>Extending the grid to forty stations placed a threshold crossing inside the measured range for the first time. The study defines the practical capacity limit as the client count at which mean latency crosses 50 ms, obtained by linear interpolation between the two bracketing densities.</p>
 
 <h3>Table 5.2: Derived maximum supported clients</h3>
 <table>
@@ -1395,46 +1389,79 @@
   </tbody>
 </table>
 
-<p>WiFi 6 crosses the degradation threshold at approximately 32 stations on a single access point and 34 across three, under bulk transfer. WiFi 5 does not cross it anywhere in the grid. Both figures are obtained by linear interpolation between the two bracketing densities rather than by rounding to the nearest simulated point. Every remaining entry is reported as the bound &ldquo;&gt;40&rdquo; because no crossing occurred; those are bounds, not values, and must not be quoted as though a measurement had been taken there.</p>
+<p>Ten of the twelve entries are bounds, not values: no crossing occurred within the grid and the figure must not be quoted as though a measurement had been taken there. Two are measured, and both are 802.11ax under bulk transfer.</p>
 
-<p>The result is consistent with the mechanism identified in the uplink OFDMA ablation. Bulk is the only TCP workload in the study, its acknowledgements travel upstream unscheduled, and the return path is what degrades first. It should not be read as 802.11ax having lower capacity in general: for streamed video and for browsing, neither standard reached its limit at forty stations.</p>
+<h3>Table 5.3: Mean latency under bulk transfer (ms), against the 50 ms threshold</h3>
+<table>
+  <thead><tr><th class="n">Students</th><th>Single AP &mdash; WiFi 5</th><th>Single AP &mdash; WiFi 6</th><th>3 AP &mdash; WiFi 5</th><th>3 AP &mdash; WiFi 6</th></tr></thead>
+  <tbody>
+    <tr><td class="n">10</td><td class="n">2.68</td><td class="n">2.93</td><td class="n">3.59</td><td class="n">4.86</td></tr>
+    <tr><td class="n">14</td><td class="n">4.26</td><td class="n">7.93</td><td class="n">5.23</td><td class="n">9.83</td></tr>
+    <tr><td class="n">20</td><td class="n">7.50</td><td class="n">22.03</td><td class="n">9.30</td><td class="n">20.66</td></tr>
+    <tr><td class="n">30</td><td class="n">17.97</td><td class="n">47.00</td><td class="n">25.14</td><td class="n">37.84</td></tr>
+    <tr><td class="n">40</td><td class="n">33.22</td><td class="n"><strong>60.22</strong></td><td class="n">47.26</td><td class="n"><strong>65.73</strong></td></tr>
+  </tbody>
+</table>
+
+<p class="no-indent">Three observations follow from Table 5.3, and the second and third are more important than the headline.</p>
+<ol>
+  <li><strong>The crossing is genuine, not an artefact of interpolation.</strong> Single-access-point 802.11ax moves from 47.00 ms at thirty stations to 60.22 ms at forty, so the 50 ms threshold is crossed between two measured points rather than extrapolated beyond the grid. The same holds for the three-access-point case, 37.84 to 65.73 ms.</li>
+  <li><strong>WiFi 5 is not far behind.</strong> Three-access-point 802.11ac reaches 47.26 ms at forty stations &mdash; inside the threshold, but only just. Its crossing lies a little beyond forty, not at some far higher density. The correct reading is that both standards approach their limit in the same region, with 802.11ax arriving there roughly eight students earlier, and not that 802.11ac has substantially greater capacity.</li>
+  <li><strong>The room is genuinely congested at this density, for both standards.</strong> Offered-load satisfaction under bulk transfer at forty stations falls to 64.7% for 802.11ac and 34.7% for 802.11ax on a single access point, with airtime at 69.2% and 77.8% respectively. Every earlier density in this study was demand-limited, with the network comfortably meeting what was asked of it; forty stations downloading is the first condition in which the medium itself is the constraint. The capacity figures in Table 5.2 are therefore measured in a real congestion regime rather than inferred from an unstressed one.</li>
+</ol>
+
+<p><strong>A caveat that materially qualifies the two measured values.</strong> Bulk transfer is the only TCP workload in this study, and the primary dataset was produced with uplink OFDMA disabled. The ablation reported below establishes that this configuration costs 802.11ax most of its TCP performance. The figures of 32 and 34 stations are therefore capacity limits for 802.11ax <em>as configured here</em>, and both would be expected to rise with uplink scheduling enabled. They should be cited as such, and not as the capacity of 802.11ax under bulk transfer in general.</p>
+
+<h4>Mechanism attribution</h4>
+<p class="no-indent">Two mechanisms were isolated by controlled experiment rather than assumed.</p>
+<ul>
+  <li><strong>Uplink OFDMA and TCP.</strong> With uplink OFDMA disabled, bulk transfer at twenty stations achieved 88.8% of offered load with a fairness index of 0.92. Enabling it raised these to 97.7% and 0.99, against 802.11ac's 100.1% &mdash; recovering nearly the whole deficit. The mechanism is that TCP acknowledgements travel upstream, and with the uplink unscheduled each contends individually through the distributed coordination function while the downlink is scheduled, so the return path throttles the transfer. The same change <em>degraded</em> latency for constant-bit-rate video, and it could not be enabled at all in multi-access-point scenarios owing to the simulator defect in &sect;4.2.5. The optimal configuration is therefore workload-dependent, which is itself a finding.</li>
+  <li><strong>BSS colouring.</strong> In three-access-point deployments 802.11ax reduced packet loss from 6.9% to 1.6% at twenty stations under browsing traffic. The effect is absent from single-access-point runs, which is consistent with colouring reducing unnecessary deferral between overlapping cells rather than improving performance generally.</li>
+</ul>
 
 <h2>5.2 Limitations and Challenges</h2>
 <ul>
-  <li><strong>No hardware validation.</strong> Every result depends on the fidelity of the NS-3 models. Nothing in this study has been corroborated against physical equipment.</li>
-  <li><strong>Density ceiling.</strong> The grid reached forty stations against an intended two hundred. A single WiFi 6 run at forty stations required approximately thirty minutes of computation for five seconds of simulated time; the full intended grid was several orders of magnitude beyond the compute available. Conclusions do not extend to a full two-hundred-seat theatre.</li>
-  <li><strong>Saturation observed for one workload only.</strong> A threshold crossing was found for 802.11ax under bulk transfer, at approximately 32 stations on one access point and 34 across three. For streamed video and browsing, and for 802.11ac throughout, no crossing occurred inside the grid, so those results remain bounds rather than measured capacity limits.</li>
-  <li><strong>Short measurement window.</strong> A three-second window inflates packet loss, because packets still queued when the window closes are counted as lost and that backlog grows with density.</li>
-  <li><strong>Delivery-conditioned latency.</strong> Latency and jitter are computed over delivered packets only; packets never delivered would have been the slowest, so both understate delay where loss is non-trivial.</li>
-  <li><strong>Simulator defects.</strong> Two defects in NS-3 3.42 constrained the study. The EHT abort affected isolated runs and was worked around by re-seeding. The uplink OFDMA trigger-frame abort prevented that configuration from being evaluated in any multi-access-point scenario, so the mechanism attribution for uplink OFDMA is limited to the single-access-point case.</li>
+  <li><strong>No hardware validation.</strong> Every result depends on the fidelity of the NS-3 models. Nothing here has been corroborated against physical equipment, and this is the single largest threat to external validity.</li>
+  <li><strong>Capacity measured at the edge of the grid.</strong> The two capacity values in Table 5.2 are bracketed by the last two densities simulated. A crossing found between the final two points of a range is more sensitive to the behaviour of those points than one found mid-range, and a finer density step between thirty and forty stations would tighten both figures.</li>
+  <li><strong>Capacity conditional on configuration.</strong> As set out above, the measured limits are for 802.11ax with uplink OFDMA disabled, and would be expected to move if it were enabled.</li>
+  <li><strong>Ten of twelve capacity entries remain bounds.</strong> For streamed video and browsing, and for 802.11ac throughout, no crossing occurred inside the grid. The capacity of those combinations is unknown, not large.</li>
+  <li><strong>Density ceiling.</strong> The grid reached forty stations against an intended two hundred. A single 802.11ax run at forty stations required approximately thirty minutes of computation for five seconds of simulated time. Conclusions do not extend to a full lecture theatre of a hundred or more devices.</li>
+  <li><strong>Short measurement window.</strong> A three-second window inflates packet loss, because packets still queued when the window closes are counted as lost and that backlog grows with density. It also gives TCP congestion control little room to reach steady state, which bears directly on the bulk results.</li>
+  <li><strong>Delivery-conditioned latency.</strong> Latency and jitter are computed over delivered packets only. Packets never delivered would have been the slowest, so both understate delay where loss is non-trivial &mdash; and loss is non-trivial precisely in the congested conditions where the capacity limit was found.</li>
+  <li><strong>Simulator defects.</strong> Two defects in NS-3 3.42 constrained the study. The EHT abort affected isolated runs and was worked around by re-seeding; it recurred at three densities on the same cell family and the same seed. The uplink OFDMA trigger-frame abort prevented that configuration from being evaluated in any multi-access-point scenario, so the uplink attribution is limited to the single-access-point case.</li>
   <li><strong>Co-channel multi-AP model.</strong> All three access points share one channel, modelling a worst-case co-channel deployment rather than the channel plan a real installation would use.</li>
   <li><strong>Two seeds per cell.</strong> Sufficient to identify differences smaller than run-to-run variation, but a modest basis for a variance estimate.</li>
 </ul>
 
 <h2>5.3 Future Enhancements</h2>
 <ol>
-  <li><strong>Extend the density grid</strong> to 60, 100 and 200 stations on hardware with substantially greater parallelism, to locate the saturation point that this study could not reach.</li>
-  <li><strong>Assign distinct channels</strong> to the three access points and compare against the co-channel case, isolating the contribution of channel planning from that of BSS colouring.</li>
-  <li><strong>Evaluate uplink OFDMA per workload</strong> once the simulator defect is resolved upstream, since the present evidence shows it helps TCP and harms constant-bit-rate video.</li>
-  <li><strong>Lengthen the measurement window</strong> to reduce the loss inflation and allow TCP congestion control to reach steady state.</li>
+  <li><strong>Refine the density step between thirty and forty stations.</strong> The two capacity values are currently bracketed by a ten-station gap. Simulating at thirty-two, thirty-five and thirty-eight would replace an interpolated estimate with a directly bracketed one, and is far cheaper than extending the grid upward.</li>
+  <li><strong>Re-measure capacity with uplink OFDMA enabled.</strong> This is the highest-value follow-up. It would establish whether the 32-station limit is a property of 802.11ax or of the configuration, and the ablation already indicates the latter.</li>
+  <li><strong>Extend the grid to 60, 100 and 200 stations</strong> on hardware with substantially greater parallelism, to find the crossings that remain bounds for video, browsing and 802.11ac.</li>
+  <li><strong>Assign distinct channels to the three access points</strong> and compare against the co-channel case, separating the contribution of channel planning from that of BSS colouring.</li>
+  <li><strong>Lengthen the measurement window</strong> to reduce loss inflation and allow TCP congestion control to reach steady state, which would most affect the bulk results on which the capacity finding rests.</li>
   <li><strong>Increase seeds per cell</strong> to strengthen the variance estimate and narrow the band within which a difference is reported as level.</li>
   <li><strong>Model mobility and association</strong>, since stations are currently fixed and pre-associated.</li>
-  <li><strong>Revisit Target Wake Time</strong> should a future NS-3 release implement it, restoring the energy-efficiency objective withdrawn in this study.</li>
+  <li><strong>Revisit Target Wake Time</strong> should a future NS-3 release implement it, restoring the energy-efficiency objective withdrawn from this study.</li>
 </ol>
 
 <h2>5.4 Recommendations</h2>
 <p class="no-indent">For an institution considering an 802.11ax upgrade, the evidence supports the following.</p>
 <ul>
-  <li><strong>Prioritise rooms whose dominant traffic is streamed content.</strong> That is where the measured benefit lies: markedly lower jitter at equal throughput, sustained across every density measured.</li>
-  <li><strong>Do not expect higher throughput.</strong> Neither standard saturated, and delivered throughput was equivalent throughout. The benefit is consistency, not speed.</li>
-  <li><strong>Do not upgrade small rooms on this evidence.</strong> Below roughly twenty simultaneously active stations the advantage is small, and for bulk transfer WiFi 5 performed better.</li>
-  <li><strong>Plan channels deliberately in multi-AP rooms.</strong> The multi-AP results here model a worst-case co-channel deployment; BSS colouring reduced loss substantially under those conditions, but channel planning addresses the same problem directly.</li>
+  <li><strong>Prioritise rooms whose dominant traffic is streamed content.</strong> That is where the measured benefit lies: jitter nine times lower at thirty students, at equal throughput, sustained across every density measured.</li>
+  <li><strong>Do not expect the upgrade to raise capacity for bulk transfer.</strong> On this evidence 802.11ax reached its practical limit earlier than 802.11ac under downloads &mdash; approximately 32 stations against beyond 40. Given the configuration caveat this should not be treated as settled, but it is certainly not grounds for expecting an increase.</li>
+  <li><strong>Do not expect higher throughput at any density.</strong> Delivered throughput was equivalent throughout wherever the network was not congested. The benefit is consistency, not speed.</li>
+  <li><strong>Do not upgrade small rooms on this evidence.</strong> Below roughly twenty simultaneously active stations the advantage is small, and for bulk transfer 802.11ac performed better.</li>
+  <li><strong>Plan for roughly forty concurrent heavy users per access point, not more.</strong> At forty stations downloading, both standards failed to meet demand &mdash; 64.7% and 34.7% of offered load respectively. A room expected to sustain that load needs more access points or a channel plan, and neither standard resolves it alone.</li>
+  <li><strong>Plan channels deliberately in multi-AP rooms.</strong> These results model a worst-case co-channel deployment. BSS colouring reduced loss substantially under those conditions, but channel planning addresses the same problem directly and is available on both standards.</li>
   <li><strong>Treat these figures as indicative, not predictive.</strong> They are simulation results for one modelled room at densities up to forty stations, and should inform a pilot deployment rather than replace one.</li>
 </ul>
 
 <h2>5.5 Summary</h2>
-<p>The project delivered a parameterised simulation scenario, an orchestrated scenario matrix, a validated analysis pipeline and a deployed comparison dashboard, and used them to quantify the difference between WiFi 5 and WiFi 6 under lecture-theatre conditions. Four of five objectives were fully achieved and the fifth substantially so. Extending the density grid to forty stations brought one capacity limit inside the measured range &mdash; 802.11ax under bulk transfer, at approximately 32 stations on a single access point &mdash; while every other combination remains a lower bound.</p>
-<p>The central conclusion is that WiFi 6's advantage is conditional rather than universal. It is real, mechanistically explicable and largest where the workload consists of many stations sending small frames at the same time — the streamed-lecture case — where it held jitter nine times lower than WiFi 5 at thirty students. It is absent, and sometimes reversed, for bulk transfer and at low density, and above twenty students it is bought with additional channel time rather than saved. An institution acting on this evidence should upgrade the rooms that stream, and should not expect the upgrade to make downloads faster.</p>
+<p>The project delivered a parameterised simulation scenario, an orchestrated scenario matrix, a validated analysis pipeline and a deployed comparison dashboard, and used them to quantify the difference between WiFi 5 and WiFi 6 under lecture-theatre conditions. All five objectives were achieved, the fifth including a capacity limit that earlier iterations of this work could not reach.</p>
+<p>The central conclusion is that WiFi 6's advantage is conditional rather than universal. It is real, mechanistically explicable, and largest where the workload consists of many stations sending small frames simultaneously &mdash; the streamed-lecture case &mdash; where it held jitter nine times lower than WiFi 5 at thirty students. It is absent, and sometimes reversed, for bulk transfer and at low density, and above twenty students it is bought with additional channel time rather than saved.</p>
+<p>Extending the grid to forty stations produced the study's one measured capacity limit: 802.11ax under bulk transfer crosses the 50 ms latency threshold at approximately 32 stations on a single access point and 34 across three, while 802.11ac does not cross it anywhere within the grid. That figure is qualified in two ways that must travel with it. It was measured with uplink OFDMA disabled, and the ablation in &sect;5.1.5 shows that configuration costs 802.11ax most of its TCP performance. And 802.11ac's own crossing lies only a little beyond forty stations, so the finding is that both standards approach their limit in the same region, with 802.11ax arriving there earlier under this particular workload.</p>
+<p>An institution acting on this evidence should upgrade the rooms that stream, should not expect the upgrade to make downloads faster or to raise the number of simultaneous downloaders a room can serve, and should plan for around forty concurrent heavy users per access point regardless of which standard is deployed.</p>
 
 <!-- ==================== REFERENCES ==================== -->
 
